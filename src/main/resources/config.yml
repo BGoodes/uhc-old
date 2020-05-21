@@ -1,0 +1,44 @@
+#########################################################
+#              UHC HOST -  Version 1.0                  #
+#                 Author : B. Goodes                    #
+#########################################################
+
+World:
+  world-name : 'world'
+  seed: 0   # 0 --> random
+  dimension: "NORMAL" #NORMAL | NETHER | END
+  type: "NORMAL" #NORMAL | LARGE_BIOMES | AMPLIFIED | FLAT | VERSION_1_1 | CUSTOMIZED
+  generate-structures: true
+
+Lobby:
+  location:
+    world-name: 'world'
+    x: 0
+    y: 200
+    z: 0
+  Cage:
+    generate: true
+    size: 50
+    height: 4
+
+ServerManager:
+  create-game: true #Allow to create a game automatically at server launch.
+  generate-worlds: true #Allow to generate worlds automatically at server launch.
+  remove-worlds: true #Allow to remove the world automatically at the end of the game.
+
+
+Permissions:
+  remove-op: false #Allows to remove automatically the permissions of op players
+  set-op-to-staff: true #Allows to give automatically the rank "Staff" to op players
+
+Scoreboard:
+  ip:
+    show-ip: true
+    ip: play.serveur.fr
+    ip-fade: true
+    ip-fade-cooldown: 50
+    ip-fade-unit: 80 #Milliseconds
+    ip-fade-color:
+      text-color: AQUA
+      point: DARK_PURPLE
+      fade: LIGHT_PURPLE

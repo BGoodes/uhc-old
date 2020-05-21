@@ -1,0 +1,7 @@
+name: UHC-HOST
+version: 1.0
+author: B. Goodes
+main: fr.aiidor.uhc.UHC
+commands:
+  host:
+    description: Commande servant pour les organisateurs d'une partie.

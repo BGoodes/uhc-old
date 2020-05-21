@@ -1,0 +1,471 @@
+{
+	"prefix" : "§5§lUHC §8»",
+
+	"inventory" : {
+
+		"inv-configuration" : "§d§lConfiguration",
+		"inv-team-choose" : "§fChoisir une équipe",
+		"inv-team-random" : "§fÉquipe §7§nAléatoire§r",
+
+		"inv-exit" : "§4Sortir §lX",
+		"inv-back" : "§4Revenir en arrière «",
+		"inv-next-page" : "§aPage suivante »",
+		"inv-last-page" : "§cPage précédente «",
+
+		"inv-left-click" : "§eClique gauche : §aAjouter {value}",
+		"inv-right-click" : "§eClique droit : §cRetirer {value}",
+
+		"inv-on" : "§a[Activé]",
+		"inv-off" : "§c[Désactivé]",
+
+		"config-menu" : {
+
+			"inv-start-game" : "§aLancer la partie ?",
+			"inv-cancel-game" : "§cAnnuler le lancement ?",
+			"inv-teams" : "§6Gestion des équipes",
+			"inv-players" : "§eGestion des joueurs",
+			"inv-stuff" : "§aGestion du stuff",
+			"inv-time" : "§9Gestion du temps",
+			"inv-world-border" : "§dGestion de la World Border",
+			"inv-worlds" : "§3Gestion des Mondes",
+			"inv-scenarios" : "§bLes scénarios",
+
+			"inv-life" : "§dGestion de la vie",
+			"inv-loots" : "§aLes Loots",
+			"inv-crafts" : "§2Crafts Personnalisés",
+			"inv-chat" : "§cParamètres du chat",
+			"inv-rules" : "§4Les règles"
+		},
+
+		"config-teams" : {
+			"inv-team-size" : "§7Tailles des équipes §8: §a{team-size}",
+			"inv-team-size-config" : "§aTailes des équipes",
+			"inv-team-number" : "§7Nombre d'équipes §8: §a{team-number}",
+			"inv-team-number-config" : "§aNombre d'équipes",
+			"inv-team-type" : "§7Type d'équipes §8» §a{team-type}"
+		},
+
+		"config-players" : {
+			"inv-join-state" : "§7État de la partie §8» §a{join-state}"
+		},
+
+		"config-stuff" : {
+			"inv-start-items" : "§aItems de départ",
+			"inv-death-items" : "§cItems à la mort",
+			"inv-stuff-limits" : "§bLimitations sur le stuff",
+			"inv-stuff-potions" : "§bGestion des potions"
+		},
+
+		"inv-scenario-list" : "§2Les Scénarios :"
+	},
+
+	"title" : {
+		"invincibility-bar" : "§7Invincibilité §8» §6{time}",
+		"bc-player-tp" : "§7Teleportation §8» §a{player-name}§7"
+	},
+
+	"announce" : {
+
+		"bc-player-join" : "{prefix} §7{player-name} §aa rejoint la partie !",
+		"bc-spectator-join" : "{prefix} §7{player-name} §aa rejoint la partie ! §b(Spectateur)",
+		"bc-player-leave" : "{prefix} §7{player-name} §ca quitté la partie !",
+		"bc-spectator-leave" : "{prefix} §7{player-name} §ca quitté la partie ! §b(Spectateur)",
+
+		"bc-game-initialization" : "{prefix} §7Vous n'êtes désormais plus §ainvincible §7!",
+
+		"bc-invincibility-end" : "{prefix} §7Vous n'êtes désormais plus §ainvincible §7!",
+		"bc-pvp-wait" : "{prefix} §7Le pvp sera activé dans §a{time} minutes §7!",
+		"bc-pvp-start" : "{prefix} §7Le pvp est désormais §aactivé §7!",
+		"bc-episode-end": "§d-------- Fin Episode {episode} --------",
+
+		"death" : {
+			"bc-death": "§8» §e{player-name} §7{reason} §8«",
+			"bc-death-kill": "§8» §e{player-name} §7a été tué par §c{killer-name} §8«",
+			"bc-death-hide": "§8» §e{player-name} §7est mort ! §8«",
+
+			"reasons" : {
+				"FALL" : {
+					"0" : "s'est cassé la gueule",
+					"1" : "est tombé de haut",
+					"2" : "s'est cassé la pipe",
+					"3" : "a glissé chef"
+				},
+
+				"LAVA" : {
+					"0" : "est mort carbonisé",
+					"1" : "est tombé dans un volcan",
+					"2" : "est tombé dans la lave"
+				},
+
+				"FIRE" : {
+					"0" : "est mort carbonisé",
+					"1" : "à oublié d'éteindre le gaz"
+				},
+
+				"FIRE_TICK" : {
+					"0" : "est mort carbonisé",
+					"1" : "à oublié d'éteindre le gaz"
+				},
+
+				"DROWNING" : {
+					"0" : "pensait pouvoir respirer dans l'eau"
+				},
+
+				"SUICIDE" : {
+					"0" : "en avait marre de la vie"
+				},
+
+				"ENTITY_EXPLOSION" : {
+					"0" : "a été désintégré dans une explosion",
+					"1" : "est mort explosé"
+				},
+
+				"BLOCK_EXPLOSION" : {
+					"0" : "a été désintégré dans une explosion",
+					"1" : "est mort explosé"
+				},
+
+				"STARVATION" : {
+					"0" : "est mort de faim",
+					"1" : "n'a pas mangé depuis un moment"
+				},
+
+				"MAGIC" : {
+					"0" : "s'est fait ensorcellé",
+					"1" : "est mort par la magie"
+				},
+
+				"THORNS" : {
+					"0" : "a fait un câlin à un hérisson",
+					"1" : "s'est fait piqué les fesses"
+				}
+			}
+		},
+
+		"starting" : {
+			"bc-game-starting" : "{prefix} §7La partie commence dans §a{timer-s} §7secondes !",
+			"bc-game-start-cancel" : "{prefix} §cLe lancement vient d'être annulé !",
+			"bc-game-start" : "{prefix} §7La partie est lancé, §aBonne chance §7!"
+		},
+
+		"loading" : {
+			"bc-random-teams" : "{prefix} §7Il y a en tout §a{team-count} §7équipe(s) pour §a{player-count} §7joueur(s).",
+			"bc-teams-loading" : "{prefix} §7Il y a en tout §a{team-count} §7équipe(s) pour §a{player-count} §7joueur(s).",
+			"bc-players-loading" : "{prefix} §7Il y a §a{player-count} §7joueur(s) dans la partie.",
+			"bc-teleportation-loading" : "{prefix} §7Zones de téléportation en cours de recherche...",
+			"bc-teleportation-find" : "{prefix} §7Les zones de téléportation on été trouvées !",
+			"bc-chunk-loading" : "{prefix} §7Les chunks sont en cours de prégénération...",
+			"bc-teleportation" : "{prefix} §7Les joueurs vont être §atéléportés §7!"
+		}
+	},
+
+	"team" : {
+		"team-join" : "{prefix} §aVous rejoignez la team {team-name} §a!",
+		"team-leave" : "{prefix} §cVous venez de quitter la team {team-name}§c.",
+		"team-full" : "{prefix} §cErreur, cette équipe est complète !",
+		"team-players" : "§eJoueurs : §a{team-player-count}§7/{team-size}",
+		"team-player-cannot-play" : "{prefix} §cVous n'avez pas eu d'équipe attribué ! Vous ne pourrez donc pas jouer cette partie."
+	},
+
+	"team-color" : {
+		"GRAY" : "Gris",
+		"RED" : "Rouge",
+		"GOLD" : "Orange",
+		"YELLOW" : "Jaune",
+		"GREEN" : "Vert",
+		"AQUA" : "Bleu clair",
+		"LIGHT_PURPLE" : "Violet",
+		"BLUE" : "Bleu",
+		"DARK_PURPLE" : "Mauve",
+		"DARK_AQUA" : "Cyan",
+		"DARK_GREEN" : "Vert foncé"
+	},
+
+	"team-type" : {
+		"CHOOSE" : "§aTeams prédéfinis",
+		"RANDOM" : "§aTeams aléatoires",
+		"CREATE" : "§aTeams customizables"
+	},
+
+	"staff" : {
+		"st-become-host" : "{prefix} §dVous êtes désormais le Host de la partie ! (Faites /host pour voir toutes les commandes.)",
+
+		"error" : {
+			"st-error-no-game" : "{prefix} §cErreur, il n'y a aucune partie en cours !",
+			"st-error-game-start" : "{prefix} §cCette partie est déjà lancé !",
+			"st-error-game-cancel" : "{prefix} §cVous ne pouvez plus annuler le lancement !",
+			"st-error-perm" : "{prefix} §cErreur, vous n'avez pas la permission pour effectuer ceci !",
+
+			"st-error-scenario-start" : "{prefix} §cErreur, ce scénario ne s'active qu'avant le lancement de la partie !"
+
+		}
+	},
+
+	"scoreboard" : {
+		"sb-episode" : "§dEpisode {episode}",
+		"sb-players" : "§7Joueurs : §a{player-count}",
+		"sb-teams" : "§7Teams : §a{team-count} §f({player-count})",
+
+		"sb-waiting" : "§6Partie en attente !",
+		"sb-starting" : "§6Lancement :§e {timer-s}s",
+		"sb-loading" : "§6Chargement...",
+
+		"sb-timer" : "§7Timer :§6 {timer-m}",
+		"sb-border" : "§7Border :§6 1250",
+
+		"sb-host" : "§cHost : §6{player-name}"
+	},
+
+	"commands" : {
+		"cmd-error-perm" : "{prefix} §cErreur, vous n'avez pas la permission pour effectuer cette commande.",
+		"cmd-help" : "{prefix} §eLa commande s'écrit : {command}.",
+		"cmd-invalid-argument" : "{prefix} §cErreur, la commande s'écrit : {command}.",
+		"cmd-invalid-command" : "{prefix} §cErreur, cette commande n'existe pas !",
+		"cmd-player-offline" : "{prefix} §cErreur, ce joueur n'est pas connecté où n'existe pas !"
+	},
+
+	"join-state" : {
+		"OPEN" : "§aOuvert",
+		"CLOSE" : "§cFermé",
+		"WHITELIST" : "§dWhitelist"
+	},
+
+	"rank" : {
+		"PLAYER" : "§7Joueur",
+		"SPECTATOR" : "§7Spectateur",
+		"ORGA" : "§9Organisateur",
+		"HOST" : "§cJoueur",
+		"STAFF" : "§bJoueur"
+	},
+
+	"kick-reason" : {
+		"cause-game-close" : "§cCette partie est fermée !",
+		"cause-game-whitelist" : "§dVous n'êtes pas sur la Whitelist !",
+		"cause-game-slot" : "§cIl n'y a plus de place dans la partie !",
+		"cause-world-deleting" : "§eLe monde est en cours de suppression..."
+	},
+
+	"motd" : {
+
+		"LOBBY" : {
+			"1" : "§6UHC HOST §7| §b1.8 §7[{join-state}§7]",
+			"2" : "§2» §aEn attente de joueur §2«"
+		},
+
+		"STARTING" : {
+			"1" : "§6UHC HOST §7| §b1.8",
+			"2" : "§7Lancement de la partie dans : §a{timer-s} §7seconde(s)."
+		},
+
+		"LOADING" : {
+			"1" : "§6UHC HOST §7| §b1.8",
+			"2" : "§6Chargement de la partie en cours..."
+		},
+
+		"GAME" : {
+			"1" : "§6UHC HOST §7| §b1.8",
+			"2" : "§7La partie est en cours !"
+		},
+
+		"ENDING" : {
+			"1" : "§6UHC HOST §7| §b1.8",
+			"2" : "§cRedémarrage en cours..."
+		}
+	},
+
+	"scenario" : "Scénario",
+
+	"scenarios" : {
+		"cutclean" : {
+			"name" : "§6CutClean",
+			"description" : "§7Les items se cuisent §fautomatiquement\n§7dès leur obtention."
+		},
+
+		"fastsmelting" : {
+			"name" : "§6Fast Smelting",
+			"description" : "§7Les items se cuisent §fplus rapidement§7.",
+			"furnace-speed" : "§6Vitesse du four : §e{value}"
+		},
+
+		"hastey-boys" : {
+			"name" : "§bHastey Boys",
+			"description" : "§7Tous les outils sont §faméliorés§7.",
+			"enchant-level" : "§7Niveau : §a{value}"
+		},
+
+		"hastey-babies" : {
+			"name" : "§bHastey Babies",
+			"description" : "§7Tous les outils sont §faméliorés§7 (mais juste un peu)."
+		},
+
+		"timber" : {
+			"name" : "§aTimber",
+			"description" : "§7Permet de casser les arbres en §fun seul coup §7!"
+		},
+
+		"rodless" : {
+			"name" : "§cRodLess",
+			"description" : "§7Permet de désactiver les\n§fcannes à pêche, boules de neige §7et §foeufs§7.",
+			"rod" : "§6Canne à pêche",
+			"snowball" : "§bBoule de neige",
+			"egg" : "§eOeuf",
+			"pvp-only" : "§cSeulement en Pvp"
+		},
+
+		"fireless" : {
+			"name" : "§6FireLess",
+			"description" : "§7Permet de désactiver les\n§fdégâts de feu§7 ou certains items en rapport.",
+			"no-fire-damage" : "§6Pas de dégâts par le feu",
+			"no-fire-tick" : "§6Pas de ticks de feu",
+			"lava-bucket" : "§cSeau de lave",
+			"flint-and-steel" : "§cBriquet",
+			"player-only" : "§bSeulement sur les joueurs"
+		},
+
+		"bleeding-sweets" : {
+			"name" : "§dBleeding sweets",
+			"description" : "§7Lorsque qu'un joueur meurt, il drop :\n §8» §a1 §fdiamant\n §8» §a5 §flingots d'or\n §8» §a16 §fflèches\n §8» §a1 §ffil"
+		},
+
+		"gone-fishing" : {
+			"name" : "§3Gone Fishing",
+			"description" : "§7Lors de votre spawn vous obtenez :\n §8» §a1 §fcanne à pêche §b(luck 250 / u250) \n §8» §a20 §fenclumes"
+		},
+
+		"enchanted-death" : {
+			"name" : "§cEnchanted Death",
+			"description" : "§7Vous ne pouvez pas crafter §fla table d'enchant§7.\n§7Le seul moyen de l'obtenir est de §ctuer un joueur !"
+		},
+
+		"no-fall" : {
+			"name" : "§aNo fall",
+			"description" : "§7Les joueurs ne prennent plus de §fdégât de chute §7!"
+		},
+
+		"believe-fly" : {
+			"name" : "§dI believe I can fly",
+			"description" : "§7Les joueurs on probablement bu du §c§nredbull§7."
+		},
+
+		"no-clean-up" : {
+			"name" : "§dNo Clean Up",
+			"description" : "§7Les joueurs sont §fautomatiquement heal §7après un kill."
+		},
+
+		"flower-power" : {
+			"name" : "§dFlower Power",
+			"description" : "§7Chaque fleur drop un i§ftem aléatoire§7 en §fquantité aléatoire §7!"
+		},
+
+		"cat-eyes" : {
+			"name" : "§5Cat Eyes",
+			"description" : "§7Tous les joueurs détiennent §fl'effet §fnight vision§7."
+		},
+
+		"eggs" : {
+			"name" : "§6Eggs",
+			"description" : "§7Les oeufs font apparaître des §fmobs randoms §7!"
+		},
+
+		"assassins" : {
+			"name" : "§4Assassins",
+			"description" : "§7Chaque joueur ce vera attribué §cune cible§7. On ne \n§7peut récupérer le stuff §fque sur notre cible \n§7ou sur une personne qui nous §fprend pour cible. \n§7Sinon le stuff §ane drop pas §7!",
+			"target-msg" : "{prexix} §6Votre objectif est d'abattre votre cible qui est §e{player-name}§6.",
+			"no-target-msg" : "{prexix} §cVous n'avez pas reçut de cible !",
+			"sb-target-name" : "§2La cible : §a{player-name}",
+			"sb-target-distance" : "§2Distance : §a{value}"
+		},
+
+		"bedbomb" : {
+			"name" : "§6BedBomb",
+			"description" : "§7Les lits §6explosent§7 lorsque que l'on interagit avec dans\n§ftoutes les dimensions§7."
+		},
+
+		"timebomb" : {
+			"name" : "§6TimeBomb",
+			"description" : "§7Le stuff spawn §fdans un coffre§7 quand on fait §cun kill§7,\n§7il §6explose §7au bout de d'un certains nomnre de secondes.§7."
+		},
+
+		"stingy-world" : {
+			"name" : "§2Stingy World",
+			"description" : "§7Les mobs et les blocks ne drop §fplus auncun item §7!",
+			"stingy-blocks" : "§aStingy Blocks",
+			"stingy-mobs" : "§cStingy Mobs",
+			"stingy-trees" : "§2Stingy Trees",
+			"stingy-lakes" : "§bStingy Lakes",
+			"stingy-bombs" : "§4Stingy Bombs"
+		},
+
+		"tnt-fly" : {
+			"name" : "§cTnt Fly",
+			"description" : "§7Permet d'augmenter le knockback §fd'une explosion§7.",
+			"tnt-boost" : "§bBuff knockback",
+			"tnt-reduction" : "§cNerf dommage",
+			"tnt-chain" : "§eTnt liées"
+		},
+
+
+		"eternal-items" : {
+			"name" : "§bEternal Items",
+			"description" : "§7Les items ne §fdespawn plus§7."
+		},
+
+		"one-punch-man" : {
+			"name" : "§eOne Punch Man",
+			"description" : "§7Devenez §faussi fort que Saitama§7 en pratiquant du sport§7."
+		},
+
+		"no-sneak" : {
+			"name" : "§9No Sneak",
+			"description" : "§7Vous ne pouvez plus §fsneak§7."
+		},
+
+		"no-sprint" : {
+			"name" : "§eNo Sprint",
+			"description" : "§7Vous ne pouvez plus §fcourrir§7."
+		}
+	},
+
+	"inv-categories" : "§5§oCatégories : §d",
+	"inv-category" : "§7Catégorie §8» §6",
+
+	"categories" : {
+		"ALL" : "§aTout",
+		"RUN" : "§dRun",
+		"PVP" : "§dPvp",
+		"SURVIVAL" : "§dSurvie",
+		"GENERATION" : "§dGénération",
+		"ENCHANTMENT" : "§dEnchantement",
+		"FUN" : "§dFun",
+		"ANIME" : "§dAnime",
+		"OTHER" : "§dAutre"
+	},
+
+	"enchants" : {
+		"level" : "Niveau",
+		"enchantments" : "Les Enchantements",
+
+		"DURABILITY" : "Unbreaking",
+		"DIG-SPEED" : "Efficiency",
+		"LOOT-BONUS-BLOCKS" : "Fortune",
+		"SILK-TOUCH" : "Silk Touch"
+	},
+
+
+	"console" : {
+
+		"error-world-not-found" : "The \"{world-name}\" world does not exist !",
+		"error-world-exist" : "The \"{world-name}\" world already exists !",
+		"world-generation" : "Creation of the \"{world-name}\" world is in progress ...",
+		"world-deleting" : "Deleting world \"{world-name}\" is in progress ...",
+		"world-deleting-done" : "The world \"{world-name}\" has been deleted.",
+		"error-world-deleting-fail" : "The \"{world-name}\" world delete has failed.",
+		"error-command-player": "Seul un joueur peut effectuer cette commande !",
+
+		"cage-generate": "The cage has been generated at spawn !",
+
+		"files" : {
+			"lang-file-load" : "Lang file has been loaded !"
+		}
+	}
+}
