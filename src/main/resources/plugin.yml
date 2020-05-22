@@ -5,3 +5,4 @@ main: fr.aiidor.uhc.UHC
 commands:
   host:
     description: Commande servant pour les organisateurs d'une partie.
+    permission: uhc.host

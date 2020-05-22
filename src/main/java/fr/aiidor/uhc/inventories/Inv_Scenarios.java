@@ -15,7 +15,6 @@ import org.bukkit.inventory.ItemStack;
 import fr.aiidor.uhc.UHC;
 import fr.aiidor.uhc.enums.Category;
 import fr.aiidor.uhc.enums.Lang;
-import fr.aiidor.uhc.game.Game;
 import fr.aiidor.uhc.scenarios.Scenario;
 import fr.aiidor.uhc.scenarios.ScenariosManager;
 import fr.aiidor.uhc.scenarios.comparators.NameComparator;
@@ -112,7 +111,7 @@ public class Inv_Scenarios extends Gui {
 				else if (e.getClick() == ClickType.RIGHT) inv.setItem(6, getCategoryIcon(getLastCategory(getCategory(inv))));
 				
 				playClickSound(event.getPlayer());
-				event.getPlayer().openInventory(getInventory(getPage(inv), inv));
+				event.getPlayer().openInventory(getInventory(1, inv));
 			}
 		}
 
@@ -214,7 +213,6 @@ public class Inv_Scenarios extends Gui {
 		}
 		
 		if (!UHC.getInstance().getGameManager().hasGame()) return Bukkit.createInventory(null, 54, getTitle());
-		Game game = UHC.getInstance().getGameManager().getGame();
 		
 		ScenariosManager sm = UHC.getInstance().getScenarioManager();
 		List<Scenario> scenarios = sm.getScenarios(new NameComparator(true), cat);
@@ -245,7 +243,7 @@ public class Inv_Scenarios extends Gui {
 			if (scenarios.size() > index + i) {
 				
 				Scenario s = scenarios.get(index + i);
-				inv.setItem(slot, getScenarioIcon(s, game.getSettings().IsActivated(s)));
+				inv.setItem(slot, s.getScenarioIcon(false, true, true));
 				
 			} else {
 				break;
@@ -268,19 +266,5 @@ public class Inv_Scenarios extends Gui {
 	
 	private ItemStack getCategoryIcon(Category cat) {
 		return new ItemBuilder(Material.NAME_TAG, Lang.INV_CATEGORY.get() + cat.getDisplayName()).getItem();
-	}
-	
-	private ItemStack getScenarioIcon(Scenario s, Boolean activated) {
-		ItemBuilder builder;
-		
-		String displayName = s.getName();
-		List<String> lore = s.getLore(true);
-		
-		if (activated) builder = new ItemBuilder(Material.STAINED_CLAY, (byte) 13, displayName + " §a✔");
-		else builder = new ItemBuilder(Material.STAINED_CLAY, (byte) 14, displayName + " §c✘");
-		
-		builder.setLore(lore);
-		
-		return builder.getItem();
 	}
 }

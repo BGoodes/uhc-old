@@ -6,18 +6,23 @@ import org.bukkit.World;
 import org.bukkit.configuration.file.FileConfiguration;
 
 import fr.aiidor.uhc.enums.UHCFile;
+import fr.aiidor.uhc.tools.Cage;
 
 public class Settings {
 	
-	private Boolean remove_op;
-	private Boolean op_to_staff;
-	private Location lobby;
+	public Boolean remove_op;
+	public Boolean op_to_staff;
+	public Boolean log_game_bc; 
+	
+	public Location lobby;
+	public Cage cage;
 	
 	public Settings() {
 		FileConfiguration config = UHCFile.CONFIG.getYamlConfig();
 		
 		remove_op = config.getBoolean("Permissions.remove-op");
 		op_to_staff = config.getBoolean("Permissions.set-op-to-staff");
+		log_game_bc = config.getBoolean("ServerManager.log-game-broadcast");
 		
 		//GET LOBBY
 		String worldname = config.getString("World.world-name");
@@ -38,21 +43,13 @@ public class Settings {
 		
 		
 	}
-
-	public Boolean OpIsStaff() {
-		return op_to_staff;
-	}
-
-	public Boolean getRemoveOp() {
-		return remove_op;
-	}
-	
-	public Location getLobby() {
-		return lobby;
-	}
 	
 	public World getLobbyWorld() {
 		if (lobby == null) return null;
 		return lobby.getWorld();
 	}
+	
+    public Boolean hasCage() {
+    	return cage != null;
+    }
 }

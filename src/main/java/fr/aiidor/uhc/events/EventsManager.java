@@ -11,14 +11,18 @@ import org.bukkit.event.entity.ItemDespawnEvent;
 import org.bukkit.event.inventory.FurnaceBurnEvent;
 import org.bukkit.event.player.PlayerBucketEmptyEvent;
 import org.bukkit.event.player.PlayerBucketFillEvent;
+import org.bukkit.event.player.PlayerDropItemEvent;
 import org.bukkit.event.player.PlayerPickupItemEvent;
 import org.bukkit.event.player.PlayerToggleSneakEvent;
+import org.bukkit.event.player.PlayerToggleSprintEvent;
+import org.bukkit.inventory.ItemStack;
 import org.bukkit.plugin.PluginManager;
 
 import fr.aiidor.uhc.UHC;
 import fr.aiidor.uhc.game.Game;
 import fr.aiidor.uhc.game.GameManager;
 import fr.aiidor.uhc.scenarios.ScenariosManager;
+import fr.aiidor.uhc.tools.UHCItem;
 
 public class EventsManager implements Listener {
 	
@@ -53,7 +57,7 @@ public class EventsManager implements Listener {
 		
 		if (!game.getWorlds().contains(e.getBlock().getWorld())) return;
 		
-		if (ScenariosManager.FASTSMELING.isActivated(game)) {
+		if (ScenariosManager.FASTSMELING.isActivated()) {
 			if (e.getBlock().getState() instanceof Furnace) {
 				ScenariosManager.FASTSMELING.increaseFurnace((Furnace)e.getBlock().getState());
 			}
@@ -70,7 +74,7 @@ public class EventsManager implements Listener {
 		
 		if (!game.getWorlds().contains(e.getLocation().getWorld())) return;
 		
-		if (ScenariosManager.ETERNAL_ITEMS.isActivated(game)) {
+		if (ScenariosManager.ETERNAL_ITEMS.isActivated()) {
 			e.setCancelled(true);
 			e.getEntity().setTicksLived(1);
 		}
@@ -86,13 +90,10 @@ public class EventsManager implements Listener {
 		
 		if (!game.isHere(player.getUniqueId())) return;
 		
-		if (!game.isStart() && player.getGameMode() != GameMode.CREATIVE) {
-			e.setCancelled(true);
-		}
 	}
 	
 	@EventHandler
-	public void playerSneakEvent(PlayerToggleSneakEvent e) {
+	public void playerDropItem(PlayerDropItemEvent e) {
 		GameManager gm = UHC.getInstance().getGameManager();
 		if (!gm.hasGame()) return;
 
@@ -101,16 +102,43 @@ public class EventsManager implements Listener {
 		
 		if (!game.isHere(player.getUniqueId())) return;
 		
+		ItemStack item = e.getItemDrop().getItemStack();
+		
+		if (item.isSimilar(UHCItem.getConfigChest())) {
+			e.getItemDrop().remove();
+		}
+		
+		if (!game.isStart() && player.getGameMode() != GameMode.CREATIVE) {
+			if (item.isSimilar(UHCItem.getTeamSelecter()) || (item.hasItemMeta() && item.getItemMeta().hasDisplayName() && 
+				item.getItemMeta().getDisplayName().equals(UHCItem.getTeamSelecter().getItemMeta().getDisplayName()))) {
+				
+				e.setCancelled(true);
+			}	
+		}
+	}
+	
+	@EventHandler
+	public void playerSneakEvent(PlayerToggleSneakEvent e) {
+		GameManager gm = UHC.getInstance().getGameManager();
+		if (!gm.hasGame()) return;
+		
+		Game game = gm.getGame();
+		Player player = e.getPlayer();
+
+		if (!game.isHere(player.getUniqueId())) return;
+		
 		if (!game.isStart()) {
 			
 			if (player.isSneaking()) {
-				if (ScenariosManager.ONE_PUNCH_MAN.isActivated(game)) {
-					
-				}
+				
 			}
 		}
 	}
 	
+	@EventHandler
+	public void playerSprintEvent(PlayerToggleSprintEvent e) {
+		
+	}
 	
 	@EventHandler
 	public void playerEmptyBucketEvent(PlayerBucketEmptyEvent e) {
@@ -123,7 +151,7 @@ public class EventsManager implements Listener {
 		if (!game.isHere(player.getUniqueId())) return;
 		
 		if (e.getBucket() == Material.LAVA_BUCKET) {
-			if (ScenariosManager.FIRELESS.isActivated(game) && player.getGameMode() != GameMode.CREATIVE) {
+			if (ScenariosManager.FIRELESS.isActivated() && player.getGameMode() != GameMode.CREATIVE) {
 				if (!ScenariosManager.FIRELESS.lava_bucket) {
 					e.setCancelled(true);
 					return;
@@ -142,7 +170,7 @@ public class EventsManager implements Listener {
 		
 		if (!game.isHere(player.getUniqueId())) return;
 		
-		if (ScenariosManager.STINGY_WORLD.isActivated(game) && ScenariosManager.STINGY_WORLD.stingyLakes) {
+		if (ScenariosManager.STINGY_WORLD.isActivated() && ScenariosManager.STINGY_WORLD.stingyLakes) {
 			if (e.getItemStack().getType() != Material.MILK_BUCKET) {
 				e.setCancelled(true);
 				player.updateInventory();

@@ -1,12 +1,17 @@
 package fr.aiidor.uhc.tools;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map.Entry;
 
 import org.bukkit.Material;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.meta.EnchantmentStorageMeta;
 import org.bukkit.inventory.meta.ItemMeta;
+import org.bukkit.potion.Potion;
+import org.bukkit.potion.PotionType;
 
 public class ItemBuilder {
 	
@@ -18,6 +23,15 @@ public class ItemBuilder {
 	
 	public ItemBuilder(Material material, String displayName) {
 		item = new ItemStack(material);
+		
+		ItemMeta meta = item.getItemMeta();
+		meta.setDisplayName(displayName);
+		
+		item.setItemMeta(meta);
+	}
+	
+	public ItemBuilder(Material material, String displayName, byte data) {
+		item = new ItemStack(material, 1, data);
 		
 		ItemMeta meta = item.getItemMeta();
 		meta.setDisplayName(displayName);
@@ -85,10 +99,49 @@ public class ItemBuilder {
 	
 	public ItemBuilder addEnchant(Enchantment enchant, Integer level) {
 		ItemMeta meta = item.getItemMeta();
-		
 		meta.addEnchant(enchant, level, true);
-		
 		item.setItemMeta(meta);
+		
+		return this;
+	}
+	
+	public ItemBuilder addEnchants(HashMap<Enchantment, Integer> enchants) {
+		ItemMeta meta = item.getItemMeta();
+		for (Entry<Enchantment, Integer> e : enchants.entrySet()) meta.addEnchant(e.getKey(), e.getValue(), true);
+		item.setItemMeta(meta);
+		
+		return this;
+	}
+	
+	public ItemBuilder removeEnchant(Enchantment enchant) {
+		ItemMeta meta = item.getItemMeta();
+		meta.removeEnchant(enchant);
+		item.setItemMeta(meta);
+		
+		return this;
+	}
+	
+	public ItemBuilder addStoredEnchant(Enchantment enchant, Integer level) {
+		EnchantmentStorageMeta meta = (EnchantmentStorageMeta) item.getItemMeta();
+		meta.addStoredEnchant(enchant, level, true);
+		item.setItemMeta(meta);
+		
+		return this;
+	}
+	
+	public ItemBuilder addStoredEnchants(HashMap<Enchantment, Integer> enchants) {
+		EnchantmentStorageMeta meta = (EnchantmentStorageMeta) item.getItemMeta();
+		for (Entry<Enchantment, Integer> e : enchants.entrySet()) meta.addStoredEnchant(e.getKey(), e.getValue(), true);
+		item.setItemMeta(meta);
+		
+		return this;
+	}
+	
+	public ItemBuilder removeStoredEnchant(Enchantment enchant) {
+		EnchantmentStorageMeta meta = (EnchantmentStorageMeta) item.getItemMeta();
+		meta.removeStoredEnchant(enchant);
+		item.setItemMeta(meta);
+		
 		return this;
 	}
 	
@@ -97,16 +150,6 @@ public class ItemBuilder {
 		
 		meta.addEnchant(Enchantment.ARROW_INFINITE, 0, true);
 		meta.addItemFlags(ItemFlag.HIDE_ENCHANTS);
-		
-		item.setItemMeta(meta);
-		return this;
-	}
-	
-	
-	public ItemBuilder removeEnchant(Enchantment enchant) {
-		ItemMeta meta = item.getItemMeta();
-		
-		meta.removeEnchant(enchant);
 		
 		item.setItemMeta(meta);
 		return this;
@@ -134,6 +177,15 @@ public class ItemBuilder {
 		ItemMeta meta = item.getItemMeta();
 		meta.removeItemFlags(flag);
 		item.setItemMeta(meta);
+		return this;
+	}
+	
+	public ItemBuilder setPotionType(PotionType type, Boolean splash) {
+		Potion pot = new Potion(1);
+		
+		pot.setSplash(splash);
+		pot.setType(type);
+		pot.apply(item);
 		return this;
 	}
 	

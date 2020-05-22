@@ -5,6 +5,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.UUID;
 
+import org.bukkit.Achievement;
 import org.bukkit.Bukkit;
 import org.bukkit.GameMode;
 import org.bukkit.Location;
@@ -26,29 +27,30 @@ public class UHCPlayer {
 	private Game game;
 	
 	private String name;
-	private String displayName;
-	
+
 	private PlayerState state;
 	private Rank rank;
 	
 	private int kill = 0;
 	
-	public UHCPlayer(Player player, Rank rank, Game game) {
+	public UHCPlayer(Player player, PlayerState state, Rank rank, Game game) {
 		
 		this.uuid = player.getUniqueId();
 		
 		this.setName(player.getName());
 		this.setRank(rank);
-		this.setDisplayName(getName());
 		
-		if (rank != Rank.SPECTATOR) state = PlayerState.ALIVE;
-		else state = PlayerState.SPECTATOR;
+		this.state = state;
 		
 		this.game = game;
 	}
 
 	public UUID getUUID() {
 		return uuid;
+	}
+	
+	public Game getGame() {
+		return game;
 	}
 	
 	public Boolean isPlaying() {
@@ -59,24 +61,25 @@ public class UHCPlayer {
 		return state == PlayerState.ALIVE;
 	}
 	
+	public Boolean isDead() {
+		return state == PlayerState.DEAD;
+	}
+	
+	public Boolean isSpec() {
+		return state == PlayerState.SPECTATOR || rank == Rank.SPECTATOR || state == PlayerState.DEAD;
+	}
+	
 	public Boolean hasPermission(Permission perm) {
 		return rank.hasPermission(perm);
 	}
 	
-	public String getName() {
-		return name;
-	}
-	
+
 	public void setName(String name) {
 		this.name = name;
 	}
 	
-	public String getDisplayName() {
-		return displayName;
-	}
-	
-	public void setDisplayName(String displayName) {
-		this.displayName = displayName;
+	public String getName() {
+		return name;
 	}
 	
 	public PlayerState getState() {
@@ -151,17 +154,41 @@ public class UHCPlayer {
 	
 	public void addPotionEffect(PotionEffect pe) {
 		
-		Iterator<PotionEffectType> p = removePotionEffect.iterator();
+		Iterator<PotionEffectType> pl = removePotionEffect.iterator();
 		
-		while(p.hasNext()) {
-			PotionEffectType pn = p.next();
+		while(pl.hasNext()) {
+			PotionEffectType pn = pl.next();
 			if (pn.equals(pe.getType())) {
 				removePotionEffect.remove(pn);
 			}
 		}
 		
 		if (isConnected()) {
+			if (getPlayer().hasPotionEffect(pe.getType())) {
+				for (PotionEffect p : getPlayer().getActivePotionEffects()) {
+					
+					if (p.getType().equals(pe.getType())) {
+						
+						if (pe.getAmplifier() == p.getAmplifier()) {
+							if (pe.getDuration() >= p.getDuration()) {
+								
+								getPlayer().removePotionEffect(p.getType());	
+								getPlayer().addPotionEffect(pe);
+							}	
+							
+						} else if (pe.getAmplifier() >= p.getAmplifier()) {
+							
+							getPlayer().removePotionEffect(p.getType());	
+							getPlayer().addPotionEffect(pe);
+						}
+						
+						return;
+					}
+				}
+			}
+			
 			getPlayer().addPotionEffect(pe);
+		
 		} else {
 			addPotionEffect.add(pe);
 		}
@@ -169,10 +196,10 @@ public class UHCPlayer {
 	
 	public void removePotionEffect(PotionEffectType pe) {
 		
-		Iterator<PotionEffect> p = addPotionEffect.iterator();
+		Iterator<PotionEffect> pl = addPotionEffect.iterator();
 		
-		while(p.hasNext()) {
-			PotionEffect pn = p.next();
+		while(pl.hasNext()) {
+			PotionEffect pn = pl.next();
 			if (pn.getType().equals(pe)) {
 				addPotionEffect.remove(pn);
 			}
@@ -205,6 +232,10 @@ public class UHCPlayer {
 			
 			giveItem.clear();
 			removePotionEffect.clear();
+			
+			if (isSpec()) {
+				reset();
+			}
 		}
 
 	}
@@ -236,14 +267,17 @@ public class UHCPlayer {
 			Player player = getPlayer();
 			
 			if (getState() == PlayerState.SPECTATOR || getState() == PlayerState.DEAD) player.setGameMode(GameMode.SPECTATOR);
-			else player.setGameMode(GameMode.SURVIVAL);
+			else {
+				player.setAllowFlight(false);
+				player.setFlying(false);
+				player.setGameMode(GameMode.SURVIVAL);
+			}
 			
+			player.setCompassTarget(new Location(player.getWorld(), 0, 100, 0));
 			player.closeInventory();
 			player.getInventory().clear();
 			player.getInventory().setArmorContents(new ItemStack[] {null, null, null, null});
 			
-			player.setAllowFlight(false);
-			player.setFlying(false);
 			player.setFlySpeed(0.1f);
 			player.setWalkSpeed(0.2f);
 			
@@ -259,6 +293,10 @@ public class UHCPlayer {
 			player.setFireTicks(0);
 			
 			player.getActivePotionEffects().forEach(p -> player.removePotionEffect(p.getType()));
+			
+			for (Achievement a : Achievement.values()) {
+				if (player.hasAchievement(a)) player.removeAchievement(a);
+			}
 			
 			EntityLiving cp = ((CraftPlayer)player).getHandle();
 			cp.setAbsorptionHearts(0);

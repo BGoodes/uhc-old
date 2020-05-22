@@ -22,11 +22,11 @@ import fr.aiidor.uhc.inventories.GuiClickEvent;
 import fr.aiidor.uhc.inventories.GuiManager;
 import fr.aiidor.uhc.tools.ItemBuilder;
 
-public class Hastey_Boys extends Scenario {
+public class HasteyBoys extends Scenario {
 
 	private Gui gui;
 	
-	public Hastey_Boys(ScenariosManager manager) {
+	public HasteyBoys(ScenariosManager manager) {
 		super(manager);
 		
 		enchants = new HashMap<Enchantment, Integer>();

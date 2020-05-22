@@ -3,6 +3,7 @@ package fr.aiidor.uhc.enums;
 public enum LangTag {
 	
 	PREFIX,
+	ERROR,
 	DEATH_PREFIX,
 	
 	EPISODE,
@@ -14,9 +15,18 @@ public enum LangTag {
 	TEAM_TYPE,
 	TEAM_NUMBER,
 	
+	INVINCIBILITY_TIME,
+	PVP_TIME,
+	EPISODE1_TIME,
+	EPISODE_TIME,
+	WB_TIME,
+	
 	REASON,
 	METHOD,
+	
 	VALUE,
+	VALUE_1,
+	VALUE_2,
 	
 	PLAYER_NAME,
 	KILLER_NAME,
@@ -34,6 +44,10 @@ public enum LangTag {
 	TEAM_SIZE,
 	MAX_PLAYERS,
 	
+	WB_INITIAL_SIZE,
+	WB_FINAL_SIZE,
+	WB_SPEED,
+	
 	PERM,
 	COMMAND,
 	
@@ -42,6 +56,8 @@ public enum LangTag {
 	
 	TIMER_S,
 	TIMER_M,
+	
+	SCENARIO_NAME,
 	
 	CONSOLE_COLOR_RESET("cc.reset", "\u001B[0m"),
 	CONSOLE_COLOR_BLACK("cc.black", "\u001B[30m"),

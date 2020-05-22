@@ -31,7 +31,7 @@ public class Inv_Start_Stuff extends Gui {
 		dictionary = new HashMap<String, ItemStack>();
 		
 		dictionary.put("X", getBackIcon());
-		dictionary.put("T", new ItemBuilder(Material.REDSTONE_TORCH_ON, "ยง2Sauvegarder ?").getItem());
+		dictionary.put("T", new ItemBuilder(Material.REDSTONE_TORCH_ON, "§2Sauvegarder ?").getItem());
 		dictionary.put("G", new ItemBuilder(Material.STAINED_GLASS_PANE, (byte) 7, " ").getItem());
 	}
 	
@@ -77,7 +77,7 @@ public class Inv_Start_Stuff extends Gui {
 		if (!UHC.getInstance().getGameManager().hasGame()) return Bukkit.createInventory(null, 54, getTitle());
 		Game game = UHC.getInstance().getGameManager().getGame();
 		
-		Inventory inv = Bukkit.createInventory(null, 54, getTitle());
+		Inventory inv = Bukkit.createInventory(null, 45, getTitle());
 		
 		for (int i = 0; i < game.getSettings().startItems.size(); i++) {
 			inv.setItem(i, game.getSettings().startItems.get(i));

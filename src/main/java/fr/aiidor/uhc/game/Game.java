@@ -1,115 +1,103 @@
 package fr.aiidor.uhc.game;
 
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Random;
 import java.util.Set;
 import java.util.UUID;
-import java.util.logging.Logger;
 
 import org.bukkit.Bukkit;
 import org.bukkit.Sound;
 import org.bukkit.World;
 import org.bukkit.entity.Player;
+import org.bukkit.scoreboard.DisplaySlot;
+import org.bukkit.scoreboard.Objective;
 import org.bukkit.scoreboard.Scoreboard;
 
 import fr.aiidor.uhc.UHC;
 import fr.aiidor.uhc.enums.GameState;
 import fr.aiidor.uhc.enums.JoinState;
 import fr.aiidor.uhc.enums.Lang;
-import fr.aiidor.uhc.enums.LangTag;
 import fr.aiidor.uhc.enums.Permission;
 import fr.aiidor.uhc.enums.PlayerState;
 import fr.aiidor.uhc.enums.Rank;
 import fr.aiidor.uhc.enums.TeamColor;
 import fr.aiidor.uhc.enums.TeamType;
-import fr.aiidor.uhc.task.Starting_Task;
-import fr.aiidor.uhc.task.UHC_Task;
+import fr.aiidor.uhc.enums.UHCType;
+import fr.aiidor.uhc.task.StartingTask;
+import fr.aiidor.uhc.task.UHCTask;
+import fr.aiidor.uhc.task.WaitingTask;
 import fr.aiidor.uhc.team.UHCTeam;
 import fr.aiidor.uhc.tools.Titles;
 import fr.aiidor.uhc.tools.UHCItem;
+import fr.aiidor.uhc.world.UHCWorld;
 import fr.aiidor.uhc.world.WorldManager;
 
 public class Game {
 	
 	private String name;
+	private UHCType type;
+	
 	private Scoreboard sb;
 	
 	private Set<UHCPlayer> players;
 	private List<UHCTeam> teams;
 	
-	private List<World> worlds = new ArrayList<World>();
+	private List<UHCWorld> worlds = new ArrayList<UHCWorld>();
 	
-	private World overworld = null;
-	private World nether = null;
-	private World end = null;
+	private UHCWorld main_world = null;
 	
 	private GameState state;
-	private HashMap<Rank, List<Permission>> permissions;
+	private GameSettings settings;
 	
-	private UHC_Task task;
+	private UHCTask task;
 	
-	public Game(String name, Player host, World world) {
+	public Game(String name, UHCType type, GameSettings settings, Player host, World world) {
 		
 		this.setName(name);
-		this.setState(GameState.LOBBY);
+		this.setType(type);
+		this.setState(GameState.WAITING);
 		
-		this.overworld = world;
-		this.worlds.add(overworld);
-		
-		Logger logger = UHC.getInstance().getLogger();
+		this.main_world = new UHCWorld(world, true);
+		this.worlds.add(main_world);
 		
 		//WORLD
-		String nethername = world.getName() + "_nether";
-		String endname = world.getName() + "_the_end";
-		
-		if (Bukkit.getWorld(nethername) != null) {
-			this.nether = Bukkit.getWorld(nethername);
-			this.worlds.add(nether);
-		} else {
-			logger.warning(Lang.ERROR_WORLD_NOT_FOUND.get().replace(LangTag.WORLD_NAME.toString(), nethername));
-		}
-		
-		if (Bukkit.getWorld(endname) != null) {
-			this.end = Bukkit.getWorld(endname);
-			this.worlds.add(end);
-		} else {
-			logger.warning(Lang.ERROR_WORLD_NOT_FOUND.get().replace(LangTag.WORLD_NAME.toString(), endname));
-		}
-		
 		for (World w : getWorlds()) {
 			new WorldManager(w.getName()).load();
 		}
 		
 		//PLAYER
 		this.players = new HashSet<>();
-		if (host != null) players.add(new UHCPlayer(host, Rank.HOST, this));
+		if (host != null) players.add(new UHCPlayer(host, PlayerState.ALIVE, Rank.HOST, this));
 		
-		UHC.getInstance().setGameSettings(new GameSettings(this));
+		if (settings == null) this.settings = new GameSettings(this);
+		else this.settings = settings;
 		
 		this.sb = Bukkit.getScoreboardManager().getNewScoreboard();
 		
-		//SETTING
-		this.task = null;
+		Objective h = sb.registerNewObjective("Health", "dummy");
+		h.setDisplayName("§c❤");
+		h.setDisplaySlot(DisplaySlot.BELOW_NAME);
 		
-		this.permissions = new HashMap<Rank, List<Permission>>();
-		
-		this.permissions.put(Rank.HOST, Arrays.asList(Permission.ALL));
-		this.permissions.put(Rank.ORGA, Arrays.asList(Permission.ALL));
-		this.permissions.put(Rank.STAFF, Arrays.asList(Permission.ALL));
-		this.permissions.put(Rank.PLAYER, Arrays.asList(Permission.CHAT));
-		this.permissions.put(Rank.SPECTATOR, Arrays.asList(Permission.NONE));
+		//TASK
+		new WaitingTask(this).launch();
 	}
 	
 	public String getName() {
 		return name;
 	}
-
+	
 	public void setName(String name) {
 		this.name = name;
+	}
+	
+	public UHCType getType() {
+		return type;
+	}
+	
+	public void setType(UHCType type) {
+		this.type = type;
 	}
 
 	public Scoreboard getScoreboard() {
@@ -121,18 +109,30 @@ public class Game {
 	}
 	
 	public Boolean isStart() {
-		return state == GameState.GAME || state == GameState.ENDING ;
+		return state == GameState.RUNNING || state == GameState.ENDING ;
 	}
 
+	public Boolean isPvpTime() {
+		return getState() == GameState.RUNNING && isRunning() && getRunner().getTime() > settings.pvp_time * 60;
+	}
+	
+	public Boolean canPvp() {
+		return isPvpTime();
+	}
+	
+	public Boolean isWaiting() {
+		return state == GameState.WAITING;
+	}
+	
 	public void setState(GameState state) {
 		this.state = state;
 	}
 	
 	public GameSettings getSettings() {
-		return UHC.getInstance().getGameSettings();
+		return settings;
 	}
 	
-	public UHC_Task getTask() {
+	public UHCTask getTask() {
 		return task;
 	}
 	
@@ -140,21 +140,21 @@ public class Game {
 		return task != null;
 	}
 	
-	public void setRunner(UHC_Task task) {
+	public void setRunner(UHCTask task) {
 		this.task = task;
 	}
 	
-	public UHC_Task getRunner() {
+	public UHCTask getRunner() {
 		return task;
 	}
 	
 	public Boolean start() {
 		
-		if (getState() == GameState.LOBBY) {
+		if (getState() == GameState.WAITING) {
 			
 			if (isRunning()) getRunner().stop();
 			
-			setRunner(new Starting_Task(this));
+			new StartingTask(this).launch();;
 			return true;
 		}
 		
@@ -163,21 +163,33 @@ public class Game {
 	}
 	
 	public List<World> getWorlds() {
+		List<World> wl = new ArrayList<World>();
+		for (UHCWorld w : worlds) {
+			wl.addAll(w.getAll());
+		}
+		return wl;
+	}
+	
+	public List<UHCWorld> getUHCWorlds() {
 		return worlds;
 	}
 	
-	public World getOverWorld() {
-		return overworld;
+	public UHCWorld getUHCWorld(World world) {
+		for (UHCWorld w : worlds) {
+			if (w.getAll().contains(world)) return w;
+		}
+		
+		return null;
 	}
 	
-	public World getNether() {
-		return nether;
+	public Boolean isUHCWorld(World world) {
+		return getUHCWorld(world) != null;
 	}
 	
-	public World getEnd() {
-		return end;
+	public UHCWorld getMainWorld() {
+		return main_world;
 	}
-	
+
 	//PLAYERS
 	public Integer getPlayerCount() {
 		return getPlayingPlayers().size();
@@ -230,7 +242,18 @@ public class Game {
 		Set<UHCPlayer> players = new HashSet<UHCPlayer>();
 		
 		for (UHCPlayer p : this.players) {
-			if (p.getState() == PlayerState.ALIVE) players.add(p);
+			if (p.isAlive()) players.add(p);
+		}
+		
+		return players;
+	}
+	
+	public Set<UHCPlayer> getConnectedPlayers() {
+		
+		Set<UHCPlayer> players = new HashSet<UHCPlayer>();
+		
+		for (UHCPlayer p : this.players) {
+			if (p.isConnected()) players.add(p);
 		}
 		
 		return players;
@@ -240,7 +263,7 @@ public class Game {
 		Set<UHCPlayer> players = new HashSet<UHCPlayer>();
 		
 		for (UHCPlayer p : this.players) {
-			if (p.isConnected() && p.getState() == PlayerState.ALIVE) players.add(p);
+			if (p.isConnected() && p.isAlive()) players.add(p);
 		}
 		
 		return players;
@@ -251,7 +274,7 @@ public class Game {
 		Set<UHCPlayer> players = new HashSet<UHCPlayer>();
 		
 		for (UHCPlayer p : this.players) {
-			if (p.getState() == PlayerState.ALIVE || p.getState() == PlayerState.DEAD) players.add(p);
+			if (!p.isSpec()) players.add(p);
 		}
 		
 		return players;
@@ -377,9 +400,9 @@ public class Game {
 			for (TeamColor c : TeamColor.values()) {
 
 				String prefix = c.getChatcolor() + s + " ";
-				
+					
 				if (!teamExist(prefix + c.getColorName())) {
-					teams.add(new UHCTeam(prefix, c, this));
+					teams.add(new UHCTeam(prefix, c, getSettings().getTeamSize(), this));
 					return;
 				}
 			}
@@ -433,29 +456,6 @@ public class Game {
 		return teams;
 	}
 	
-	//PERMISSIONS
-	public HashMap<Rank, List<Permission>> getPermissions() {
-		return permissions;
-	}
-	
-	public Boolean rankHasPermission(Rank rank, Permission perm) {
-		return rank.hasPermission(perm);
-	}
-	
-	public Boolean playerHasPermission(UHCPlayer player, Permission perm) {
-		return rankHasPermission(player.getRank(), perm);
-	}
-	
-	public Boolean playerHasPermission(Player player, Permission perm) {
-		return playerHasPermission(player.getUniqueId(), perm);
-	}
-	
-	public Boolean playerHasPermission(UUID uuid, Permission perm) {
-		
-		if (!isHere(uuid)) return false;
-		return rankHasPermission(getUHCPlayer(uuid).getRank(), perm);
-	}
-	
 	public UHCPlayer getHost() {
 		
 		for (UHCPlayer p : players) {
@@ -483,6 +483,23 @@ public class Game {
 		
 		for (Player p : getInWorldsPlayers()) {
 			p.sendMessage(message);
+		}
+		
+		if (UHC.getInstance().getSettings().log_game_bc) {
+			Bukkit.getConsoleSender().sendMessage(message);
+		}
+	}
+	
+	public void log(String message) {
+		
+		for (UHCPlayer p : getConnectedPlayers()) {
+			if (p.hasPermission(Permission.LOG)) {
+				p.getPlayer().sendMessage(message);
+			}
+		}
+		
+		if (UHC.getInstance().getSettings().log_game_bc) {
+			Bukkit.getConsoleSender().sendMessage(message);
 		}
 	}
 	
@@ -539,14 +556,8 @@ public class Game {
 		}
 	}
 	
-	//END
-	public Boolean isEnd() {
+	//DELETE
+	public void delete() {
 		
-		if (hasTeam()) {
-			if (getAliveTeams().size() == 1) {
-				
-			}
-		}
-		return false;
 	}
 }

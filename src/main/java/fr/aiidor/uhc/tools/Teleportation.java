@@ -28,7 +28,7 @@ public class Teleportation {
 		GameManager gm = UHC.getInstance().getGameManager();
 		
 		if (gm.hasGame()) {
-			this.world = gm.getGame().getOverWorld();
+			this.world = gm.getGame().getMainWorld().getMainWorld();
 		}
 	}
 	

@@ -3,6 +3,7 @@ package fr.aiidor.uhc.scoreboard;
 import java.util.UUID;
 
 import org.bukkit.Bukkit;
+import org.bukkit.craftbukkit.v1_8_R3.entity.CraftPlayer;
 import org.bukkit.entity.Player;
 
 import fr.aiidor.uhc.UHC;
@@ -48,11 +49,18 @@ public class PersonalScoreboard {
 
     public void setLines(String ip){
     	
+    	objectiveSign.clearScores();
+    	
     	UHC uhc = UHC.getInstance();
     	if (uhc.getGameManager().hasGame()) {
     		
     		Game game = uhc.getGameManager().getGame();
     		GameState gameState = game.getState();
+    		
+    		if (game.getSettings().display_life) {
+    			game.getScoreboard().getObjective("Health").getScore(player.getName()).setScore(
+    					(int) (Math.round((player.getHealth() + ((CraftPlayer) player).getHandle().getAbsorptionHearts())* 100D) / 100D * 5D));
+    		}
     		
             objectiveSign.setDisplayName(game.getName());
             
@@ -66,59 +74,63 @@ public class PersonalScoreboard {
             	objectiveSign.setLine(line + 1, "§6");
             	line = line + 2;
             }
-         
             
-            if (gameState == GameState.GAME) {
-                objectiveSign.setLine(line, Lang.SB_EPISODE.get());
-                line++;
-            }
+            if (gameState == GameState.ENDING) {
+            	objectiveSign.setLine(line + 1, "§aFFIFIIINNNIIII");
+            	line = line ++;
             
-            if (!game.hasTeam()) {
-                objectiveSign.setLine(line, Lang.SB_PLAYERS.get());
             } else {
-            	objectiveSign.setLine(line, Lang.SB_TEAMS.get());
-            }
-            
-            line++;
-            
-            if (!game.isStart()) {
-                
-                if (gameState == GameState.LOBBY) objectiveSign.setLine(line, Lang.SB_WAITING.get());
-                if (gameState == GameState.STARTING) objectiveSign.setLine(line, Lang.SB_STARTING.get());
-                if (gameState == GameState.LOADING) objectiveSign.setLine(line, Lang.SB_LOADING.get());
-                
-                line++;
-            }
-            
-            if (gameState == GameState.GAME) {
-                objectiveSign.setLine(line, "§7");
-                objectiveSign.setLine(line + 1, Lang.SB_TIMER.get());
-                objectiveSign.setLine(line + 2, Lang.SB_BORDER.get());
-                
-                line = line + 3;
-                
-                //ASSASSINS
-                if (ScenariosManager.ASSASSINS.isActivated(game)) {
-                	if (game.isHere(player.getUniqueId())) {
-                		UHCPlayer p = game.getUHCPlayer(player.getUniqueId());
-                		
-                		if (ScenariosManager.ASSASSINS.hasTarget(p)) {
-                			
-                			objectiveSign.setLine(line, "§a");
-                			
-                			UHCPlayer t = ScenariosManager.ASSASSINS.getTarget(p);
-                            objectiveSign.setLine(line + 1, Lang.SB_TARGET_NAME.get().replace(LangTag.PLAYER_NAME.toString(), t.getDisplayName()));
-                            
-                            Integer distance = ScenariosManager.ASSASSINS.getDistance(p);
-                            
-                            if (distance == -1) objectiveSign.setLine(line + 2, Lang.SB_TARGET_DISTANCE.get().replace(LangTag.VALUE.toString(), "§k0000"));
-                            else objectiveSign.setLine(line + 2, Lang.SB_TARGET_DISTANCE.get().replace(LangTag.VALUE.toString(), distance.toString()));
-                			line = line + 3;
-                		}
-                	}
+            	
+            	if (gameState == GameState.RUNNING) {
+                    objectiveSign.setLine(line, Lang.SB_EPISODE.get());
+                    line++;
                 }
                 
-               
+                if (!game.hasTeam()) {
+                    objectiveSign.setLine(line, Lang.SB_PLAYERS.get());
+                } else {
+                	objectiveSign.setLine(line, Lang.SB_TEAMS.get());
+                }
+                
+                line++;
+                
+                if (!game.isStart()) {
+                    
+                    if (gameState == GameState.WAITING) objectiveSign.setLine(line, Lang.SB_WAITING.get());
+                    if (gameState == GameState.STARTING) objectiveSign.setLine(line, Lang.SB_STARTING.get());
+                    if (gameState == GameState.LOADING) objectiveSign.setLine(line, Lang.SB_LOADING.get());
+                    
+                    line++;
+                }
+                
+                if (gameState == GameState.RUNNING) {
+                    objectiveSign.setLine(line, "§7");
+                    objectiveSign.setLine(line + 1, Lang.SB_TIMER.get());
+                    objectiveSign.setLine(line + 2, Lang.SB_BORDER.get().replace(LangTag.VALUE.toString(), "" + ((int) game.getMainWorld().getMainWorld().getWorldBorder().getSize() / 2)));
+                    
+                    line = line + 3;
+                    
+                    //ASSASSINS
+                    if (ScenariosManager.ASSASSINS.isActivated() && !ScenariosManager.ASSASSINS.compass) {
+                    	if (game.isHere(player.getUniqueId())) {
+                    		UHCPlayer p = game.getUHCPlayer(player.getUniqueId());
+                    		
+                    		if (ScenariosManager.ASSASSINS.hasTarget(p)) {
+                    			
+                    			objectiveSign.setLine(line, "§a");
+                    			
+                    			UHCPlayer t = ScenariosManager.ASSASSINS.getTarget(p);
+                                objectiveSign.setLine(line + 1, Lang.SB_TARGET_NAME.get().replace(LangTag.PLAYER_NAME.toString(), t.getName()));
+                                
+                                Integer distance = ScenariosManager.ASSASSINS.getDistance(p);
+                                
+                                if (distance == -1) objectiveSign.setLine(line + 2, Lang.SB_TARGET_DISTANCE.get().replace(LangTag.VALUE.toString(), "§k0000"));
+                                else objectiveSign.setLine(line + 2, Lang.SB_TARGET_DISTANCE.get().replace(LangTag.VALUE.toString(), distance.toString()));
+                    			line = line + 3;
+                    		}
+                    	}
+                    }
+                }
             }
             
             //IP

@@ -7,17 +7,28 @@ import fr.aiidor.uhc.enums.GameState;
 import fr.aiidor.uhc.enums.Lang;
 import fr.aiidor.uhc.game.Game;
 import fr.aiidor.uhc.game.UHCPlayer;
+import fr.aiidor.uhc.scenarios.Scenario;
 
-public class Starting_Task extends UHC_Task {
+public class StartingTask extends UHCTask {
 
 	private Game game;
-	private Integer Timer;
+	private Integer timer;
 	
-	public Starting_Task(Game game) {
-		Timer = 31;
+	public StartingTask(Game game) {
+		timer = 31;
 		
 		this.game = game;
-		this.game.setState(GameState.STARTING);
+	}
+	
+	@Override
+	public void launch() {
+		
+		game.setRunner(this);
+		game.setState(GameState.STARTING);
+		
+		for (Scenario s : game.getSettings().getActivatedScenarios()) {
+			s.checkConditions();
+		}
 		
 		this.runTaskTimer(UHC.getInstance(), 0, 20);
 	}
@@ -27,23 +38,23 @@ public class Starting_Task extends UHC_Task {
 	@Override
 	public void run() {
 		
-		Timer --;
+		timer --;
 		
-		if (Timer <= 0) {
+		if (timer <= 0) {
 			start();
 			return;
 		}
 		
-		setXp(Timer);
+		setXp(timer);
 		
-		if (Timer == 10 || Timer == 20 || Timer == 30) {
+		if (timer == 10 || timer == 20 || timer == 30) {
 			game.playSound(Sound.CLICK, 0.6f);
 			game.broadcast(Lang.BC_GAME_STARTING.get());
 		}
 		
-		if (Timer <= 5) {
+		if (timer <= 5) {
 			game.playSound(Sound.NOTE_PLING, 0.6f);
-			game.title(color[Timer - 1] + Timer, 5, 20, 0);
+			game.title(color[timer - 1] + timer, 5, 20, 0);
 		}
 	}
 	
@@ -62,22 +73,19 @@ public class Starting_Task extends UHC_Task {
 		game.broadcast(Lang.BC_GAME_START_CANCEL.get());
 		game.playSound(Sound.NOTE_BASS_GUITAR, 1f);
 		
-		game.setRunner(null);
-		game.setState(GameState.LOBBY);
+		new WaitingTask(game).launch();
+		game.setState(GameState.WAITING);
 	}
 	
 	private void start() {
 		setXp(0);
 		cancel();
 		
-		game.setRunner(null);
-		game.setState(GameState.LOADING);
-		
-		new Loading_task(game).load();
+		new LoadingTask(game).launch();
 	}
 	
 	@Override
 	public Integer getTime() {
-		return Timer;
+		return timer;
 	}
 }

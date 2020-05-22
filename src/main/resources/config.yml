@@ -9,28 +9,27 @@ World:
   dimension: "NORMAL" #NORMAL | NETHER | END
   type: "NORMAL" #NORMAL | LARGE_BIOMES | AMPLIFIED | FLAT | VERSION_1_1 | CUSTOMIZED
   generate-structures: true
-
+  
 Lobby:
-  location:
+  location: 
     world-name: 'world'
     x: 0
     y: 200
     z: 0
-  Cage:
-    generate: true
-    size: 50
-    height: 4
-
-ServerManager:
+  cage:
+     generate: true
+     size: 25
+     height: 4
+  
+ServerManager: 
+  log-game-broadcast: true #Allows to authorize sending game's messages in console
   create-game: true #Allow to create a game automatically at server launch.
   generate-worlds: true #Allow to generate worlds automatically at server launch.
-  remove-worlds: true #Allow to remove the world automatically at the end of the game.
-
 
 Permissions:
   remove-op: false #Allows to remove automatically the permissions of op players
   set-op-to-staff: true #Allows to give automatically the rank "Staff" to op players
-
+  
 Scoreboard:
   ip:
     show-ip: true

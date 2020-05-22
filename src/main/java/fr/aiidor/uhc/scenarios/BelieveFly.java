@@ -37,7 +37,7 @@ public class BelieveFly extends Scenario {
 	
 	@Override
 	public void changeStateEvent(ChangeScenarioStateEvent e) {
-		if (e.getGame().isStart()) {
+		if (!e.getGame().isWaiting()) {
 			
 			e.getPlayer().closeInventory();
 			e.getPlayer().sendMessage(Lang.ST_ERROR_SCENARIO_START.get());

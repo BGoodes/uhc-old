@@ -53,7 +53,7 @@ public class PlayerInteractEvents implements Listener {
 						
 						e.setCancelled(true);
 						
-						if (!game.playerHasPermission(player, Permission.CONFIG)) {
+						if (!game.getSettings().playerHasPermission(player, Permission.CONFIG)) {
 							player.sendMessage(Lang.ST_ERROR_PERM.get().replace(LangTag.PERM.toString(), Permission.CONFIG.toString()));
 							player.getInventory().setItemInHand(null);
 							return;
@@ -64,7 +64,7 @@ public class PlayerInteractEvents implements Listener {
 					}
 				}
 				
-				if (hand.getType() == Material.BANNER && !game.isStart()) {
+				if (hand.getType() == Material.BANNER && !game.isStart() && game.hasTeam()) {
 					
 					//TEAM CHOOSE
 					if (displayName.equalsIgnoreCase(Lang.INV_TEAM_CHOOSE.get())) {
@@ -79,10 +79,10 @@ public class PlayerInteractEvents implements Listener {
 		}
 		
 		if (hand != null) {
-			if (e.getAction() == Action.RIGHT_CLICK_BLOCK) {
+			if (e.getAction() == Action.RIGHT_CLICK_BLOCK && game.isStart()) {
 				
 				
-				if (ScenariosManager.FIRELESS.isActivated(game) && player.getGameMode() != GameMode.CREATIVE) {
+				if (ScenariosManager.FIRELESS.isActivated() && player.getGameMode() != GameMode.CREATIVE) {
 					if (!ScenariosManager.FIRELESS.flint_and_steel) {
 						if (hand != null && hand.getType() == Material.FLINT_AND_STEEL) {
 							e.setCancelled(true);
@@ -90,7 +90,7 @@ public class PlayerInteractEvents implements Listener {
 					}
 				}
 				
-				if (ScenariosManager.TNTFLY.isActivated(game) && ScenariosManager.TNTFLY.chain) {
+				if (ScenariosManager.TNTFLY.isActivated() && ScenariosManager.TNTFLY.chain) {
 					if (hand != null && hand.getType() == Material.FLINT_AND_STEEL) {
 						Block Target = e.getClickedBlock();
 						if (Target != null && Target.getType() == Material.TNT) {
@@ -111,7 +111,7 @@ public class PlayerInteractEvents implements Listener {
 		}
 
 		
-		if (ScenariosManager.BEDBOMB.isActivated(game) && e.getAction() == Action.RIGHT_CLICK_BLOCK && game.isStart()) {
+		if (ScenariosManager.BEDBOMB.isActivated() && e.getAction() == Action.RIGHT_CLICK_BLOCK && game.isStart()) {
 			if (player.getGameMode() == GameMode.SURVIVAL || player.getGameMode() == GameMode.ADVENTURE) {
 				if (e.getClickedBlock().getType() == Material.BED_BLOCK) {
 					

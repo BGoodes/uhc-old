@@ -2,10 +2,16 @@ package fr.aiidor.uhc.task;
 
 import org.bukkit.scheduler.BukkitRunnable;
 
-public abstract class UHC_Task extends BukkitRunnable {
+public abstract class UHCTask extends BukkitRunnable {
+	
+	public abstract void launch();
+	
+	@Override
+	public abstract void run();
 	
 	public abstract void stop();
 	public abstract Integer getTime();
+	
 	
 	public String getTimeString(String format) {
 		

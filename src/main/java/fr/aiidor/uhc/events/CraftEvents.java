@@ -34,18 +34,18 @@ public class CraftEvents implements Listener {
 			
 			if (result == Material.ENCHANTMENT_TABLE) {
 				
-				if (ScenariosManager.ENCHANTED_DEATH.isActivated(game)) {
+				if (ScenariosManager.ENCHANTED_DEATH.isActivated()) {
 					inv.setResult(new ItemStack(Material.AIR));
 					return;
 				}
 			}
 			if (result.name().endsWith("_SPADE") || result.name().endsWith("_PICKAXE") || result.name().endsWith("_AXE")) {
 				
-				if (ScenariosManager.HASTEY_BABIES.isActivated(game)) {
+				if (ScenariosManager.HASTEY_BABIES.isActivated()) {
 					inv.setResult(ScenariosManager.HASTEY_BABIES.setEnchant(inv.getResult()));
 				}
 				
-				if (ScenariosManager.HASTEY_BOYS.isActivated(game)) {
+				if (ScenariosManager.HASTEY_BOYS.isActivated()) {
 					inv.setResult(ScenariosManager.HASTEY_BOYS.setEnchants(inv.getResult()));
 				}
 			}

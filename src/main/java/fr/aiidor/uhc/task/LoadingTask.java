@@ -10,11 +10,12 @@ import org.bukkit.Chunk;
 import org.bukkit.GameMode;
 import org.bukkit.Location;
 import org.bukkit.Sound;
+import org.bukkit.World;
+import org.bukkit.WorldBorder;
 import org.bukkit.craftbukkit.v1_8_R3.entity.CraftPlayer;
 import org.bukkit.entity.Player;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
-import org.bukkit.scheduler.BukkitRunnable;
 
 import fr.aiidor.uhc.UHC;
 import fr.aiidor.uhc.enums.GameState;
@@ -27,24 +28,33 @@ import fr.aiidor.uhc.game.UHCPlayer;
 import fr.aiidor.uhc.scenarios.ScenariosManager;
 import fr.aiidor.uhc.team.UHCTeam;
 import fr.aiidor.uhc.tools.Teleportation;
-import net.minecraft.server.v1_8_R3.EntityLiving;
 
-public class Loading_task {
+public class LoadingTask extends UHCTask {
 
 	private Game game;
 	private HashMap<UHCPlayer, Location> spawns;
 	
-	public Loading_task(Game game) {
+	public LoadingTask(Game game) {
 		this.game = game;
 		this.spawns = new HashMap<UHCPlayer, Location>();
 	}
 	
 	private String[] color = {"§a", "§e", "§6", "§c", "§4", "§5", "§5", "§5", "§5", "§5"};
+	private Integer timer;
 	
-	public void load() {
+	@Override
+	public void launch() {
 		
-		game.getOverWorld().setTime(23500);
+		game.setState(GameState.LOADING);
+		game.getMainWorld().getMainWorld().setTime(23500);
 		
+		for (World w : game.getWorlds()) {
+			WorldBorder wb = w.getWorldBorder();
+			
+			wb.setSize(game.getSettings().wb_size_max * 2);
+			wb.setDamageAmount(game.getSettings().wb_damage);
+			wb.setDamageBuffer(0);	
+		}
 		
 		for (UHCPlayer p : game.getAllPlayers()) {
 			if (p.isConnected()) {
@@ -127,21 +137,22 @@ public class Loading_task {
 		game.broadcast("§8-------------------------------");
 		
 		
-		
+		//SPAWNS
 		if (!game.hasTeam()) {
 			for (UHCPlayer player : game.getAlivePlayers()) {
 				if (player.isConnected()) {
 					
-					spawns.put(player, Teleportation.getRandomLocation(game.getOverWorld(), game.getSettings().wbSize - 20));
+					spawns.put(player, Teleportation.getRandomLocation(game.getMainWorld().getMainWorld(), game.getSettings().wb_size_max - 20));
 					
 				} else {
 					game.removeUHCPlayer(player);
+					//SET SPEC FOR OP
 				}
 			}
 		} else {
 			for (UHCTeam t : game.getTeams()) {
-				if (t.getPlayerCount() != 0) {
-					Location loc = Teleportation.getRandomLocation(game.getOverWorld(), game.getSettings().wbSize - 20);
+				if (t.getPlayerCount() > 0) {
+					Location loc = Teleportation.getRandomLocation(game.getMainWorld().getMainWorld(), game.getSettings().wb_size_max - 20);
 					
 					for (UHCPlayer player : t.getPlayers()) {
 						if (player.isConnected()) {
@@ -149,6 +160,7 @@ public class Loading_task {
 							
 						} else {
 							game.removeUHCPlayer(player);
+							//SET SPEC FOR OP
 						}
 					}
 					
@@ -166,6 +178,7 @@ public class Loading_task {
 		}
 		
 		game.broadcast(Lang.BC_TELEPORTATION.get());
+		
 		//TP
 		for (UHCPlayer player : game.getAlivePlayers()) {
 			if (player.isConnected()) {
@@ -174,9 +187,6 @@ public class Loading_task {
 				//EFFECT
 				p.addPotionEffect(new PotionEffect(PotionEffectType.BLINDNESS, Integer.MAX_VALUE, 0, true, true));
 				p.addPotionEffect(new PotionEffect(PotionEffectType.SLOW, Integer.MAX_VALUE, 255, true, true));
-				
-				EntityLiving cp = ((CraftPlayer)p).getHandle();
-				cp.setInvisible(true);
 			}
 		}
 		
@@ -194,72 +204,78 @@ public class Loading_task {
 			}
 		}
 		
-		UHC.getInstance().getCage().destroy();
-		new Start().runTaskTimer(UHC.getInstance(), 0, 20);
+		UHC.getInstance().getSettings().cage.destroy();
+		
+		timer = 20;
+		
+		game.setRunner(this);
+		runTaskTimer(UHC.getInstance(), 0, 20);
 	}
 	
-	private class Start extends BukkitRunnable {
-
-		private Integer timer;
-		public Start() {
-			timer = 20;
-		}
+	@Override
+	public void run() {
 		
-		@Override
-		public void run() {
-			timer--;
-			
-			if (timer <= 0) {
+		timer--;
+		
+		if (timer <= 0) {
 				
-				this.cancel();
+			this.cancel();
 				
-				for (UHCPlayer player : game.getIngamePlayers()) {
-					if (player.isConnected()) {
+			for (UHCPlayer player : game.getIngamePlayers()) {
+				if (player.isConnected()) {
 						
-						Player p = player.getPlayer();
-						EntityLiving cp = ((CraftPlayer)p).getHandle();
+					Player p = player.getPlayer();
+					p.getActivePotionEffects().forEach(pot -> p.removePotionEffect(pot.getType()));
+					p.setMaxHealth(game.getSettings().start_life);	
+					
+					game.getSettings().setStartItems(p);
 						
-						p.getActivePotionEffects().forEach(pot -> p.removePotionEffect(pot.getType()));
-						cp.setInvisible(false);
-						
-						game.getSettings().setStartItems(p);
-						
-						if (ScenariosManager.GONE_FISHING.isActivated(game)) {
-							ScenariosManager.GONE_FISHING.GiveItems(player);
-						}
-						
-						if (ScenariosManager.CAT_EYES.isActivated(game)) {
-							p.addPotionEffect(ScenariosManager.CAT_EYES.nightVision);
-						}
-						
-						if (ScenariosManager.BELIEVE_FLY.isActivated(game)) {
-							p.setAllowFlight(true);
-						}
-						
-					} else {
-						game.removeUHCPlayer(player);
+					if (ScenariosManager.GONE_FISHING.isActivated()) {
+						ScenariosManager.GONE_FISHING.GiveItems(player);
 					}
+					
+					if (ScenariosManager.PUPPY_POWER.isActivated()) {
+						ScenariosManager.PUPPY_POWER.GiveItems(player);
+					}
+						
+					if (ScenariosManager.CAT_EYES.isActivated()) {
+						p.addPotionEffect(ScenariosManager.CAT_EYES.nightVision);
+					}
+						
+					if (ScenariosManager.BELIEVE_FLY.isActivated()) {
+						p.setAllowFlight(true);
+					}
+					
+					if (game.getSettings().start_abso > 0) {
+						((CraftPlayer) p).getHandle().setAbsorptionHearts(game.getSettings().start_abso * 2);
+					}
+						
+				} else {
+					game.removeUHCPlayer(player);
 				}
-				
-				//BROADCAST
-				game.title("§5§lUHC");
-				game.playSound(Sound.ENDERDRAGON_GROWL, 0.5f);
-				game.broadcast("§8-------------------------------");
-				game.broadcast(Lang.BC_GAME_START.get());
-				game.broadcast("§8-------------------------------");
-				
-				game.getOverWorld().setTime(0);
-				
-				//START
-				game.setState(GameState.GAME);
-				game.setRunner(new Game_Task(game));
-				return;
 			}
 			
-			if (timer <= 10) {
-				game.playSound(Sound.SUCCESSFUL_HIT, 0.6f);
-				game.title(color[timer - 1] + timer, 5, 20, 0);
+			if (ScenariosManager.SUPER_HEROES.isActivated()) {
+				ScenariosManager.SUPER_HEROES.start(game);
 			}
+			
+			//BROADCAST
+			game.title("§5§lUHC");
+			game.playSound(Sound.ENDERDRAGON_GROWL, 0.5f);
+			game.broadcast("§8-------------------------------");
+			game.broadcast(Lang.BC_GAME_START.get());
+			game.broadcast("§8-------------------------------");
+				
+			game.getMainWorld().getMainWorld().setTime(0);
+				
+			//START
+			new GameTask(game).launch();
+			return;
+		}
+			
+		if (timer <= 10) {
+			game.playSound(Sound.SUCCESSFUL_HIT, 0.6f);
+			game.title(color[timer - 1] + timer, 5, 20, 0);
 		}
 	}
 	
@@ -286,8 +302,18 @@ public class Loading_task {
 			Player p = player.getPlayer();
 			
 			p.setGameMode(GameMode.SPECTATOR);
-			p.teleport(new Location(game.getOverWorld(), 0, 150, 0));
+			p.teleport(new Location(game.getMainWorld().getMainWorld(), 0, 150, 0));
 		}
+	}
+
+	@Override
+	public void stop() {
+		
+	}
+
+	@Override
+	public Integer getTime() {
+		return timer;
 	}
 
 }

@@ -10,9 +10,9 @@ import org.bukkit.inventory.meta.ItemMeta;
 
 import fr.aiidor.uhc.enums.Category;
 
-public class Hastey_Babies extends Scenario {
+public class HasteyBabies extends Scenario {
 
-	public Hastey_Babies(ScenariosManager manager) {
+	public HasteyBabies(ScenariosManager manager) {
 		super(manager);
 	}
 	

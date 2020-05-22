@@ -132,7 +132,7 @@ public class Inv_Scenarios_List extends Gui {
 			if (gs.getActivatedScenarios().size() > index + i) {
 				
 				Scenario s = gs.getActivatedScenarios().get(index + i);
-				inv.setItem(slot, getScenarioIcon(s));
+				inv.setItem(slot, s.getScenarioIcon(true, false, false));
 
 				
 			} else {
@@ -152,13 +152,4 @@ public class Inv_Scenarios_List extends Gui {
 		
 		return inv;
 	}
-	
-	private ItemStack getScenarioIcon(Scenario s) {
-		
-		ItemBuilder builder = new ItemBuilder(s.getIcon(), s.getName());
-		builder.setLore(s.getLore(false));
-		
-		return builder.getItem();
-	}
-	
 }

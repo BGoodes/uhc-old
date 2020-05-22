@@ -12,7 +12,7 @@ import org.bukkit.generator.BlockPopulator;
 import org.bukkit.generator.ChunkGenerator;
 import org.bukkit.util.noise.SimplexOctaveGenerator;
 
-public class WorldGenerator extends ChunkGenerator {
+public class Wg_Flat extends ChunkGenerator {
 	
     int currentHeight = 50;
 

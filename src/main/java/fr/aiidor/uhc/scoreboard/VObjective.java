@@ -485,7 +485,7 @@ public class VObjective
                 PacketPlayOutScoreboardObjective packet = new PacketPlayOutScoreboardObjective();
 
                 Reflection.setValue(packet, "a", objectiveName); //Nom de l'objective
-                Reflection.setValue(packet, "b", objectiveDisplayName); //Nom affich§ de l'objective
+                Reflection.setValue(packet, "b", objectiveDisplayName); //Nom affiché de l'objective
                 Reflection.setValue(packet, "c", format); //Affichage des données Nombre/Coeurs
                 Reflection.setValue(packet, "d", action); //Action à effectuer - 0: Create 1: Remove 2: Update
 

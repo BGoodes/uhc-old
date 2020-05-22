@@ -7,7 +7,7 @@ public enum TeamColor {
 	YELLOW("§e", 4, 11), 
 	GREEN("§a", 5, 10),
 	AQUA("§b", 3, 12),
-	LIGHT_PURPLE("§d", 9, 13), 
+	LIGHT_PURPLE("§d", 2, 13), 
 	BLUE("§9", 11, 4),
 	DARK_PURPLE("§5", 10, 5), 
 	DARK_AQUA("§3", 9, 6),
@@ -47,7 +47,7 @@ public enum TeamColor {
 	}
 	
 	public byte getGlassColor() {
-		return (byte) bannercolor;
+		return (byte) woolcolor;
 	}
 	
 	//21

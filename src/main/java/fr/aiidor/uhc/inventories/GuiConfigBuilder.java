@@ -9,6 +9,7 @@ import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 
+import fr.aiidor.uhc.enums.Lang;
 import fr.aiidor.uhc.tools.ItemBuilder;
 
 public abstract class GuiConfigBuilder extends Gui {
@@ -20,6 +21,7 @@ public abstract class GuiConfigBuilder extends Gui {
 			{"C", "B", "B", "B", "B", "B", "B", "B", "X"},
 	};
 	
+	public abstract boolean startProtection();
 	
 	public GuiConfigBuilder() {
 		dictionnary = new HashMap<String, ItemStack>();
@@ -49,15 +51,15 @@ public abstract class GuiConfigBuilder extends Gui {
 		
 		if (amount == 0) {
 			builder = new ItemBuilder(Material.BANNER, 1, (byte) 15);
-			builder.setDisplayName("§7+0");
+			builder.setDisplayName("§7+0" + getPrefix());
 			
 		} else if (amount > 0) {
 			builder = new ItemBuilder(Material.BANNER, 1, (byte) 2);
-			builder.setDisplayName("§a+" + amount);
+			builder.setDisplayName("§a+" + amount + getPrefix());
 			
 		} else {
 			builder = new ItemBuilder(Material.BANNER, 1, (byte) 1);
-			builder.setDisplayName("§c" + amount);
+			builder.setDisplayName("§c" + amount + getPrefix());
 		}
 		
 		builder.setLore(getLore());
@@ -77,7 +79,14 @@ public abstract class GuiConfigBuilder extends Gui {
 		
 		if (event.getItemClicked().getType() == Material.BANNER && event.getItemClicked().getItemMeta().hasDisplayName()) {
 			if (e.getSlot() >= 10 && e.getSlot() <= 16 && e.getSlot() != 13) {
-				addValue(Integer.valueOf(event.getItemClicked().getItemMeta().getDisplayName().substring(2)));
+				
+				if (startProtection()  && !event.getGame().isWaiting()) {
+					event.getPlayer().sendMessage(Lang.ST_ERROR_OPTION_START.get());
+					event.getPlayer().closeInventory();
+					return;
+				}
+				
+				addValue(Integer.valueOf(event.getItemClicked().getItemMeta().getDisplayName().substring(2).split(" ")[0]));
 				playClickSound(event.getPlayer());
 				update();
 				return;
@@ -88,7 +97,7 @@ public abstract class GuiConfigBuilder extends Gui {
 	
 	@Override
 	public Boolean titleIsDynamic() {
-		return true;
+		return false;
 	}
 	
 	public abstract String getTitle();
@@ -96,6 +105,10 @@ public abstract class GuiConfigBuilder extends Gui {
 	public abstract Integer[] getBannersValues();
 	public abstract void addValue(Integer value);
 	public abstract List<String> getLore();
+	
+	public String getPrefix() {
+		return "";
+	}
 	
 	@Override
 	public Inventory getInventory() {

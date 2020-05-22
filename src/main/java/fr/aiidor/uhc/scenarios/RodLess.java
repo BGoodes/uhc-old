@@ -20,7 +20,6 @@ import fr.aiidor.uhc.inventories.Gui;
 import fr.aiidor.uhc.inventories.GuiBuilder;
 import fr.aiidor.uhc.inventories.GuiClickEvent;
 import fr.aiidor.uhc.inventories.GuiManager;
-import fr.aiidor.uhc.tools.ItemBuilder;
 
 public class RodLess extends Scenario {
 	
@@ -109,11 +108,11 @@ public class RodLess extends Scenario {
 				
 				dictionnary.put("X", getBackIcon());
 				
-				dictionnary.put("C", getItem(Material.FISHING_ROD, Lang.ROD.get(), rod));
-				dictionnary.put("B", getItem(Material.SNOW_BALL, Lang.SNOWBALL.get(), snowball));
-				dictionnary.put("O", getItem(Material.EGG, Lang.EGG.get(), egg));
+				dictionnary.put("C", getConfigItem(Material.FISHING_ROD, Lang.ROD.get(), rod));
+				dictionnary.put("B", getConfigItem(Material.SNOW_BALL, Lang.SNOWBALL.get(), snowball));
+				dictionnary.put("O", getConfigItem(Material.EGG, Lang.EGG.get(), egg));
 				
-				dictionnary.put("P", getItem(Material.BOOK, Lang.PVP_ONLY.get(), pvpOnly));
+				dictionnary.put("P", getConfigItem(Material.BOOK, Lang.PVP_ONLY.get(), pvpOnly));
 				
 				return dictionnary;
 			}
@@ -136,19 +135,6 @@ public class RodLess extends Scenario {
 		else lore.add("§7" + Lang.removeColor(Lang.EGG.get()) + " §8» §c✘");
 		
 		return lore;
-	}
-	
-	
-	private ItemStack getItem(Material mat, String displayName, Boolean on) {
-		ItemBuilder builder = new ItemBuilder(mat, displayName);
-		List<String> lore = new ArrayList<String>();
-		
-		if (on) lore.add(Lang.INV_ON.get());
-		else lore.add(Lang.INV_OFF.get());
-		
-		builder.setLore(lore);
-		
-		return builder.getItem();
 	}
 	
 	@Override

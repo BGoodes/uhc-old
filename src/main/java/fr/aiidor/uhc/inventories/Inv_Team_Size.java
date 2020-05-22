@@ -19,6 +19,11 @@ public class Inv_Team_Size extends GuiConfigBuilder {
 	}
 	
 	@Override
+	public boolean startProtection() {
+		return true;
+	}
+	
+	@Override
 	public Gui getBackInventory() {
 		return GuiManager.INV_CONFIG_TEAMS;
 	}
@@ -33,6 +38,7 @@ public class Inv_Team_Size extends GuiConfigBuilder {
 	public void addValue(Integer value) {
 		if (UHC.getInstance().getGameManager().hasGame()) {
 			Game game = UHC.getInstance().getGameManager().getGame();
+			
 			GameSettings s = game.getSettings();
 			
 			Integer team_size = game.getSettings().getTeamSize();

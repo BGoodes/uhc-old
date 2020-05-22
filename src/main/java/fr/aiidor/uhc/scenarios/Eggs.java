@@ -54,7 +54,6 @@ public class Eggs extends Scenario {
         EntityType choose = entities.get(new Random().nextInt(entities.size()));
         if (choose == null) return;
         
-        System.out.println(choose.name());
         Entity spawn = loc.getWorld().spawnEntity(loc, choose);
         
         if (choose == EntityType.SKELETON) {

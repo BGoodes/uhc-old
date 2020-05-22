@@ -39,6 +39,23 @@ public class GuiManager implements Listener {
 		
 		INV_SCENARIO_LIST = createInventory(new Inv_Scenarios_List());
 		
+		INV_CONFIG_LOOTS = createInventory(new Inv_Loots());
+		INV_CONFIG_TREES = createInventory(new Inv_Trees());
+		
+		INV_CONFIG_WB = createInventory(new Inv_Worldborder());
+		INV_CONFIG_WB_SIZE = createInventory(new Inv_Wb_Size());
+		INV_CONFIG_WB_FINAL_SIZE = createInventory(new Inv_Wb_Final_Size());
+		
+		INV_CONFIG_TIME = createInventory(new Inv_Time());
+		INV_CONFIG_INVINCIBILITY_TIME = createInventory(new Inv_Invincibility_Time());
+		INV_CONFIG_PVP_TIME = createInventory(new Inv_Pvp_Time());
+		INV_CONFIG_WB_TIME = createInventory(new Inv_Wb_Time());
+		INV_CONFIG_EP1_TIME = createInventory(new Inv_Ep1_Time());
+		INV_CONFIG_EP_TIME = createInventory(new Inv_Ep_Time());
+		
+		INV_CONFIG_LIFE = createInventory(new Inv_Life());
+		INV_CONFIG_GAPPLES = createInventory(new Inv_Gapples());
+		
 		for (Scenario scenario : UHC.getInstance().getScenarioManager().getScenarios()) {
 			if (scenario.hasSettings()) {
 				createInventory(scenario.getSettings());
@@ -56,9 +73,25 @@ public class GuiManager implements Listener {
 	public static Gui INV_CONFIG_TEAMS;
 	public static Gui INV_SCENARIO_LIST;
 	
+	public static Gui INV_CONFIG_LOOTS;
+	public static Gui INV_CONFIG_TREES;
+	public static Gui INV_CONFIG_WB;
+	public static Gui INV_CONFIG_TIME;
+	
 	//CONFIG VALUES
 	public static Gui INV_TEAM_NUMBER;
 	public static Gui INV_TEAM_SIZE;
+
+	public static Gui INV_CONFIG_WB_SIZE;
+	public static Gui INV_CONFIG_WB_FINAL_SIZE;
+	
+	public static Gui INV_CONFIG_PVP_TIME;
+	public static Gui INV_CONFIG_INVINCIBILITY_TIME;
+	public static Gui INV_CONFIG_WB_TIME;
+	public static Gui INV_CONFIG_EP1_TIME;
+	public static Gui INV_CONFIG_EP_TIME;
+	public static Gui INV_CONFIG_LIFE;
+	public static Gui INV_CONFIG_GAPPLES;
 	
 	public Gui createInventory(Gui inv) {
 		inventories.add(inv);

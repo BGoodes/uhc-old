@@ -5,7 +5,6 @@ import java.util.concurrent.ScheduledExecutorService;
 
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
-import org.bukkit.World;
 import org.bukkit.World.Environment;
 import org.bukkit.WorldType;
 import org.bukkit.command.PluginCommand;
@@ -16,10 +15,9 @@ import org.bukkit.plugin.java.JavaPlugin;
 import fr.aiidor.uhc.enums.Lang;
 import fr.aiidor.uhc.enums.LangTag;
 import fr.aiidor.uhc.enums.UHCFile;
+import fr.aiidor.uhc.enums.UHCType;
 import fr.aiidor.uhc.events.EventsManager;
-import fr.aiidor.uhc.game.Game;
 import fr.aiidor.uhc.game.GameManager;
-import fr.aiidor.uhc.game.GameSettings;
 import fr.aiidor.uhc.inventories.GuiManager;
 import fr.aiidor.uhc.scenarios.ScenariosManager;
 import fr.aiidor.uhc.scoreboard.ScoreboardManager;
@@ -34,15 +32,17 @@ public class UHC extends JavaPlugin {
 	private GuiManager guiManager;
 	
 	private Settings settings;
-	private GameSettings game_settings;
 	
 	//SCOREBOARD
     private ScoreboardManager scoreboardManager;
     private ScheduledExecutorService executorMonoThread;
     private ScheduledExecutorService scheduledExecutorService;
-    
-    private Cage cage;
 	
+    
+    //PERMISSIONS
+    //whitelist.bypass
+    
+    
 	@Override
 	public void onEnable() {
 		instance = this;
@@ -82,16 +82,14 @@ public class UHC extends JavaPlugin {
 
 		//GAME CREATION
 		if (UHCFile.CONFIG.getYamlConfig().getBoolean("ServerManager.create-game")) {	
-			Game game = gameManager.createGame("§5§lUHC", null, Bukkit.getWorld(worldname));
-			
-			game_settings = new GameSettings(game);
+			gameManager.createGame("§5§lUHC", UHCType.CLASSIC, null, null, Bukkit.getWorld(worldname));
 		}
 		
-		if (UHCFile.CONFIG.getYamlConfig().getBoolean("Lobby.Cage.generate")) {	
+		if (UHCFile.CONFIG.getYamlConfig().getBoolean("Lobby.cage.generate")) {	
 			
-			ConfigurationSection c = UHCFile.CONFIG.getYamlConfig().getConfigurationSection("Lobby.Cage");
-			cage = new Cage(getSettings().getLobby().clone().subtract(0, 2, 0), c.getInt("size"), c.getInt("height"), Material.BARRIER, Material.BARRIER);
-			cage.create();
+			ConfigurationSection c = UHCFile.CONFIG.getYamlConfig().getConfigurationSection("Lobby.cage");
+			settings.cage = new Cage(getSettings().lobby.clone().subtract(0, 2, 0), c.getInt("size"), c.getInt("height"), Material.BARRIER, Material.STAINED_GLASS_PANE);
+			settings.cage.create();
 			
 			getLogger().info(Lang.CAGE_GENERATE.get());
 		}
@@ -105,31 +103,28 @@ public class UHC extends JavaPlugin {
 		
 		pc_host.setExecutor(cmd_host);
 		pc_host.setTabCompleter(cmd_host);
-
-		if (pc_host.getPermission() != null)
-			pc_host.setPermissionMessage(Lang.CMD_ERROR_PERM.get().replace(LangTag.PERM.toString(), pc_host.getPermission()));
+		pc_host.setPermissionMessage(Lang.CMD_ERROR_PERM.get().replace(LangTag.PERM.toString(), pc_host.getPermission()));
 		
 		//SCOREBOARD
         scheduledExecutorService = Executors.newScheduledThreadPool(16);
         executorMonoThread = Executors.newScheduledThreadPool(1);
         scoreboardManager = new ScoreboardManager();
+        
+        
+        Bukkit.getConsoleSender().sendMessage("§e========================================");
+        Bukkit.getConsoleSender().sendMessage("   §fPlugin UHC HOST - Version 1.0");
+        Bukkit.getConsoleSender().sendMessage("         §fAuthor : B. Goodes");
+        Bukkit.getConsoleSender().sendMessage("§e========================================");
+        
 	}
 	
 	@Override
 	public void onDisable() {
 		
-		if (hasCage()) cage.destroy();
-		scoreboardManager.onDisable();
+		if (settings.hasCage()) settings.cage.destroy();
 		
-		if (gameManager.hasGame()) {
-			Game game = gameManager.getGame();
-			
-			if (UHCFile.CONFIG.getYamlConfig().getBoolean("ServerManager.remove-worlds")) {
-				for (World world : game.getWorlds()) {
-					new WorldManager(world).deleteWorld();
-				}
-			}
-		}
+		
+		scoreboardManager.onDisable();
 	}
 	
 	public static UHC getInstance() {
@@ -148,14 +143,6 @@ public class UHC extends JavaPlugin {
 		return guiManager;
 	}
 	
-	public GameSettings getGameSettings() {
-		return game_settings;
-	}
-	
-	public void setGameSettings(GameSettings game_settings) {
-		this.game_settings = game_settings;
-	}
-	
 	public Settings getSettings() {
 		return settings;
 	}
@@ -170,12 +157,5 @@ public class UHC extends JavaPlugin {
  
     public ScheduledExecutorService getScheduledExecutorService() {
         return scheduledExecutorService;
-    }
-    
-    public Boolean hasCage() {
-    	return cage != null;
-    }
-    public Cage getCage() {
-    	return cage;
     }
 }

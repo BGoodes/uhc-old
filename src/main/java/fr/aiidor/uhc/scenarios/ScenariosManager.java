@@ -13,12 +13,16 @@ public class ScenariosManager {
 	private List<Scenario> scenarios;
 	
 	public ScenariosManager() {
+		load();
+	}
+	
+	public void load() {
 		scenarios = new ArrayList<Scenario>();
 		
 		CUTCLEAN = new CutClean(this);
 		FASTSMELING = new FastSmelting(this);
-		HASTEY_BOYS = new Hastey_Boys(this);
-		HASTEY_BABIES = new Hastey_Babies(this);
+		HASTEY_BOYS = new HasteyBoys(this);
+		HASTEY_BABIES = new HasteyBabies(this);
 		TIMBER = new Timber(this);
 		RODLESS = new RodLess(this);
 		FIRELESS = new FireLess(this);
@@ -35,18 +39,24 @@ public class ScenariosManager {
 		ASSASSINS = new Assassins(this);
 		BEDBOMB = new BedBomb(this);
 		TNTFLY = new TntFly(this);
-		ETERNAL_ITEMS = new Eternal_Items(this);
-		ONE_PUNCH_MAN = new OnePunchMan(this);
-		
-		for (Scenario s : getScenarios()) {
-			s.load();
-		}
+		ETERNAL_ITEMS = new EternalItems(this);
+		GOOD_GAME = new GoodGame(this);
+		FINAL_HEAL = new FinalHeal(this);
+		BETA_ZOMBIE = new BetaZombie(this);
+		ASSAULT_AND_BATTERY = new AssaultAndBattery(this);
+		BLOOD_DIAMOND = new BloodDiamond(this);
+		SUPER_HEROES = new SuperHeroes(this);
+		BOOKCEPTION = new Bookception(this);
+		ONLY_ONE_WINNER = new OnlyOneWinner(this);
+		WEBCAGE = new WebCage(this);
+		PUPPY_POWER = new PuppyPower(this);
+		CUPID = new Cupid(this);
 	}
 	
 	public static CutClean CUTCLEAN;
 	public static FastSmelting FASTSMELING;
-	public static Hastey_Boys HASTEY_BOYS;
-	public static Hastey_Babies HASTEY_BABIES;
+	public static HasteyBoys HASTEY_BOYS;
+	public static HasteyBabies HASTEY_BABIES;
 	public static Timber TIMBER;
 	public static RodLess RODLESS;
 	public static FireLess FIRELESS;
@@ -63,8 +73,18 @@ public class ScenariosManager {
 	public static Assassins ASSASSINS;
 	public static BedBomb BEDBOMB;
 	public static TntFly TNTFLY;
-	public static Eternal_Items ETERNAL_ITEMS;
-	public static OnePunchMan ONE_PUNCH_MAN;
+	public static EternalItems ETERNAL_ITEMS;
+	public static GoodGame GOOD_GAME;
+	public static FinalHeal FINAL_HEAL;
+	public static BetaZombie BETA_ZOMBIE;
+	public static AssaultAndBattery ASSAULT_AND_BATTERY;
+	public static BloodDiamond BLOOD_DIAMOND;
+	public static SuperHeroes SUPER_HEROES;
+	public static Bookception BOOKCEPTION;
+	public static OnlyOneWinner ONLY_ONE_WINNER;
+	public static WebCage WEBCAGE;
+	public static PuppyPower PUPPY_POWER;
+	public static Cupid CUPID;
 	
 	public List<Scenario> getScenarios() {
 		return scenarios;

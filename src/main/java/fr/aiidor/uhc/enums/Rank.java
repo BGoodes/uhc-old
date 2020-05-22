@@ -24,7 +24,7 @@ public enum Rank {
 		if (!UHC.getInstance().getGameManager().hasGame()) return false;		
 		Game game = UHC.getInstance().getGameManager().getGame();
 		
-		List<Permission> perms = game.getPermissions().get(this);
+		List<Permission> perms = game.getSettings().permissions.get(this);
 		
 		if (perms.contains(Permission.NONE)) return false;
 		if (perms.contains(Permission.ALL)) return true;

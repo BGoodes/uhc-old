@@ -10,10 +10,13 @@ import org.bukkit.event.player.AsyncPlayerChatEvent;
 import org.bukkit.event.player.PlayerCommandPreprocessEvent;
 
 import fr.aiidor.uhc.UHC;
+import fr.aiidor.uhc.enums.Lang;
+import fr.aiidor.uhc.enums.Permission;
 import fr.aiidor.uhc.game.Game;
 import fr.aiidor.uhc.game.GameManager;
 import fr.aiidor.uhc.game.UHCPlayer;
 import fr.aiidor.uhc.inventories.GuiManager;
+import fr.aiidor.uhc.scenarios.ScenariosManager;
 
 public class ChatEvent implements Listener {
 	
@@ -28,7 +31,21 @@ public class ChatEvent implements Listener {
 			UHCPlayer p = game.getUHCPlayer(e.getPlayer().getUniqueId());
 			
 			e.setCancelled(true);
-			game.broadcast("§f" + p.getDisplayName() + " §8»§7 " + e.getMessage());
+			
+			if (!p.hasPermission(Permission.CHAT)) {
+				p.getPlayer().sendMessage(Lang.PM_ERROR_CHAT.get());
+				return;
+			}
+			
+			game.broadcast("§f" + p.getName()+ " §8»§7 " + e.getMessage());
+			
+			if (ScenariosManager.GOOD_GAME.isActivated() && ScenariosManager.GOOD_GAME.death && p.isAlive() && e.getMessage().toLowerCase().contains("gg")) {
+				ScenariosManager.GOOD_GAME.death = false;
+				ScenariosManager.GOOD_GAME.giveItem(p);
+			}
+			
+		} else {
+			e.setCancelled(true);
 		}
 	}
 	

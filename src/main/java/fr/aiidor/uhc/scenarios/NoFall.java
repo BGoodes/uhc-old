@@ -22,6 +22,7 @@ public class NoFall extends Scenario {
 	public Material getIcon() {
 		return Material.FEATHER;
 	}
+	
 	@Override
 	public Boolean isOriginal() {
 		return false;

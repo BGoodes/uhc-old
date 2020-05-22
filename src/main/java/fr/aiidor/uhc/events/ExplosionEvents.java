@@ -32,7 +32,7 @@ public class ExplosionEvents implements Listener {
 		Game game = gm.getGame();
 		if (!game.getWorlds().contains(e.getEntity().getWorld())) return;
 		
-		if (ScenariosManager.TNTFLY.isActivated(game) && ScenariosManager.TNTFLY.chain) {
+		if (ScenariosManager.TNTFLY.isActivated() && ScenariosManager.TNTFLY.chain) {
 			if (e.getEntity() instanceof TNTPrimed) {
 				e.getEntity().setVelocity(new Vector(0, 0.25, 0));
 			}
@@ -49,7 +49,7 @@ public class ExplosionEvents implements Listener {
 		
 		onExplosion(game, e.blockList());
 		
-		if (ScenariosManager.STINGY_WORLD.isActivated(game) && ScenariosManager.STINGY_WORLD.stingyBombs) {
+		if (ScenariosManager.STINGY_WORLD.isActivated() && ScenariosManager.STINGY_WORLD.stingyBombs) {
 			e.setYield(0);
 		}
 	}
@@ -64,7 +64,7 @@ public class ExplosionEvents implements Listener {
 		
 		onExplosion(game, e.blockList());
 		
-		if (ScenariosManager.STINGY_WORLD.isActivated(game) && ScenariosManager.STINGY_WORLD.stingyBombs) {
+		if (ScenariosManager.STINGY_WORLD.isActivated() && ScenariosManager.STINGY_WORLD.stingyBombs) {
 			e.setYield(0);
 		}
 	}
@@ -73,7 +73,7 @@ public class ExplosionEvents implements Listener {
 		
 		Iterator<Block> b = blocks.iterator();
 		
-		if (ScenariosManager.TNTFLY.isActivated(game) && ScenariosManager.TNTFLY.chain) {
+		if (ScenariosManager.TNTFLY.isActivated() && ScenariosManager.TNTFLY.chain) {
 			while(b.hasNext()) {
 				Block bs = b.next();
 				

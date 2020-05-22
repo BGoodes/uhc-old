@@ -7,28 +7,29 @@ import org.bukkit.Material;
 
 import fr.aiidor.uhc.enums.Category;
 
-public class Eternal_Items extends Scenario {
-
-	public Eternal_Items(ScenariosManager manager) {
+public class BetaZombie extends Scenario {
+	
+	public BetaZombie(ScenariosManager manager) {
 		super(manager);
 	}
 	
 	@Override
 	public String getID() {
-		return "eternal-items";
+		return "beta-zombie";
 	}
-	
+
 	@Override
 	public Material getIcon() {
-		return Material.NETHER_STAR;
+		return Material.ROTTEN_FLESH;
 	}
+
 	@Override
 	public Boolean isOriginal() {
-		return true;
+		return false;
 	}
 
 	@Override
 	public List<Category> getCategories() {
-		return Arrays.asList(Category.OTHER);
+		return Arrays.asList(Category.RUN);
 	}
 }

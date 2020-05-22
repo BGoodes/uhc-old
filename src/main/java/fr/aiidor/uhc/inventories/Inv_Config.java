@@ -151,11 +151,34 @@ public class Inv_Config extends GuiBuilder {
 			return;
 		}
 		
+		if (e.getSlot() == 13) {
+			playClickSound(event.getPlayer());
+			event.getPlayer().openInventory(GuiManager.INV_CONFIG_TIME.getInventory());
+			return;
+		}
+		
+		if (e.getSlot() == 14) {
+			playClickSound(event.getPlayer());
+			event.getPlayer().openInventory(GuiManager.INV_CONFIG_WB.getInventory());
+			return;
+		}
+		
 		if (e.getSlot() == 16) {
 			playClickSound(event.getPlayer());
 			event.getPlayer().openInventory(GuiManager.INV_CONFIG_SCENARIOS.getInventory());
 			return;
 		}
 		
+		if (e.getSlot() == 19) {
+			playClickSound(event.getPlayer());
+			event.getPlayer().openInventory(GuiManager.INV_CONFIG_LIFE.getInventory());
+			return;
+		}
+		
+		if (e.getSlot() == 20) {
+			playClickSound(event.getPlayer());
+			event.getPlayer().openInventory(GuiManager.INV_CONFIG_LOOTS.getInventory());
+			return;
+		}
 	}
 }

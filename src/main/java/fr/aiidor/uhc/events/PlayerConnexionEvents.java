@@ -33,31 +33,35 @@ public class PlayerConnexionEvents implements Listener {
 		
 		e.setJoinMessage("");
 		
-		if (player.isOp() && UHC.getInstance().getSettings().getRemoveOp()) {
+		if (player.isOp() && UHC.getInstance().getSettings().remove_op) {
 			player.setOp(false);
 		}
 		
 		if (!game.join(player)) return;	
 		
-		if (game.getState() == GameState.LOBBY) {
+		if (game.getState() == GameState.WAITING) {
 					
 			if (!game.isHere(player.getUniqueId())) {
 				
-				if (player.isOp() && UHC.getInstance().getSettings().OpIsStaff()) {
-					game.addUHCPlayer(new UHCPlayer(player, Rank.STAFF, game));
+				if (player.isOp() && UHC.getInstance().getSettings().op_to_staff) {
+					game.addUHCPlayer(new UHCPlayer(player, PlayerState.ALIVE, Rank.STAFF, game));
 				} else {
-					game.addUHCPlayer(new UHCPlayer(player, Rank.PLAYER, game));
+					game.addUHCPlayer(new UHCPlayer(player, PlayerState.ALIVE, Rank.PLAYER, game));
 				}
 			}
 				
 			UHCPlayer p = game.getUHCPlayer(player.getUniqueId());
 			p.reset();
 			
-			player.teleport(UHC.getInstance().getSettings().getLobby());
+			player.teleport(UHC.getInstance().getSettings().lobby);
 			
 			if (game.hasTeam()) {
 				if (game.getSettings().team_type == TeamType.CHOOSE) {
-					player.getInventory().setItem(8, UHCItem.getTeamSelecter());
+					if (p.hasTeam()) {
+						player.getInventory().setItem(8, UHCItem.getTeamSelecter(p.getTeam()));
+					} else {
+						player.getInventory().setItem(8, UHCItem.getTeamSelecter());
+					}
 				}
 			}
 			
@@ -76,12 +80,21 @@ public class PlayerConnexionEvents implements Listener {
 			player.setScoreboard(game.getScoreboard());
 			UHC.getInstance().getScoreboardManager().onLogin(player);
 			
-			if (p.getRank() == Rank.SPECTATOR || p.getState() == PlayerState.SPECTATOR || p.getState() == PlayerState.DEAD) {
+			if (p.isSpec()) {
 				e.setJoinMessage(Lang.BC_SPECTATOR_JOIN.get().replace(LangTag.PLAYER_NAME.toString(), player.getName()));
-				p.reset();
+			} else e.setJoinMessage(Lang.BC_PLAYER_JOIN.get().replace(LangTag.PLAYER_NAME.toString(), player.getName()));
+			
+		} else {
+			//SPEC VERIF
+			UHCPlayer p = new UHCPlayer(player, PlayerState.SPECTATOR, Rank.SPECTATOR, game);
+			
+			if (player.isOp() && UHC.getInstance().getSettings().op_to_staff) {
+				p = new UHCPlayer(player, PlayerState.SPECTATOR, Rank.STAFF, game);
 			}
-				
-			else e.setJoinMessage(Lang.BC_PLAYER_JOIN.get().replace(LangTag.PLAYER_NAME.toString(), player.getName()));
+			
+			e.setJoinMessage(Lang.BC_SPECTATOR_JOIN.get().replace(LangTag.PLAYER_NAME.toString(), player.getName()));
+			game.addUHCPlayer(p);
+			p.onLogin();
 		}
 
 	}
@@ -106,11 +119,10 @@ public class PlayerConnexionEvents implements Listener {
 			if (p.getRank() == Rank.PLAYER || p.getRank() == Rank.SPECTATOR) {
 				 game.removeUHCPlayer(p);
 			}
-			
 		}
 		
 		//MESSAGE
-		if (p.getRank() == Rank.SPECTATOR || p.getState() == PlayerState.SPECTATOR || p.getState() == PlayerState.DEAD)
+		if (p.isSpec() || p.getState() == PlayerState.DEAD)
 			e.setQuitMessage(Lang.BC_SPECTATOR_LEAVE.get().replace(LangTag.PLAYER_NAME.toString(), player.getName()));
 		
 		else e.setQuitMessage(Lang.BC_PLAYER_LEAVE.get().replace(LangTag.PLAYER_NAME.toString(), player.getName()));

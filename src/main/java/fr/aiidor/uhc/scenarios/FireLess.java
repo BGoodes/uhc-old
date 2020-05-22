@@ -18,7 +18,6 @@ import fr.aiidor.uhc.inventories.Gui;
 import fr.aiidor.uhc.inventories.GuiBuilder;
 import fr.aiidor.uhc.inventories.GuiClickEvent;
 import fr.aiidor.uhc.inventories.GuiManager;
-import fr.aiidor.uhc.tools.ItemBuilder;
 
 public class FireLess extends Scenario {
 
@@ -117,28 +116,15 @@ public class FireLess extends Scenario {
 				
 				dictionnary.put("X", getBackIcon());
 				
-				dictionnary.put("F", getItem(Material.BLAZE_POWDER, Lang.NO_FIRE_DAMAGE.get(), noFireDamage));
-				dictionnary.put("T", getItem(Material.FIREBALL, Lang.NO_FIRE_TICK.get(), noFireTick));
-				dictionnary.put("B", getItem(Material.LAVA_BUCKET, Lang.LAVA_BUCKET.get(), lava_bucket));
-				dictionnary.put("S", getItem(Material.FLINT_AND_STEEL, Lang.FLINT_AND_STEEL.get(), flint_and_steel));
+				dictionnary.put("F", getConfigItem(Material.BLAZE_POWDER, Lang.NO_FIRE_DAMAGE.get(), noFireDamage));
+				dictionnary.put("T", getConfigItem(Material.FIREBALL, Lang.NO_FIRE_TICK.get(), noFireTick));
+				dictionnary.put("B", getConfigItem(Material.LAVA_BUCKET, Lang.LAVA_BUCKET.get(), lava_bucket));
+				dictionnary.put("S", getConfigItem(Material.FLINT_AND_STEEL, Lang.FLINT_AND_STEEL.get(), flint_and_steel));
 				
-				dictionnary.put("P", getItem(Material.BOOK, Lang.PLAYER_ONLY.get(), player_only));
+				dictionnary.put("P", getConfigItem(Material.BOOK, Lang.PLAYER_ONLY.get(), player_only));
 				return dictionnary;
 			}
 		};
-	}
-	
-	
-	private ItemStack getItem(Material mat, String displayName, Boolean on) {
-		ItemBuilder builder = new ItemBuilder(mat, displayName);
-		List<String> lore = new ArrayList<String>();
-		
-		if (on) lore.add(Lang.INV_ON.get());
-		else lore.add(Lang.INV_OFF.get());
-		
-		builder.setLore(lore);
-		
-		return builder.getItem();
 	}
 	
 	@Override

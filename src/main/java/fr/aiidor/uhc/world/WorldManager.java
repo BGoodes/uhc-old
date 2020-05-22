@@ -14,6 +14,7 @@ import org.bukkit.Bukkit;
 import org.bukkit.Chunk;
 import org.bukkit.Difficulty;
 import org.bukkit.World;
+import org.bukkit.WorldBorder;
 import org.bukkit.World.Environment;
 import org.bukkit.WorldCreator;
 import org.bukkit.WorldType;
@@ -49,8 +50,9 @@ public class WorldManager {
 		world.setPVP(true);
 		world.setDifficulty(Difficulty.HARD);
 		
-		world.getWorldBorder().setCenter(0, 0);
-		world.getWorldBorder().setSize(2500);
+		WorldBorder wb = world.getWorldBorder();
+		wb.setCenter(0, 0);
+		wb.setSize(10000);
 		
 		return true;
 	}
@@ -84,7 +86,6 @@ public class WorldManager {
 		c.environment(environment);
 		c.type(type);
 		c.generateStructures(generateStructures);
-
 		c.createWorld();
 	}
 	

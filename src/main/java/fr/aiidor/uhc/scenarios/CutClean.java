@@ -77,12 +77,10 @@ public class CutClean extends Scenario {
 			
 			if (cooked.containsKey(b.getType())) {
 				
-				if (player.getItemInHand() != null && player.getItemInHand().getType() != Material.AIR) {
+				if (player.getItemInHand() != null && player.getItemInHand().getType() != Material.AIR && !b.getDrops(player.getItemInHand()).isEmpty()) {
 					if (player.getItemInHand().getItemMeta().hasEnchant(Enchantment.SILK_TOUCH)) return;
 				}
-				
-				e.setCancelled(true);
-				
+
 				b.getWorld().dropItemNaturally(b.getLocation().add(0.5, 0.5, 0.5), new ItemStack(cooked.get(b.getType())));
 				
 				switch (e.getBlock().getType()) {
@@ -94,8 +92,6 @@ public class CutClean extends Scenario {
 				}
 				
 				b.setType(Material.AIR);
-				
-
 			}
 		}
 	}

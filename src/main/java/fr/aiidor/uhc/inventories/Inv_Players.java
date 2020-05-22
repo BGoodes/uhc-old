@@ -6,7 +6,6 @@ import java.util.List;
 
 import org.bukkit.Material;
 import org.bukkit.event.inventory.InventoryClickEvent;
-import org.bukkit.inventory.InventoryHolder;
 import org.bukkit.inventory.ItemStack;
 
 import fr.aiidor.uhc.enums.JoinState;
@@ -23,11 +22,6 @@ public class Inv_Players extends GuiBuilder {
 	@Override
 	public Boolean titleIsDynamic() {
 		return false;
-	}
-	
-	@Override
-	public InventoryHolder getHolder() {
-		return null;
 	}
 	
 	@Override

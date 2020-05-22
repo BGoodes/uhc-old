@@ -69,7 +69,7 @@ public class CommandHost implements CommandExecutor, TabCompleter {
 						return true; 
 					}
 					
-					if (!game.playerHasPermission(player, Permission.CONFIG)) {
+					if (!game.getSettings().playerHasPermission(player, Permission.CONFIG)) {
 						player.sendMessage(Lang.CMD_ERROR_PERM.get().replace(LangTag.PERM.toString(), Permission.CONFIG.toString()));
 						return true;
 					}
@@ -88,13 +88,13 @@ public class CommandHost implements CommandExecutor, TabCompleter {
 		
 		Player player = (Player) sender;
 		
-		if (!game.playerHasPermission(player, Permission.CONFIG)) {
+		if (!game.getSettings().playerHasPermission(player, Permission.CONFIG)) {
 			player.sendMessage(Lang.CMD_ERROR_PERM.get().replace(LangTag.PERM.toString(), Permission.CONFIG.toString()));
 			return true;
 		}
 		
 		if (args[0].equalsIgnoreCase("test")) {
-			player.sendMessage(game.getRandomPlayer().getDisplayName());
+			player.sendMessage(game.getRandomPlayer().getName());
 			return true;
 		}
 		

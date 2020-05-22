@@ -19,6 +19,11 @@ public class Inv_Team_Number extends GuiConfigBuilder {
 	}
 	
 	@Override
+	public boolean startProtection() {
+		return true;
+	}
+	
+	@Override
 	public Gui getBackInventory() {
 		return GuiManager.INV_CONFIG_TEAMS;
 	}
@@ -28,17 +33,18 @@ public class Inv_Team_Number extends GuiConfigBuilder {
 		setCenter(new ItemBuilder(Material.ANVIL, Lang.INV_TEAM_NUMBER.get()).getItem());
 		return new Integer[] {-10, -5, -1, 0, +1, +5, +10};
 	}
-
+	
 	@Override
 	public void addValue(Integer value) {
 		if (UHC.getInstance().getGameManager().hasGame()) {
 			Game game = UHC.getInstance().getGameManager().getGame();
+			
 			GameSettings s = game.getSettings();
 			
 			Integer team_number = game.getSettings().getTeamNumber();
 			
 			if (team_number + value <= 2) s.setTeamNumber(2);
-			else if (team_number + value >= 231) s.setTeamNumber(231);
+			else if (team_number + value >= 230) s.setTeamNumber(230);
 			else s.setTeamNumber(team_number + value);
 		}
 	}

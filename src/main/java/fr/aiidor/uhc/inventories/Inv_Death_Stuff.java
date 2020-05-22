@@ -30,7 +30,7 @@ public class Inv_Death_Stuff extends Gui {
 		dictionary = new HashMap<String, ItemStack>();
 		
 		dictionary.put("X", getBackIcon());
-		dictionary.put("T", new ItemBuilder(Material.REDSTONE_TORCH_ON, "ยง2Sauvegarder ?").getItem());
+		dictionary.put("T", new ItemBuilder(Material.REDSTONE_TORCH_ON, "§2Sauvegarder ?").getItem());
 		dictionary.put("G", new ItemBuilder(Material.STAINED_GLASS_PANE, (byte) 7, " ").getItem());
 	}
 	
