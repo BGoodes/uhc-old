@@ -4,7 +4,9 @@ public enum LangTag {
 	
 	PREFIX,
 	ERROR,
-	DEATH_PREFIX,
+	INFO_PREFIX,
+	DW_PREFIX,
+	TG_PREFIX,
 	
 	EPISODE,
 	
@@ -27,6 +29,8 @@ public enum LangTag {
 	VALUE,
 	VALUE_1,
 	VALUE_2,
+	VALUE_3,
+	VALUE_4,
 	
 	PLAYER_NAME,
 	KILLER_NAME,
@@ -34,6 +38,7 @@ public enum LangTag {
 	WORLD_NAME,
 	
 	GAME_NAME,
+	GAME_TYPE,
 	JOIN_STATE,
 	
 	SERVER_SLOTS,
@@ -58,6 +63,13 @@ public enum LangTag {
 	TIMER_M,
 	
 	SCENARIO_NAME,
+	
+	ROLE_NAME,
+	CAMP_NAME,
+	GOAL,
+	POWER,
+	
+	DW_SECTARIAN,
 	
 	CONSOLE_COLOR_RESET("cc.reset", "\u001B[0m"),
 	CONSOLE_COLOR_BLACK("cc.black", "\u001B[30m"),

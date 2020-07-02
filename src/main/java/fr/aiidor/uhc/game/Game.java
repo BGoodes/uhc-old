@@ -14,8 +14,10 @@ import org.bukkit.entity.Player;
 import org.bukkit.scoreboard.DisplaySlot;
 import org.bukkit.scoreboard.Objective;
 import org.bukkit.scoreboard.Scoreboard;
+import org.bukkit.scoreboard.Team;
 
 import fr.aiidor.uhc.UHC;
+import fr.aiidor.uhc.comparators.KillComparator;
 import fr.aiidor.uhc.enums.GameState;
 import fr.aiidor.uhc.enums.JoinState;
 import fr.aiidor.uhc.enums.Lang;
@@ -25,6 +27,7 @@ import fr.aiidor.uhc.enums.Rank;
 import fr.aiidor.uhc.enums.TeamColor;
 import fr.aiidor.uhc.enums.TeamType;
 import fr.aiidor.uhc.enums.UHCType;
+import fr.aiidor.uhc.gamemodes.UHCMode;
 import fr.aiidor.uhc.task.StartingTask;
 import fr.aiidor.uhc.task.UHCTask;
 import fr.aiidor.uhc.task.WaitingTask;
@@ -37,7 +40,7 @@ import fr.aiidor.uhc.world.WorldManager;
 public class Game {
 	
 	private String name;
-	private UHCType type;
+	private UHCMode uhc_mode;
 	
 	private Scoreboard sb;
 	
@@ -53,11 +56,15 @@ public class Game {
 	
 	private UHCTask task;
 	
-	public Game(String name, UHCType type, GameSettings settings, Player host, World world) {
+	
+	public Game(String name, UHCMode uhc_mode, GameSettings settings, Player host, Set<UHCPlayer> players, World world) {
 		
 		this.setName(name);
-		this.setType(type);
+		this.setUHCMode(uhc_mode);
 		this.setState(GameState.WAITING);
+		
+		uhc_mode.setGame(this);
+		this.uhc_mode = uhc_mode;
 		
 		this.main_world = new UHCWorld(world, true);
 		this.worlds.add(main_world);
@@ -68,11 +75,16 @@ public class Game {
 		}
 		
 		//PLAYER
-		this.players = new HashSet<>();
+		if (players != null) this.players = players;
+		else this.players = new HashSet<>();
+		
 		if (host != null) players.add(new UHCPlayer(host, PlayerState.ALIVE, Rank.HOST, this));
 		
 		if (settings == null) this.settings = new GameSettings(this);
-		else this.settings = settings;
+		else {
+			this.settings = settings;
+			this.settings.setGame(this);
+		}
 		
 		this.sb = Bukkit.getScoreboardManager().getNewScoreboard();
 		
@@ -80,8 +92,16 @@ public class Game {
 		h.setDisplayName("§c❤");
 		h.setDisplaySlot(DisplaySlot.BELOW_NAME);
 		
+		if (sb.getTeam(Lang.TEAM_SPEC_NAME.get()) == null) sb.registerNewTeam(Lang.TEAM_SPEC_NAME.get());
+		
+		Team t = sb.getTeam(Lang.TEAM_SPEC_NAME.get());
+		t.setPrefix(Lang.TEAM_SPEC_PREFIX.get());
+		t.setCanSeeFriendlyInvisibles(true);
+		
 		//TASK
 		new WaitingTask(this).launch();
+		
+		this.settings.setTeamSize(this.settings.getTeamSize());
 	}
 	
 	public String getName() {
@@ -93,13 +113,17 @@ public class Game {
 	}
 	
 	public UHCType getType() {
-		return type;
+		return uhc_mode.getUHCType();
 	}
 	
-	public void setType(UHCType type) {
-		this.type = type;
+	public UHCMode getUHCMode() {
+		return uhc_mode;
 	}
-
+	
+	public void setUHCMode(UHCMode uhc_mode) {
+		this.uhc_mode = uhc_mode;
+	}
+	
 	public Scoreboard getScoreboard() {
 		return sb;
 	}
@@ -274,14 +298,34 @@ public class Game {
 		Set<UHCPlayer> players = new HashSet<UHCPlayer>();
 		
 		for (UHCPlayer p : this.players) {
-			if (!p.isSpec()) players.add(p);
+			if (p.getState() != PlayerState.SPECTATOR) players.add(p);
 		}
 		
 		return players;
 	}
 	
+	public List<UHCPlayer> getPlayersSort() {
+		List<UHCPlayer> list = new ArrayList<UHCPlayer>();
+		
+		for (UHCPlayer p : getIngamePlayers()) {
+			list.add(p);
+		}
+		
+		list.sort(new KillComparator());
+		
+		return list;
+	}
+	
 	public Boolean isHere(UUID uuid) {
 		return getUHCPlayer(uuid) != null;
+	}
+	
+	public void addUHCPlayer(Player player) {
+		if (player.isOp() && UHC.getInstance().getSettings().op_to_staff) {
+			addUHCPlayer(new UHCPlayer(player, PlayerState.ALIVE, Rank.STAFF, this));
+		} else {
+			addUHCPlayer(new UHCPlayer(player, PlayerState.ALIVE, Rank.PLAYER, this));
+		}
 	}
 	
 	public void addUHCPlayer(UHCPlayer player) {
@@ -384,6 +428,10 @@ public class Game {
 		return null;
 	}
 	
+	public void addTeam(UHCTeam team) {
+		teams.add(team);
+	}
+	
 	public void createTeam() {
 		
 		if (!hasTeam()) {
@@ -399,7 +447,7 @@ public class Game {
 		for (String s : TeamColor.prefix) {
 			for (TeamColor c : TeamColor.values()) {
 
-				String prefix = c.getChatcolor() + s + " ";
+				String prefix = c.getChatcolor() + s;
 					
 				if (!teamExist(prefix + c.getColorName())) {
 					teams.add(new UHCTeam(prefix, c, getSettings().getTeamSize(), this));
@@ -480,12 +528,16 @@ public class Game {
 	
 	//EFFECTS ----------------------------------------------
 	public void broadcast(String message) {
+		broadcast(message, true);
+	}
+	
+	public void broadcast(String message, Boolean log) {
 		
 		for (Player p : getInWorldsPlayers()) {
 			p.sendMessage(message);
 		}
 		
-		if (UHC.getInstance().getSettings().log_game_bc) {
+		if (UHC.getInstance().getSettings().log_game_bc && log) {
 			Bukkit.getConsoleSender().sendMessage(message);
 		}
 	}
@@ -552,12 +604,7 @@ public class Game {
 	public void playSound(Sound sound, float volume, float pitch) {
 		
 		for (Player p : getInWorldsPlayers()) {
-			p.getPlayer().playSound(p.getPlayer().getLocation(), sound, volume, pitch);
+			p.playSound(p.getLocation(), sound, volume, pitch);
 		}
-	}
-	
-	//DELETE
-	public void delete() {
-		
 	}
 }

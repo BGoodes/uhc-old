@@ -36,8 +36,6 @@ public class Timber extends Scenario {
 		return Arrays.asList(Category.RUN);
 	}
 	
-	private BlockFace[] faces = {BlockFace.UP, BlockFace.EAST, BlockFace.NORTH, BlockFace.SOUTH, BlockFace.WEST};
-	
 	public void destroy(Block base) {
 		if (base.getType() == Material.LOG || base.getType() == Material.LOG_2) {
 			breakBlock(base, 0);
@@ -54,7 +52,7 @@ public class Timber extends Scenario {
 
 		if (limit == 30) return;
 		
-		for (BlockFace face : faces) {
+		for (BlockFace face : BlockFace.values()) {
 			if (b.getRelative(face).getType() == mat) {
 				breakBlock(b.getRelative(face), limit + 1);
 			}

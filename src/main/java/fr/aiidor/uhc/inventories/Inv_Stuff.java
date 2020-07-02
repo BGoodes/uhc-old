@@ -8,6 +8,7 @@ import org.bukkit.inventory.InventoryHolder;
 import org.bukkit.inventory.ItemStack;
 
 import fr.aiidor.uhc.enums.Lang;
+import fr.aiidor.uhc.listeners.events.GuiClickEvent;
 import fr.aiidor.uhc.tools.ItemBuilder;
 
 public class Inv_Stuff extends GuiBuilder {

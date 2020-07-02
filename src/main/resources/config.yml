@@ -1,9 +1,10 @@
 #########################################################
-#              UHC HOST -  Version 1.0                  #
+#              UHC HOST -  Version 1.1                  #
 #                 Author : B. Goodes                    #
 #########################################################
 
 World:
+  default-world: 'world' #The name of the server's default world
   world-name : 'world'
   seed: 0   # 0 --> random
   dimension: "NORMAL" #NORMAL | NETHER | END
@@ -21,10 +22,15 @@ Lobby:
      size: 25
      height: 4
   
+Game:
+   create-default-game: true #Allow to create a game automatically at server launch.
+   default-game-mode: "CLASSIC" #CLASSIC | DEVIL_WATCHES | TAUPE_GUN
+   
 ServerManager: 
   log-game-broadcast: true #Allows to authorize sending game's messages in console
-  create-game: true #Allow to create a game automatically at server launch.
   generate-worlds: true #Allow to generate worlds automatically at server launch.
+  delete-worlds: false #Allow to delete uhc's worlds automatically at server close/reload. /!\ Don't work with the server's default world
+  server-restart: false #Allow to restart the server after game
 
 Permissions:
   remove-op: false #Allows to remove automatically the permissions of op players
@@ -34,10 +40,16 @@ Scoreboard:
   ip:
     show-ip: true
     ip: play.serveur.fr
-    ip-fade: true
-    ip-fade-cooldown: 50
-    ip-fade-unit: 80 #Milliseconds
-    ip-fade-color:
+    ip-color:
       text-color: AQUA
-      point: DARK_PURPLE
-      fade: LIGHT_PURPLE
+    fade:
+      ip-fade: true
+      ip-fade-cooldown: 50
+      ip-fade-unit: 80 #Milliseconds
+      ip-fade-color: 
+        point: DARK_PURPLE
+        fade: LIGHT_PURPLE
+    
+    
+  
+  

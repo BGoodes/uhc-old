@@ -15,6 +15,7 @@ import fr.aiidor.uhc.enums.Lang;
 import fr.aiidor.uhc.enums.LangTag;
 import fr.aiidor.uhc.game.Game;
 import fr.aiidor.uhc.game.UHCPlayer;
+import fr.aiidor.uhc.listeners.events.GuiClickEvent;
 import fr.aiidor.uhc.team.UHCTeam;
 import fr.aiidor.uhc.tools.ItemBuilder;
 
@@ -216,7 +217,7 @@ public class Inv_Teams_Choose extends Gui {
 				break;
 			}
 			
-			lore.add("§8» §7" + p.getName());
+			lore.add("§8» §7" + p.getDisplayName());
 			
 			i++;
 		}

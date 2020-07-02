@@ -4,10 +4,10 @@ public enum Category {
 	
 	ALL, RUN, PVP, SURVIVAL, GENERATION, ENCHANTMENT, FUN, ANIME, OTHER;
 	
-	private String name;
+	private final String name;
 	
 	private Category() {
-		name = (String) UHCFile.LANG.getJSONObject("categories").get(name());
+		name = (String) UHCFile.LANG.getJSONObject("inventory/categories").get(name());
 	}
 	
 	public String getDisplayName() {

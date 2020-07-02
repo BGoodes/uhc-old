@@ -13,11 +13,13 @@ import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 
 import fr.aiidor.uhc.UHC;
+import fr.aiidor.uhc.comparators.NameComparator;
 import fr.aiidor.uhc.enums.Category;
 import fr.aiidor.uhc.enums.Lang;
+import fr.aiidor.uhc.listeners.events.ChangeScenarioStateEvent;
+import fr.aiidor.uhc.listeners.events.GuiClickEvent;
 import fr.aiidor.uhc.scenarios.Scenario;
 import fr.aiidor.uhc.scenarios.ScenariosManager;
-import fr.aiidor.uhc.scenarios.comparators.NameComparator;
 import fr.aiidor.uhc.tools.ItemBuilder;
 
 public class Inv_Scenarios extends Gui {
@@ -76,7 +78,7 @@ public class Inv_Scenarios extends Gui {
 		
 		if (clicked.getType() == Material.STAINED_CLAY && clicked.getItemMeta().hasDisplayName()) {
 			
-			String displayName = event.getItemClicked().getItemMeta().getDisplayName();
+			String displayName = clicked.getItemMeta().getDisplayName();
 			
 			for (Scenario scenario : UHC.getInstance().getScenarioManager().getScenarios()) {
 				

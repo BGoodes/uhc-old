@@ -27,27 +27,36 @@ import fr.aiidor.uhc.team.UHCTeam;
 public class GameSettings {
 	
 	private Game game;
-	
+
 	private Integer spec_slots;
 	
+	//CHAT
+	public Boolean chat = true;
+	
 	//TEAM
-	private Integer team_number;
+	private Integer team_number = 4;
 	private Integer team_size;
-	public TeamType team_type;
-	public Boolean friendly_fire;
+	public TeamType team_type = TeamType.CHOOSE;
+	public Boolean friendly_fire = true;
+	public Boolean team_chat = true;
 	
 	//TIME
 	public Integer invincibility_time = 1;
 	public Integer pvp_time = 25;
 	public Integer ep1_time = 20;
-	public Integer ep_time = 20;
+	public Integer ep_time = 1;
 	public Integer wb_time = 60;
 	
 	public Boolean can_win = true;
 	 
 	//PVP
-	public Boolean strength_nerf = true;
+	public StrenghtNerf strength_nerf = StrenghtNerf.PERCENT;
 	public Double strength_nerf_damage = 3.0;
+	public Double strength_nerf_percent = 0.20D;
+	
+	public enum StrenghtNerf {
+		OFF, DAMAGE, PERCENT;
+	}
 	
 	//LOOTS
 	public Boolean uhc_trees = true;
@@ -59,20 +68,29 @@ public class GameSettings {
 	public Boolean trees_gapple = false;
 	
 	//LIFE
-	public Boolean bow_display_life = true;
 	public Boolean display_life = true;
+	public Boolean bow_display_life = true;
+	public Boolean display_head_life = true;
 	
-	public Boolean uhc_apple = true;
-	public Boolean notch_apple = false;
 	public Integer start_abso = 0;
 	public Integer start_life = 20;
-	public Integer gapple_food_level = 4;
-	public Float gapple_saturation = 9.6f;
+	
+	public Boolean uhc_apple = true;
+	public Boolean golden_apple = true;
+	public Boolean notch_apple = false;
 	public Boolean golden_head  = false;
 	
+	public Integer gapple_food_level = 4;
+	public Float gapple_saturation = 9.6f;
+	
 	public List<PotionEffect> gapple_effects;
+	public Integer gapple_abso = 2;
+	
 	public List<PotionEffect> napple_effects;
+	public Integer napple_abso = 2;
+	
 	public List<PotionEffect> happle_effects;
+	public Integer happle_abso = 2;
 	
 	//DEATH
 	public Boolean show_death_message = true;
@@ -92,6 +110,10 @@ public class GameSettings {
 	public Double wb_speed;
 	public Integer wb_damage = 2;
 	
+	//TIME
+	public Boolean uhc_cycle = false;
+	public Boolean double_uhc_cycle = false;
+	
 	private JoinState join_state = JoinState.CLOSE;
 	private Set<String> whitelist = new HashSet<String>();
 	private List<Scenario> scenarios = new ArrayList<Scenario>();
@@ -100,10 +122,8 @@ public class GameSettings {
 		
 		this.game = game;
 		
-		this.team_number = 10;
 		this.spec_slots = 10;
 		
-		team_type = TeamType.CHOOSE;
 		this.setTeamSize(1);
 		
 		this.wb_size_max = 1250;
@@ -132,8 +152,6 @@ public class GameSettings {
 			}
 		}
 		
-		friendly_fire = true;
-		
 		
 		this.permissions = new HashMap<Rank, List<Permission>>();
 		
@@ -148,17 +166,17 @@ public class GameSettings {
 		napple_effects = new ArrayList<PotionEffect>();
 		
 		gapple_effects.add(new PotionEffect(PotionEffectType.REGENERATION, 100, 1, true, true));
-		gapple_effects.add(new PotionEffect(PotionEffectType.ABSORPTION, 2400, 0, true, true));
 		
 		happle_effects.add(new PotionEffect(PotionEffectType.REGENERATION, 200, 1, true, true));
-		happle_effects.add(new PotionEffect(PotionEffectType.ABSORPTION, 2400, 0, true, true));
 		
 		napple_effects.add(new PotionEffect(PotionEffectType.REGENERATION, 600, 4, true, true));
-		napple_effects.add(new PotionEffect(PotionEffectType.ABSORPTION, 2400, 0, true, true));
 		napple_effects.add(new PotionEffect(PotionEffectType.DAMAGE_RESISTANCE, 6000, 0, true, true));
 		napple_effects.add(new PotionEffect(PotionEffectType.FIRE_RESISTANCE, 6000, 0, true, true));
 	}
 	
+	public void setGame(Game game) {
+		this.game = game;
+	}
 	
 	//PERMISSIONS
 	public Boolean rankHasPermission(Rank rank, Permission perm) {

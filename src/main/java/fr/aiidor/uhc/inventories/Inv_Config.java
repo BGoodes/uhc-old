@@ -10,7 +10,10 @@ import org.bukkit.inventory.ItemStack;
 import fr.aiidor.uhc.UHC;
 import fr.aiidor.uhc.enums.GameState;
 import fr.aiidor.uhc.enums.Lang;
+import fr.aiidor.uhc.enums.UHCType;
 import fr.aiidor.uhc.game.Game;
+import fr.aiidor.uhc.gamemodes.DevilWatches;
+import fr.aiidor.uhc.listeners.events.GuiClickEvent;
 import fr.aiidor.uhc.tools.ItemBuilder;
 import fr.aiidor.uhc.tools.SkullBuilder;
 
@@ -38,7 +41,7 @@ public class Inv_Config extends GuiBuilder {
 		String[][] item = {
 				{"B", "L", "L", "L", "L", "L", "L", "L", "B"},
 				{"L", "T", "J", "Y", "O", "W", "D", "/", "L"},
-				{"L", "G", "A", "I", "P", "R", " ", " ", "L"},
+				{"L", "G", "A", "R", "!", " ", " ", " ", "L"},
 				{"B", "L", "L", "L", "S", "C", "L", "L", "X"},
 		};
 		
@@ -64,13 +67,13 @@ public class Inv_Config extends GuiBuilder {
 		
 		dictionary.put("G", new ItemBuilder(Material.GOLDEN_APPLE, (byte) 1, Lang.INV_LIFE.get()).getItem());
 		dictionary.put("A", new ItemBuilder(Material.APPLE, Lang.INV_LOOTS.get()).getItem());
-		dictionary.put("I", new ItemBuilder(Material.WORKBENCH, Lang.INV_CRAFTS.get()).getItem());
-		dictionary.put("P", new ItemBuilder(Material.PAPER, Lang.INV_CHAT.get()).getItem());
 		dictionary.put("R", new ItemBuilder(Material.BOOK, Lang.INV_RULES.get()).getItem());
 		
 		//GLASS
 		dictionary.put("L", new ItemBuilder(Material.STAINED_GLASS_PANE, (byte) 3, " ").getItem());
 		dictionary.put("B", new ItemBuilder(Material.STAINED_GLASS_PANE, (byte) 11, " ").getItem());
+		
+		dictionary.put("!", new ItemBuilder(Material.AIR).getItem());
 		
 		//CANCEL BUTTON
 		if (UHC.getInstance().getGameManager().hasGame()) {
@@ -78,6 +81,10 @@ public class Inv_Config extends GuiBuilder {
 			
 			if (game.getState() == GameState.STARTING) {
 				dictionary.put("C", new ItemBuilder(Material.REDSTONE_BLOCK, Lang.INV_CANCEL_GAME.get()).setGliding().getItem());
+			}
+			
+			if (game.getUHCMode().getUHCType() == UHCType.DEVIL_WATCHES) {
+				dictionary.put("!", new ItemBuilder(Material.DARK_OAK_DOOR_ITEM, UHCType.DEVIL_WATCHES.getName()).getItem());
 			}
 		}
 		
@@ -178,6 +185,12 @@ public class Inv_Config extends GuiBuilder {
 		if (e.getSlot() == 20) {
 			playClickSound(event.getPlayer());
 			event.getPlayer().openInventory(GuiManager.INV_CONFIG_LOOTS.getInventory());
+			return;
+		}
+		
+		if (e.getSlot() == 22 && DevilWatches.isDevilWatches()) {
+			playClickSound(event.getPlayer());
+			event.getPlayer().openInventory(GuiManager.INV_CONFIG_DW.getInventory());
 			return;
 		}
 	}

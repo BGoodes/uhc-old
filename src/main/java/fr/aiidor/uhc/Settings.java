@@ -14,6 +14,8 @@ public class Settings {
 	public Boolean op_to_staff;
 	public Boolean log_game_bc; 
 	
+	public String default_world;
+	
 	public Location lobby;
 	public Cage cage;
 	
@@ -24,10 +26,11 @@ public class Settings {
 		op_to_staff = config.getBoolean("Permissions.set-op-to-staff");
 		log_game_bc = config.getBoolean("ServerManager.log-game-broadcast");
 		
+		default_world = config.getString("World.default-world");
+		
 		//GET LOBBY
 		String worldname = config.getString("World.world-name");
 		String lobby_name = config.getString("Lobby.location.world-name");
-		
 
 		if (Bukkit.getWorld(lobby_name) != null) {
 				

@@ -44,7 +44,7 @@ public class Inv_Team_Number extends GuiConfigBuilder {
 			Integer team_number = game.getSettings().getTeamNumber();
 			
 			if (team_number + value <= 2) s.setTeamNumber(2);
-			else if (team_number + value >= 230) s.setTeamNumber(230);
+			else if (team_number + value >= 242) s.setTeamNumber(242);
 			else s.setTeamNumber(team_number + value);
 		}
 	}

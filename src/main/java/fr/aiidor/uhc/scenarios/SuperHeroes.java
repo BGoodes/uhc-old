@@ -21,10 +21,10 @@ import fr.aiidor.uhc.enums.Lang;
 import fr.aiidor.uhc.enums.UHCFile;
 import fr.aiidor.uhc.game.Game;
 import fr.aiidor.uhc.game.UHCPlayer;
-import fr.aiidor.uhc.inventories.ChangeScenarioStateEvent;
 import fr.aiidor.uhc.inventories.Gui;
-import fr.aiidor.uhc.inventories.GuiClickEvent;
 import fr.aiidor.uhc.inventories.GuiManager;
+import fr.aiidor.uhc.listeners.events.ChangeScenarioStateEvent;
+import fr.aiidor.uhc.listeners.events.GuiClickEvent;
 import fr.aiidor.uhc.team.UHCTeam;
 
 public class SuperHeroes extends Scenario {
@@ -94,7 +94,7 @@ public class SuperHeroes extends Scenario {
 				
 				int i = 0;
 				for (Power pow : Power.values()) {
-					inv.setItem(i, getConfigItem(null, pow.getName(), pow.isActivated()));
+					inv.setItem(i, getConfigItem(pow.getName(), pow.isActivated()));
 					i++;
 				}
 				
@@ -149,6 +149,8 @@ public class SuperHeroes extends Scenario {
 			e.getPlayer().sendMessage(Lang.ST_ERROR_SCENARIO_START.get());
 			e.getPlayer().closeInventory();
 		}
+		
+		super.changeStateEvent(e);
 	}
 	
 	@Override
@@ -198,7 +200,7 @@ public class SuperHeroes extends Scenario {
 					if (p.isConnected() && hasPower(p)) {
 						if (p.isAlive()) {
 							for (PotionEffect pe : getPower(p).effects) {
-								if (!p.getPlayer().hasPotionEffect(pe.getType()))
+								if (!p.getPlayer().hasPotionEffect(pe.getType()) || p.getPotionAmplifier(pe.getType()) < pe.getAmplifier())
 									p.addPotionEffect(pe);
 							}
 						}
@@ -209,9 +211,15 @@ public class SuperHeroes extends Scenario {
 		
 		task.runTaskTimer(UHC.getInstance(), 0, 100);
 	}
+	
+	
 	public void setPower(UHCPlayer p, Power pow) {
 		powers.put(p, pow);
 		
+		if (p.hasTeam() && pow == Power.INVICIBILITY) {
+			p.getTeam().getTeam().removeEntry(p.getName());
+		}
+			
 		for (PotionEffect pe : getPower(p).effects) {
 			p.addPotionEffect(pe);
 		}
@@ -268,7 +276,18 @@ public class SuperHeroes extends Scenario {
 	}
 	
 	@Override
-	public void stop() {
+	public void reload() {
 		if (task != null) task.cancel();
+		task = null;
+		powers = new HashMap<UHCPlayer, SuperHeroes.Power>();
+		
+		if (UHC.getInstance().getGameManager().hasGame()) {
+			Game game = UHC.getInstance().getGameManager().getGame();
+			for (UHCPlayer p : game.getAllPlayers()) {
+				if (p.hasTeam()) {
+					if (!p.getTeam().getTeam().hasEntry(p.getName())) p.getTeam().getTeam().addEntry(p.getName());
+				}
+			}
+		}
 	}
 }

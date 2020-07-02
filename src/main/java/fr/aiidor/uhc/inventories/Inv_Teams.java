@@ -1,6 +1,8 @@
 package fr.aiidor.uhc.inventories;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
 import org.bukkit.Material;
 import org.bukkit.event.inventory.InventoryClickEvent;
@@ -8,6 +10,8 @@ import org.bukkit.inventory.InventoryHolder;
 import org.bukkit.inventory.ItemStack;
 
 import fr.aiidor.uhc.enums.Lang;
+import fr.aiidor.uhc.enums.TeamType;
+import fr.aiidor.uhc.listeners.events.GuiClickEvent;
 import fr.aiidor.uhc.tools.ItemBuilder;
 
 public class Inv_Teams extends GuiBuilder {
@@ -78,8 +82,25 @@ public class Inv_Teams extends GuiBuilder {
 		
 		if (e.getSlot() == 7) {
 			playClickSound(event.getPlayer());
-			
+			event.getGame().getSettings().team_type = getNextTeamType(event.getGame().getSettings().team_type);
+			update();
 			return;
 		}
+	}
+	
+	private TeamType getNextTeamType(TeamType type) {
+		List<TeamType> values = new ArrayList<TeamType>();
+		
+		for (TeamType value : TeamType.values()) {
+			values.add(value);
+		}
+		
+		Integer index = values.indexOf(type) + 1;
+		
+		if (index >= values.size()) {
+			index = 0;
+		}
+		
+		return values.get(index);
 	}
 }

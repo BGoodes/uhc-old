@@ -21,6 +21,7 @@ import org.bukkit.entity.Player;
  * You should have received a copy of the GNU General Public License
  * along with SamaGamesAPI.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 public class ObjectiveSign extends VObjective {
     public HashMap<Integer, String> lines = new HashMap<>();
 

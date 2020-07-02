@@ -9,17 +9,25 @@ import org.bukkit.Achievement;
 import org.bukkit.Bukkit;
 import org.bukkit.GameMode;
 import org.bukkit.Location;
+import org.bukkit.Material;
 import org.bukkit.craftbukkit.v1_8_R3.entity.CraftPlayer;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.PlayerInventory;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
+import org.bukkit.scoreboard.Team;
 
+import fr.aiidor.uhc.enums.Lang;
 import fr.aiidor.uhc.enums.Permission;
 import fr.aiidor.uhc.enums.PlayerState;
 import fr.aiidor.uhc.enums.Rank;
+import fr.aiidor.uhc.scenarios.ScenariosManager;
 import fr.aiidor.uhc.team.UHCTeam;
-import net.minecraft.server.v1_8_R3.EntityLiving;
+import fr.aiidor.uhc.tools.Teleportation;
+import net.minecraft.server.v1_8_R3.EntityPlayer;
+import net.minecraft.server.v1_8_R3.PacketPlayInClientCommand;
+import net.minecraft.server.v1_8_R3.PacketPlayInClientCommand.EnumClientCommand;
 
 public class UHCPlayer {
 	
@@ -33,11 +41,16 @@ public class UHCPlayer {
 	
 	private int kill = 0;
 	
+	//DEATH
+	private Location death_loc;
+	private ItemStack[] contents;
+	private ItemStack[] armor_contents;
+	
 	public UHCPlayer(Player player, PlayerState state, Rank rank, Game game) {
 		
 		this.uuid = player.getUniqueId();
 		
-		this.setName(player.getName());
+		this.refreshName(player);
 		this.setRank(rank);
 		
 		this.state = state;
@@ -47,10 +60,6 @@ public class UHCPlayer {
 
 	public UUID getUUID() {
 		return uuid;
-	}
-	
-	public Game getGame() {
-		return game;
 	}
 	
 	public Boolean isPlaying() {
@@ -64,7 +73,7 @@ public class UHCPlayer {
 	public Boolean isDead() {
 		return state == PlayerState.DEAD;
 	}
-	
+
 	public Boolean isSpec() {
 		return state == PlayerState.SPECTATOR || rank == Rank.SPECTATOR || state == PlayerState.DEAD;
 	}
@@ -73,12 +82,25 @@ public class UHCPlayer {
 		return rank.hasPermission(perm);
 	}
 	
-
-	public void setName(String name) {
-		this.name = name;
+	public void refreshName(Player player) {
+		if (this.name != null && !this.name.equals(player.getName())) {
+			if (game.getScoreboard().getEntryTeam(name) != null) {
+				
+				Team t = game.getScoreboard().getEntryTeam(name);
+				t.removeEntry(name);
+				t.addEntry(player.getName());
+			}
+		}
+		
+		this.name = player.getName();
 	}
 	
 	public String getName() {
+		return name;
+	}
+	
+	public String getDisplayName() {
+		if (hasTeam()) return getTeam().getTeam().getPrefix() + name + getTeam().getTeam().getSuffix();
 		return name;
 	}
 	
@@ -106,7 +128,6 @@ public class UHCPlayer {
 		this.rank = rank;
 	}
 	
-
 	public int getKills() {
 		return kill;
 	}
@@ -133,6 +154,55 @@ public class UHCPlayer {
 		}
 	}
 	
+	public void kill() {
+		
+		setState(PlayerState.DEAD);
+		
+		Player player = getPlayer();
+		PlayerInventory inv = player.getInventory();
+			
+		this.death_loc = player.getLocation();
+		this.contents = inv.getContents();
+		this.armor_contents = inv.getArmorContents();
+		
+		reset();
+	}
+	
+	public void revive(Boolean location, Boolean inventory) {
+		
+		if (isConnected()) {
+			
+			setState(PlayerState.ALIVE);
+			reset();
+			
+			Player player = getPlayer();
+			player.setNoDamageTicks(20 * 20);
+			
+			if (ScenariosManager.BELIEVE_FLY.isActivated()) {
+				player.setAllowFlight(true);
+			}
+			
+			PacketPlayInClientCommand paquet = new PacketPlayInClientCommand(EnumClientCommand.PERFORM_RESPAWN);
+			((CraftPlayer) player).getHandle().playerConnection.a(paquet);
+	            	
+			if (inventory) {
+				if (this.contents != null) player.getInventory().setContents(this.contents);
+				if (this.armor_contents != null) player.getInventory().setArmorContents(this.armor_contents);
+			}
+			
+	    	if (location && death_loc != null) player.teleport(death_loc);
+	    	else new Teleportation(this).revive(300).teleport();
+		}
+	}
+	
+	public Boolean hasArmor() {
+		for (ItemStack i : getPlayer().getInventory().getArmorContents()) {
+			if (i != null && i.getType() != Material.AIR) return true;
+		}
+		
+		return false;
+	}
+	
 	public List<ItemStack> giveItem = new ArrayList<ItemStack>();
 	
 	public void giveItem(ItemStack item) {
@@ -152,7 +222,34 @@ public class UHCPlayer {
 	private List<PotionEffect> addPotionEffect = new ArrayList<PotionEffect>();
 	private List<PotionEffectType> removePotionEffect = new ArrayList<PotionEffectType>();
 	
-	public void addPotionEffect(PotionEffect pe) {
+	public void setAbso(Integer amount, Integer time) {
+		if (isConnected()) {
+			if (amount > 0) {
+				if (amount%2 == 0) {
+					addPotionEffect(new PotionEffect(PotionEffectType.ABSORPTION, time, amount/2 - 1, true, true));
+				} else {
+					
+					if (addPotionEffect(new PotionEffect(PotionEffectType.ABSORPTION, time, (Integer) amount/2, true, true))) {
+						EntityPlayer ep = ((CraftPlayer) getPlayer()).getHandle();
+						ep.setAbsorptionHearts(ep.getAbsorptionHearts() - 2);
+					}
+				}
+			}
+		}
+	}
+	
+	public Integer getPotionAmplifier(PotionEffectType pe) {
+		
+		if (isConnected()) {
+			for (PotionEffect p : getPlayer().getActivePotionEffects()) {
+				if (pe.equals(p.getType())) return p.getAmplifier();
+			}
+		}
+			
+		return null;
+	}
+	
+	public Boolean addPotionEffect(PotionEffect pe) {
 		
 		Iterator<PotionEffectType> pl = removePotionEffect.iterator();
 		
@@ -174,23 +271,29 @@ public class UHCPlayer {
 								
 								getPlayer().removePotionEffect(p.getType());	
 								getPlayer().addPotionEffect(pe);
+								
+								return true;
 							}	
 							
 						} else if (pe.getAmplifier() >= p.getAmplifier()) {
 							
 							getPlayer().removePotionEffect(p.getType());	
 							getPlayer().addPotionEffect(pe);
+							
+							return true;
 						}
 						
-						return;
+						return false;
 					}
 				}
 			}
 			
 			getPlayer().addPotionEffect(pe);
+			return true;
 		
 		} else {
 			addPotionEffect.add(pe);
+			return false;
 		}
 	}
 	
@@ -225,8 +328,12 @@ public class UHCPlayer {
 					}
 				}
 				
+				for (PotionEffect pe : addPotionEffect) {
+					addPotionEffect(pe);
+				}
+				
 				for (PotionEffectType pe : removePotionEffect) {
-					player.removePotionEffect(pe);
+					removePotionEffect(pe);
 				}
 			}
 			
@@ -266,12 +373,22 @@ public class UHCPlayer {
 			
 			Player player = getPlayer();
 			
-			if (getState() == PlayerState.SPECTATOR || getState() == PlayerState.DEAD) player.setGameMode(GameMode.SPECTATOR);
-			else {
+			if (getState() == PlayerState.SPECTATOR || getState() == PlayerState.DEAD)  {
+				
+				player.setGameMode(GameMode.SPECTATOR);
+				if (hasTeam()) getTeam().getTeam().removeEntry(name);
+				game.getScoreboard().getTeam(Lang.TEAM_SPEC_NAME.get()).addEntry(name);
+				
+			} else {
+				
 				player.setAllowFlight(false);
 				player.setFlying(false);
 				player.setGameMode(GameMode.SURVIVAL);
+				
+				if (hasTeam()) getTeam().getTeam().addEntry(name);
 			}
+			
+			refreshName(player);
 			
 			player.setCompassTarget(new Location(player.getWorld(), 0, 100, 0));
 			player.closeInventory();
@@ -298,7 +415,7 @@ public class UHCPlayer {
 				if (player.hasAchievement(a)) player.removeAchievement(a);
 			}
 			
-			EntityLiving cp = ((CraftPlayer)player).getHandle();
+			EntityPlayer cp = ((CraftPlayer)player).getHandle();
 			cp.setAbsorptionHearts(0);
 			cp.setInvisible(false);
 		}

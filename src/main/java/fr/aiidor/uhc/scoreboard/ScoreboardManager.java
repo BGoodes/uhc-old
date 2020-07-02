@@ -33,7 +33,7 @@ import fr.aiidor.uhc.enums.UHCFile;
 
 public class ScoreboardManager {
 	
-    private final Map<UUID, PersonalScoreboard> scoreboards;
+    public final Map<UUID, PersonalScoreboard> scoreboards;
     
     private int ipCharIndex;
     private int cooldown;
@@ -60,15 +60,17 @@ public class ScoreboardManager {
     	this.ipCharIndex = 0;
     	this.cooldown = 0;
         
-    	this.ipColor = ChatColor.valueOf(config.getString("ip-fade-color.text-color").toUpperCase());
-    	this.pointColor = ChatColor.valueOf(config.getString("ip-fade-color.point").toUpperCase());
-    	this.fadeColor = ChatColor.valueOf(config.getString("ip-fade-color.fade").toUpperCase());
-        
-    	this.cooldown_time = config.getInt("ip-fade-cooldown");
-        
-    	this.fade = config.getBoolean("ip-fade");
+    	this.ipColor = ChatColor.valueOf(config.getString("ip-color.text-color").toUpperCase());
     	
-    	Integer ipFadeUnit =  config.getInt("ip-fade-unit");
+    	//FADE
+    	this.pointColor = ChatColor.valueOf(config.getString("fade.ip-fade-color.point").toUpperCase());
+    	this.fadeColor = ChatColor.valueOf(config.getString("fade.ip-fade-color.fade").toUpperCase());
+        
+    	this.cooldown_time = config.getInt("fade.ip-fade-cooldown");
+        
+    	this.fade = config.getBoolean("fade.ip-fade");
+    	
+    	Integer ipFadeUnit =  config.getInt("fade.ip-fade-unit");
         
         UHC.getInstance().getScheduledExecutorService().scheduleAtFixedRate(() ->  {
                 	
@@ -93,9 +95,7 @@ public class ScoreboardManager {
     }
 
     public void onLogin(Player player) {
-        if (scoreboards.containsKey(player.getUniqueId())) {
-            return;
-        }
+        if (scoreboards.containsKey(player.getUniqueId())) return;
         scoreboards.put(player.getUniqueId(), new PersonalScoreboard(player));
     }
 

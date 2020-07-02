@@ -12,6 +12,7 @@ import org.bukkit.inventory.ItemStack;
 
 import fr.aiidor.uhc.enums.Lang;
 import fr.aiidor.uhc.game.UHCPlayer;
+import fr.aiidor.uhc.listeners.events.GuiClickEvent;
 import fr.aiidor.uhc.tools.ItemBuilder;
 
 public abstract class Gui {
@@ -50,17 +51,30 @@ public abstract class Gui {
 		return new ItemBuilder(Material.STAINED_GLASS_PANE, data, " ").getItem();
 	}
 	
+	public ItemStack getConfigItem(String display_name, Boolean state) {
+		return getConfigItem(null, null, display_name, state);
+	}
+	
+	public ItemStack getConfigItem(String display_name, Integer i) {
+		return getConfigItem(null, null, display_name, i != 0);
+	}
+	
+	public ItemStack getConfigItem(Material material, String display_name, Integer i) {
+		return getConfigItem(material, null, display_name, i != 0);
+	}
+	
 	public ItemStack getConfigItem(Material material, String display_name, Boolean state) {
 		return getConfigItem(material, null, display_name, state);
+	}
+	
+	public ItemStack getConfigItem(Material material, Byte data, String display_name, Integer i) {
+		return getConfigItem(material, data, display_name, i != 0);
 	}
 	
 	public ItemStack getConfigItem(Material material, Byte data, String display_name, Boolean state) {
 		ItemBuilder builder;
 		
-		if (display_name == null) {
-			if (state) display_name = (Lang.INV_ON.get());
-			else display_name = (Lang.INV_OFF.get());
-		}
+		if (display_name == null) display_name = (Lang.INV_STATE.get());
 			
 		if (material == null) {
 			if (state) builder = new ItemBuilder(Material.INK_SACK, display_name, (byte) 10);

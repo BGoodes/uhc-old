@@ -1,21 +1,24 @@
 
 package fr.aiidor.uhc.game;
 
+import java.util.Set;
 import java.util.UUID;
 
 import org.bukkit.Bukkit;
-import org.bukkit.Sound;
 import org.bukkit.World;
 import org.bukkit.entity.Player;
 
+import fr.aiidor.uhc.UHC;
 import fr.aiidor.uhc.enums.GameState;
 import fr.aiidor.uhc.enums.Lang;
-import fr.aiidor.uhc.enums.LangTag;
-import fr.aiidor.uhc.enums.UHCType;
+import fr.aiidor.uhc.enums.Permission;
+import fr.aiidor.uhc.enums.PlayerState;
+import fr.aiidor.uhc.enums.TeamType;
+import fr.aiidor.uhc.enums.UHCFile;
+import fr.aiidor.uhc.gamemodes.UHCMode;
 import fr.aiidor.uhc.scenarios.Scenario;
-import fr.aiidor.uhc.scenarios.ScenariosManager;
-import fr.aiidor.uhc.team.UHCTeam;
 import fr.aiidor.uhc.tools.Titles;
+import fr.aiidor.uhc.tools.UHCItem;
 
 public class GameManager {
 	
@@ -34,14 +37,85 @@ public class GameManager {
 		this.game = game;
 	}
 	
-	public Game createGame(String name, UHCType type, GameSettings settings, Player host, World world) {
-		this.game = new Game(name, type, settings, host, world);
+	public Game createGame(String name, UHCMode mode, GameSettings settings, Player host, Set<UHCPlayer> players, World world) {
+		this.game = new Game(name, mode, settings, host, players, world);
 		return game;
 	}
 	
 	public void restartGame() {
-		this.game.delete();
-		this.game = createGame(game.getName(), game.getType(), game.getSettings(), game.getHost().getPlayer(), game.getMainWorld().getOverWorld());
+		
+		if (game.isRunning()) game.getRunner().stop();
+		
+		for (Scenario s : game.getSettings().getActivatedScenarios()) {
+			s.reload();
+		}
+		
+		game.getUHCMode().stop();
+		
+		Set<UHCPlayer> players = game.getAllPlayers();
+		
+		
+		createGame(game.getName(), game.getUHCMode(), game.getSettings(), null, null, game.getMainWorld().getOverWorld());
+		
+		if (UHC.getInstance().getSettings().hasCage()) {
+			UHC.getInstance().getSettings().cage.create();
+		}
+		
+		for (UHCPlayer p : players) {
+			
+			p.reset();
+			
+			if (p.isConnected()) {
+				
+				Player player = p.getPlayer();
+				player.setScoreboard(game.getScoreboard());
+				
+				game.addUHCPlayer(new UHCPlayer(player, PlayerState.ALIVE, p.getRank(), game));
+				
+				player.teleport(UHC.getInstance().getSettings().lobby);
+				
+				if (p.hasPermission(Permission.CONFIG)) {
+					player.getInventory().setItem(4, UHCItem.getConfigChest());
+				}
+				
+				if (game.hasTeam()) {
+					if (game.getSettings().team_type == TeamType.CHOOSE) {
+						if (p.hasTeam()) {
+							player.getInventory().setItem(8, UHCItem.getTeamSelecter(p.getTeam()));
+						} else {
+							player.getInventory().setItem(8, UHCItem.getTeamSelecter());
+						}
+					}
+				}
+			}
+
+		}
+	}
+	
+	
+	public void stopGame() {
+		
+		if (game.isRunning()) game.getRunner().stop();
+		
+		game.setState(GameState.ENDING);
+		
+		if (UHCFile.CONFIG.getYamlConfig().getBoolean("ServerManager.server-restart")) {
+			
+			Bukkit.broadcastMessage(Lang.BC_SERVER_RESTART.get());
+			
+			Bukkit.getScheduler().runTaskLater(UHC.getInstance(), new Runnable() {
+				
+				@Override
+				public void run() {
+					
+					for (Player p : Bukkit.getOnlinePlayers()) {
+						p.kickPlayer(Lang.CAUSE_SERVER_CLOSE.get());
+					}
+					
+					Bukkit.shutdown();
+				}
+			}, 20 * 60);
+		}
 	}
 	
 	//PLAYERS
@@ -62,6 +136,8 @@ public class GameManager {
 	
 	public void end() {
 		
+		if (!game.getSettings().can_win) return;
+		
 		if (game.getAlivePlayers().isEmpty()) {
 			Bukkit.broadcastMessage(Lang.BC_DRAW.get());
 			
@@ -74,63 +150,6 @@ public class GameManager {
 			stopGame();
 		}
 		
-		
-		if (!game.hasTeam()) {
-			
-			if (game.getAlivePlayers().size() == 1) {
-				for (UHCPlayer player : game.getAlivePlayers()) {
-					
-					Bukkit.broadcastMessage(Lang.BC_SOLO_VICTORY.get().replace(LangTag.PLAYER_NAME.toString(), player.getName()));
-					if (player.isConnected()) new Titles(player.getPlayer()).sendTitle(Lang.BC_VICTORY_TITLE_LINE_1.get(), Lang.BC_VICTORY_TITLE_LINE_2.get(), 60);
-					
-					for (UHCPlayer p : game.getIngamePlayers()) {
-						if (p.isConnected() && p.isDead()) {
-							new Titles(p.getPlayer()).sendTitle(Lang.BC_LOSE_TITLE_LINE_1.get(), Lang.BC_LOSE_TITLE_LINE_2.get(), 60);
-						}
-					}
-					
-					stopGame();
-					break;
-				}
-			}
-		}
-		
-		else {
-			
-			if (game.getAliveTeams().size() == 1) {
-				
-				if (ScenariosManager.ONLY_ONE_WINNER.isActivated()) {
-					game.destroyTeams();
-					game.playSound(Sound.GHAST_MOAN, 0.6f);
-					game.broadcast(Lang.BC_ONE_WINNER.get());
-					return;
-				}
-				
-				for (UHCTeam team : game.getAliveTeams()) {
-					
-					Bukkit.broadcastMessage(Lang.BC_TEAM_VICTORY.get().replace(LangTag.TEAM_NAME.toString(), team.getName()));
-					for (UHCPlayer p : game.getIngamePlayers()) {
-						if (p.isConnected()) {
-							if (p.isDead()) new Titles(p.getPlayer()).sendTitle(Lang.BC_LOSE_TITLE_LINE_1.get(), Lang.BC_LOSE_TITLE_LINE_2.get(), 60);
-							else new Titles(p.getPlayer()).sendTitle(Lang.BC_VICTORY_TITLE_LINE_1.get(), Lang.BC_VICTORY_TITLE_LINE_2.get(), 60);
-						}
-					}
-					
-					stopGame();
-					break;
-				}
-			}
-			
-		}
-	}
-	
-	private void stopGame() {
-		
-		for (Scenario s : game.getSettings().getActivatedScenarios()) {
-			s.stop();
-		}
-		
-		game.getRunner().stop();
-		game.setState(GameState.ENDING);
+		game.getUHCMode().end();
 	}
 } 

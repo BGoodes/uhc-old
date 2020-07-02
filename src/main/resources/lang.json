@@ -1,6 +1,10 @@
 {
 	"prefix" : "§5§lUHC §8»",
 	"error" : "§6§lErreur §8»",
+	"info-prefix" : "§c§lInfo §8»",
+		
+	"dw-prefix" : "§4§lDW-UHC §8»",
+	"tg-prefix" : "§6Taupe§f-§cGun §8»",
 	
 	"inventory" : {
 		
@@ -25,8 +29,14 @@
 		"inv-off" : "§c[Désactivé]",
 		"inv-state" : "§7État : ",
 		
+		"inv-time-option" : "§7Temps : §a{value}",
 		"minute" : "min",
 		"second" : "s",
+		
+		"minutes" : "minutes",
+		"secondes" : "secondes",
+		
+		"inv-probability-option" : "§7Probabilité : §a{value}",
 		
 		"config-menu" : {
 		
@@ -42,9 +52,7 @@
 		
 			"inv-life" : "§dGestion de la vie",
 			"inv-loots" : "§aLes Loots",
-			"inv-crafts" : "§2Crafts Personnalisés",
-			"inv-chat" : "§cParamètres du chat",
-			"inv-rules" : "§4Les règles"
+			"inv-rules" : "§5Les règles"
 		},
 		
 		"config-teams" : {
@@ -90,7 +98,18 @@
 		
 		"config-life" : {
 			"inv-gapples-config" : "§6Gestion des pommes d'or",
-			"inv-uhc-gapples" : "§eUHC Gapples"
+			"inv-uhc-gapples" : "§eUHC Gapples",
+			"inv-life-display-config" : "§5Gestion affichage de la vie",
+			"inv-life-display" : "§eAffichage de la vie",
+			"inv-life-display-head" : "§bAffichage au dessus de la tête",
+			"inv-life-display-bow" : "§bAffichage quand touché à l'arc",
+			
+			"inv-life-gapple" : "§eGolden Apple",
+			"inv-life-happle" : "§6Golden Head",
+			"inv-life-napple" : "§5Notch Apple",
+
+			"inv-life-abso" : "§bAbsorption : §7{value}",
+			"inv-life-effects" : "§5Gestions des effets"
 		},
 		
 		"config-loots" : {
@@ -104,7 +123,27 @@
 			"inv-trees-drop-sapling" : "§aDrop des pousses"
 		},
 		
+			
+		"inv-categories" : "§5§oCatégories : §d",
+		"inv-category" : "§7Catégorie §8» §6",
+	
+		"categories" : {
+			"ALL" : "§aTout",
+			"RUN" : "§dRun",
+			"PVP" : "§dPvp",
+			"SURVIVAL" : "§dSurvie",
+			"GENERATION" : "§dGénération",
+			"ENCHANTMENT" : "§dEnchantement",
+			"FUN" : "§dFun",
+			"ANIME" : "§dAnime",
+			"OTHER" : "§dAutre"
+		},
+	
 		"inv-scenario-list" : "§2Les Scénarios :"
+	},
+	
+	"items" : {
+		"player-head-name" : "§cTête de §6{player-name}"
 	},
 	
 	"title" : {
@@ -117,6 +156,12 @@
 	},
 	
 	"message" : {
+		"msg-chat" : "§f{player-name} §8»§7 {value}",
+		"msg-chat-off" : "{prefix} §cLe chat est désactivé !",
+		"msg-private-send" : "§8[§7Moi §7-> §b{player-name} §8] §8» §6{value}",
+		"msg-private-receive" : "§8[§b{player-name} §7-> Moi §8] » §6{value}",
+		"msg-chat-team" : "§7[Equipe] §f{player-name} §8»§7 {value}",
+		"msg-chat-spec" : "§7[Spectateur] §f{player-name} §8»§7 {value}",
 		"msg-bow-damage" : "{prefix} §e{player-name} §7est maintenant à {value}"
 	},
 	
@@ -134,6 +179,10 @@
 		
 		"bc-wb-wait": "{prefix} §7Réduction de la bordure dans §a{time} minute(s).",
 		"bc-wb-start": "{prefix} §7La bordure va désormais réduire jusqu'en §a{value} x {value}.",
+		
+		"bc-broadcast" : "§8-------------------------------\n{info-prefix} §6{value}\n§8-------------------------------",
+		
+		"bc-revive" : "{info-prefix} §aLe joueur {player-name}§a a été ramené à la vie !",
 		
 		"death" : {
 			"bc-death": "§8» §e{player-name} §7{reason} §8«",
@@ -238,7 +287,10 @@
 			
 			"bc-draw" : "{prefix} §f§l§k!!!§6 Tous le monde est mort donc personne ne gagne la partie ! §f§l§k!!!",
 		 	"bc-solo-victory" : "{prefix} §f§l§k!!!§6 Le joueur §e{player-name} §6remporte la partie ! §f§l§k!!!",
-		 	"bc-team-victory" : "{prefix} §f§l§k!!!§6 L'équipe §e{team-name} §6remporte la partie ! §f§l§k!!!"
+		 	"bc-team-victory" : "{prefix} §f§l§k!!!§6 L'équipe §e{team-name} §6remporte la partie ! §f§l§k!!!",
+		 	
+		 			
+			"bc-server-restart" : "{prefix} §cFermeture du serveur dans 1 minute !"
 		 }
 	},
 	
@@ -247,31 +299,47 @@
 		"team-leave" : "{prefix} §cVous venez de quitter l'équipe {team-name}§c.",
 		"team-full" : "{prefix} §cErreur, cette équipe est complète !",
 		"team-players" : "§eJoueurs : §a{team-player-count}§7/{team-size}",
-		"team-player-t-play" : "{prefix} §cVous n'avez pas eu d'équipe attribué ! Vous ne pourrez donc pas jouer cette partie."
-	},
-	
-	"team-color" : {
-		"GRAY" : "Gris",
-		"RED" : "Rouge",
-		"GOLD" : "Orange",
-		"YELLOW" : "Jaune",
-		"GREEN" : "Vert",
-		"AQUA" : "Bleu clair",
-		"LIGHT_PURPLE" : "Violet",
-		"BLUE" : "Bleu",
-		"DARK_PURPLE" : "Mauve",
-		"DARK_AQUA" : "Cyan",
-		"DARK_GREEN" : "Vert foncé"
+		"team-player-cannot-play" : "{prefix} §cVous n'avez pas eu d'équipe attribué ! Vous ne pourrez donc pas jouer cette partie.",
+		
+		"team-spec-name" : "@Spectateur",
+		"team-spec-prefix" : "§8[Spec] ",
+		
+		"team-color" : {
+			"GRAY" : "Gris",
+			"RED" : "Rouge",
+			"GOLD" : "Orange",
+			"YELLOW" : "Jaune",
+			"GREEN" : "Slime",
+			"AQUA" : "Bleu clair",
+			"LIGHT_PURPLE" : "Violet",
+			"BLUE" : "Bleu",
+			"DARK_PURPLE" : "Mauve",
+			"DARK_AQUA" : "Cyan",
+			"DARK_GREEN" : "Vert"
+		},
+		
+		"team-type" : {
+			"CHOOSE" : "§aÉquipes prédéfinis",
+			"RANDOM" : "§aÉquipes aléatoires",
+			"CREATE" : "§aÉquipes modifiable"
+		}
 	},
 	
 	"uhc-type" : {
-		"CLASSIC" : "§aUHC Classique"
-	},
-	
-	"team-type" : {
-		"CHOOSE" : "§aÉquipes prédéfinis",
-		"RANDOM" : "§aÉquipes aléatoires",
-		"CREATE" : "§aÉquipes modifiable"
+		"CLASSIC" : {
+			"name" : "§aClassique",
+			"tab-name" : "§5§lUHC"
+		},
+		
+		"TAUPE_GUN" : {
+			"name" : "§cTaupe §6Gun",
+			"tab-name" : "§cTaupe §6Gun"
+		},
+		
+		"DEVIL_WATCHES" : {
+			"name" : "§4Devil Watches",
+			"tab-name" : "§4§lDW UHC"
+		}
 	},
 	
 	"staff" : {
@@ -287,15 +355,19 @@
 			"st-error-scenario-pvp" : "{error} §cL'état de ce scénario ne peut être changé qu'avant le pvp.",
 			"st-error-scenario-condition" : "{error} §cLes conditions nécessaires à l'activation de ce scénario ne sont pas respectées.",
 			"st-error-scenario-compatibility" : "{error} §cLe scénario §o{value-1}§c a été désactivé car il est incompatible avec le scénario §o{value-2}.",
+			"st-error-gamemode-compatibility" : "{error} §cLe scénario §o{value}§c a été désactivé car il est incompatible avec le mode de jeu §o{game-type}.",
 			"st-error-option-start" : "{error} §cVous ne pouvez pas modifier ce paramètre après le lancement de la partie.",
 			"st-error-option-pvp" : "{error} §cVous ne pouvez pas modifier ce paramètre après le lancement du pvp."
 		}
 	},
 
 	"scoreboard" : {
+		"sb-line" : "§8»§m---------------§8« ",
+		
 		"sb-episode" : "§dEpisode {episode}",
 		"sb-players" : "§7Joueurs : §a{player-count}",
 		"sb-teams" : "§7Equipes : §a{team-count} §f({player-count})",
+		"sb-kills" : "§7Kills : §a{value}",
 
 		"sb-waiting" : "§6Partie en attente !",
 		"sb-starting" : "§6Lancement :§e {timer-s}s",
@@ -304,15 +376,31 @@
 		"sb-timer" : "§7Timer :§6 {timer-m}",
 		"sb-border" : "§7Border :§6 {value}",
 		
-		"sb-host" : "§cHost : §6{player-name}"
+		"sb-host" : "§cHost : §6{player-name}",
+		
+		"sb-kill-score" : "§4§lKills :"
+	},
+	
+	"tablist" : {
+		"tl-connexion" : "§6Ping : §e{value-1}ms §f| §6TPS : §e{value-2}"
 	},
 	
 	"commands" : {
-		"cmd-error-perm" : "{prefix} §cVous n'avez pas la permission pour effectuer cette commande.",
+		"cmd-error-perm" : "{error} §cVous n'avez pas la permission pour effectuer cette commande.",
 		"cmd-help" : "{prefix} §eLa commande s'écrit : {command}.",
-		"cmd-invalid-argument" : "{prefix} §cErreur, la commande s'écrit : {command}.",
-		"cmd-invalid-command" : "{prefix} §cErreur, cette commande n'existe pas !",
-		"cmd-player-offline" : "{prefix} §cErreur, ce joueur n'est pas connecté où n'existe pas !"
+		"cmd-error-invalid-argument" : "{error} §cLa commande s'écrit : {command}.",
+		"cmd-error-invalid-command" : "{error} §cCette commande n'existe pas !",
+		"cmd-error-player-offline" : "{error} §cCe joueur n'est pas connecté ou n'existe pas !",
+		"cmd-error-player-offgame" : "{error} §cCe joueur n'est pas dans la partie.",
+		"cmd-error-player-dead" : "{error} §cVous ne pouvez pas effectuer cette commande sur un joueur mort.",
+		"cmd-error-player-alive" : "{error} Seul un joueur en vie peut effectuer cette commande.",
+		"cmd-error-player-not-dead" : "{error} §cVous ne pouvez pas effectuer cette commande sur un joueur vivant.",
+		"cmd-error-gamemode" : "{error} §cCette commande ne fonctionne qu'avec le mode de jeu §o{value}.",
+		
+		"cmd-error-no-role" : "{error} §cVous devez avoir un rôle pour effectuer cette commande.",
+		"cmd-error-role" : "{error} §cVous devez être §o{role-name}§c pour effectuer cette commande.",
+					
+		"cmd-error-self-msg" : "{error} §cVous ne pouvez pas envoyer de message à vous-même."
 	},
 	
 	"join-state" : {
@@ -333,7 +421,8 @@
 	    "cause-game-close" : "§cCette partie est fermée !",
 	    "cause-game-whitelist" : "§dVous n'êtes pas sur la Whitelist !",
 	    "cause-game-slot" : "§cIl n'y a plus de place dans la partie !",
-		"cause-world-deleting" : "§eLe monde est en cours de suppression..."
+		"cause-world-deleting" : "§eLe monde est en cours de suppression...",
+		"cause-server-close" : "§cFermeture du serveur"
 	},
 	
 	"motd" : {
@@ -365,7 +454,7 @@
 	},
 	
 	"scenarios" : {
-	
+		
 		"scenario" : "Scénario",
 		"condition" : "Condition(s)",
 		"error-condition-to2" : "{error} §cLe scénario {value} n'a pas pu être activé car il ne fonctionne que avec des équipes de deux joueurs.",
@@ -477,12 +566,12 @@
 		
 		"bedbomb" : {
 			"name" : "§6BedBomb",
-			"description" : "§7Les lits §6explosent§7 lorsque que l'on interagit avec dans\n§ftoutes les dimensions§7."
+			"description" : "§7Les lits §6explosent§7 lorsque que l'on interagit avec\n§7dans§ftoutes les dimensions§7."
 		},
 		
 		"timebomb" : {
 			"name" : "§6TimeBomb",
-			"description" : "§7Le stuff spawn §fdans un coffre§7 quand on fait §cun kill§7,\n§7il §6explose §7au bout de d'un certains nomnre de secondes.§7."
+			"description" : "§7Le stuff est posé §fdans un coffre§7 quand un joueur §cmeurt§7,\n§7il §6explose §7au bout de d'un certain nombre de secondes."
 		},
 		
 		"stingy-world" : {
@@ -505,7 +594,7 @@
 		
 		
 		"eternal-items" : {
-			"name" : "§bEternal Items",
+			"name" : "§5Eternal Items",
 			"description" : "§7Les items ne §fdespawn plus§7."
 		},
 		
@@ -542,7 +631,7 @@
 		
 		"superheroes" : {
 			"name" : "§eSuperheroes",
-			"description" : "§7Lors de votre apparition, vous obtiendrez §fun pouvoir aléatoire§7.",
+			"description" : "§7Tous les joueurs obtiennent §fun pouvoir aléatoire§7.",
 			"powers" : "§a§nPouvoirs :",
 			"power" : {
 				"STRENGTH" : "§cForce",
@@ -556,7 +645,7 @@
 		
 		"bookception" : {
 			"name" : "§dBookception",
-			"description" : "§7Quand un joueur §cmeurt§7, il drop un §flivre enchanté §7aléatoire."
+			"description" : "§7Quand un joueur §cmeurt§7, il drop un §flivre \n§fenchanté §7aléatoire."
 		},
 		
 		"only-one-winner" : {
@@ -572,29 +661,58 @@
 		
 		"puppy-power" : {
 			"name" : "§aPuppy Power",
-			"description" : "§7Lors de votre spawn vous obtenez :\n §8» §a64 §foeufs de loup \n §8» §a64 §f §fos \n §8» §a64 §f viandes de zombie"
+			"description" : "§7Tous les joueurs obtiennent, en début de partie :\n §8» §a64 §foeufs de loup \n §8» §a64 §f §fos \n §8» §a64 §f viandes de zombie"
 		},
 		
 		"cupid" : {
 			"name" : "§dCupid",
-			"description" : "§7Quand un joueur §7touche un autre à l'arc, §7il vol §fun certain pourcentage de vie§7.",
+			"description" : "§7Quand un joueur touche un autre à l'arc, \n§7il vol §fun certain pourcentage de vie§7.",
 			"cupid-heal" : "§7Vole §d{value}% §7de vie."
+		}, 
+		
+		"inventors" : {
+			"name" : "§eInventors",
+			"description" : "§7Quand un joueur §fcraft en premier un item,\n§7il est affiché dans le chat.",
+			"invention" : "§e{player-name}§6 à inventé :§f {value} §6!"
+		}, 
+		
+		"mystery-teams" : {
+			"name" : "§5Mystery Teams",
+			"description" : "§7Les pseudos des joueurs §fsont brouillé§7."
+		},
+		
+		"bow-swap" : {
+			"name" : "§3Bow Swap",
+			"description" : "§7Quand un joueur touche un autre à l'arc, il y une probabilité \n§7que les deux joueurs §féchangent leurs positions."
+		}, 
+		
+		"highway-to-hell" : {
+			"name" : "§4Highway to hell",
+			"description" : "§7Tous les joueurs obtiennent, §fen début de partie,\n§7de quoi aller dans §cle nether."
+		},
+		
+		"soup" : {
+			"name" : "§aSoup",
+			"description" : "§7Quand un joueur §futilise une soupe,§7 il la consomme\n§7instantanément regagnant ainsi de la vie."
+		},
+		
+		"double-jump" : {
+			"name" : "§bDouble Jump",
+			"description" : "§7Les joueurs peuvent effectuer §fun double saut."
+		},
+		
+		"tracker" : {
+			"name" : "§cTracker",
+			"description" : "§7En faisant §fclique droit §7avec un compas en main,\n§7vous pouvez §ctraquer§7 le joueur le plus proche.",
+			"tracker-no-target" : "{prefix} §cLe Traqueur n'a pas trouvé de cible.",
+			"tracker-target" : "{prefix} §eVous ciblez §l{player-name}§e qui se trouve à {value} blocs."
+		},
+		
+		"master-level" : {
+			"name" : "§2Master Level",
+			"description" : "§7Permet de choisir §fle niveau des joueurs§7 en début de partie.",
+			"start-level" : "§aNiveau : §e{value}"
 		}
-	},
-	
-	"inv-categories" : "§5§oCatégories : §d",
-	"inv-category" : "§7Catégorie §8» §6",
-	
-	"categories" : {
-		"ALL" : "§aTout",
-		"RUN" : "§dRun",
-		"PVP" : "§dPvp",
-		"SURVIVAL" : "§dSurvie",
-		"GENERATION" : "§dGénération",
-		"ENCHANTMENT" : "§dEnchantement",
-		"FUN" : "§dFun",
-		"ANIME" : "§dAnime",
-		"OTHER" : "§dAutre"
 	},
 	
 	"enchants" : {
@@ -607,6 +725,181 @@
 		"SILK-TOUCH" : "Silk Touch"
 	},
 		
+	"gamemodes" : {
+	
+		"taupe-gun" : {
+			"tg-mole" : "Taupe",
+			"tg-mole-selection" : "{tg-prefix} §6Les taupes on été selectionnées !",
+			"tg-mole-announce" : "{tg-prefix} §cVous êtes taupe, vous devez donc trahir votre équipe actuel afin de gagner avec votre vrai équipe. Pour cela vous disposez d'un kit de départ récupérable à l'aide de la commande /t claim. Vous pouvez aussi parler avec votre équipe avec la commande /t chat."
+		},
+		
+		"devil-watches" : {
+			
+			"camps" : {
+				"VILLAGERS" : {
+					"name" : "§aVillageois",
+					"member" : "villageois",
+					"goal" : "§9Votre objectif de ramener la paix dans le village en tuant démons et sectaires.",
+					"victory-message" : "{dw-prefix} §a§lVictoire du village : la paix par l'extermination des démons a été accomplit."
+				},
+				
+				"SECTARIANS" : {
+					"name" : "§cSectaires",
+					"member" : "sectaire",
+					"goal" : "§9Votre objectif est de ressusciter le devil en gagnant avec la secte.",
+					"victory-message" : "{dw-prefix} §5§lVictoire de la secte qui vont désormais permettre au devil de revenir à la vie."
+				},
+				
+				"DEMONS" : {
+					"name" : "§4Démons",
+					"member" : "démon",
+					"goal" : "§9Votre objectif est gagner avec les démons en tuant le village et la secte.",
+					"victory-message" : "{dw-prefix} §c§lVictoire des démons qui ont tués tout le monde."
+				},
+				
+				"SOLOS" : {
+					"name" : "§6Solos",
+					"member" : "solo",
+					"goal" : "§9Votre objectif est de tuer tout le monde.",
+					"victory-message" : "{dw-prefix} §e§lVictoire de {player-name} qui a tué tout le monde."
+				},
+				
+				"NEUTRALS" : {
+					"name" : "§bNeutres",
+					"member" : "neutre",
+					"goal" : "§9Vous êtes neutre et par conséquent vous n'avez actuellement pas d'objectif.",
+					"victory-message" : "{dw-prefix} §b§lPersonne ne remporte la partie car il ne reste plus que des joueurs neutres."
+				}
+			},
+			
+			"roles" : {
+				
+				"VILLAGER" : {
+					"name" : "Simple Villageois",
+					"lore" : "§9Cependant, vous ne disposez pas de pouvoir spéciaux. Cependant, vous receverez en début de partie les outils et compétences permettant d'exercer votre profession."
+				},
+				
+				"villager-type" : {
+					"MINOR" : {
+						"name" : "Mineur",
+						"lore" : "§9Vous diposez ainsi d'une pioche en diamant efficacité 2 et de l'effet haste I permanent."
+					},
+				
+					"SMITH" : {
+						"name" : "Forgeron",
+						"lore" : "§9Vous disposez ainsi d'une enclume mais aussi d'un livre tranchant II et d'un livre protection II."
+					},
+					
+					"BOOKSELLER" : {
+						"name" : "Libraire",
+						"lore" : "§9Vous disposez ainsi de 8 livres et de 12 bouteilles d'XP."
+					},
+					
+					"GUARD" : {
+						"name" : "Garde",
+						"lore" : "§9Vous disposez ainsi d'un casque en diamant."
+					}
+				},
+				
+				"HUNTER" : {
+					"name" : "Chasseur",
+					"lore" : "§9Lorsque vous utilisez votre arc, plus vous êtes loin de votre cible, plus vous lui infligez de dégats ; à raison de 10% de dégats supplémentaires tous les 15 blocs.Vous disposez aussi de deux capacités passives : \n\"Pistage\" vous permettant d'analyser la dépouille d'un joueur pendant les 5 premières minutes suivant sa mort. \n\"Dépeceur\" augmentant le taux de drop du cuir et des têtes. Enfin, vous avez un livre puissance IV.",
+					"dw-hunter-inspect-null" : "{dw-prefix} §eVous avez trouvé la dépouille de §l{player-name}§e. Cependant, celui ci n'a visiblement pas été tué de la main d'un joueur.",
+					"dw-hunter-inspect-locate" : "{dw-prefix} §6Vous avez trouvé la dépouille de §l{player-name}§6. Vous arrivez alors à savoir que son tueur se trouve en : §e{value}."
+				},
+				
+				"GUARDIAN" : {
+					"name" : "Gardien",
+					"lore" : "§9Chaque épisode vous avez la possibilité de protéger un joueur (y compris vous même) lui confiant ainsi l'effet résistance I durant l'épisode complet. Si votre protégé vient à mourrir, il survivra mais vous perdrez votre pouvoir.",
+					
+					"dw-guardian-can-use" : "{dw-prefix} §bVous pouvez désormais veiller sur un joueur avec la commande /dw protect <pseudo>. Vous avez 5 minutes pour effectuer cette commande.",
+										
+					"dw-guardian-error-target" : "{dw-prefix} §cVous ne pouvez pas veiller deux fois sur la même personne d'affilé.",
+					"dw-guardian-protection-msg" : "{dw-prefix} §eVous veillez désormais sur §l{player-name} §edurant tout l'épisode.",
+					"dw-guardian-protected-msg" : "{dw-prefix} §aLe §oGardien §aveille sur vous, par conséquent si vous venez à mourrir cet épisode, vous survivrez. De plus vous obtenez l'effet resistance I durant toute cette période.",
+					"dw-guardian-protected-death-msg" : "{dw-prefix} §cVotre protégé viens de mourrir, vous lui sauvez donc la vie mais perdez votre pouvoir.",
+					"dw-guardian-protected-death" : "{dw-prefix} §aVous êtes mort mais grâce au pouvoir du §oGardien §aqui veille sur vous, vous survivez."
+				},
+				
+				"GURU" : {
+					"name" : "Gourou",
+					"lore" : "§9Vous êtes le chef de la secte, c'est pour cela que vous disposez de la liste complète des membres. De plus, chaque épisode vous pourrez envoyer un message à tous les sectaires (mais seulement la nuit).",
+					"dw-guru-use" : "{dw-prefix} §bVous pouvez à nouveau faire une annonce aux sectaires avec la commande /dw announce <message> mais seulement la nuit.",
+					"dw-guru-bc" : "§4§lLa secte §8» §c{value}",
+					"dw-announce-night" : "{dw-prefix} §cLes annonces ne peuvent êtres faites que la nuit."
+				},
+				
+				"PROPHET" : {
+					"name" : "Prophète",
+					"lore" : "§9Vous pouvez, 3 fois dans la partie, découvir le rôle et camp d'un joueur contre un coeur permanent grâce à la commande /dw see <pseudo>.",
+					"dw-prophet-prophecy" : "{dw-prefix} §bLa prophétie vous dit que §l{player-name}§b est §o{role-name}§b du coté des {camp-name}."
+				},
+				
+				"MOUNTEBANK" : {
+					"name" : "Saltimbanque",
+					"lore" : "§9En tant que maître des accrobaties, vous disposez de l'effet vitesse I permanent. De plus, vous pouvez faire un super saut en faisant sneak + saut. Enfin, vous recevez un livre Chute amorti IV et 3 ender pearls."
+				},
+				
+				"PROWLER" : {
+					"name" : "Rôdeur",
+					"lore" : "§9En tant que maître des mauvais coups, vous pouvez accomplir un méfait pour changer de camp. Si vous tuez un sectaire, vous rejoignez le village pour fuir la secte et si vous tuez un villageois, vous rejoignez la secte pour fuir le village. De plus, vous êtes discret et fort quand vous enlevez votre armure pendant la moitié du temps de chaque épisode. Enfin, vous disposez de l'effet vitesse I permanent.",
+					"dw-prowler-join" : "{dw-prefix} §cVous avez tué un {value-1}, vous rejoignez donc les {camp-name} pour fuir les {value-2}."
+				},
+				
+				"HERMIT" : {
+					"name" : "Hermite",
+					"lore" : "§9Vous êtes le reclut du village n'ayant ainsi pas l'habitude de cotôyer les villageois. Vous aurez donc l'effet faiblesse I si 4 personnes ou plus vous entourent (dans un rayon de 30 blocs). Si seulement 3 personnes vous entourent, vous n'avez pas d'effet. Cependant cette solitude vous a permis d'être plus fort ce qui vous permet de bénéficier au contraire de l'effet force I de jour et résistance I de nuit quand 2 personnes ou moins vous entourent. Enfin, si vous êtes seul ou en tête à tête avec un joueur, vous gagnez l'effet vitesse I."
+				},
+				
+				"INQUISITOR" : {
+					"name" : "Inquisiteur",
+					"lore" : "§9En tant que membre de l'inquisition, vous cherchez à combattre les hérésies. La Foi qui vous anime vous permet d'obtenir l'effet force I le jour."
+				},
+				
+				"DEMON" : {
+					"name" : "Démon mineur",
+					"lore" : "§9En tant que de démon de bas rang, vous disposez de l'effet force I la nuit."
+				},
+				
+				"CAT_LADY" : {
+					"name" : "Dame aux chats",
+					"lore" : "§9Vous entretenez une relation particulière, et même mystique, avec vos chats. Vous pouvez les entendre vous murmurer des informations sur les autres villageois. Quand ils sont témoin d'un meurtre ou d'un rituel, ils vous le murmure. Vous pouvez utiliser la commande /dw cat pour invoquer un chat sachant que vous ne pouvez pas en avoir plus de 3 en même temps. Enfin, vous ne prenez pas de dégâts de chute car les chats retombent toujours sur leurs pattes.",
+					"dw-cat-meow" : "§dMiaou !",
+					"dw-cat-whisper" : "{dw-prefix} §dUn chat vous murmure {value}.",
+					"dw-cat-whisper-death" : "qu'il va mourrir.",
+					"dw-cat-whisper-death-around" : "qu'il va mourrir entouré de :\n{value}",
+					"dw-cat-whisper-death-killer" : "qu'il va mourrir de la main de §l{player-name}§d",
+					"dw-cat-whisper-kill" : "qu'il vu §l{player-name} §dse faire tuer par §l{value}§d",
+					"dw-cat-number" : "{dw-prefix} §cVous ne pouvez pas avoir plus de 3 chats en même temps."
+				}
+			},
+			
+			"announce" : {
+				"dw-announce-role" : "{dw-prefix} §9Vous êtes §o{role-name}{dw-sectarian}§9.\n{goal} {power}",
+				"dw-sectarian" : "§5 (Sectaire)",
+				"dw-seal" : "§dVous faites partie de la secte et avez reçut le sceau du devil. Par conséquence, en effectuant des rituels vous pouvez acquérir des pouvoirs démoniaques.",
+				"dw-death-reason" : "§d===================§5§kO§d===================\n§9Le village a perdu un de ses membres §l{player-name}§9,\n§9il était §o{role-name}{dw-sectarian}.\n§d=======================================\n",
+				"dw-victory-drawn" : "{dw-prefix} §7Tout le monde est mort donc personne ne gagne la partie."
+			},
+			
+			"message" : {
+				"dw-error-no-power" : "{dw-prefix} §cVous n'avez actuellement plus accès a vos pouvoirs.",
+				"dw-error-no-power-episode" : "{dw-prefix} §cVous avez déjà utilisé votre pouvoir pendant cet épisode.",
+				"dw-error-no-power-episode-time" : "{dw-prefix} §cVous avez déjà utilisé votre pouvoir pendant cet épisode ou avez attendu trop longtemps.",
+				"dw-error-no-power-use" : "{dw-prefix} §cVous avez déjà utilisé votre pouvoir {value} fois.",
+				"dw-error-power-time-limit-episode" : "{dw-prefix} §cVous avez attendu trop longtemps, vous ne pourrez donc utiliser votre pouvoir qu'à partir du prochain épisode !",
+				"dw-sectarians-list" : "§5Liste des sectaires : {value}",
+				"dw-demons-list" : "§4Liste des démons : {value}",
+				"dw-new-sectarian" : "§5{dw-prefix} Un nouveau membre a rejoint la secte. Faites /dw role pour connaître son identité."
+			},
+			
+			"inventory" : {
+				"dw-item-holy-water" : "§bEau bénite",
+				"inv-dw-compo" : "§5Gestion de la composition"
+			}
+		}
+	},
+	
 	"console" : {
 		
 		"error-world-not-found" : "The \"{world-name}\" world does not exist !",

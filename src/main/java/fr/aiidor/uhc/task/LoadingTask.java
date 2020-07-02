@@ -25,6 +25,8 @@ import fr.aiidor.uhc.enums.PlayerState;
 import fr.aiidor.uhc.enums.TeamType;
 import fr.aiidor.uhc.game.Game;
 import fr.aiidor.uhc.game.UHCPlayer;
+import fr.aiidor.uhc.scenarios.ItemScenario;
+import fr.aiidor.uhc.scenarios.ItemScenario.GiveTime;
 import fr.aiidor.uhc.scenarios.ScenariosManager;
 import fr.aiidor.uhc.team.UHCTeam;
 import fr.aiidor.uhc.tools.Teleportation;
@@ -45,8 +47,11 @@ public class LoadingTask extends UHCTask {
 	@Override
 	public void launch() {
 		
+		
+		timer = 20;
+		
 		game.setState(GameState.LOADING);
-		game.getMainWorld().getMainWorld().setTime(23500);
+		game.getMainWorld().getMainWorld().setTime(23500 - 20 * timer);
 		
 		for (World w : game.getWorlds()) {
 			WorldBorder wb = w.getWorldBorder();
@@ -87,6 +92,7 @@ public class LoadingTask extends UHCTask {
 						
 						UHCPlayer p = players.get(new Random().nextInt(players.size()));
 						t.join(p);
+						players.remove(p);
 					}
 				}
 			}
@@ -204,9 +210,8 @@ public class LoadingTask extends UHCTask {
 			}
 		}
 		
-		UHC.getInstance().getSettings().cage.destroy();
-		
-		timer = 20;
+		game.getUHCMode().loading();
+		if (UHC.getInstance().getSettings().hasCage()) UHC.getInstance().getSettings().cage.destroy();
 		
 		game.setRunner(this);
 		runTaskTimer(UHC.getInstance(), 0, 20);
@@ -225,17 +230,17 @@ public class LoadingTask extends UHCTask {
 				if (player.isConnected()) {
 						
 					Player p = player.getPlayer();
+					
+					p.setLevel(0);
+					p.setExp(0);
+					
 					p.getActivePotionEffects().forEach(pot -> p.removePotionEffect(pot.getType()));
 					p.setMaxHealth(game.getSettings().start_life);	
 					
 					game.getSettings().setStartItems(p);
 						
-					if (ScenariosManager.GONE_FISHING.isActivated()) {
-						ScenariosManager.GONE_FISHING.GiveItems(player);
-					}
-					
-					if (ScenariosManager.PUPPY_POWER.isActivated()) {
-						ScenariosManager.PUPPY_POWER.GiveItems(player);
+					for (ItemScenario s : UHC.getInstance().getScenarioManager().getItemScenarios(GiveTime.LOADING)) {
+						if (s.isActivated()) s.GiveItems(player);
 					}
 						
 					if (ScenariosManager.CAT_EYES.isActivated()) {
@@ -244,6 +249,10 @@ public class LoadingTask extends UHCTask {
 						
 					if (ScenariosManager.BELIEVE_FLY.isActivated()) {
 						p.setAllowFlight(true);
+					}
+					
+					if (ScenariosManager.MASTER_LEVEL.isActivated()) {
+						p.setLevel(ScenariosManager.MASTER_LEVEL.level);
 					}
 					
 					if (game.getSettings().start_abso > 0) {
@@ -266,7 +275,9 @@ public class LoadingTask extends UHCTask {
 			game.broadcast(Lang.BC_GAME_START.get());
 			game.broadcast("§8-------------------------------");
 				
-			game.getMainWorld().getMainWorld().setTime(0);
+			for (World w : game.getWorlds()) {
+				w.setTime(23500);
+			}
 				
 			//START
 			new GameTask(game).launch();
@@ -308,7 +319,8 @@ public class LoadingTask extends UHCTask {
 
 	@Override
 	public void stop() {
-		
+		cancel();
+		game.setState(GameState.WAITING);
 	}
 
 	@Override

@@ -15,18 +15,18 @@ public abstract class UHCTask extends BukkitRunnable {
 	
 	public String getTimeString(String format) {
 		
-		int Timer = getTime();
+		int time = getTime();
 		
-		int sec = Timer%60;
-		int min = (Timer/60)%60;
-		int h = Timer/3600;
+		int sec = time%60;
+		int min = (time/60)%60;
+		int h = time/3600;
 		
 		if (!format.contains("%m")) {
-			sec = Timer;
+			sec = time;
 		}
 		
 		if (!format.contains("%h")) {
-			min = Timer/60;
+			min = time/60;
 		}
 		
 		for (int i = 1; i != 4; i++) {

@@ -14,6 +14,10 @@ public class UHCWorld {
 	private World nether;
 	private World end;
 	
+	private Boolean overworld_state = true;
+	private Boolean nether_state = true;
+	private Boolean end_state = true;
+	
 	public UHCWorld(World overworld, Boolean generate) {
 		
 		World end = null;
@@ -63,6 +67,30 @@ public class UHCWorld {
 	
 	public World getEnd() {
 		return end;
+	}
+
+	public Boolean getOverworldState() {
+		return overworld_state;
+	}
+	
+	public Boolean getNetherState() {
+		return nether_state;
+	}
+	
+	public Boolean getEndState() {
+		return end_state;
+	}
+	
+	public void setOverworldState(Boolean state) {
+		this.overworld_state = state;
+	}
+	
+	public void getNetherState(Boolean state) {
+		this.nether_state = state;
+	}
+	
+	public void getEndState(Boolean state) {
+		this.end_state = state;
 	}
 	
 	public List<World> getAll() {

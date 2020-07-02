@@ -45,6 +45,18 @@ public class Teleportation {
         return this;
 	}
 	
+	public Teleportation randomValue(Integer size) {
+        this.tp = getRandomLocation(world, size);
+        return this;
+	}
+	
+	public Teleportation revive(Integer size) {
+		
+		if (size >= world.getWorldBorder().getSize() / 2) size = ((int) world.getWorldBorder().getSize() / 2) - 10;
+        this.tp = getRandomLocation(world, size);
+        return this;
+	}
+	
 	public Boolean teleport() {
 		
 		if (!player.isConnected()) return false;
@@ -59,12 +71,16 @@ public class Teleportation {
 	public static Location getRandomLocation(World world, Integer size) {
         Random random = new Random();
         
-	    int rangeMax = (int) size;
-	    int rangeMin = (int) -size;
-	    
-	   
-	    int x = random.nextInt((rangeMax - rangeMin) + 1) + rangeMin;
-	    int z = random.nextInt((rangeMax - rangeMin) + 1) + rangeMin;
+        int x = 0;
+        int z = 0;
+        
+        if (size > 0) {
+    	    int rangeMax = (int) size;
+    	    int rangeMin = (int) -size;
+    	   
+    	    x = random.nextInt((rangeMax - rangeMin) + 1) + rangeMin;
+    	    z = random.nextInt((rangeMax - rangeMin) + 1) + rangeMin;
+        }
 	    
 	    Chunk c = world.getChunkAt(x, z);
 	    if (c.isLoaded()) c.load(true);
@@ -77,17 +93,23 @@ public class Teleportation {
     		location.setY(149);
     	}
         
-        return location.add(0, 1, 0);
+        return location.add(0, 10, 0);
 	}
 	
 	public static Location getRandomLocation(World world, Integer size, Integer top) {
         Random random = new Random();
         
-	    int rangeMax = (int) size;
-	    int rangeMin = (int) -size;
-	    
-	    int x = random.nextInt((rangeMax - rangeMin) + 1) + rangeMin;
-	    int z = random.nextInt((rangeMax - rangeMin) + 1) + rangeMin;
+        int x = 0;
+        int z = 0;
+        
+        if (size > 0) {
+    	    int rangeMax = (int) size;
+    	    int rangeMin = (int) -size;
+    	   
+    	    x = random.nextInt((rangeMax - rangeMin) + 1) + rangeMin;
+    	    z = random.nextInt((rangeMax - rangeMin) + 1) + rangeMin;
+        }
+        
         int y = top;
         
         return new Location(world, x, y, z);

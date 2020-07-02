@@ -12,7 +12,7 @@ import org.bukkit.inventory.ItemStack;
 import fr.aiidor.uhc.UHC;
 import fr.aiidor.uhc.enums.Category;
 import fr.aiidor.uhc.game.UHCPlayer;
-import fr.aiidor.uhc.inventories.ChangeScenarioStateEvent;
+import fr.aiidor.uhc.listeners.events.ChangeScenarioStateEvent;
 import fr.aiidor.uhc.tools.ItemBuilder;
 
 public class GoodGame extends Scenario {
@@ -55,10 +55,16 @@ public class GoodGame extends Scenario {
 	@Override
 	public void changeStateEvent(ChangeScenarioStateEvent e) {
 		death = false;
+		super.changeStateEvent(e);
 	}
 	
 	public void giveItem(UHCPlayer p) {
 		p.getPlayer().playSound(p.getPlayer().getLocation(), Sound.CAT_MEOW, 0.4f, 1f);
 		Bukkit.getScheduler().runTask(UHC.getInstance(), () -> p.giveItem(items[new Random().nextInt(items.length)]));
+	}
+	
+	@Override
+	public void reload() {
+		death = false;
 	}
 }

@@ -9,7 +9,7 @@ public enum Rank {
 	
 	PLAYER, SPECTATOR, ORGA, HOST, STAFF;
 	
-	private String name;
+	private final String name;
 	
 	private Rank() {
 		this.name = (String) UHCFile.LANG.getJSONObject("rank").get(name());

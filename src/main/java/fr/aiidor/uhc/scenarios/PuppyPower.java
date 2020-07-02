@@ -9,11 +9,8 @@ import org.bukkit.entity.EntityType;
 import org.bukkit.inventory.ItemStack;
 
 import fr.aiidor.uhc.enums.Category;
-import fr.aiidor.uhc.enums.Lang;
-import fr.aiidor.uhc.game.UHCPlayer;
-import fr.aiidor.uhc.inventories.ChangeScenarioStateEvent;
 
-public class PuppyPower extends Scenario {
+public class PuppyPower extends ItemScenario {
 	
 	private List<ItemStack> items;
 	
@@ -47,20 +44,16 @@ public class PuppyPower extends Scenario {
 	public List<Category> getCategories() {
 		return Arrays.asList(Category.PVP, Category.FUN);
 	}
-	
+
 	@Override
-	public void changeStateEvent(ChangeScenarioStateEvent e) {
-		if (e.getGame().isStart()) {
-			
-			e.getPlayer().closeInventory();
-			e.getPlayer().sendMessage(Lang.ST_ERROR_SCENARIO_START.get());
-			e.setCancelled(true);
-		}
+	public GiveTime giveTime() {
+		return GiveTime.LOADING;
+	}
+
+	@Override
+	public List<ItemStack> getItems() {
+		return items;
 	}
 	
-	public void GiveItems(UHCPlayer player) {
-		for (ItemStack item : items) {
-			player.giveItem(item);
-		}
-	}
+	
 }

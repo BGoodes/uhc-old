@@ -12,6 +12,7 @@ import fr.aiidor.uhc.UHC;
 import fr.aiidor.uhc.enums.Lang;
 import fr.aiidor.uhc.game.Game;
 import fr.aiidor.uhc.game.GameSettings;
+import fr.aiidor.uhc.listeners.events.GuiClickEvent;
 import fr.aiidor.uhc.scenarios.Scenario;
 import fr.aiidor.uhc.tools.ItemBuilder;
 
@@ -133,7 +134,6 @@ public class Inv_Scenarios_List extends Gui {
 				
 				Scenario s = gs.getActivatedScenarios().get(index + i);
 				inv.setItem(slot, s.getScenarioIcon(true, false, false));
-
 				
 			} else {
 				break;

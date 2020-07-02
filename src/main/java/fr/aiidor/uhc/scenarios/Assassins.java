@@ -17,11 +17,11 @@ import fr.aiidor.uhc.enums.Lang;
 import fr.aiidor.uhc.enums.LangTag;
 import fr.aiidor.uhc.game.Game;
 import fr.aiidor.uhc.game.UHCPlayer;
-import fr.aiidor.uhc.inventories.ChangeScenarioStateEvent;
 import fr.aiidor.uhc.inventories.Gui;
 import fr.aiidor.uhc.inventories.GuiBuilder;
-import fr.aiidor.uhc.inventories.GuiClickEvent;
 import fr.aiidor.uhc.inventories.GuiManager;
+import fr.aiidor.uhc.listeners.events.ChangeScenarioStateEvent;
+import fr.aiidor.uhc.listeners.events.GuiClickEvent;
 import fr.aiidor.uhc.team.UHCTeam;
 import fr.aiidor.uhc.tools.ItemBuilder;
 
@@ -116,6 +116,8 @@ public class Assassins extends Scenario {
 			e.getPlayer().sendMessage(Lang.ST_ERROR_SCENARIO_PVP.get());
 			e.getPlayer().closeInventory();
 		}
+		
+		super.changeStateEvent(e);
 	}
 	
 	@Override
@@ -132,10 +134,16 @@ public class Assassins extends Scenario {
 	public Boolean isOriginal() {
 		return false;
 	}
-
+	
 	@Override
 	public List<Category> getCategories() {
 		return Arrays.asList(Category.PVP);
+	}
+	
+	@Override
+	public Boolean compatibleWith(Scenario scenario) {
+		if (scenario.equals(ScenariosManager.TRACKER)) return false;
+		return true;
 	}
 	
 	@Override
@@ -148,13 +156,8 @@ public class Assassins extends Scenario {
 		
 		for (UHCPlayer p : game.getAlivePlayers()) {
 			if (hasTarget(p) && getTarget(p).equals(player)) {
-				
-				Bukkit.getScheduler().runTaskLater(UHC.getInstance(), new Runnable() {
-					public void run() {
-						if (p.isConnected()) p.getPlayer().sendMessage(Lang.TARGET_DEATH_MSG.get().replace(LangTag.PLAYER_NAME.toString(), player.getName()));
-						setTarget(p);
-					}
-				}, 1);
+				if (p.isConnected()) p.getPlayer().sendMessage(Lang.TARGET_DEATH_MSG.get().replace(LangTag.PLAYER_NAME.toString(), player.getName()));
+				setTarget(p);
 			}
 		}
 	}
@@ -277,7 +280,11 @@ public class Assassins extends Scenario {
 	}
 	
 	@Override
-	public void stop() {
+	public void reload() {
+		
 		if (task != null) task.cancel();
+		task = null;
+		targets = new HashMap<UHCPlayer, UHCPlayer>();
+		distance = new HashMap<UHCPlayer, Integer>();
 	}
 }

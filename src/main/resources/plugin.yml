@@ -1,8 +1,18 @@
 name: UHC-HOST
-version: 1.0
+version: 1.1
 author: B. Goodes
 main: fr.aiidor.uhc.UHC
 commands:
   host:
-    description: Commande servant pour les organisateurs d'une partie.
+    description: Commands for UHC organizers.
     permission: uhc.host
+  scenarios:
+    description: Commands to see UHC scenarios.
+  dw:
+    description: DW-UHC related commands.
+  taupe:
+    description: Taupe-Gun related commands. 
+  t:
+    description: Taupe-Gun related commands. 
+  msg:
+   description: Command to send private messages.

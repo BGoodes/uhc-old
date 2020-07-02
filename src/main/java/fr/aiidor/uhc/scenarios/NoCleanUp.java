@@ -16,8 +16,8 @@ import fr.aiidor.uhc.enums.Category;
 import fr.aiidor.uhc.game.UHCPlayer;
 import fr.aiidor.uhc.inventories.Gui;
 import fr.aiidor.uhc.inventories.GuiBuilder;
-import fr.aiidor.uhc.inventories.GuiClickEvent;
 import fr.aiidor.uhc.inventories.GuiManager;
+import fr.aiidor.uhc.listeners.events.GuiClickEvent;
 import fr.aiidor.uhc.tools.ItemBuilder;
 
 public class NoCleanUp extends Scenario {
@@ -139,19 +139,17 @@ public class NoCleanUp extends Scenario {
 		return gui;
 	}
 	
-	public void healPlayer(UHCPlayer player) {
+	public void healPlayer(UHCPlayer p) {
 		
-		if (player.isConnected()) {
-			Player p = player.getPlayer();
+		if (p.isConnected()) {
+			Player player = p.getPlayer();
 			
-			if (p.getHealth() + heal <= p.getMaxHealth() ) {
-				p.setHealth(p.getHealth() + heal);
+			if (player.getHealth() + heal <= player.getMaxHealth() ) {
+				player.setHealth(player.getHealth() + heal);
 				
 			} else {
-				p.setHealth(p.getMaxHealth());
+				player.setHealth(player.getMaxHealth());
 			}
 		}
 	}
-
-	
 }

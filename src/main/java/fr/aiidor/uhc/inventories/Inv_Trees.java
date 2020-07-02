@@ -12,6 +12,7 @@ import fr.aiidor.uhc.UHC;
 import fr.aiidor.uhc.enums.Lang;
 import fr.aiidor.uhc.enums.LangTag;
 import fr.aiidor.uhc.game.Game;
+import fr.aiidor.uhc.listeners.events.GuiClickEvent;
 import fr.aiidor.uhc.tools.ItemBuilder;
 
 public class Inv_Trees extends GuiBuilder {

@@ -10,10 +10,9 @@ import org.bukkit.entity.Player;
 public class IdentityChanger {
 	
 	public static void changeName(Player player, String name) {
-		
-		player.setPlayerListName(name);
-		
+
 		try {
+			
 			Method getHandle = player.getClass().getMethod("getHandle",(Class<?>[]) null);
 			try {
 				Class.forName("com.mojang.authlib.GameProfile");
@@ -37,7 +36,7 @@ public class IdentityChanger {
 				all.hidePlayer(player);
 				all.showPlayer(player);
 			}
-			        
+			
 		} catch (NoSuchMethodException | SecurityException| IllegalAccessException | IllegalArgumentException| InvocationTargetException | NoSuchFieldException e) {
 			e.printStackTrace();
 			return;

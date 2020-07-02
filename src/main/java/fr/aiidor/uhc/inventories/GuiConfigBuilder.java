@@ -10,6 +10,7 @@ import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 
 import fr.aiidor.uhc.enums.Lang;
+import fr.aiidor.uhc.listeners.events.GuiClickEvent;
 import fr.aiidor.uhc.tools.ItemBuilder;
 
 public abstract class GuiConfigBuilder extends Gui {
@@ -86,7 +87,7 @@ public abstract class GuiConfigBuilder extends Gui {
 					return;
 				}
 				
-				addValue(Integer.valueOf(event.getItemClicked().getItemMeta().getDisplayName().substring(2).split(" ")[0]));
+				addValue(Integer.valueOf(event.getItemClicked().getItemMeta().getDisplayName().substring(2).split(" ")[0]), event);
 				playClickSound(event.getPlayer());
 				update();
 				return;
@@ -104,6 +105,11 @@ public abstract class GuiConfigBuilder extends Gui {
 	public abstract Gui getBackInventory();
 	public abstract Integer[] getBannersValues();
 	public abstract void addValue(Integer value);
+	
+	public void addValue(Integer value, GuiClickEvent event) {
+		addValue(value);
+	}
+	
 	public abstract List<String> getLore();
 	
 	public String getPrefix() {

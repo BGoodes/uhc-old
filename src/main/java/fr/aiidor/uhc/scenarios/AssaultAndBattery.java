@@ -6,7 +6,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Random;
 
-import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.entity.Arrow;
 import org.bukkit.entity.Player;
@@ -17,13 +16,14 @@ import org.bukkit.inventory.ItemStack;
 import fr.aiidor.uhc.UHC;
 import fr.aiidor.uhc.enums.Category;
 import fr.aiidor.uhc.enums.Lang;
+import fr.aiidor.uhc.enums.UHCType;
 import fr.aiidor.uhc.game.Game;
 import fr.aiidor.uhc.game.UHCPlayer;
-import fr.aiidor.uhc.inventories.ChangeScenarioStateEvent;
 import fr.aiidor.uhc.inventories.Gui;
 import fr.aiidor.uhc.inventories.GuiBuilder;
-import fr.aiidor.uhc.inventories.GuiClickEvent;
 import fr.aiidor.uhc.inventories.GuiManager;
+import fr.aiidor.uhc.listeners.events.ChangeScenarioStateEvent;
+import fr.aiidor.uhc.listeners.events.GuiClickEvent;
 import fr.aiidor.uhc.team.UHCTeam;
 
 public class AssaultAndBattery extends Scenario {
@@ -119,6 +119,12 @@ public class AssaultAndBattery extends Scenario {
 	}
 	
 	@Override
+	public Boolean compatibleWith(UHCType type) {
+		if (type == UHCType.DEVIL_WATCHES) return false;
+		return true;
+	}
+	
+	@Override
 	public Gui getSettings() {
 		return gui;
 	}
@@ -147,6 +153,8 @@ public class AssaultAndBattery extends Scenario {
 			e.getPlayer().sendMessage(Lang.ST_ERROR_SCENARIO_CONDITION.get());
 			e.getPlayer().closeInventory();
 		}
+		
+		super.changeStateEvent(e);
 	}
 	
 	public Boolean canUseSword(UHCPlayer p) {
@@ -173,12 +181,8 @@ public class AssaultAndBattery extends Scenario {
 				
 				if (bow.contains(p)) bow.remove(p);
 				if (sword.contains(p)) sword.remove(p);
-				
-				Bukkit.getScheduler().runTaskLater(UHC.getInstance(), new Runnable() {
-					public void run() {
-						if (p.isConnected()) p.getPlayer().sendMessage(Lang.BC_ANNOUNCE_USE_ALL.get());
-					}
-				}, 1);
+
+				if (p.isConnected()) p.getPlayer().sendMessage(Lang.BC_ANNOUNCE_USE_ALL.get());
 			}
 		}
 	}
@@ -281,5 +285,11 @@ public class AssaultAndBattery extends Scenario {
 				}
 			}
 		}
+	}
+	
+	@Override
+	public void reload() {
+		sword = new ArrayList<UHCPlayer>();
+		bow = new ArrayList<UHCPlayer>();
 	}
 }

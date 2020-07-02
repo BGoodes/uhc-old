@@ -16,6 +16,9 @@ public enum Lang {
 	
 	PREFIX,
 	ERROR,
+	INFO_PREFIX,
+	DW_PREFIX,
+	TG_PREFIX,
 	
 	//ENCHANTS
 	LEVEL("enchants"),
@@ -45,11 +48,16 @@ public enum Lang {
 	INV_RIGHT_SHIFT_CLICK("inventory"),
 	INV_RIGHT_CLICK_OPTION("inventory"),
 	
-	INV_CATEGORIES,
-	INV_CATEGORY,
+	INV_CATEGORIES("inventory"),
+	INV_CATEGORY("inventory"),
 	
+	INV_TIME_OPTION("inventory"),
 	MINUTE("inventory"),
 	SECOND("inventory"),
+	MINUTES("inventory"),
+	SECONDS("inventory"),
+	
+	INV_PROBABILITY_OPTION("inventory"),
 	
 	INV_START_GAME("inventory/config-menu"),
 	INV_CANCEL_GAME("inventory/config-menu"),
@@ -63,8 +71,6 @@ public enum Lang {
 	
 	INV_LIFE("inventory/config-menu"),
 	INV_LOOTS("inventory/config-menu"),
-	INV_CRAFTS("inventory/config-menu"),
-	INV_CHAT("inventory/config-menu"),
 	INV_RULES("inventory/config-menu"),
 	
 	INV_TEAM_SIZE("inventory/config-teams"),
@@ -100,6 +106,17 @@ public enum Lang {
 	
 	INV_UHC_GAPPLES("inventory/config-life"),
 	INV_GAPPLES_CONFIG("inventory/config-life"),
+	INV_LIFE_DISPLAY("inventory/config-life"),
+	INV_LIFE_DISPLAY_CONFIG("inventory/config-life"),
+	INV_LIFE_DISPLAY_HEAD("inventory/config-life"),
+	INV_LIFE_DISPLAY_BOW("inventory/config-life"),
+		
+	INV_LIFE_GAPPLE("inventory/config-life"),
+	INV_LIFE_HAPPLE("inventory/config-life"),
+	INV_LIFE_NAPPLE("inventory/config-life"),
+	
+	INV_LIFE_ABSO("inventory/config-life"),
+	INV_LIFE_EFFECTS("inventory/config-life"),
 	
 	INV_UHC_DROP("inventory/config-loots"),
 	INV_TREES("inventory/config-loots"),
@@ -112,22 +129,31 @@ public enum Lang {
 	
 	INV_SCENARIO_LIST("inventory"),
 	
+	PLAYER_HEAD_NAME("items"),
+	
 	TEAM_JOIN("team"),
 	TEAM_LEAVE("team"),
 	TEAM_FULL("team"),
 	TEAM_PLAYERS("team"),
 	TEAM_PLAYER_CANNOT_PLAY("team"),
+	TEAM_SPEC_NAME("team"),
+	TEAM_SPEC_PREFIX("team"),
 	
+	SB_LINE("scoreboard"),
 	SB_EPISODE("scoreboard"),
 	SB_PLAYERS("scoreboard"),
 	SB_TEAMS("scoreboard"),
+	SB_KILLS("scoreboard"),
 	SB_WAITING("scoreboard"),
 	SB_STARTING("scoreboard"),
 	SB_LOADING("scoreboard"),
 	SB_TIMER("scoreboard"),
 	SB_BORDER("scoreboard"),
 	SB_HOST("scoreboard"),
+	SB_KILL_SCORE("scoreboard"),
 
+	TL_CONNEXION("tablist"),
+	
 	INVINCIBILITY_BAR("title"),
 	BC_PLAYER_TP("title"),
 	
@@ -145,7 +171,12 @@ public enum Lang {
 	ST_ERROR_OPTION_START("staff/error"),
 	ST_ERROR_OPTION_PVP("staff/error"),
 	
+	MSG_CHAT("message"),
+	MSG_CHAT_TEAM("message"),
 	MSG_BOW_DAMAGE("message"),
+	
+	MSG_PRIVATE_SEND("message"),
+	MSG_PRIVATE_RECEIVE("message"),
 	
 	BC_PLAYER_JOIN("announce"),
 	BC_SPECTATOR_JOIN("announce"),
@@ -153,6 +184,9 @@ public enum Lang {
 	BC_SPECTATOR_LEAVE("announce"),
 	
 	BC_INVINCIBILITY_END("announce"),
+	
+	BC_BROADCAST("announce"),
+	BC_REVIVE("announce"),
 	
 	SCENARIO("scenarios"),
 	CONDITION("scenarios"),
@@ -192,15 +226,25 @@ public enum Lang {
 	BC_DRAW("announce/end"),
 	BC_SOLO_VICTORY("announce/end"),
 	BC_TEAM_VICTORY("announce/end"),
-	
+	BC_SERVER_RESTART("announce/end"),
 	
 	//COMMANDS
 	CMD_ERROR_PERM("commands"),
 	CMD_HELP("commands"),
-	CMD_INVALID_ARGUMENT("commands"),
-	CMD_INVALID_COMMAND("commands"),
-	CMD_PLAYER_OFFLINE("commands"),
-
+	CMD_ERROR_INVALID_ARGUMENT("commands"),
+	CMD_ERROR_INVALID_COMMAND("commands"),
+	CMD_ERROR_PLAYER_OFFLINE("commands"),
+	CMD_ERROR_PLAYER_OFFGAME("commands"),
+	CMD_ERROR_PLAYER_DEAD("commands"),
+	CMD_ERROR_PLAYER_ALIVE("commands"),
+	CMD_ERROR_PLAYER_NOT_DEAD("commands"),
+	CMD_ERROR_GAMEMODE("commands"),
+	
+	CMD_ERROR_NO_ROLE("commands"),
+	CMD_ERROR_ROLE("commands"),
+	
+	CMD_ERROR_SELF_MSG("commands"),
+	
 	//ENUMS
 	OPEN("OPEN", "join-state"),
 	CLOSE("CLOSE", "join-state"),
@@ -256,6 +300,12 @@ public enum Lang {
 	POWERS("scenarios/superheroes"),
 	
 	CUPID_HEAL("scenarios/cupid"),
+	INVENTION("scenarios/inventors"),
+	
+	TRACKER_NO_TARGET("scenarios/tracker"),
+	TRACKER_TARGET("scenarios/tracker"),
+	
+	START_LEVEL("scenarios/master-level"),
 	
 	//MOTD
 	MOTD_WAITING_LINE_1("1", "motd/WAITING"),
@@ -278,6 +328,58 @@ public enum Lang {
 	CAUSE_GAME_WHITELIST("kick-reason"),
 	CAUSE_GAME_SLOT("kick-reason"),
 	CAUSE_WORLD_DELETING("kick-reason"),
+	CAUSE_SERVER_CLOSE("kick-reason"),
+	
+	TG_MOLE("gamemodes/taupe-gun"),
+	TG_MOLE_SELECTION("gamemodes/taupe-gun"),
+	TG_MOLE_ANNOUNCE("gamemodes/taupe-gun"),
+	
+	DW_ANNOUNCE_ROLE("gamemodes/devil-watches/announce"),
+	DW_SECTARIAN("gamemodes/devil-watches/announce"),
+	DW_SEAL("gamemodes/devil-watches/announce"),
+	DW_DEATH_REASON("gamemodes/devil-watches/announce"),
+	
+	DW_VICTORY_DRAW("gamemodes/devil-watches/announce"),
+	DW_VICTORY_WIN("gamemodes/devil-watches/announce"),
+	DW_VICTORY_SOLO("gamemodes/devil-watches/announce"),
+	
+	DW_ERROR_NO_POWER("gamemodes/devil-watches/message"),
+	DW_ERROR_NO_POWER_EPISODE("gamemodes/devil-watches/message"),
+	DW_ERROR_NO_POWER_EPISODE_TIME("gamemodes/devil-watches/message"),
+	DW_ERROR_NO_POWER_USE("gamemodes/devil-watches/message"),
+	DW_ERROR_POWER_TIME_LIMIT_EPISODE("gamemodes/devil-watches/message"),
+	DW_SECTARIANS_LIST("gamemodes/devil-watches/message"),
+	DW_DEMONS_LIST("gamemodes/devil-watches/message"),
+	DW_NEW_SECTARIAN("gamemodes/devil-watches/message"),
+	
+	DW_HUNTER_INSPECT_NULL("gamemodes/devil-watches/roles/HUNTER"),
+	DW_HUNTER_INSPECT_LOCATE("gamemodes/devil-watches/roles/HUNTER"),
+	
+	DW_GURU_USE("gamemodes/devil-watches/roles/GURU"),
+	DW_GURU_BC("gamemodes/devil-watches/roles/GURU"),
+	DW_ANNOUNCE_NIGHT("gamemodes/devil-watches/roles/GURU"),
+	
+	DW_GUARDIAN_CAN_USE("gamemodes/devil-watches/roles/GUARDIAN"),
+	DW_GUARDIAN_ERROR_TARGET("gamemodes/devil-watches/roles/GUARDIAN"),
+	DW_GUARDIAN_PROTECTION_MSG("gamemodes/devil-watches/roles/GUARDIAN"),
+	DW_GUARDIAN_PROTECTED_MSG("gamemodes/devil-watches/roles/GUARDIAN"),
+	DW_GUARDIAN_PROTECTED_DEATH_MSG("gamemodes/devil-watches/roles/GUARDIAN"),
+	DW_GUARDIAN_PROTECTED_DEATH("gamemodes/devil-watches/roles/GUARDIAN"),
+	
+	DW_PROPHET_PROPHECY("gamemodes/devil-watches/roles/PROPHET"),
+	
+	DW_PROWLER_JOIN("gamemodes/devil-watches/roles/PROWLER"),
+	
+	DW_CAT_MEOW("gamemodes/devil-watches/roles/CAT_LADY"),
+	DW_CAT_WHISPER("gamemodes/devil-watches/roles/CAT_LADY"),
+	DW_CAT_WHISPER_DEATH("gamemodes/devil-watches/roles/CAT_LADY"),
+	DW_CAT_WHISPER_DEATH_AROUND("gamemodes/devil-watches/roles/CAT_LADY"),
+	DW_CAT_WHISPER_DEATH_KILLER("gamemodes/devil-watches/roles/CAT_LADY"),
+	DW_CAT_WHISPER_KILL("gamemodes/devil-watches/roles/CAT_LADY"),
+	DW_CAT_NUMBER("gamemodes/devil-watches/roles/CAT_LADY"),
+	
+	DW_ITEM_HOLY_WATER("gamemodes/devil-watches/inventory"),
+	INV_DW_COMPO("gamemodes/devil-watches/inventory"),
 	
 	//CONSOLE
 	ERROR_WORLD_NOT_FOUND("console"),
@@ -344,11 +446,14 @@ public enum Lang {
 		return ChatColor.translateAlternateColorCodes('§', value);
 	}
 	
-	public String get() {
+	public static String format(String value) {
 		
-		String value = VALUES.get(this);
 		value = value.replace(LangTag.PREFIX.toString(), VALUES.get(PREFIX));
 		value = value.replace(LangTag.ERROR.toString(), VALUES.get(ERROR));
+		value = value.replace(LangTag.INFO_PREFIX.toString(), VALUES.get(INFO_PREFIX));
+		
+		value = value.replace(LangTag.DW_PREFIX.toString(), VALUES.get(DW_PREFIX));
+		value = value.replace(LangTag.TG_PREFIX.toString(), VALUES.get(TG_PREFIX));
 		
 		//LANG VALUES
 		for (LangTag tag : LangTag.values()) {
@@ -369,6 +474,8 @@ public enum Lang {
 			value = value.replace(LangTag.SERVER_SLOTS.toString(), Bukkit.getMaxPlayers() + "");
 			value = value.replace(LangTag.PLAYER_COUNT.toString(), game.getPlayerCount().toString());
 			value = value.replace(LangTag.GAME_NAME.toString(), game.getName());
+			value = value.replace(LangTag.GAME_TYPE.toString(), game.getType().getName());
+			
 			value = value.replace(LangTag.JOIN_STATE.toString(), VALUES.get(Lang.valueOf(settings.getJoinState().name())));
 			
 			value = value.replace(LangTag.TEAM_NUMBER.toString(), settings.getTeamNumber().toString());
@@ -406,6 +513,10 @@ public enum Lang {
 		}
 		
 		return value;
+	}
+	
+	public String get() {
+		return format(VALUES.get(this));
 	}
 	
 	public static String removeColor(String string) {

@@ -5,10 +5,12 @@ import java.util.HashMap;
 import org.bukkit.Material;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.scoreboard.DisplaySlot;
 
 import fr.aiidor.uhc.UHC;
 import fr.aiidor.uhc.enums.Lang;
 import fr.aiidor.uhc.game.Game;
+import fr.aiidor.uhc.listeners.events.GuiClickEvent;
 import fr.aiidor.uhc.tools.ItemBuilder;
 
 public class Inv_Life extends GuiBuilder {
@@ -27,9 +29,9 @@ public class Inv_Life extends GuiBuilder {
 	public String[][] getMatrix() {
 		
 		String[][] item = {
-				{"A", " ", " ", " ", " ", " ", " ", " ", " "},
+				{"A", "D", " ", " ", " ", " ", " ", " ", " "},
 				{"G", "G", "G", "G", "G", "G", "G", "G", "G"},
-				{"A1", " ", " ", " ", " ", " ", " ", " ", "X"}
+				{ "A1", "D1", " ", " ", " ", " ", " ", " ", "X"}
 		};
 		
 		return item;
@@ -52,7 +54,10 @@ public class Inv_Life extends GuiBuilder {
 			dictionary.put("A", new ItemBuilder(Material.GOLDEN_APPLE, Lang.INV_GAPPLES_CONFIG.get()).getItem());
 			dictionary.put("A1", getConfigItem(null, Lang.INV_UHC_GAPPLES.get(), game.getSettings().uhc_apple));
 			
+			dictionary.put("D", new ItemBuilder(Material.SIGN, Lang.INV_LIFE_DISPLAY_CONFIG.get()).getItem());
+			dictionary.put("D1", getConfigItem(null, Lang.INV_LIFE_DISPLAY.get(), game.getSettings().display_life));
 		}
+		
 		return dictionary;
 	}
 
@@ -66,13 +71,30 @@ public class Inv_Life extends GuiBuilder {
 		
 		if (e.getSlot() == 0) {
 			playClickSound(event.getPlayer());
-			event.getPlayer().openInventory(GuiManager.INV_CONFIG_GAPPLES.getInventory());
+			event.getPlayer().openInventory(GuiManager.INV_CONFIG_LIFE_APPLE.getInventory());
+			return;
+		}
+		
+		if (e.getSlot() == 1) {
+			playClickSound(event.getPlayer());
+			event.getPlayer().openInventory(GuiManager.INV_CONFIG_DISPLAY_LIFE.getInventory());
 			return;
 		}
 		
 		if (e.getSlot() == 18) {
 			game.getSettings().uhc_apple = !game.getSettings().uhc_apple;
 			playClickSound(event.getPlayer());
+			update();
+			return;
+		}
+		
+		if (e.getSlot() == 19) {
+			game.getSettings().display_life = !game.getSettings().display_life;
+			playClickSound(event.getPlayer());
+			
+			if (game.getSettings().display_life && game.getSettings().display_head_life) game.getScoreboard().getObjective("Health").setDisplaySlot(DisplaySlot.BELOW_NAME);
+			else game.getScoreboard().getObjective("Health").setDisplaySlot(null);
+			
 			update();
 			return;
 		}

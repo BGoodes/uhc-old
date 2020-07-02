@@ -7,7 +7,7 @@ import org.bukkit.Material;
 
 import fr.aiidor.uhc.enums.Category;
 import fr.aiidor.uhc.enums.Lang;
-import fr.aiidor.uhc.inventories.ChangeScenarioStateEvent;
+import fr.aiidor.uhc.listeners.events.ChangeScenarioStateEvent;
 
 public class BelieveFly extends Scenario {
 	
@@ -26,6 +26,12 @@ public class BelieveFly extends Scenario {
 	}
 
 	@Override
+	public Boolean compatibleWith(Scenario scenario) {
+		if (scenario.equals(ScenariosManager.DOUBLE_JUMP)) return false;
+		return true;
+	}
+	
+	@Override
 	public Boolean isOriginal() {
 		return true;
 	}
@@ -43,5 +49,7 @@ public class BelieveFly extends Scenario {
 			e.getPlayer().sendMessage(Lang.ST_ERROR_SCENARIO_START.get());
 			e.setCancelled(true);
 		}
+		
+		super.changeStateEvent(e);
 	}
 }

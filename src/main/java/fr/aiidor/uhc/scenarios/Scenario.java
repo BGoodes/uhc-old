@@ -11,9 +11,10 @@ import fr.aiidor.uhc.enums.Category;
 import fr.aiidor.uhc.enums.Lang;
 import fr.aiidor.uhc.enums.LangTag;
 import fr.aiidor.uhc.enums.UHCFile;
+import fr.aiidor.uhc.enums.UHCType;
 import fr.aiidor.uhc.game.Game;
-import fr.aiidor.uhc.inventories.ChangeScenarioStateEvent;
 import fr.aiidor.uhc.inventories.Gui;
+import fr.aiidor.uhc.listeners.events.ChangeScenarioStateEvent;
 import fr.aiidor.uhc.tools.ItemBuilder;
 import net.md_5.bungee.api.ChatColor;
 
@@ -44,14 +45,33 @@ public abstract class Scenario {
 
 		this.description = description;
 		
-		manager.getScenarios().add(this);
+		manager.scenarios.add(this);
 	}
 
 	public Boolean isActivated() {
 		return UHC.getInstance().getGameManager().getGame().getSettings().IsActivated(this);
 	}
 	
-	public void changeStateEvent(ChangeScenarioStateEvent e) {}
+	public void changeStateEvent(ChangeScenarioStateEvent e) {
+		Game game = UHC.getInstance().getGameManager().getGame();
+		
+		if (e.getState() == true && !e.isCancelled()) {
+			for (Scenario s : game.getSettings().getActivatedScenarios()) {
+				if (!compatibleWith(s) || !s.compatibleWith(this)) {
+					
+					e.getPlayer().sendMessage(Lang.ST_ERROR_SCENARIO_COMPATIBILITY.get()
+							.replace(LangTag.VALUE_1.toString(), Lang.removeColor(this.name))
+							.replace(LangTag.VALUE_2.toString(), Lang.removeColor(s.getName()))
+						);
+					
+					e.getPlayer().closeInventory();
+					e.setCancelled(true);
+					return;
+				}
+			}
+		}
+
+	}
 	
 	public abstract String getID();
 	
@@ -98,6 +118,10 @@ public abstract class Scenario {
 		return true;
 	}
 	
+	public Boolean compatibleWith(UHCType type) {
+		return true;
+	}
+	
 	public void checkConditions() {
 		Game game = UHC.getInstance().getGameManager().getGame();
 		
@@ -131,7 +155,7 @@ public abstract class Scenario {
 		
 		lore.add(" ");
 		lore.add(Lang.INV_CATEGORIES.get());
-			
+		
 		StringBuilder sb = new StringBuilder();
 			
 		Integer index = 0;
@@ -185,5 +209,5 @@ public abstract class Scenario {
 		return builder.getItem();
 	}
 	
-	public void stop() {}
+	public void reload() {}
 }

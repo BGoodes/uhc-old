@@ -9,7 +9,7 @@ import org.bukkit.potion.PotionEffectType;
 
 import fr.aiidor.uhc.enums.Category;
 import fr.aiidor.uhc.game.UHCPlayer;
-import fr.aiidor.uhc.inventories.ChangeScenarioStateEvent;
+import fr.aiidor.uhc.listeners.events.ChangeScenarioStateEvent;
 
 public class CatEyes extends Scenario {
 
@@ -45,6 +45,8 @@ public class CatEyes extends Scenario {
 				player.removePotionEffect(PotionEffectType.NIGHT_VISION);
 			}
 		}
+		
+		super.changeStateEvent(e);
 	}
 	
 }

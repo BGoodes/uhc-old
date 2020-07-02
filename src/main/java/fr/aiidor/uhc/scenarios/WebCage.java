@@ -3,9 +3,11 @@ package fr.aiidor.uhc.scenarios;
 import java.util.Arrays;
 import java.util.List;
 
+import org.bukkit.Location;
 import org.bukkit.Material;
 
 import fr.aiidor.uhc.enums.Category;
+import fr.aiidor.uhc.tools.Cage;
 
 public class WebCage extends Scenario {
 	
@@ -31,5 +33,9 @@ public class WebCage extends Scenario {
 	@Override
 	public List<Category> getCategories() {
 		return Arrays.asList(Category.PVP);
+	}
+	
+	public void generate(Location loc) {
+		new Cage(loc.subtract(0, 1, 0), 3, 6, 2,  Material.WEB, Material.WEB, Material.WEB, false).create();
 	}
 }

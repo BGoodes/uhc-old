@@ -6,11 +6,14 @@ import java.util.List;
 
 import fr.aiidor.uhc.UHC;
 import fr.aiidor.uhc.enums.Category;
+import fr.aiidor.uhc.game.Game;
 import fr.aiidor.uhc.game.GameManager;
+import fr.aiidor.uhc.scenarios.ItemScenario.GiveTime;
 
 public class ScenariosManager {
 	
-	private List<Scenario> scenarios;
+	protected List<Scenario> scenarios;
+	protected List<ItemScenario> item_scenarios;
 	
 	public ScenariosManager() {
 		load();
@@ -18,6 +21,7 @@ public class ScenariosManager {
 	
 	public void load() {
 		scenarios = new ArrayList<Scenario>();
+		item_scenarios = new ArrayList<ItemScenario>();
 		
 		CUTCLEAN = new CutClean(this);
 		FASTSMELING = new FastSmelting(this);
@@ -51,6 +55,21 @@ public class ScenariosManager {
 		WEBCAGE = new WebCage(this);
 		PUPPY_POWER = new PuppyPower(this);
 		CUPID = new Cupid(this);
+		INVENTORS = new Inventors(this);
+		TIME_BOMB = new TimeBomb(this);
+		MYSTERY_TEAMS = new MysteryTeams(this);
+		BOW_SWAP = new BowSwap(this);
+		HIGHWAY_TO_HELL = new HighwayToHell(this);
+		SOUP = new Soup(this);
+		DOUBLE_JUMP = new DoubleJump(this);
+		TRACKER = new Tracker(this);
+		MASTER_LEVEL = new MasterLevel(this);
+		
+		for (Scenario s : scenarios) {
+			if (s instanceof ItemScenario) {
+				item_scenarios.add((ItemScenario) s);
+			}
+		}
 	}
 	
 	public static CutClean CUTCLEAN;
@@ -85,9 +104,47 @@ public class ScenariosManager {
 	public static WebCage WEBCAGE;
 	public static PuppyPower PUPPY_POWER;
 	public static Cupid CUPID;
+	public static Inventors INVENTORS;
+	public static TimeBomb TIME_BOMB;
+	public static MysteryTeams MYSTERY_TEAMS;
+	public static BowSwap BOW_SWAP;
+	public static HighwayToHell HIGHWAY_TO_HELL;
+	public static Soup SOUP;
+	public static DoubleJump DOUBLE_JUMP;
+	public static Tracker TRACKER;
+	public static MasterLevel MASTER_LEVEL;
 	
 	public List<Scenario> getScenarios() {
-		return scenarios;
+		List<Scenario> list = new ArrayList<Scenario>();
+		
+		if (UHC.getInstance().getGameManager().hasGame()) {
+			
+			Game game = UHC.getInstance().getGameManager().getGame();
+			
+			for (Scenario s : scenarios) {
+				if (s.compatibleWith(game.getType())) list.add(s);
+			}
+			
+		} else {
+			list.addAll(scenarios);
+		}
+		
+		return list;
+	}
+	
+	public List<ItemScenario> getItemScenarios(GiveTime time) {
+		List<ItemScenario> list = new ArrayList<ItemScenario>();
+		
+		if (UHC.getInstance().getGameManager().hasGame()) {
+			
+			Game game = UHC.getInstance().getGameManager().getGame();
+			
+			for (ItemScenario s : item_scenarios) {
+				if (s.compatibleWith(game.getType()) && s.giveTime() == time) list.add(s);
+			}
+		}
+		
+		return list;
 	}
 	
 	public List<Scenario> getScenarios(Comparator<Scenario> comparator) {

@@ -36,7 +36,7 @@ public class PersonalScoreboard {
     private final UUID uuid;
     private final ObjectiveSign objectiveSign;
 
-    PersonalScoreboard(Player player){
+    public PersonalScoreboard(Player player){
         this.player = player;
         uuid = player.getUniqueId();
         objectiveSign = new ObjectiveSign("sidebar", "DevPlugin");
@@ -47,8 +47,7 @@ public class PersonalScoreboard {
 
     public void reloadData(){}
 
-    public void setLines(String ip){
-    	
+    public void setLines(String ip) {
     	objectiveSign.clearScores();
     	
     	UHC uhc = UHC.getInstance();
@@ -57,30 +56,39 @@ public class PersonalScoreboard {
     		Game game = uhc.getGameManager().getGame();
     		GameState gameState = game.getState();
     		
-    		if (game.getSettings().display_life) {
+    		if (game.getSettings().display_head_life && game.getSettings().display_life) {
+    			
     			game.getScoreboard().getObjective("Health").getScore(player.getName()).setScore(
-    					(int) (Math.round((player.getHealth() + ((CraftPlayer) player).getHandle().getAbsorptionHearts())* 100D) / 100D * 5D));
+    					(int) (Math.round((player.getHealth() + ((CraftPlayer) player).getHandle().getAbsorptionHearts())* 100D) / 100D * 5D)
+    				);
     		}
     		
-            objectiveSign.setDisplayName(game.getName());
+    		//if (game.hasHost())  objectiveSign.setDisplayName(game.getName() + " §8» §7§o" + game.getHost().getName()); MODE KILL
+    		objectiveSign.setDisplayName(game.getName());
+           
             
             Integer line = 0;
             
-            objectiveSign.setLine(line, "§f");
+            objectiveSign.setLine(line, "§6" + Lang.SB_LINE.get());
             line++;
             
-            if (game.hasHost()) {
-            	objectiveSign.setLine(line, Lang.SB_HOST.get().replace(LangTag.PLAYER_NAME.toString(), game.getHost().getName()));
-            	objectiveSign.setLine(line + 1, "§6");
-            	line = line + 2;
-            }
-            
             if (gameState == GameState.ENDING) {
-            	objectiveSign.setLine(line + 1, "§aFFIFIIINNNIIII");
-            	line = line ++;
+
+            	objectiveSign.setDisplayName(Lang.SB_KILL_SCORE.get());
+            	
+            	for (UHCPlayer p : game.getPlayersSort()) {
+                	objectiveSign.setLine(line,  "§f" + p.getDisplayName() + " §8» §c" + p.getKills());
+                	line++;
+            	}
             
             } else {
             	
+                if (game.hasHost()) {
+                	objectiveSign.setLine(line, Lang.SB_HOST.get().replace(LangTag.PLAYER_NAME.toString(), game.getHost().getName()));
+                	objectiveSign.setLine(line + 1, "§6");
+                	line = line + 2;
+                }
+                
             	if (gameState == GameState.RUNNING) {
                     objectiveSign.setLine(line, Lang.SB_EPISODE.get());
                     line++;
@@ -104,6 +112,13 @@ public class PersonalScoreboard {
                 }
                 
                 if (gameState == GameState.RUNNING) {
+                	
+                	if (game.isHere(player.getUniqueId())) {
+                		UHCPlayer p = game.getUHCPlayer(player.getUniqueId());
+                		 objectiveSign.setLine(line, Lang.SB_KILLS.get().replace(LangTag.VALUE.toString(), ""+p.getKills()));
+                		 line++;
+                	}
+                	
                     objectiveSign.setLine(line, "§7");
                     objectiveSign.setLine(line + 1, Lang.SB_TIMER.get());
                     objectiveSign.setLine(line + 2, Lang.SB_BORDER.get().replace(LangTag.VALUE.toString(), "" + ((int) game.getMainWorld().getMainWorld().getWorldBorder().getSize() / 2)));
@@ -134,11 +149,13 @@ public class PersonalScoreboard {
             }
             
             //IP
+            objectiveSign.setLine(line, "§b" + Lang.SB_LINE.get());
+            line++;
             
             if (uhc.getScoreboardManager().showIP()) {
-                objectiveSign.setLine(line, "§b");
-                objectiveSign.setLine(line + 1, ip);
-                line = line + 2;
+
+                objectiveSign.setLine(line, ip);
+                line++;
             }
             
             //UPDATE
@@ -150,7 +167,7 @@ public class PersonalScoreboard {
     	}
     }
 
-    public void onLogout(){
+    public void onLogout() {
         objectiveSign.removeReceiver(Bukkit.getServer().getOfflinePlayer(uuid));
     }
 }

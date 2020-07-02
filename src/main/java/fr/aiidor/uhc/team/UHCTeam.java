@@ -4,6 +4,7 @@ import java.util.HashSet;
 import java.util.Random;
 import java.util.Set;
 
+import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.Sound;
 import org.bukkit.entity.Player;
@@ -17,13 +18,19 @@ import fr.aiidor.uhc.enums.Lang;
 import fr.aiidor.uhc.enums.LangTag;
 import fr.aiidor.uhc.enums.PlayerState;
 import fr.aiidor.uhc.enums.TeamColor;
+import fr.aiidor.uhc.enums.UHCType;
 import fr.aiidor.uhc.game.Game;
 import fr.aiidor.uhc.game.UHCPlayer;
+import fr.aiidor.uhc.scenarios.ScenariosManager;
 import fr.aiidor.uhc.tools.ItemBuilder;
 
 public class UHCTeam {
 	
+	private String name;
+	
 	private String prefix;
+	private String suffix;
+	
 	private Game game;
 	private TeamColor color;
 	
@@ -33,31 +40,44 @@ public class UHCTeam {
 	private Set<UHCPlayer> players;
 	
 	public UHCTeam(String prefix, TeamColor color, Integer size, Game game) {
-		
+		this(prefix, color, null, size, game);
+	}
+	
+	public UHCTeam(String prefix, TeamColor color, String name, Integer size, Game game) {
 		players = new HashSet<UHCPlayer>();
 		
-		this.setPrefix(prefix);
-		this.setColor(color);
-		this.setSize(size);
+		if (name == null) setName(prefix + color.getColorName());
+		else setName(name);
 		
 		this.game = game;
+		this.setColor(color);
+		this.setSize(size);
+		this.prefix = prefix;
 		
 		Scoreboard sb = game.getScoreboard();
 		if (sb.getTeam(getName()) == null) sb.registerNewTeam(getName());
-		
 		team = sb.getTeam(getName());
 		
+		this.setSuffix("");
+		
 		team.setDisplayName(getName());
-		team.setPrefix(getPrefix());
-		team.setSuffix("");
+		team.setPrefix(prefix);
 		
 		team.setAllowFriendlyFire(game.getSettings().friendly_fire);
 		team.setCanSeeFriendlyInvisibles(true);
 		team.setNameTagVisibility(NameTagVisibility.ALWAYS);
+		
+		if (ScenariosManager.MYSTERY_TEAMS.isActivated()) {
+			ScenariosManager.MYSTERY_TEAMS.setMystery(this);
+		}
 	}
 
 	public String getPrefix() {
 		return prefix;
+	}
+	
+	public String getSuffix() {
+		return suffix;
 	}
 	
 	public Game getGame() {
@@ -68,14 +88,24 @@ public class UHCTeam {
 		return team;
 	}
 
+	public void setName(String name) {
+		this.name = name;
+	}
+	
 	public String getName() {
-		return prefix + color.getColorName();
+		return name;
 	}
 	
 	public void setPrefix(String prefix) {
 		this.prefix = prefix;
+		team.setPrefix(prefix);
 	}
 
+	public void setSuffix(String suffix) {
+		this.suffix = suffix;
+		team.setSuffix(suffix);
+	}
+	
 	public TeamColor getColor() {
 		return color;
 	}
@@ -113,6 +143,16 @@ public class UHCTeam {
 		return players;
 	}
 	
+	public Set<UHCPlayer> getConnectedPlayers() {
+		Set<UHCPlayer> players = new HashSet<UHCPlayer>();
+		
+		for (UHCPlayer p : this.players) {
+			if (p.isConnected()) players.add(p);
+		}
+		
+		return players;
+	}
+	
 	public Set<UHCPlayer> getAlivePlayers() {
 		Set<UHCPlayer> players = new HashSet<UHCPlayer>();
 		
@@ -129,6 +169,20 @@ public class UHCTeam {
 	
 	public Boolean isInTeam(UHCPlayer player) {
 		return getPlayers().contains(player);
+	}
+	
+	public void broadcast(String message) {
+		for (UHCPlayer p : getConnectedPlayers()) {
+			p.getPlayer().sendMessage(message);
+		}
+		
+		if (game.getUHCMode().getUHCType() == UHCType.TAUPE_GUN) {
+			
+		}
+		
+		if (UHC.getInstance().getSettings().log_game_bc) {
+			Bukkit.getConsoleSender().sendMessage(getName() + " > " + message);
+		}
 	}
 	
 	public void destroy() {

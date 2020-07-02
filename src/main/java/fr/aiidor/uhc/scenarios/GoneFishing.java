@@ -9,12 +9,9 @@ import org.bukkit.enchantments.Enchantment;
 import org.bukkit.inventory.ItemStack;
 
 import fr.aiidor.uhc.enums.Category;
-import fr.aiidor.uhc.enums.Lang;
-import fr.aiidor.uhc.game.UHCPlayer;
-import fr.aiidor.uhc.inventories.ChangeScenarioStateEvent;
 import fr.aiidor.uhc.tools.ItemBuilder;
 
-public class GoneFishing extends Scenario {
+public class GoneFishing extends ItemScenario {
 	
 	private List<ItemStack> items;
 	
@@ -50,20 +47,14 @@ public class GoneFishing extends Scenario {
 	public List<Category> getCategories() {
 		return Arrays.asList(Category.ENCHANTMENT, Category.FUN);
 	}
-	
+
 	@Override
-	public void changeStateEvent(ChangeScenarioStateEvent e) {
-		if (e.getGame().isStart()) {
-			
-			e.getPlayer().closeInventory();
-			e.getPlayer().sendMessage(Lang.ST_ERROR_SCENARIO_START.get());
-			e.setCancelled(true);
-		}
+	public GiveTime giveTime() {
+		return GiveTime.LOADING;
 	}
-	
-	public void GiveItems(UHCPlayer player) {
-		for (ItemStack item : items) {
-			player.giveItem(item);
-		}
+
+	@Override
+	public List<ItemStack> getItems() {
+		return items;
 	}
 }

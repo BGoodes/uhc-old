@@ -23,6 +23,8 @@ public class GameTask extends UHCTask {
 	private Integer episode;
 	private Integer next_ep;
 	
+	private TimeTask time_task;
+	
 	public GameTask(Game game) {
 		timer = -1;
 		this.game = game;
@@ -30,6 +32,8 @@ public class GameTask extends UHCTask {
 		
 		this.settings = game.getSettings();
 		this.next_ep = settings.ep1_time * 60;
+		
+		this.time_task = null;
 	}
 	
 	@Override
@@ -69,7 +73,7 @@ public class GameTask extends UHCTask {
 				
 			if (timer == settings.invincibility_time * 60) game.broadcast(Lang.BC_INVINCIBILITY_END.get());
 		}
-
+		
 		//-----------------------------------
 		
 		//PVP
@@ -123,26 +127,53 @@ public class GameTask extends UHCTask {
 			//NETHER & END OFF ?
 		}
 		
-		//-----------------------------------
+		if (game.getSettings().uhc_cycle && episode > 1) {
+			Integer m = game.getSettings().double_uhc_cycle ? 2 : 1;
+			
+			if (timer%60 == 0) {
+				
+				Integer min = timer/60;
+				
+				if (min%(10/m) == 0) {
+					if (min%(20/m) == 0) game.getWorlds().forEach(w->w.setTime(23500));
+					else game.getWorlds().forEach(w->w.setTime(13500));
+				}
+			}
+		}
 		
+		//-----------------------------------
 		playerRunnable();
+		game.getUHCMode().run();
 		
 		if (timer >= next_ep) {
 			//NEW EPISODE
 			game.broadcast(Lang.BC_EPISODE_END.get());
 			
+			
+			if (episode == 1) {
+				game.getUHCMode().begin();
+				
+				if (game.getSettings().uhc_cycle) {
+					
+					time_task = new TimeTask(game);
+					time_task.runTaskTimer(UHC.getInstance(), 0, 1);
+				}
+			}
+			
 			episode++;
+			game.getUHCMode().episode(episode);
+			
 			this.next_ep = timer + settings.ep_time * 60;
 		}
 		
-		
-		if (game.getSettings().can_win) UHC.getInstance().getGameManager().end();
+		UHC.getInstance().getGameManager().end();
 	}
 	
 
 	@Override
 	public void stop() {
 		cancel();
+		if (time_task != null) time_task.cancel();
 		game.setRunner(null);
 	}
 
@@ -170,7 +201,7 @@ public class GameTask extends UHCTask {
 	}
 	
 	public void playerRunnable() {
-		for (UHCPlayer player : game.getIngamePlayers()) {
+		for (UHCPlayer player : game.getPlayingPlayers()) {
 			if (player.isConnected()) {
 				Player p = player.getPlayer();
 				

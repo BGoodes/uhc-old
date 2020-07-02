@@ -13,6 +13,7 @@ import org.bukkit.inventory.ItemStack;
 
 import fr.aiidor.uhc.UHC;
 import fr.aiidor.uhc.game.Game;
+import fr.aiidor.uhc.listeners.events.GuiClickEvent;
 import fr.aiidor.uhc.scenarios.Scenario;
 
 public class GuiManager implements Listener {
@@ -54,7 +55,17 @@ public class GuiManager implements Listener {
 		INV_CONFIG_EP_TIME = createInventory(new Inv_Ep_Time());
 		
 		INV_CONFIG_LIFE = createInventory(new Inv_Life());
-		INV_CONFIG_GAPPLES = createInventory(new Inv_Gapples());
+		INV_CONFIG_LIFE_APPLE = createInventory(new Inv_Life_Apples());
+		
+		INV_CONFIG_GAPPLES = createInventory(new Inv_Life_Gapples());
+		INV_CONFIG_NAPPLES = createInventory(new Inv_Life_Napples());
+		
+		INV_CONFIG_DISPLAY_LIFE = createInventory(new Inv_Display_Life());
+		
+		
+		//DW
+		INV_CONFIG_DW = createInventory(new Inv_Dw());
+		INV_CONFIG_DW_COMPO = createInventory(new Inv_Dw_Compo());
 		
 		for (Scenario scenario : UHC.getInstance().getScenarioManager().getScenarios()) {
 			if (scenario.hasSettings()) {
@@ -91,7 +102,17 @@ public class GuiManager implements Listener {
 	public static Gui INV_CONFIG_EP1_TIME;
 	public static Gui INV_CONFIG_EP_TIME;
 	public static Gui INV_CONFIG_LIFE;
+	public static Gui INV_CONFIG_LIFE_APPLE;
 	public static Gui INV_CONFIG_GAPPLES;
+	public static Gui INV_CONFIG_NAPPLES;
+	public static Gui INV_CONFIG_HAPPLES;
+
+	public static Gui INV_CONFIG_DISPLAY_LIFE;
+	
+	//DW
+	public static Gui INV_CONFIG_DW;
+	public static Gui INV_CONFIG_DW_COMPO;
+	
 	
 	public Gui createInventory(Gui inv) {
 		inventories.add(inv);

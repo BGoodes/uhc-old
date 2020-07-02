@@ -11,11 +11,10 @@ import java.util.Arrays;
 import java.util.logging.Logger;
 
 import org.bukkit.Bukkit;
-import org.bukkit.Chunk;
 import org.bukkit.Difficulty;
 import org.bukkit.World;
-import org.bukkit.WorldBorder;
 import org.bukkit.World.Environment;
+import org.bukkit.WorldBorder;
 import org.bukkit.WorldCreator;
 import org.bukkit.WorldType;
 
@@ -47,6 +46,10 @@ public class WorldManager {
 		World world = Bukkit.getWorld(worldname);
 		
 		world.setGameRuleValue("naturalRegeneration", "false");
+		world.setGameRuleValue("doDaylightCycle", "true");
+		world.setGameRuleValue("showDeathMessages", "true");
+		world.setGameRuleValue("keepInventory", "false");
+		
 		world.setPVP(true);
 		world.setDifficulty(Difficulty.HARD);
 		
@@ -83,9 +86,16 @@ public class WorldManager {
 		WorldCreator c = new WorldCreator(worldname);
 		
 		if (seed != 0) c.seed(seed);
+		
 		c.environment(environment);
 		c.type(type);
 		c.generateStructures(generateStructures);
+		c.generator(new Wg_Flat());
+		
+		if (UHC.getInstance().getGameManager().hasGame()) {
+			
+		}
+		
 		c.createWorld();
 	}
 	
@@ -103,16 +113,14 @@ public class WorldManager {
 		World world = Bukkit.getWorld(worldname);
 		File path = world.getWorldFolder();
 		
-		world.getPlayers().forEach(p-> p.kickPlayer(Lang.CAUSE_WORLD_DELETING.get()));
+		if (UHC.getInstance().getSettings().getLobbyWorld().equals(world)) world.getPlayers().forEach(p-> p.kickPlayer(Lang.CAUSE_WORLD_DELETING.get()));
+		else world.getPlayers().forEach(p-> p.teleport(UHC.getInstance().getSettings().lobby));
 		
-		for(Chunk c : world.getLoadedChunks())	{
-			c.unload(false, false);
+		if (UHC.getInstance().getServer().unloadWorld(world, false)) {
+			
+			if (deleteFile(path)) logger.info(Lang.WORLD_DELETING_DONE.get().replace(LangTag.WORLD_NAME.toString(), worldname));
+			else logger.info(Lang.ERROR_WORLD_DELETING_FAIL.get().replace(LangTag.WORLD_NAME.toString(), worldname));
 		}
-		
-		Bukkit.getServer().unloadWorld(world, false);
-		
-		if (deleteFile(path)) logger.info(Lang.WORLD_DELETING_DONE.get().replace(LangTag.WORLD_NAME.toString(), worldname));
-		else logger.info(Lang.ERROR_WORLD_DELETING_FAIL.get().replace(LangTag.WORLD_NAME.toString(), worldname));
 	}
 	
 	private Boolean deleteFile(File path) {

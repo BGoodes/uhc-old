@@ -1,5 +1,6 @@
 package fr.aiidor.uhc.tools;
 
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map.Entry;
@@ -10,12 +11,20 @@ import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.EnchantmentStorageMeta;
 import org.bukkit.inventory.meta.ItemMeta;
+import org.bukkit.inventory.meta.PotionMeta;
+import org.bukkit.inventory.meta.SkullMeta;
 import org.bukkit.potion.Potion;
+import org.bukkit.potion.PotionEffect;
+import org.bukkit.potion.PotionEffectType;
 import org.bukkit.potion.PotionType;
 
 public class ItemBuilder {
 	
-	private ItemStack item;
+	private final ItemStack item;
+	
+	public ItemBuilder(ItemStack item) {
+		this.item = item;
+	}
 	
 	public ItemBuilder(Material material) {
 		item = new ItemStack(material);
@@ -164,6 +173,10 @@ public class ItemBuilder {
 		return this;
 	}
 	
+	public ItemBuilder setLore(String lore) {
+		return setLore(Arrays.asList(lore));
+	}
+	
 	public ItemBuilder addFlag(ItemFlag flag) {
 		
 		ItemMeta meta = item.getItemMeta();
@@ -183,12 +196,34 @@ public class ItemBuilder {
 	public ItemBuilder setPotionType(PotionType type, Boolean splash) {
 		Potion pot = new Potion(1);
 		
-		pot.setSplash(splash);
 		pot.setType(type);
+		pot.setSplash(splash);
 		pot.apply(item);
+		return this;
+	}		   
+	
+	public ItemBuilder addPotionEffect(PotionEffect pot, Boolean arg1) {
+		PotionMeta meta = (PotionMeta) item.getItemMeta();
+		meta.addCustomEffect(pot, arg1);
+		item.setItemMeta(meta);
 		return this;
 	}
 	
+	public ItemBuilder removePotionEffect(PotionEffectType type) {
+		PotionMeta meta = (PotionMeta) item.getItemMeta();
+		meta.removeCustomEffect(type);
+		item.setItemMeta(meta);
+		return this;
+	}
+	
+	public ItemBuilder setHeadOwner(String name) {
+		
+		SkullMeta meta = (SkullMeta) item.getItemMeta();
+		meta.setOwner(name);
+		item.setItemMeta(meta);
+		
+		return this;
+	}
 	
 	public ItemStack getItem() {
 		return item;
