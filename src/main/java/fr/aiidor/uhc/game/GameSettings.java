@@ -5,17 +5,22 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 import java.util.UUID;
+import java.util.Map.Entry;
 
 import org.bukkit.Material;
 import org.bukkit.Sound;
+import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.PlayerInventory;
+import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
+import org.bukkit.scoreboard.DisplaySlot;
 
 import fr.aiidor.uhc.enums.JoinState;
 import fr.aiidor.uhc.enums.Permission;
@@ -44,12 +49,13 @@ public class GameSettings {
 	public Integer invincibility_time = 1;
 	public Integer pvp_time = 25;
 	public Integer ep1_time = 20;
-	public Integer ep_time = 1;
+	public Integer ep_time = 20;
 	public Integer wb_time = 60;
 	
 	public Boolean can_win = true;
 	 
-	//PVP
+	//POTION
+	public List<PotionEffect> start_effects;
 	public StrenghtNerf strength_nerf = StrenghtNerf.PERCENT;
 	public Double strength_nerf_damage = 3.0;
 	public Double strength_nerf_percent = 0.20D;
@@ -58,19 +64,23 @@ public class GameSettings {
 		OFF, DAMAGE, PERCENT;
 	}
 	
+	//ENCHANT 
+	public HashMap<Enchantment, Integer> enchants_limit;
+	
 	//LOOTS
 	public Boolean uhc_trees = true;
 	
-	public Double trees_apple = 0.5;
+	public Double trees_apple = 1.0;
 	public Boolean all_trees_drop = false;
 	public Boolean trees_shears = false;
 	public Boolean trees_sapling = true;
 	public Boolean trees_gapple = false;
 	
 	//LIFE
-	public Boolean display_life = true;
-	public Boolean bow_display_life = true;
-	public Boolean display_head_life = true;
+	private Boolean display_life = true;
+	private Boolean bow_display_life = true;
+	private Boolean display_head_life = true;
+	private Boolean display_tab_life = true;
 	
 	public Integer start_abso = 0;
 	public Integer start_life = 20;
@@ -84,16 +94,17 @@ public class GameSettings {
 	public Float gapple_saturation = 9.6f;
 	
 	public List<PotionEffect> gapple_effects;
-	public Integer gapple_abso = 2;
+	public Integer gapple_abso = 4;
 	
 	public List<PotionEffect> napple_effects;
-	public Integer napple_abso = 2;
+	public Integer napple_abso = 4;
 	
 	public List<PotionEffect> happle_effects;
-	public Integer happle_abso = 2;
+	public Integer happle_abso = 4;
 	
 	//DEATH
 	public Boolean show_death_message = true;
+	public Boolean death_lightning = true;
 	public Boolean show_death_reason = true;
 	public Boolean show_killer = false;
 	public Sound death_sound = Sound.WITHER_SPAWN;
@@ -117,6 +128,10 @@ public class GameSettings {
 	private JoinState join_state = JoinState.CLOSE;
 	private Set<String> whitelist = new HashSet<String>();
 	private List<Scenario> scenarios = new ArrayList<Scenario>();
+	
+	//SCENARIOS
+	public Boolean scenarios_list = true;
+	public Integer random_scenarios = 0;
 	
 	public GameSettings(Game game) {
 		
@@ -152,6 +167,13 @@ public class GameSettings {
 			}
 		}
 		
+		enchants_limit = new HashMap<Enchantment, Integer>();
+		
+		for (Enchantment enchant : Enchantment.values()) {
+			enchants_limit.put(enchant, enchant.getMaxLevel());
+		}
+		
+		start_effects = new ArrayList<PotionEffect>();
 		
 		this.permissions = new HashMap<Rank, List<Permission>>();
 		
@@ -276,7 +298,7 @@ public class GameSettings {
 	}
 	
 	public void setActivated(Scenario scenario, Boolean state) {
-		if (state) scenarios.add(scenario);
+		if (state && !scenarios.contains(scenario)) scenarios.add(scenario);
 		else scenarios.remove(scenario);
 	}
 	
@@ -348,5 +370,82 @@ public class GameSettings {
 		}
 		
 		return deathItems;
+	}
+	
+	public Boolean getDisplayLife() {
+		return display_life;
+	}
+	
+	public Boolean getDisplayBowLife() {
+		return bow_display_life;
+	}
+	
+	public Boolean getDisplayHeadLife() {
+		return display_head_life && getDisplayLife();
+	}
+	
+	public Boolean getDisplayTabLife() {
+		return display_tab_life && getDisplayLife();
+	}
+	
+	public void setDisplayLife(Boolean state) {
+		this.display_life = state;
+		
+		if (state && display_head_life) game.getScoreboard().getObjective("name_h").setDisplaySlot(DisplaySlot.BELOW_NAME);
+		else game.getScoreboard().getObjective("name_h").setDisplaySlot(null);
+		
+		if (state && display_tab_life) game.getScoreboard().getObjective("tab_h").setDisplaySlot(DisplaySlot.PLAYER_LIST);
+		else game.getScoreboard().getObjective("tab_h").setDisplaySlot(null);
+	}
+	
+	public void setDisplayBowLife(Boolean state) {
+		this.bow_display_life = state;
+	}
+	
+	public void setDisplayHeadLife(Boolean state) {
+		this.display_head_life = state;
+		game.getScoreboard().getObjective("name_h").setDisplaySlot(state ? DisplaySlot.BELOW_NAME : null);
+	}
+	
+	public void setDisplayTabLife(Boolean state) {
+		this.display_tab_life = state;
+		game.getScoreboard().getObjective("tab_h").setDisplaySlot(state ? DisplaySlot.PLAYER_LIST : null);
+	}
+	
+	public void enchantLimiter(ItemStack item) {
+		
+		if (item == null || item.getType() == Material.AIR || !item.hasItemMeta()) return;
+		
+		ItemMeta meta = item.getItemMeta();
+		GameSettings s = game.getSettings();
+		
+		if (!meta.getEnchants().isEmpty()) {
+			
+			Map<Enchantment, Integer> enchants = new HashMap<Enchantment, Integer>();
+			Boolean change = false;
+			
+			for (Entry<Enchantment, Integer> m : meta.getEnchants().entrySet()) {
+				
+				Enchantment en = m.getKey();
+				Integer l = m.getValue();
+				
+				meta.removeEnchant(en);
+				
+				if (en.getMaxLevel() >= l) {
+					if (l > s.enchants_limit.get(en)) {
+						l = s.enchants_limit.get(en);
+						change = true;
+					}
+				}
+				
+				if (l > 0) enchants.put(en, l);
+			}
+			
+			for (Entry<Enchantment, Integer> m : enchants.entrySet()) {
+				meta.addEnchant(m.getKey(), m.getValue(), true);
+			}
+			
+			if (change) item.setItemMeta(meta);
+		}
 	}
 }

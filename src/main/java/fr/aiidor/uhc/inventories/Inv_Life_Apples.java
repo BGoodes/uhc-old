@@ -17,11 +17,6 @@ public class Inv_Life_Apples extends GuiBuilder {
 	public String getTitle() {
 		return Lang.INV_GAPPLES_CONFIG.get();
 	}
-
-	@Override
-	public Boolean titleIsDynamic() {
-		return false;
-	}
 	
 	@Override
 	public String[][] getMatrix() {
@@ -68,6 +63,12 @@ public class Inv_Life_Apples extends GuiBuilder {
 		if (e.getSlot() == 1) {
 			playClickSound(event.getPlayer());
 			event.getPlayer().openInventory(GuiManager.INV_CONFIG_NAPPLES.getInventory());
+			return;
+		}
+		
+		if (e.getSlot() == 2) {
+			playClickSound(event.getPlayer());
+			event.getPlayer().openInventory(GuiManager.INV_CONFIG_HAPPLES.getInventory());
 			return;
 		}
 		

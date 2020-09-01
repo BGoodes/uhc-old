@@ -15,7 +15,7 @@ public abstract class ItemScenario extends Scenario {
 	}
 	
 	public enum GiveTime {
-		LOADING, FIRST_EPISODE, EPISODE;
+		LOADING, FIRST_EPISODE, EPISODE, DEATH;
 	}
 	
 	public abstract GiveTime giveTime();

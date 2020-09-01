@@ -45,6 +45,7 @@ public class UHCPlayer {
 	private Location death_loc;
 	private ItemStack[] contents;
 	private ItemStack[] armor_contents;
+	private Integer level;
 	
 	public UHCPlayer(Player player, PlayerState state, Rank rank, Game game) {
 		
@@ -63,11 +64,11 @@ public class UHCPlayer {
 	}
 	
 	public Boolean isPlaying() {
-		return isConnected() && state == PlayerState.ALIVE;
+		return isConnected() && isAlive();
 	}
 	
 	public Boolean isAlive() {
-		return state == PlayerState.ALIVE;
+		return state == PlayerState.ALIVE || state == PlayerState.DYING;
 	}
 	
 	public Boolean isDead() {
@@ -148,27 +149,23 @@ public class UHCPlayer {
 		return game.getPlayerTeam(this);
 	}
 	
-	public void leaveTeam() {
+	public void leaveTeam(Boolean announce) {
 		if (hasTeam()) {
-			getTeam().leave(this);
+			getTeam().leave(this, announce);
 		}
 	}
 	
-	public void kill() {
-		
-		setState(PlayerState.DEAD);
-		
+	public void saveDeath() {
 		Player player = getPlayer();
 		PlayerInventory inv = player.getInventory();
 			
 		this.death_loc = player.getLocation();
 		this.contents = inv.getContents();
 		this.armor_contents = inv.getArmorContents();
-		
-		reset();
+		this.level = player.getLevel();
 	}
 	
-	public void revive(Boolean location, Boolean inventory) {
+	public void revive() {
 		
 		if (isConnected()) {
 			
@@ -177,6 +174,7 @@ public class UHCPlayer {
 			
 			Player player = getPlayer();
 			player.setNoDamageTicks(20 * 20);
+			player.setHealth(player.getMaxHealth());
 			
 			if (ScenariosManager.BELIEVE_FLY.isActivated()) {
 				player.setAllowFlight(true);
@@ -185,12 +183,12 @@ public class UHCPlayer {
 			PacketPlayInClientCommand paquet = new PacketPlayInClientCommand(EnumClientCommand.PERFORM_RESPAWN);
 			((CraftPlayer) player).getHandle().playerConnection.a(paquet);
 	            	
-			if (inventory) {
-				if (this.contents != null) player.getInventory().setContents(this.contents);
-				if (this.armor_contents != null) player.getInventory().setArmorContents(this.armor_contents);
-			}
+			if (this.contents != null) player.getInventory().setContents(this.contents);
+			if (this.armor_contents != null) player.getInventory().setArmorContents(this.armor_contents);
+
+			if (level != null) player.setLevel(level);
 			
-	    	if (location && death_loc != null) player.teleport(death_loc);
+	    	if (death_loc != null) player.teleport(death_loc);
 	    	else new Teleportation(this).revive(300).teleport();
 		}
 	}
@@ -224,14 +222,20 @@ public class UHCPlayer {
 	
 	public void setAbso(Integer amount, Integer time) {
 		if (isConnected()) {
+			
+			EntityPlayer ep = ((CraftPlayer) getPlayer()).getHandle();
+			
+			if (amount > ep.getAbsorptionHearts()) {
+				getPlayer().removePotionEffect(PotionEffectType.ABSORPTION);
+			}
+			
 			if (amount > 0) {
-				if (amount%2 == 0) {
-					addPotionEffect(new PotionEffect(PotionEffectType.ABSORPTION, time, amount/2 - 1, true, true));
+				if (amount%4 == 0) {
+					addPotionEffect(new PotionEffect(PotionEffectType.ABSORPTION, time, amount/4 - 1, true, true));
 				} else {
 					
-					if (addPotionEffect(new PotionEffect(PotionEffectType.ABSORPTION, time, (Integer) amount/2, true, true))) {
-						EntityPlayer ep = ((CraftPlayer) getPlayer()).getHandle();
-						ep.setAbsorptionHearts(ep.getAbsorptionHearts() - 2);
+					if (addPotionEffect(new PotionEffect(PotionEffectType.ABSORPTION, time, (Integer) amount/4, true, true))) {
+						ep.setAbsorptionHearts(ep.getAbsorptionHearts() - (4 - amount%4));
 					}
 				}
 			}
@@ -317,25 +321,37 @@ public class UHCPlayer {
 	
 	public void onLogin() {
 		if (isConnected()) {
-			if (game.isStart() && getState() == PlayerState.ALIVE) {
-				Player player = getPlayer();
+			Player player = getPlayer();
+			
+			if (game.isStart()) {
 				
-				for (ItemStack item : giveItem) {
-					if (player.getInventory().firstEmpty() == -1) {
-						player.getWorld().dropItem(player.getLocation(), item);
-					} else {
-						player.getInventory().addItem(item);
+				if (getState() == PlayerState.ALIVE) {
+					for (ItemStack item : giveItem) {
+						if (player.getInventory().firstEmpty() == -1) {
+							player.getWorld().dropItem(player.getLocation(), item);
+						} else {
+							player.getInventory().addItem(item);
+						}
+					}
+					
+					for (PotionEffect pe : addPotionEffect) {
+						addPotionEffect(pe);
+					}
+					
+					for (PotionEffectType pe : removePotionEffect) {
+						removePotionEffect(pe);
 					}
 				}
 				
-				for (PotionEffect pe : addPotionEffect) {
-					addPotionEffect(pe);
+				if (ScenariosManager.BELIEVE_FLY.isActivated()) {
+					player.setAllowFlight(true);
 				}
 				
-				for (PotionEffectType pe : removePotionEffect) {
-					removePotionEffect(pe);
+				if (ScenariosManager.MELEE_FUN.isActivated()) {
+					ScenariosManager.MELEE_FUN.resetMeleeFun(player);
 				}
 			}
+
 			
 			giveItem.clear();
 			removePotionEffect.clear();
@@ -373,18 +389,19 @@ public class UHCPlayer {
 			
 			Player player = getPlayer();
 			
-			if (getState() == PlayerState.SPECTATOR || getState() == PlayerState.DEAD)  {
+			if (isSpec())  {
 				
 				player.setGameMode(GameMode.SPECTATOR);
 				if (hasTeam()) getTeam().getTeam().removeEntry(name);
 				game.getScoreboard().getTeam(Lang.TEAM_SPEC_NAME.get()).addEntry(name);
-				
+			    
 			} else {
 				
 				player.setAllowFlight(false);
 				player.setFlying(false);
 				player.setGameMode(GameMode.SURVIVAL);
 				
+				if (game.getScoreboard().getTeam(Lang.TEAM_SPEC_NAME.get()).hasEntry(name)) game.getScoreboard().getTeam(Lang.TEAM_SPEC_NAME.get()).removeEntry(name);
 				if (hasTeam()) getTeam().getTeam().addEntry(name);
 			}
 			
@@ -397,6 +414,7 @@ public class UHCPlayer {
 			
 			player.setFlySpeed(0.1f);
 			player.setWalkSpeed(0.2f);
+			player.setMaximumNoDamageTicks(20);
 			
 			player.setFoodLevel(20);
 			player.setSaturation(20);

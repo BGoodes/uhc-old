@@ -36,6 +36,7 @@ import fr.aiidor.uhc.tools.Titles;
 import fr.aiidor.uhc.tools.UHCItem;
 import fr.aiidor.uhc.world.UHCWorld;
 import fr.aiidor.uhc.world.WorldManager;
+import fr.aiidor.uhc.world.WorldPanel;
 
 public class Game {
 	
@@ -47,17 +48,17 @@ public class Game {
 	private Set<UHCPlayer> players;
 	private List<UHCTeam> teams;
 	
-	private List<UHCWorld> worlds = new ArrayList<UHCWorld>();
+	private List<UHCWorld> worlds;
 	
 	private UHCWorld main_world = null;
+	private WorldPanel world_panel = null;
 	
 	private GameState state;
 	private GameSettings settings;
 	
 	private UHCTask task;
 	
-	
-	public Game(String name, UHCMode uhc_mode, GameSettings settings, Player host, Set<UHCPlayer> players, World world) {
+	public Game(String name, UHCMode uhc_mode, GameSettings settings, Player host, Set<UHCPlayer> players, UHCWorld world, List<UHCWorld> worlds) {
 		
 		this.setName(name);
 		this.setUHCMode(uhc_mode);
@@ -66,8 +67,11 @@ public class Game {
 		uhc_mode.setGame(this);
 		this.uhc_mode = uhc_mode;
 		
-		this.main_world = new UHCWorld(world, true);
-		this.worlds.add(main_world);
+		if (worlds != null) this.worlds = worlds;
+		else this.worlds = new ArrayList<UHCWorld>();
+		
+		this.main_world = world;
+		if (!this.worlds.contains(world)) this.worlds.add(main_world);
 		
 		//WORLD
 		for (World w : getWorlds()) {
@@ -88,14 +92,19 @@ public class Game {
 		
 		this.sb = Bukkit.getScoreboardManager().getNewScoreboard();
 		
-		Objective h = sb.registerNewObjective("Health", "dummy");
-		h.setDisplayName("§c❤");
-		h.setDisplaySlot(DisplaySlot.BELOW_NAME);
+		Objective name_h = sb.registerNewObjective("name_h", "dummy");
+		name_h.setDisplayName("§c❤");
+		
+		Objective tab_h = sb.registerNewObjective("tab_h", "health");
+		tab_h.setDisplayName("§c❤");
+		
+		if (this.settings.getDisplayHeadLife()) name_h.setDisplaySlot(DisplaySlot.BELOW_NAME);
+		if (this.settings.getDisplayTabLife()) tab_h.setDisplaySlot(DisplaySlot.PLAYER_LIST);
 		
 		if (sb.getTeam(Lang.TEAM_SPEC_NAME.get()) == null) sb.registerNewTeam(Lang.TEAM_SPEC_NAME.get());
 		
 		Team t = sb.getTeam(Lang.TEAM_SPEC_NAME.get());
-		t.setPrefix(Lang.TEAM_SPEC_PREFIX.get());
+		t.setPrefix(Rank.SPECTATOR.getPrefix());
 		t.setCanSeeFriendlyInvisibles(true);
 		
 		//TASK
@@ -175,10 +184,7 @@ public class Game {
 	public Boolean start() {
 		
 		if (getState() == GameState.WAITING) {
-			
-			if (isRunning()) getRunner().stop();
-			
-			new StartingTask(this).launch();;
+			new StartingTask(this).launch();
 			return true;
 		}
 		
@@ -198,6 +204,26 @@ public class Game {
 		return worlds;
 	}
 	
+	public Boolean hasWorldPanel() {
+		return world_panel != null;
+	}
+	
+	public WorldPanel getWorldPanel() {
+		return world_panel;
+	}
+	
+	public void setWorldPanel(WorldPanel panel) {
+		this.world_panel = panel;
+	}
+	
+	public void addUHCWorld(UHCWorld w) {
+		worlds.add(w);
+	}
+	
+	public void removeUHCWorld(UHCWorld w) {
+		worlds.remove(w);
+	}
+	
 	public UHCWorld getUHCWorld(World world) {
 		for (UHCWorld w : worlds) {
 			if (w.getAll().contains(world)) return w;
@@ -208,6 +234,10 @@ public class Game {
 	
 	public Boolean isUHCWorld(World world) {
 		return getUHCWorld(world) != null;
+	}
+	
+	public void setMainWorld(UHCWorld w) {
+		this.main_world = w;
 	}
 	
 	public UHCWorld getMainWorld() {
@@ -287,7 +317,7 @@ public class Game {
 		Set<UHCPlayer> players = new HashSet<UHCPlayer>();
 		
 		for (UHCPlayer p : this.players) {
-			if (p.isConnected() && p.isAlive()) players.add(p);
+			if (p.isPlaying()) players.add(p);
 		}
 		
 		return players;
@@ -334,7 +364,7 @@ public class Game {
 	
 	public void removeUHCPlayer(UHCPlayer player) {
 		
-		if (player.hasTeam()) player.leaveTeam();
+		if (player.hasTeam()) player.leaveTeam(true);
 		
 		if (player.getRank() == Rank.HOST || player.getRank() == Rank.ORGA) {
 			player.setState(PlayerState.DEAD);
@@ -493,7 +523,7 @@ public class Game {
 		if (hasTeam()) {
 			for (UHCTeam t : getTeams()) {
 				for (UHCPlayer p : t.getPlayers()) {
-					if (p.isConnected() && p.getState() == PlayerState.ALIVE) {
+					if (p.isConnected() && p.isAlive()) {
 						teams.add(t);
 						break;
 					}

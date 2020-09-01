@@ -16,12 +16,10 @@ import org.bukkit.scoreboard.Team;
 import fr.aiidor.uhc.UHC;
 import fr.aiidor.uhc.enums.Lang;
 import fr.aiidor.uhc.enums.LangTag;
-import fr.aiidor.uhc.enums.PlayerState;
 import fr.aiidor.uhc.enums.TeamColor;
 import fr.aiidor.uhc.enums.UHCType;
 import fr.aiidor.uhc.game.Game;
 import fr.aiidor.uhc.game.UHCPlayer;
-import fr.aiidor.uhc.scenarios.ScenariosManager;
 import fr.aiidor.uhc.tools.ItemBuilder;
 
 public class UHCTeam {
@@ -66,10 +64,6 @@ public class UHCTeam {
 		team.setAllowFriendlyFire(game.getSettings().friendly_fire);
 		team.setCanSeeFriendlyInvisibles(true);
 		team.setNameTagVisibility(NameTagVisibility.ALWAYS);
-		
-		if (ScenariosManager.MYSTERY_TEAMS.isActivated()) {
-			ScenariosManager.MYSTERY_TEAMS.setMystery(this);
-		}
 	}
 
 	public String getPrefix() {
@@ -137,7 +131,7 @@ public class UHCTeam {
 		Set<UHCPlayer> players = new HashSet<UHCPlayer>();
 		
 		for (UHCPlayer p : this.players) {
-			if (p.isConnected() && p.getState() == PlayerState.ALIVE) players.add(p);
+			if (p.isConnected() && p.isAlive()) players.add(p);
 		}
 		
 		return players;
@@ -202,31 +196,33 @@ public class UHCTeam {
 		
 		if (getPlayerCount() > size && size >= 1) {
 			while (getPlayerCount() > size && size >= 1) {
-				((UHCPlayer) getPlayers().toArray()[new Random().nextInt(getPlayers().size())]).leaveTeam();
+				((UHCPlayer) getPlayers().toArray()[new Random().nextInt(getPlayers().size())]).leaveTeam(true);
 			}
 		}
 	
 		this.size = size;
 	}
 	
-	public void join(UHCPlayer player) {
+	public void join(UHCPlayer player, Boolean announce) {
 		
 		if (!UHC.getInstance().getGameManager().hasGame()) return;
 		
 		if (!isFull()) {
 			if (player.isConnected()) {
 				
-				player.leaveTeam();
+				player.leaveTeam(announce);
 				Player p = player.getPlayer();
 				
 				players.add(player);
 				team.addEntry(player.getName());
 				
-				p.playSound(p.getLocation(), Sound.LEVEL_UP, 0.6f, 1f);
-				p.sendMessage(Lang.TEAM_JOIN.get()
-						.replace(LangTag.TEAM_NAME.toString(), getName())
-						.replace(LangTag.TEAM_PLAYER_COUNT.toString(), getPlayerCount().toString()));
-				
+				if (announce) {
+					p.playSound(p.getLocation(), Sound.LEVEL_UP, 0.6f, 1f);
+					p.sendMessage(Lang.TEAM_JOIN.get()
+							.replace(LangTag.TEAM_NAME.toString(), getName())
+							.replace(LangTag.TEAM_PLAYER_COUNT.toString(), getPlayerCount().toString()));
+				}
+
 				ItemStack hand = p.getItemInHand();
 				if (hand != null && hand.getType() == Material.BANNER && hand.hasItemMeta() && hand.getItemMeta().hasDisplayName() 
 					&& hand.getItemMeta().getDisplayName().equalsIgnoreCase(Lang.INV_TEAM_CHOOSE.get())) {
@@ -245,12 +241,12 @@ public class UHCTeam {
 		}
 	}
 	
-	public void leave(UHCPlayer player) {
+	public void leave(UHCPlayer player, Boolean announce) {
 		
 		players.remove(player);
 		team.removeEntry(player.getName());
 		
-		player.getPlayer().sendMessage(Lang.TEAM_LEAVE.get().replace(LangTag.TEAM_NAME.toString(), getName()));
+		if (announce) player.getPlayer().sendMessage(Lang.TEAM_LEAVE.get().replace(LangTag.TEAM_NAME.toString(), getName()));
 		
 		if (player.isConnected()) {
 			Player p = player.getPlayer();

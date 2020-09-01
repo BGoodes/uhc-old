@@ -32,11 +32,6 @@ public class Cupid extends Scenario {
 		gui = new GuiBuilder() {
 			
 			@Override
-			public Boolean titleIsDynamic() {
-				return false;
-			}
-			
-			@Override
 			public void onClick(GuiClickEvent event) {
 				
 				InventoryClickEvent e = event.getEvent();

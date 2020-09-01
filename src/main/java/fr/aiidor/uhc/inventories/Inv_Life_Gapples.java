@@ -23,11 +23,6 @@ public class Inv_Life_Gapples extends GuiBuilder {
 	public String getTitle() {
 		return Lang.INV_LIFE_GAPPLE.get();
 	}
-
-	@Override
-	public Boolean titleIsDynamic() {
-		return false;
-	}
 	
 	@Override
 	public String[][] getMatrix() {
@@ -52,9 +47,9 @@ public class Inv_Life_Gapples extends GuiBuilder {
 			
 			dictionary.put("S", getConfigItem(null, game.getSettings().golden_apple));
 			dictionary.put("P", new ItemBuilder(Material.POTION, Lang.INV_LIFE_EFFECTS.get()).setPotionType(PotionType.REGEN, true).addFlag(ItemFlag.HIDE_POTION_EFFECTS).getItem());
-			dictionary.put("A", new ItemBuilder(Material.GOLD_CHESTPLATE, Lang.INV_LIFE_ABSO.get().replace(LangTag.VALUE.toString(), game.getSettings().gapple_abso + " §c❤")).setLore(Arrays.asList(
-						Lang.INV_LEFT_CLICK.get().replace(LangTag.VALUE.toString(), "§71 §c❤"),
-						Lang.INV_RIGHT_CLICK.get().replace(LangTag.VALUE.toString(), "§71 §c❤")
+			dictionary.put("A", new ItemBuilder(Material.GOLD_CHESTPLATE, Lang.INV_LIFE_ABSO.get().replace(LangTag.VALUE.toString(), (float) game.getSettings().gapple_abso/2f + " §c❤")).setLore(Arrays.asList(
+						Lang.INV_LEFT_CLICK.get().replace(LangTag.VALUE.toString(), "§f0.5 §c❤"),
+						Lang.INV_RIGHT_CLICK.get().replace(LangTag.VALUE.toString(), "§f0.5 §c❤")
 					)).getItem());
 			
 		}
@@ -86,7 +81,7 @@ public class Inv_Life_Gapples extends GuiBuilder {
 			}
 			
 			if (game.getSettings().gapple_abso <= 0) game.getSettings().gapple_abso = 0;
-			if (game.getSettings().gapple_abso >= 10) game.getSettings().gapple_abso = 10;
+			if (game.getSettings().gapple_abso >= 20) game.getSettings().gapple_abso = 20;
 			
 			playClickSound(event.getPlayer());
 			update();

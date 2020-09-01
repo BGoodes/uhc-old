@@ -11,6 +11,7 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.potion.PotionEffect;
 
 import fr.aiidor.uhc.UHC;
+import fr.aiidor.uhc.enums.Lang;
 import fr.aiidor.uhc.game.Game;
 import fr.aiidor.uhc.game.GameManager;
 import fr.aiidor.uhc.game.UHCPlayer;
@@ -78,17 +79,33 @@ public class FoodEvents implements Listener {
 				
 			} else {
 				
-				//GAPPLE
-				if (!game.getSettings().golden_apple) {
-					return;
+				//GOLDEN HEAD
+				if (hand.hasItemMeta() && hand.getItemMeta().hasDisplayName() && hand.getItemMeta().getDisplayName().equals(Lang.GOLDEN_HEAD_NAME.get())) {
+					
+					if (!game.getSettings().golden_head) {
+						return;
+					}
+					
+					for (PotionEffect pe : game.getSettings().happle_effects) {
+						p.addPotionEffect(pe);
+					}
+					
+					//ABSO
+					p.setAbso(game.getSettings().happle_abso, 2400);
+					
+				} else {
+					//GAPPLE
+					if (!game.getSettings().golden_apple) {
+						return;
+					}
+					
+					for (PotionEffect pe : game.getSettings().gapple_effects) {
+						p.addPotionEffect(pe);
+					}
+					
+					//ABSO
+					p.setAbso(game.getSettings().gapple_abso, 2400);
 				}
-				
-				for (PotionEffect pe : game.getSettings().gapple_effects) {
-					p.addPotionEffect(pe);
-				}
-				
-				//ABSO
-				p.setAbso(game.getSettings().gapple_abso, 2400);
 			}
 		}
 	}

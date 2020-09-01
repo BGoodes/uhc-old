@@ -44,16 +44,9 @@ public class Assassins extends Scenario {
 		gui = new GuiBuilder() {
 			
 			@Override
-			public Boolean titleIsDynamic() {
-				return false;
-			}
-			
-			@Override
 			public void onClick(GuiClickEvent event) {
 				
 				InventoryClickEvent e = event.getEvent();
-				ItemStack clicked = event.getItemClicked();
-				
 				e.setCancelled(true);
 				
 				if (event.getGame().isPvpTime()) {
@@ -63,11 +56,7 @@ public class Assassins extends Scenario {
 					return;
 				}
 				
-				if (e.getSlot() == 0 && clicked.getType() == Material.COMPASS) {
-					if (event.getGame().isPvpTime()) {
-						event.getPlayer().sendMessage(Lang.ST_ERROR_OPTION_PVP.get());
-						event.getPlayer().closeInventory();
-					}
+				if (e.getSlot() == 0) {
 					compass = !compass;
 					update();
 					return;

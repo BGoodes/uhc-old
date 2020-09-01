@@ -10,6 +10,7 @@ import java.util.Set;
 import java.util.UUID;
 
 import org.bukkit.Bukkit;
+import org.bukkit.craftbukkit.v1_8_R3.entity.CraftPlayer;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 import org.bukkit.potion.PotionEffect;
@@ -32,6 +33,9 @@ import fr.aiidor.uhc.game.Game;
 import fr.aiidor.uhc.game.GameManager;
 import fr.aiidor.uhc.game.GameSettings;
 import fr.aiidor.uhc.game.UHCPlayer;
+import fr.aiidor.uhc.task.TimeTask;
+import net.minecraft.server.v1_8_R3.EnumParticle;
+import net.minecraft.server.v1_8_R3.PacketPlayOutWorldParticles;
 
 public class DevilWatches extends UHCMode {
 	
@@ -62,8 +66,8 @@ public class DevilWatches extends UHCMode {
 		GameSettings s = game.getSettings();
 		s.uhc_cycle = true;
 		s.double_uhc_cycle = true;
-		s.display_life = false;
-		
+		s.setDisplayLife(false);
+		s.death_lightning = false;
 	}
 	
 	@Override
@@ -116,9 +120,12 @@ public class DevilWatches extends UHCMode {
 				players = new ArrayList<DWplayer>();
 				
 				for (DWplayer p : roles) {
-					p.announceRole();
 					players.add(p);
-					
+				}
+				
+				for (DWplayer p : roles) {
+					p.announceRole();
+
 					episode(2);
 				}
 			}
@@ -149,41 +156,24 @@ public class DevilWatches extends UHCMode {
 	@Override
 	public void run() {
 		
-		Integer time = game.getRunner().getTime();
+		//Integer time = game.getRunner().getTime();
 		
 		if (playersHasRole()) {
 			for (DWplayer dwp : getPlayingPlayers()) {
 				UHCPlayer p = dwp.getUHCPlayer();
 				if (dwp.hasRole()) {
 					
+					Player player = p .getPlayer();
+					
 					DWRole r = dwp.getRole();
-					if (dwp.hasPotionEffects()) {
-						for (PotionEffect pe : dwp.getPotionEffects()) {
-							dwp.getUHCPlayer().addPotionEffect(pe);
-						}
-					}
 					
-					Integer min = ((time - time%60)/60);
-					Boolean isDay = ((min - min%10)/10)%2 == 0;
+					/*Integer min = ((time - time%60)/60);
+					Boolean isDay = ((min - min%10)/10)%2 == 0;*/
 					
-					if (isDay) { //DAY
-						
-						if (dwp.hasDayPotionEffects()) {
-							for (PotionEffect pe : dwp.getDayPotionEffects()) {
-								p.addPotionEffect(pe);
-							}
-						}
-						
-					} else { //NIGHT
-						
-						if (dwp.hasNightPotionEffects()) {
-							for (PotionEffect pe : dwp.getNightPotionEffects()) {
-								p.addPotionEffect(pe);
-							}
-						}
-					}
+					Boolean isDay = TimeTask.isDay(player.getWorld());
 					
-					if (r.getRoleType() == DWRoleType.PROWLER && dwp.getRole().hasPower()) {
+					//PROWLER ------------------------------------------
+					if (r.getRoleType() == DWRoleType.PROWLER && r.hasPower()) {
 						Prowler role = (Prowler) r;
 						
 						Integer power_time =  game.getSettings().ep_time * 60/2 - role.time;
@@ -200,7 +190,8 @@ public class DevilWatches extends UHCMode {
 						}
 					}
 					
-					if (r.getRoleType() == DWRoleType.HERMIT && dwp.getRole().hasPower()) {
+					//HERMIT ----------------------------------------
+					if (r.getRoleType() == DWRoleType.HERMIT && r.hasPower()) {
 						int number = getPlayersArround(dwp.getUHCPlayer().getPlayer());
 						
 						if (number >= 4) {
@@ -216,6 +207,101 @@ public class DevilWatches extends UHCMode {
 							p.addPotionEffect(new PotionEffect(PotionEffectType.SPEED, 2*20, 0, false, false));
 						}
 					}
+					
+					//GLOBAL EFFECTS -------------------------------
+					if (isDay) { //DAY
+						
+						//PERMANENT DAY ----------------------------------
+						if (dwp.hasDayPotionEffects()) {
+							for (PotionEffect pe : dwp.getDayPotionEffects()) {
+								p.addPotionEffect(pe);
+							}
+						}
+						
+					} else { //NIGHT
+						
+						//ROLES NIGHT ---------------------------------------
+						if (r.getRoleType() == DWRoleType.MISCHIEVOUS_DEMON && r.hasPower()) {
+							if (!p.hasArmor()) {
+								p.addPotionEffect(new PotionEffect(PotionEffectType.INVISIBILITY, 2*20, 0, false, false));
+							} else {
+								p.removePotionEffect(PotionEffectType.INVISIBILITY);
+							}
+						}
+						
+						//PERMANENT NIGHT ----------------------------------
+						if (dwp.hasNightPotionEffects()) {
+							for (PotionEffect pe : dwp.getNightPotionEffects()) {
+								p.addPotionEffect(pe);
+							}
+						}
+					}
+					
+					//PERMANENT EFFECTS
+					if (dwp.hasPotionEffects()) {
+						for (PotionEffect pe : dwp.getPotionEffects()) {
+							dwp.getUHCPlayer().addPotionEffect(pe);
+						}
+					}
+					
+					//INVISIBILITY PARTICLE
+					if (player.hasPotionEffect(PotionEffectType.INVISIBILITY)) {
+						
+						for (Entity ent : player.getNearbyEntities(40, 40, 40)) {
+							if (ent instanceof Player && ((Player) ent).hasPotionEffect(PotionEffectType.INVISIBILITY)) {
+								Player w = (Player) ent;
+								
+								float x = (float) player.getLocation().getX();
+								float y = (float) player.getLocation().getY() + 0.15F;
+								float z = (float) player.getLocation().getZ();
+								
+								int red = new Random().nextInt(255);
+								int green = new Random().nextInt(255);
+								int blue = new Random().nextInt(255);
+								
+								PacketPlayOutWorldParticles particles = new PacketPlayOutWorldParticles(EnumParticle.REDSTONE, true, x, y, z, red, green, blue, (float)10, 0, 40);;
+		                        ((CraftPlayer) w).getHandle().playerConnection.sendPacket(particles);
+							}
+						}
+					}
+				}
+			}
+		}
+	}
+	
+	@Override
+	public void night(Integer ep) {
+		
+		if (playersHasRole()) {
+			for (DWplayer dwp : getPlayingPlayers()) {
+				UHCPlayer p = dwp.getUHCPlayer();
+				Player player = p.getPlayer();
+				
+				if (dwp.hasRole()) {
+					DWRole r = dwp.getRole();
+					
+					Integer abso = 0;
+					
+					if (r.getRoleType() == DWRoleType.GREEDY_DEMON && r.hasPower()) {
+						
+						for (Entity ent : player.getNearbyEntities(50, 50, 50)) {
+							if (ent instanceof Player) {
+								Player target = (Player) ent;
+								
+								if (hasRole(target.getUniqueId())) {
+									DWplayer dwt = getDWPlayer(target.getUniqueId());
+									
+									if (dwt.getCamp() != DWCamp.DEMONS) {
+										target.damage(1);
+										target.sendMessage(Lang.DW_GREEDY_PREVENT.get());
+										abso++;
+									}
+								}
+							}
+						}
+					}
+					
+					if (abso > 0) p.setAbso(abso, 20 * 60 * 5);
 				}
 			}
 		}
@@ -238,11 +324,11 @@ public class DevilWatches extends UHCMode {
 		
 		if (playersHasRole()) {
 			
-			Integer villagers = getPlayingPlayers(DWCamp.VILLAGERS).size();
-			Integer sectarians = getPlayingPlayers(DWCamp.SECTARIANS).size();
-			Integer demons = getPlayingPlayers(DWCamp.DEMONS).size();
-			Integer solos = getPlayingPlayers(DWCamp.SOLOS).size();
-			Integer neutrals = getPlayingPlayers(DWCamp.NEUTRALS).size();
+			Integer villagers = getAlivePlayers(DWCamp.VILLAGERS).size();
+			Integer sectarians = getAlivePlayers(DWCamp.SECTARIANS).size();
+			Integer demons = getAlivePlayers(DWCamp.DEMONS).size();
+			Integer solos = getAlivePlayers(DWCamp.SOLOS).size();
+			Integer neutrals = getAlivePlayers(DWCamp.NEUTRALS).size();
 			
 			if ((neutrals > 0 && sectarians == 0 && demons == 0 && solos == 0) || getPlayingPlayers().size() == 0) {
 				//DRAW
@@ -311,8 +397,10 @@ public class DevilWatches extends UHCMode {
 	@Override
 	public void stop() {
 		
-		for (DWplayer p : players) {
-			if (p.hasRole()) p.getRole().stop();
+		if (playersHasRole()) {
+			for (DWplayer p : players) {
+				if (p.hasRole()) p.getRole().stop();
+			}
 		}
 		
 		players = null;

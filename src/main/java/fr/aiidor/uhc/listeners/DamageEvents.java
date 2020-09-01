@@ -25,6 +25,7 @@ import fr.aiidor.uhc.UHC;
 import fr.aiidor.uhc.enums.GameState;
 import fr.aiidor.uhc.enums.Lang;
 import fr.aiidor.uhc.enums.LangTag;
+import fr.aiidor.uhc.enums.PlayerState;
 import fr.aiidor.uhc.enums.UHCType;
 import fr.aiidor.uhc.game.Game;
 import fr.aiidor.uhc.game.GameManager;
@@ -44,6 +45,14 @@ public class DamageEvents implements Listener {
 		Game game = gm.getGame();
 		if (!game.getWorlds().contains(e.getEntity().getWorld())) return;
 		
+		if (ScenariosManager.FIRELESS.isActivated()) {
+			if (!ScenariosManager.FIRELESS.canDamage(e.getCause(), e.getEntity())) {
+				e.setCancelled(true);
+				e.getEntity().setFireTicks(0);
+				return;
+			}
+		}
+		
 		//PLAYERS
 		if (e.getEntity() instanceof Player) {
 			
@@ -53,6 +62,11 @@ public class DamageEvents implements Listener {
 			UHCPlayer p = game.getUHCPlayer(player.getUniqueId());
 			
 			if (!game.isStart()) {
+				e.setCancelled(true);
+				return;
+			}
+
+			if (p.getState() == PlayerState.DYING) {
 				e.setCancelled(true);
 				return;
 			}
@@ -91,14 +105,13 @@ public class DamageEvents implements Listener {
 				if (ScenariosManager.TNTFLY.damage_reduction != 0) e.setDamage(e.getDamage() / ScenariosManager.TNTFLY.damage_reduction);
 				player.setVelocity(player.getVelocity().multiply(ScenariosManager.TNTFLY.boost));
 			}
-		}
-		
-		//ENTITIES
-		if (ScenariosManager.FIRELESS.isActivated()) {
-			if (!ScenariosManager.FIRELESS.canDamage(e.getCause(), e.getEntity())) {
-				e.setCancelled(true);
-				e.getEntity().setFireTicks(0);
-				return;
+			
+			if (ScenariosManager.GAPZAP.isActivated()) {
+				player.removePotionEffect(PotionEffectType.REGENERATION);
+			}
+			
+			if (ScenariosManager.DROPPING_COINS.isActivated()) {
+				ScenariosManager.DROPPING_COINS.drop(player);
 			}
 		}
 	}
@@ -112,20 +125,60 @@ public class DamageEvents implements Listener {
 		
 		if (!game.getWorlds().contains(e.getEntity().getWorld())) return;
 		
-		if (e.getEntity() instanceof Player) {
+		
+		//CANCEL DAMAGE
+		if (e.getDamager() instanceof Player) {
+			Player damager = (Player) e.getDamager();
 			
-			Player player = (Player) e.getEntity();
-			
-			if (game.isHere(player.getUniqueId())) {
+			if (game.isHere(damager.getUniqueId())) {
 				
-				UHCPlayer p = game.getUHCPlayer(player.getUniqueId());
+				UHCPlayer d = game.getUHCPlayer(damager.getUniqueId());
 				
-				if (e.getDamager() instanceof Player) {
-					//PVP TIME
+				
+				if (e.getEntity() instanceof Player) {
 					if (!game.canPvp()) {
 						e.setCancelled(true);
 						return;
 					}
+				}
+				
+				if (d.getState() == PlayerState.DYING) {
+					e.setCancelled(true);
+					return;
+				}
+			}
+		}
+		
+		if (e.getDamager() instanceof Projectile) {
+			if (((Projectile) e.getDamager()).getShooter() instanceof Player) {
+				
+				if (game.isHere(((Player)((Projectile) e.getDamager()).getShooter()).getUniqueId())) {
+					if (!game.canPvp()) {
+						e.setCancelled(true);
+						return;
+					}
+				}
+			}
+		}
+		
+		if (game.getSettings().IsActivated(ScenariosManager.RODLESS)) {
+			if (!ScenariosManager.RODLESS.canDamage(e.getDamager(), e.getEntity())) {
+				e.setCancelled(true);
+				return;
+			}
+		}
+		
+		//-------------------------------------------------
+		
+		if (e.getEntity() instanceof Player) {
+			
+			Player player = (Player) e.getEntity();
+			if (game.isHere(player.getUniqueId())) {
+				
+				UHCPlayer p = game.getUHCPlayer(player.getUniqueId());
+				
+				if (ScenariosManager.MELEE_FUN.isActivated()) {
+					player.setNoDamageTicks(0);
 				}
 				
 				if (e.getDamager() instanceof Projectile) {
@@ -134,34 +187,32 @@ public class DamageEvents implements Listener {
 					if (pj.getShooter() instanceof Player) {
 						
 						Player damager = (Player) pj.getShooter();
-						if (!game.canPvp()) {
-							e.setCancelled(true);
-							return;
-						}
 						
-						if (pj.getType() == EntityType.ARROW) {
-							
-							if (game.getSettings().display_life && game.getSettings().bow_display_life) {
+						if (game.isHere(damager.getUniqueId())) {
+							if (pj.getType() == EntityType.ARROW) {
 								
-								Double life = Math.round((player.getHealth() + ((CraftPlayer) player).getHandle().getAbsorptionHearts() - e.getFinalDamage()) * 100D * 5D) / 100D;
+								if (game.getSettings().getDisplayBowLife() && game.getSettings().getDisplayLife()) {
+									
+									Double life = Math.round((player.getHealth() + ((CraftPlayer) player).getHandle().getAbsorptionHearts() - e.getFinalDamage()) * 100D * 5D) / 100D;
+									
+									String life_text = "§a" + life + "%";
+									if (life < 80) life_text = "§e" + life + "%";
+									if (life <= 50) life_text = "§6" + life + "%";
+									if (life <= 20) life_text = "§c" + life + "%";
+									if (life <= 5) life_text = "§4" + life + "%";
+									
+									damager.sendMessage(Lang.MSG_BOW_DAMAGE.get()
+											.replace(LangTag.VALUE.toString(), life_text)
+											.replace(LangTag.PLAYER_NAME.toString(), p.getDisplayName()));
+								}
 								
-								String life_text = "§a" + life + "%";
-								if (life < 80) life_text = "§e" + life + "%";
-								if (life <= 50) life_text = "§6" + life + "%";
-								if (life <= 20) life_text = "§c" + life + "%";
-								if (life <= 5) life_text = "§4" + life + "%";
+								if (ScenariosManager.CUPID.isActivated()) {
+									ScenariosManager.CUPID.heal(damager, e.getFinalDamage());
+								}
 								
-								damager.sendMessage(Lang.MSG_BOW_DAMAGE.get()
-										.replace(LangTag.VALUE.toString(), life_text)
-										.replace(LangTag.PLAYER_NAME.toString(), p.getDisplayName()));
-							}
-							
-							if (ScenariosManager.CUPID.isActivated()) {
-								ScenariosManager.CUPID.heal(damager, e.getFinalDamage());
-							}
-							
-							if (ScenariosManager.BOW_SWAP.isActivated()) {
-								ScenariosManager.BOW_SWAP.tp(player, damager);
+								if (ScenariosManager.BOW_SWAP.isActivated()) {
+									ScenariosManager.BOW_SWAP.tp(player, damager);
+								}
 							}
 						}
 					}
@@ -170,6 +221,8 @@ public class DamageEvents implements Listener {
 			
 		}
 		
+		
+		//DAMAGE GENERAUX
 		if (e.getDamager() instanceof Player) {
 			
 			Player player = (Player) e.getDamager();
@@ -218,7 +271,7 @@ public class DamageEvents implements Listener {
 				Player damager = (Player) pj.getShooter();
 				if (game.isHere(damager.getUniqueId())) {
 					
-					UHCPlayer p = game.getUHCPlayer(damager.getUniqueId());
+					UHCPlayer d = game.getUHCPlayer(damager.getUniqueId());
 					
 					if (pj.getType() == EntityType.ARROW) {
 						
@@ -226,8 +279,8 @@ public class DamageEvents implements Listener {
 							
 							DevilWatches dw = (DevilWatches) game.getUHCMode();
 							
-							if (dw.hasRole(p.getUUID())) {
-								DWRole role = dw.getDWPlayer(p.getUUID()).getRole();
+							if (dw.hasRole(d.getUUID())) {
+								DWRole role = dw.getDWPlayer(d.getUUID()).getRole();
 								
 								if (role.getRoleType() == DWRoleType.HUNTER && role.hasPower()) {
 									
@@ -240,13 +293,6 @@ public class DamageEvents implements Listener {
 					}
 				}
 
-			}
-		}
-		
-		if (game.getSettings().IsActivated(ScenariosManager.RODLESS)) {
-			if (!ScenariosManager.RODLESS.canDamage(e.getDamager(), e.getEntity())) {
-				e.setCancelled(true);
-				return;
 			}
 		}
 		

@@ -19,16 +19,44 @@ public enum Lang {
 	INFO_PREFIX,
 	DW_PREFIX,
 	TG_PREFIX,
+	LG_PREFIX,
 	
 	//ENCHANTS
-	LEVEL("enchants"),
 	ENCHANTMENTS("enchants"),
 	
-	DURABILITY("DURABILITY", "enchants"),
-	DIG_SPEED("DIG-SPEED" , "enchants"),
-	LOOT_BONUS_BLOCKS("LOOT-BONUS-BLOCKS", "enchants"),
-	SILK_TOUCH("SILK-TOUCH", "enchants"),
-
+	ENCH_ARROW_DAMAGE("ARROW_DAMAGE", "enchants"),
+	ENCH_ARROW_FIRE("ARROW_FIRE", "enchants"),	
+	ENCH_ARROW_INFINITE("ARROW_INFINITE", "enchants"),
+	ENCH_ARROW_KNOCKBACK("ARROW_KNOCKBACK", "enchants"),	
+	ENCH_DAMAGE_ALL("DAMAGE_ALL", "enchants"),
+	ENCH_DAMAGE_ARTHROPODS("DAMAGE_ARTHROPODS", "enchants"),
+	ENCH_DAMAGE_UNDEAD("DAMAGE_UNDEAD", "enchants"),
+	ENCH_DEPTH_STRIDER("DEPTH_STRIDER", "enchants"),
+	ENCH_DIG_SPEED("DIG_SPEED", "enchants"),
+	ENCH_DURABILITY("DURABILITY", "enchants"),
+	ENCH_FIRE_ASPECT("FIRE_ASPECT", "enchants"),
+	ENCH_KNOCKBACK("KNOCKBACK", "enchants"),
+	ENCH_LOOT_BONUS_BLOCKS("LOOT_BONUS_BLOCKS", "enchants"),
+	ENCH_LOOT_BONUS_MOBS("LOOT_BONUS_MOBS", "enchants"),
+	ENCH_LUCK("LUCK", "enchants"),
+	ENCH_LURE("LURE", "enchants"),
+	ENCH_OXYGEN("OXYGEN", "enchants"),
+	ENCH_PROTECTION_ENVIRONMENTAL("PROTECTION_ENVIRONMENTAL", "enchants"),	
+	ENCH_PROTECTION_EXPLOSIONS("PROTECTION_EXPLOSIONS", "enchants"),	
+	ENCH_PROTECTION_FALL("PROTECTION_FALL", "enchants"),	
+	ENCH_PROTECTION_FIRE("PROTECTION_FIRE", "enchants"),
+	ENCH_PROTECTION_PROJECTILE("PROTECTION_PROJECTILE", "enchants"),
+	ENCH_SILK_TOUCH("SILK_TOUCH", "enchants"),
+	ENCH_THORNS("THORNS", "enchants"),
+	ENCH_WATER_WORKER("WATER_WORKER", "enchants"),
+	
+	//POTIONS
+	POTIONS("potions"),
+	
+	SPEED("SPEED", "potions"),
+	FAST_DIGGING("FAST_DIGGING", "potions"),
+	DAMAGE_RESISTANCE("DAMAGE_RESISTANCE", "potions"),
+	
 	//INVENTORY
 	INV_CONFIGURATION("inventory"),
 	INV_TEAM_CHOOSE("inventory"),
@@ -40,6 +68,7 @@ public enum Lang {
 	INV_LAST_PAGE("inventory"),
 	INV_ON("inventory"),
 	INV_OFF("inventory"),
+	INV_RANDOM("inventory"),
 	INV_STATE("inventory"),
 	
 	INV_LEFT_CLICK("inventory"),
@@ -58,6 +87,11 @@ public enum Lang {
 	SECONDS("inventory"),
 	
 	INV_PROBABILITY_OPTION("inventory"),
+	LEVEL("inventory"),
+	SEARCH("inventory"),
+	SETTINGS("inventory"),
+	
+	INV_LOCKED("inventory"),
 	
 	INV_START_GAME("inventory/config-menu"),
 	INV_CANCEL_GAME("inventory/config-menu"),
@@ -73,6 +107,11 @@ public enum Lang {
 	INV_LOOTS("inventory/config-menu"),
 	INV_RULES("inventory/config-menu"),
 	
+	INV_CONFIG("inventory/config-menu"),
+	
+	INV_CONFIG_LOAD("inventory/config-configs"),
+	INV_CONFIG_SAVE("inventory/config-configs"),
+	
 	INV_TEAM_SIZE("inventory/config-teams"),
 	INV_TEAM_NUMBER("inventory/config-teams"),
 	INV_TEAM_TYPE("inventory/config-teams"),
@@ -83,7 +122,7 @@ public enum Lang {
 	
 	INV_START_ITEMS("inventory/config-stuff"),
 	INV_DEATH_ITEMS("inventory/config-stuff"),
-	INV_STUFF_LIMITS("inventory/config-stuff"),
+	INV_STUFF_ENCHANTS("inventory/config-stuff"),
 	INV_STUFF_POTIONS("inventory/config-stuff"),
 	
 	INV_INVINCIBILITY_TIME("inventory/config-time"),
@@ -103,6 +142,19 @@ public enum Lang {
 	INV_WB_FINAL_SIZE_CONFIG("inventory/config-wb"),
 	INV_WB_SPEED("inventory/config-wb"),
 	INV_BLOCK_PER_SECOND("inventory/config-wb"),
+	
+	INV_W_MAIN_WORLD("inventory/config-worlds"),
+	INV_W_LOBBY_WORLD("inventory/config-worlds"),
+	INV_W_OVERWORLD("inventory/config-worlds"),
+	INV_W_NETHER("inventory/config-worlds"),
+	INV_W_END("inventory/config-worlds"),
+	INV_W_CREATION("inventory/config-worlds"),
+	INV_W_SETTINGS("inventory/config-worlds"),
+	INV_W_TP("inventory/config-worlds"),
+	INV_W_GENERATE_STRUCTURE("inventory/config-worlds"),
+	INV_W_TYPE("inventory/config-worlds"),
+	INV_W_SEED("inventory/config-worlds"),
+	INV_W_DELETE("inventory/config-worlds"),
 	
 	INV_UHC_GAPPLES("inventory/config-life"),
 	INV_GAPPLES_CONFIG("inventory/config-life"),
@@ -127,9 +179,12 @@ public enum Lang {
 	INV_TREES_GOLDEN_APPLE("inventory/config-loots"),
 	INV_TREES_DROP_SAPLING("inventory/config-loots"),
 	
-	INV_SCENARIO_LIST("inventory"),
+	INV_SCENARIO_LIST("inventory/config-scenarios"),
+	INV_SCENARIO_HIDE("inventory/config-scenarios"),
+	INV_SCENARIO_RANDOM("inventory/config-scenarios"),
 	
 	PLAYER_HEAD_NAME("items"),
+	GOLDEN_HEAD_NAME("items"),
 	
 	TEAM_JOIN("team"),
 	TEAM_LEAVE("team"),
@@ -137,7 +192,6 @@ public enum Lang {
 	TEAM_PLAYERS("team"),
 	TEAM_PLAYER_CANNOT_PLAY("team"),
 	TEAM_SPEC_NAME("team"),
-	TEAM_SPEC_PREFIX("team"),
 	
 	SB_LINE("scoreboard"),
 	SB_EPISODE("scoreboard"),
@@ -156,6 +210,7 @@ public enum Lang {
 	
 	INVINCIBILITY_BAR("title"),
 	BC_PLAYER_TP("title"),
+	BC_WORLD_GENERATION("title"),
 	
 	PM_ERROR_CHAT("permission"),
 	
@@ -170,13 +225,29 @@ public enum Lang {
 	ST_ERROR_SCENARIO_COMPATIBILITY("staff/error"),
 	ST_ERROR_OPTION_START("staff/error"),
 	ST_ERROR_OPTION_PVP("staff/error"),
+	ST_ERROR_WORLD_GENERATION("staff/error"),
+	ST_ERROR_WORLD_CREATION_SIZE("staff/error"),
+	ST_ERROR_UNLOAD_FAIL("staff/error"),
+	ST_ERROR_MAIN_WORLD("staff/error"),
+	ST_ERROR_LOBBY_WORLD("staff/error"),
+	ST_ERROR_WORLD_EXIST("staff/error"),
+	ST_ERROR_SERVER_RESTART("staff/error"),
 	
 	MSG_CHAT("message"),
 	MSG_CHAT_TEAM("message"),
 	MSG_BOW_DAMAGE("message"),
 	
+	MSG_ERROR_SCENARIO_LIST_OFF("message/error"),
+	MSG_ERROR_PLACE_BLOCK("message/error"),
+	MSG_ERROR_BREAK_BLOCK("message/error"),
+	
 	MSG_PRIVATE_SEND("message"),
 	MSG_PRIVATE_RECEIVE("message"),
+	
+	AC_CANCEL("message/action-chat"),
+	AC_VALIDATE("message/action-chat"),
+	AC_CANCEL_MESSAGE("message/action-chat"),
+	AC_CHAT("message/action-chat"),
 	
 	BC_PLAYER_JOIN("announce"),
 	BC_SPECTATOR_JOIN("announce"),
@@ -239,11 +310,18 @@ public enum Lang {
 	CMD_ERROR_PLAYER_ALIVE("commands"),
 	CMD_ERROR_PLAYER_NOT_DEAD("commands"),
 	CMD_ERROR_GAMEMODE("commands"),
+	CMD_ERROR_TEAM("commands"),
+	CMD_ERROR_OFF("commands"),
+	CMD_ERROR_SELECTOR("commands"),
 	
 	CMD_ERROR_NO_ROLE("commands"),
 	CMD_ERROR_ROLE("commands"),
 	
 	CMD_ERROR_SELF_MSG("commands"),
+
+	CMD_ERROR_NAME_SIZE("commands"),
+	
+	CMD_EXECUTE("commands"),
 	
 	//ENUMS
 	OPEN("OPEN", "join-state"),
@@ -257,8 +335,6 @@ public enum Lang {
 	FURNACE_SPEED("scenarios/fastsmelting"),
 	
 	FLOWER_DROP("scenarios/flower-power"),
-	
-	ENCHANT_LEVEL("scenarios/hastey-boys"),
 	
 	ROD("scenarios/rodless"),
 	SNOWBALL("scenarios/rodless"),
@@ -298,6 +374,7 @@ public enum Lang {
 	BC_ONE_WINNER("scenarios/only-one-winner"),
 	
 	POWERS("scenarios/superheroes"),
+	POWER_ANNOUNCE("scenarios/superheroes"),
 	
 	CUPID_HEAL("scenarios/cupid"),
 	INVENTION("scenarios/inventors"),
@@ -306,6 +383,13 @@ public enum Lang {
 	TRACKER_TARGET("scenarios/tracker"),
 	
 	START_LEVEL("scenarios/master-level"),
+	
+	WATER_BUCKET("scenarios/no-bucket"),
+	
+	ENCHANT_TABLE_GENERATION_ERROR("scenarios/enchanting-center"),
+	
+	SKYHIGH_ANNOUNCE("scenarios/skyhigh"),
+	SKYHIGH_DAMAGE("scenarios/skyhigh"),
 	
 	//MOTD
 	MOTD_WAITING_LINE_1("1", "motd/WAITING"),
@@ -328,11 +412,20 @@ public enum Lang {
 	CAUSE_GAME_WHITELIST("kick-reason"),
 	CAUSE_GAME_SLOT("kick-reason"),
 	CAUSE_WORLD_DELETING("kick-reason"),
+	CAUSE_WORLD_GENERATING("kick-reason"),
 	CAUSE_SERVER_CLOSE("kick-reason"),
 	
 	TG_MOLE("gamemodes/taupe-gun"),
+	TG_MOLE_PREFIX("gamemodes/taupe-gun"),
 	TG_MOLE_SELECTION("gamemodes/taupe-gun"),
 	TG_MOLE_ANNOUNCE("gamemodes/taupe-gun"),
+	TG_SUPER_MOLE_ANNOUNCE("gamemodes/taupe-gun"),
+	TG_MOLE_REVEAL("gamemodes/taupe-gun"),
+	TG_SUPER_MOLE_REVEAL("gamemodes/taupe-gun"),
+	
+	TG_CMD_ERROR_MOLE("gamemodes/taupe-gun"),
+	TG_CMD_ERROR_REVEAL("gamemodes/taupe-gun"),
+	TG_CMD_ERROR_KIT("gamemodes/taupe-gun"),
 	
 	DW_ANNOUNCE_ROLE("gamemodes/devil-watches/announce"),
 	DW_SECTARIAN("gamemodes/devil-watches/announce"),
@@ -378,6 +471,8 @@ public enum Lang {
 	DW_CAT_WHISPER_KILL("gamemodes/devil-watches/roles/CAT_LADY"),
 	DW_CAT_NUMBER("gamemodes/devil-watches/roles/CAT_LADY"),
 	
+	DW_GREEDY_PREVENT("gamemodes/devil-watches/roles/GREEDY_DEMON"),
+	
 	DW_ITEM_HOLY_WATER("gamemodes/devil-watches/inventory"),
 	INV_DW_COMPO("gamemodes/devil-watches/inventory"),
 	
@@ -392,7 +487,8 @@ public enum Lang {
 	
 	CAGE_GENERATE("console"),
 	
-	LANG_FILE_LOAD("console/files");
+	LANG_FILE_LOAD("console/files"),
+	FILE_CREATED("console/files");
 	
 	private static final Map<Lang, String> VALUES = new HashMap<Lang, String>();
 	
@@ -454,6 +550,10 @@ public enum Lang {
 		
 		value = value.replace(LangTag.DW_PREFIX.toString(), VALUES.get(DW_PREFIX));
 		value = value.replace(LangTag.TG_PREFIX.toString(), VALUES.get(TG_PREFIX));
+		value = value.replace(LangTag.LG_PREFIX.toString(), VALUES.get(LG_PREFIX));
+		
+		value = value.replace(LangTag.AC_CANCEL.toString(), VALUES.get(AC_CANCEL));
+		value = value.replace(LangTag.AC_VALIDATE.toString(), VALUES.get(AC_VALIDATE));
 		
 		//LANG VALUES
 		for (LangTag tag : LangTag.values()) {

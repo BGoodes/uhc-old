@@ -12,6 +12,7 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
 import fr.aiidor.uhc.UHC;
+import fr.aiidor.uhc.enums.GameState;
 import fr.aiidor.uhc.enums.Lang;
 import fr.aiidor.uhc.enums.LangTag;
 import fr.aiidor.uhc.enums.Permission;
@@ -30,7 +31,6 @@ public class CommandHost extends UHCCommand {
 	//HOST CONFIG
 	
 	//PERMS : uhc.host, whitelist.bypass
-	
 	
 	@Override
 	public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
@@ -61,21 +61,15 @@ public class CommandHost extends UHCCommand {
 					if (game.isHere(player.getUniqueId())) {
 						game.getUHCPlayer(player.getUniqueId()).setRank(Rank.HOST);
 						
-						if (!game.isStart()) player.getInventory().setItem(4, UHCItem.getConfigChest());
+						if (!game.isStart()) player.getInventory().setItem(4, UHCItem.config_chest);
 						player.sendMessage(Lang.ST_BECOME_HOST.get());
 						player.playSound(player.getLocation(), Sound.LEVEL_UP, 0.7f, 1);
 						return true; 
-					}
-					
-					if (!game.getSettings().playerHasPermission(player, Permission.CONFIG)) {
-						player.sendMessage(Lang.CMD_ERROR_PERM.get().replace(LangTag.PERM.toString(), Permission.CONFIG.toString()));
-						return true;
 					}
 				}
 			}
 			
 			//TOUTES LES COMMANDES
-			
 			return true;
 		}
 		
@@ -85,17 +79,17 @@ public class CommandHost extends UHCCommand {
 		}
 		
 		Player player = (Player) sender;
-		
-		if (!game.getSettings().playerHasPermission(player, Permission.CONFIG)) {
-			player.sendMessage(Lang.CMD_ERROR_PERM.get().replace(LangTag.PERM.toString(), Permission.CONFIG.toString()));
-			return true;
-		}
-		
+				
 		if (args[0].equalsIgnoreCase("config")) {
 			
 			if (args.length != 1) {
 				player.sendMessage(Lang.CMD_ERROR_INVALID_ARGUMENT.get().replace(LangTag.COMMAND.toString(), 
 						"/host config"));
+				return true;
+			}
+			
+			if (!game.getSettings().playerHasPermission(player, Permission.CONFIG)) {
+				player.sendMessage(Lang.CMD_ERROR_PERM.get().replace(LangTag.PERM.toString(), Permission.CONFIG.toString()));
 				return true;
 			}
 			
@@ -108,6 +102,16 @@ public class CommandHost extends UHCCommand {
 			if (args.length != 1) {
 				player.sendMessage(Lang.CMD_ERROR_INVALID_ARGUMENT.get().replace(LangTag.COMMAND.toString(), 
 						"/host restart"));
+				return true;
+			}
+			
+			if (!game.getSettings().playerHasPermission(player, Permission.RESTART)) {
+				player.sendMessage(Lang.CMD_ERROR_PERM.get().replace(LangTag.PERM.toString(), Permission.RESTART.toString()));
+				return true;
+			}
+			
+			if (game.getState() == GameState.ENDING && UHC.getInstance().getSettings().server_restart) {
+				player.sendMessage(Lang.ST_ERROR_SERVER_RESTART.get());
 				return true;
 			}
 			
@@ -125,6 +129,12 @@ public class CommandHost extends UHCCommand {
 				player.sendMessage(Lang.CMD_ERROR_INVALID_ARGUMENT.get().replace(LangTag.COMMAND.toString(), "/host broadcast <message>"));
 				return true;
 			}
+			
+			if (!game.getSettings().playerHasPermission(player, Permission.ALERT)) {
+				player.sendMessage(Lang.CMD_ERROR_PERM.get().replace(LangTag.PERM.toString(), Permission.ALERT.toString()));
+				return true;
+			}
+			
 			StringBuilder msg = new StringBuilder();
 			for (int i = 1; i < args.length; i++) {
 				msg.append(" " + args[i]);
@@ -147,6 +157,11 @@ public class CommandHost extends UHCCommand {
 			
 			if (args.length != 2) {
 				player.sendMessage(Lang.CMD_ERROR_INVALID_ARGUMENT.get().replace(LangTag.COMMAND.toString(), command));
+				return true;
+			}
+			
+			if (!game.getSettings().playerHasPermission(player, Permission.INVSEE)) {
+				player.sendMessage(Lang.CMD_ERROR_PERM.get().replace(LangTag.PERM.toString(), Permission.INVSEE.toString()));
 				return true;
 			}
 			
@@ -173,6 +188,11 @@ public class CommandHost extends UHCCommand {
 				return true;
 			}
 			
+			if (!game.getSettings().playerHasPermission(player, Permission.REVIVE)) {
+				player.sendMessage(Lang.CMD_ERROR_PERM.get().replace(LangTag.PERM.toString(), Permission.REVIVE.toString()));
+				return true;
+			}
+			
 			String targetName = args[1];
 			
 			if (!isConnected(targetName)) {
@@ -193,7 +213,7 @@ public class CommandHost extends UHCCommand {
 				return true;
 			}
 			
-			t.revive(true, true);
+			t.revive();
 			game.broadcast(Lang.BC_REVIVE.get().replace(LangTag.PLAYER_NAME.toString(), t.getDisplayName()));
 			return true;
 		}

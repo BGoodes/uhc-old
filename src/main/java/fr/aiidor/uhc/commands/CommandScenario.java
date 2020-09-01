@@ -29,6 +29,11 @@ public class CommandScenario extends UHCCommand {
 		
 		Player player = (Player) sender;
 		
+		if (!uhc.getGameManager().getGame().getSettings().scenarios_list) {
+			player.sendMessage(Lang.MSG_ERROR_SCENARIO_LIST_OFF.get());
+			return true;
+		}
+		
 		if (args.length != 0) {
 			player.sendMessage(Lang.CMD_ERROR_INVALID_ARGUMENT.get().replace(LangTag.COMMAND.toString(), "/scenarios"));
 			return true;

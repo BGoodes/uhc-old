@@ -20,11 +20,6 @@ public class Inv_Teams extends GuiBuilder {
 	public String getTitle() {
 		return Lang.INV_TEAMS.get();
 	}
-
-	@Override
-	public Boolean titleIsDynamic() {
-		return false;
-	}
 	
 	@Override
 	public InventoryHolder getHolder() {

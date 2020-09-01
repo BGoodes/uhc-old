@@ -29,11 +29,6 @@ public class Inv_Dw_Compo extends GuiBuilder {
 	public String getTitle() {
 		return Lang.INV_DW_COMPO.get();
 	}
-
-	@Override
-	public Boolean titleIsDynamic() {
-		return false;
-	}
 	
 	@Override
 	public String[][] getMatrix() {

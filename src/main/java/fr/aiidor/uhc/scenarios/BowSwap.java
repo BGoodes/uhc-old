@@ -34,11 +34,6 @@ public class BowSwap extends Scenario {
 		gui = new GuiBuilder() {
 			
 			@Override
-			public Boolean titleIsDynamic() {
-				return false;
-			}
-			
-			@Override
 			public void onClick(GuiClickEvent event) {
 				
 				InventoryClickEvent e = event.getEvent();
@@ -84,7 +79,7 @@ public class BowSwap extends Scenario {
 				if (e.getSlot() == 6) {
 					
 					probability += 5;
-					if (probability < 1) probability = 1;
+					if (probability > 100) probability = 100;
 					
 					event.getPlayer().playSound(event.getPlayer().getLocation(), Sound.WOOD_CLICK, 0.5f, 1f);
 					update();

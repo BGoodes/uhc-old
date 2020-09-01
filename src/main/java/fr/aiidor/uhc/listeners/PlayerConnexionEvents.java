@@ -7,6 +7,7 @@ import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
 
 import fr.aiidor.uhc.UHC;
+import fr.aiidor.uhc.enums.ActionChat;
 import fr.aiidor.uhc.enums.GameState;
 import fr.aiidor.uhc.enums.Lang;
 import fr.aiidor.uhc.enums.LangTag;
@@ -31,7 +32,7 @@ public class PlayerConnexionEvents implements Listener {
 		
 		Game game = gm.getGame();
 		
-		e.setJoinMessage("");
+		e.setJoinMessage(null);
 		
 		if (player.isOp() && UHC.getInstance().getSettings().remove_op) {
 			player.setOp(false);
@@ -61,7 +62,7 @@ public class PlayerConnexionEvents implements Listener {
 			}
 			
 			if (p.hasPermission(Permission.CONFIG)) {
-				player.getInventory().setItem(4, UHCItem.getConfigChest());
+				player.getInventory().setItem(4, UHCItem.config_chest);
 			}
 		}
 		
@@ -100,6 +101,8 @@ public class PlayerConnexionEvents implements Listener {
 		Player player = e.getPlayer();
 		GameManager gm = UHC.getInstance().getGameManager();
 		
+		ActionChat.onLogout(player);
+		
 		UHC.getInstance().getScoreboardManager().onLogout(player);
 		UHC.getInstance().getTablistManager().onLogout(player);
 		
@@ -114,14 +117,14 @@ public class PlayerConnexionEvents implements Listener {
 		UHCPlayer p = game.getUHCPlayer(player.getUniqueId());
 				
 		if (!game.isStart()) {
-			if (p.hasTeam()) p.getTeam().leave(p);
+			if (p.hasTeam()) p.getTeam().leave(p, false);
 			if (p.getRank() == Rank.PLAYER || p.getRank() == Rank.SPECTATOR) {
 				 game.removeUHCPlayer(p);
 			}
 		}
 		
 		//MESSAGE
-		if (p.isSpec() || p.getState() == PlayerState.DEAD)
+		if (p.isSpec())
 			e.setQuitMessage(Lang.BC_SPECTATOR_LEAVE.get().replace(LangTag.PLAYER_NAME.toString(), player.getName()));
 		
 		else e.setQuitMessage(Lang.BC_PLAYER_LEAVE.get().replace(LangTag.PLAYER_NAME.toString(), player.getName()));

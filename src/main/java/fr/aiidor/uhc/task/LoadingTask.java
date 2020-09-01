@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Map.Entry;
 import java.util.Random;
 
+import org.bukkit.Bukkit;
 import org.bukkit.Chunk;
 import org.bukkit.GameMode;
 import org.bukkit.Location;
@@ -18,6 +19,7 @@ import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 
 import fr.aiidor.uhc.UHC;
+import fr.aiidor.uhc.enums.ActionChat;
 import fr.aiidor.uhc.enums.GameState;
 import fr.aiidor.uhc.enums.Lang;
 import fr.aiidor.uhc.enums.LangTag;
@@ -26,6 +28,7 @@ import fr.aiidor.uhc.enums.TeamType;
 import fr.aiidor.uhc.game.Game;
 import fr.aiidor.uhc.game.UHCPlayer;
 import fr.aiidor.uhc.scenarios.ItemScenario;
+import fr.aiidor.uhc.scenarios.Scenario;
 import fr.aiidor.uhc.scenarios.ItemScenario.GiveTime;
 import fr.aiidor.uhc.scenarios.ScenariosManager;
 import fr.aiidor.uhc.team.UHCTeam;
@@ -47,6 +50,9 @@ public class LoadingTask extends UHCTask {
 	@Override
 	public void launch() {
 		
+		for (Player player : Bukkit.getOnlinePlayers()) {
+			if (ActionChat.hasActionChat(player)) ActionChat.removeActionChat(player);
+		}
 		
 		timer = 20;
 		
@@ -64,7 +70,7 @@ public class LoadingTask extends UHCTask {
 		for (UHCPlayer p : game.getAllPlayers()) {
 			if (p.isConnected()) {
 				
-				if (p.getState() == PlayerState.SPECTATOR) {
+				if (p.isSpec()) {
 					spec(p);
 					continue;
 				}
@@ -91,7 +97,7 @@ public class LoadingTask extends UHCTask {
 					while (!t.isFull() && !players.isEmpty()) {
 						
 						UHCPlayer p = players.get(new Random().nextInt(players.size()));
-						t.join(p);
+						t.join(p, true);
 						players.remove(p);
 					}
 				}
@@ -104,7 +110,7 @@ public class LoadingTask extends UHCTask {
 					if (p.isConnected()) {
 						if (!p.hasTeam()) {
 							if (!game.getNotFullTeams().isEmpty()) {
-								game.getNotFullTeams().get(new Random().nextInt(game.getNotFullTeams().size())).join(p);
+								game.getNotFullTeams().get(new Random().nextInt(game.getNotFullTeams().size())).join(p, true);
 							}
 						}
 					}
@@ -148,7 +154,9 @@ public class LoadingTask extends UHCTask {
 			for (UHCPlayer player : game.getAlivePlayers()) {
 				if (player.isConnected()) {
 					
-					spawns.put(player, Teleportation.getRandomLocation(game.getMainWorld().getMainWorld(), game.getSettings().wb_size_max - 20));
+					World world = game.getMainWorld().getMainWorld();
+					if (ScenariosManager.WORLD_IS_SMALL.isActivated()) spawns.put(player, new Location(world, 0,  world.getMaxHeight() + 1, 0));
+					else spawns.put(player, Teleportation.getRandomLocation(game.getMainWorld().getMainWorld(), game.getSettings().wb_size_max - 20));
 					
 				} else {
 					game.removeUHCPlayer(player);
@@ -158,7 +166,12 @@ public class LoadingTask extends UHCTask {
 		} else {
 			for (UHCTeam t : game.getTeams()) {
 				if (t.getPlayerCount() > 0) {
-					Location loc = Teleportation.getRandomLocation(game.getMainWorld().getMainWorld(), game.getSettings().wb_size_max - 20);
+					
+					World world = game.getMainWorld().getMainWorld();
+					
+					Location loc;
+					if (ScenariosManager.WORLD_IS_SMALL.isActivated()) loc = new Location(world, 0,  world.getMaxHeight() + 1, 0);
+					else loc = Teleportation.getRandomLocation(game.getMainWorld().getMainWorld(), game.getSettings().wb_size_max - 20);
 					
 					for (UHCPlayer player : t.getPlayers()) {
 						if (player.isConnected()) {
@@ -192,6 +205,7 @@ public class LoadingTask extends UHCTask {
 				
 				//EFFECT
 				p.addPotionEffect(new PotionEffect(PotionEffectType.BLINDNESS, Integer.MAX_VALUE, 0, true, true));
+				p.addPotionEffect(new PotionEffect(PotionEffectType.INVISIBILITY, Integer.MAX_VALUE, 0, true, true));
 				p.addPotionEffect(new PotionEffect(PotionEffectType.SLOW, Integer.MAX_VALUE, 255, true, true));
 			}
 		}
@@ -210,8 +224,24 @@ public class LoadingTask extends UHCTask {
 			}
 		}
 		
-		game.getUHCMode().loading();
 		if (UHC.getInstance().getSettings().hasCage()) UHC.getInstance().getSettings().cage.destroy();
+		
+		Integer n = game.getSettings().random_scenarios;
+		
+		if (n != 0) {
+			
+			List<Scenario> scenarios = UHC.getInstance().getScenarioManager().getScenarios();
+			if (n == -1) n = new Random().nextInt(scenarios.size());
+			
+			for (int i = n; i > 0; i--) {
+				Scenario scenario = scenarios.get(new Random().nextInt(scenarios.size()));
+				game.getSettings().setActivated(scenario, true);
+			}
+			
+			for (Scenario s : game.getSettings().getActivatedScenarios()) {
+				s.checkConditions(false);
+			}
+		}
 		
 		game.setRunner(this);
 		runTaskTimer(UHC.getInstance(), 0, 20);
@@ -225,48 +255,6 @@ public class LoadingTask extends UHCTask {
 		if (timer <= 0) {
 				
 			this.cancel();
-				
-			for (UHCPlayer player : game.getIngamePlayers()) {
-				if (player.isConnected()) {
-						
-					Player p = player.getPlayer();
-					
-					p.setLevel(0);
-					p.setExp(0);
-					
-					p.getActivePotionEffects().forEach(pot -> p.removePotionEffect(pot.getType()));
-					p.setMaxHealth(game.getSettings().start_life);	
-					
-					game.getSettings().setStartItems(p);
-						
-					for (ItemScenario s : UHC.getInstance().getScenarioManager().getItemScenarios(GiveTime.LOADING)) {
-						if (s.isActivated()) s.GiveItems(player);
-					}
-						
-					if (ScenariosManager.CAT_EYES.isActivated()) {
-						p.addPotionEffect(ScenariosManager.CAT_EYES.nightVision);
-					}
-						
-					if (ScenariosManager.BELIEVE_FLY.isActivated()) {
-						p.setAllowFlight(true);
-					}
-					
-					if (ScenariosManager.MASTER_LEVEL.isActivated()) {
-						p.setLevel(ScenariosManager.MASTER_LEVEL.level);
-					}
-					
-					if (game.getSettings().start_abso > 0) {
-						((CraftPlayer) p).getHandle().setAbsorptionHearts(game.getSettings().start_abso * 2);
-					}
-						
-				} else {
-					game.removeUHCPlayer(player);
-				}
-			}
-			
-			if (ScenariosManager.SUPER_HEROES.isActivated()) {
-				ScenariosManager.SUPER_HEROES.start(game);
-			}
 			
 			//BROADCAST
 			game.title("§5§lUHC");
@@ -274,6 +262,56 @@ public class LoadingTask extends UHCTask {
 			game.broadcast("§8-------------------------------");
 			game.broadcast(Lang.BC_GAME_START.get());
 			game.broadcast("§8-------------------------------");
+			
+			game.getUHCMode().loading();
+			
+			if (ScenariosManager.ENCHANTING_CENTER.isActivated()) {
+				ScenariosManager.ENCHANTING_CENTER.spawnEnchantTable(game.getMainWorld().getMainWorld());
+			}
+			
+			for (UHCPlayer p : game.getIngamePlayers()) {
+				if (p.isConnected()) {
+					
+					p.reset();
+					
+					Player player = p.getPlayer();
+					
+					game.getSettings().setStartItems(player);
+						
+					for (ItemScenario s : UHC.getInstance().getScenarioManager().getItemScenarios(GiveTime.LOADING)) {
+						if (s.isActivated()) s.GiveItems(p);
+					}
+					
+					if (ScenariosManager.CAT_EYES.isActivated()) {
+						p.addPotionEffect(ScenariosManager.CAT_EYES.nightVision);
+					}
+						
+					if (ScenariosManager.BELIEVE_FLY.isActivated()) {
+						player.setAllowFlight(true);
+					}
+					
+					if (ScenariosManager.MASTER_LEVEL.isActivated()) {
+						player.setLevel(ScenariosManager.MASTER_LEVEL.level);
+					}
+					
+					if (game.getSettings().start_abso > 0) {
+						((CraftPlayer) player).getHandle().setAbsorptionHearts(game.getSettings().start_abso * 2);
+					}
+					
+					for (PotionEffect pe : game.getSettings().start_effects) {
+						p.addPotionEffect(pe);
+					}
+					
+					player.updateInventory();
+						
+				} else {
+					game.removeUHCPlayer(p);
+				}
+			}
+			
+			if (ScenariosManager.SUPER_HEROES.isActivated()) {
+				ScenariosManager.SUPER_HEROES.start(game);
+			}
 				
 			for (World w : game.getWorlds()) {
 				w.setTime(23500);
@@ -307,7 +345,7 @@ public class LoadingTask extends UHCTask {
 	private void spec(UHCPlayer player) {
 		player.setState(PlayerState.SPECTATOR);
 		
-		if (player.hasTeam()) player.leaveTeam();
+		if (player.hasTeam()) player.leaveTeam(true);
 		
 		if (player.isConnected()) {
 			Player p = player.getPlayer();

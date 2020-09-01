@@ -10,13 +10,19 @@ public enum Rank {
 	PLAYER, SPECTATOR, ORGA, HOST, STAFF;
 	
 	private final String name;
+	private final String prefix;
 	
 	private Rank() {
-		this.name = (String) UHCFile.LANG.getJSONObject("rank").get(name());
+		this.name = (String) UHCFile.LANG.getJSONObject("rank/" + name()).get("name");
+		this.prefix = (String) UHCFile.LANG.getJSONObject("rank/" + name()).get("prefix");
 	}
 	
 	public String getRankName() {
 		return name;
+	}
+	
+	public String getPrefix() {
+		return prefix;
 	}
 	
 	public Boolean hasPermission(Permission perm) {

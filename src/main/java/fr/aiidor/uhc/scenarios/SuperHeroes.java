@@ -18,6 +18,7 @@ import org.bukkit.scheduler.BukkitRunnable;
 import fr.aiidor.uhc.UHC;
 import fr.aiidor.uhc.enums.Category;
 import fr.aiidor.uhc.enums.Lang;
+import fr.aiidor.uhc.enums.LangTag;
 import fr.aiidor.uhc.enums.UHCFile;
 import fr.aiidor.uhc.game.Game;
 import fr.aiidor.uhc.game.UHCPlayer;
@@ -54,12 +55,9 @@ public class SuperHeroes extends Scenario {
 		
 		powers = new HashMap<UHCPlayer, SuperHeroes.Power>();
 		
+		Power.INVICIBILITY.setActivated(false);
+		
 		gui = new Gui() {
-			
-			@Override
-			public Boolean titleIsDynamic() {
-				return false;
-			}
 			
 			@Override
 			public void onClick(GuiClickEvent event) {
@@ -144,13 +142,13 @@ public class SuperHeroes extends Scenario {
 	@Override
 	public void changeStateEvent(ChangeScenarioStateEvent e) {
 		
+		super.changeStateEvent(e);
+		
 		if (!e.getGame().isWaiting()) {
 			e.setCancelled(true);
 			e.getPlayer().sendMessage(Lang.ST_ERROR_SCENARIO_START.get());
 			e.getPlayer().closeInventory();
 		}
-		
-		super.changeStateEvent(e);
 	}
 	
 	@Override
@@ -226,6 +224,7 @@ public class SuperHeroes extends Scenario {
 		
 		if (p.isConnected()) {
 			p.getPlayer().setHealth(p.getPlayer().getMaxHealth());
+			p.getPlayer().sendMessage(Lang.POWER_ANNOUNCE.get().replace(LangTag.VALUE.toString(), Lang.removeColor(pow.getName())));
 		}
 	}
 	

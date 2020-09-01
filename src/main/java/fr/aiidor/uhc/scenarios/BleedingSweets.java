@@ -9,7 +9,7 @@ import org.bukkit.inventory.ItemStack;
 
 import fr.aiidor.uhc.enums.Category;
 
-public class BleedingSweets extends Scenario {
+public class BleedingSweets extends ItemScenario {
 	
 	public List<ItemStack> items;
 	
@@ -42,5 +42,15 @@ public class BleedingSweets extends Scenario {
 	@Override
 	public List<Category> getCategories() {
 		return Arrays.asList(Category.RUN, Category.PVP);
+	}
+
+	@Override
+	public GiveTime giveTime() {
+		return GiveTime.DEATH;
+	}
+
+	@Override
+	public List<ItemStack> getItems() {
+		return items;
 	}
 }

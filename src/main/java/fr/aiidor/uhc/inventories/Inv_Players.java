@@ -19,11 +19,6 @@ public class Inv_Players extends GuiBuilder {
 	public String getTitle() {
 		return Lang.INV_PLAYERS.get();
 	}
-
-	@Override
-	public Boolean titleIsDynamic() {
-		return false;
-	}
 	
 	@Override
 	public String[][] getMatrix() {

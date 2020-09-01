@@ -63,105 +63,100 @@ public class FlowerPower extends Scenario {
 				}
 
 			}
-			
-			gui = new GuiBuilder() {
-				
-				@Override
-				public Boolean titleIsDynamic() {
-					return false;
-				}
-				
-				@Override
-				public void onClick(GuiClickEvent event) {
-					
-					InventoryClickEvent e = event.getEvent();
-					e.setCancelled(true);
-					
-					if (e.getSlot() == 8) {
-						event.getPlayer().openInventory(GuiManager.INV_CONFIG_SCENARIOS.getInventory());
-						playClickSound(event.getPlayer());
-						return;
-					}
-					
-					if (e.getSlot() == 2) {
-						
-						probability = probability - 5;
-						if (probability < 1) probability = 1;
-						
-						event.getPlayer().playSound(event.getPlayer().getLocation(), Sound.WOOD_CLICK, 0.5f, 1f);
-						update();
-						return;
-					}
-					
-					
-					if (e.getSlot() == 3) {
-						
-						probability--;
-						if (probability < 1) probability = 1;
-						
-						event.getPlayer().playSound(event.getPlayer().getLocation(), Sound.WOOD_CLICK, 0.5f, 1f);
-						update();
-						return;
-					}
-					
-					if (e.getSlot() == 5) {
-						
-						probability++;
-						if (probability > 100) probability = 100;
-						
-						event.getPlayer().playSound(event.getPlayer().getLocation(), Sound.WOOD_CLICK, 0.5f, 1f);
-						update();
-						return;
-					}
-					
-					if (e.getSlot() == 6) {
-						
-						probability = probability + 5;
-						if (probability > 100) probability = 100;
-						
-						event.getPlayer().playSound(event.getPlayer().getLocation(), Sound.WOOD_CLICK, 0.5f, 1f);
-						update();
-						return;
-					}
-				}
-				
-				@Override
-				public String getTitle() {
-					return getName();
-				}
-				
-				@Override
-				public String[][] getMatrix() {
-
-					String[][] items = {
-							{" ", " ", "--", "-", "F", "+", "++", " ", "X"},
-					};
-					
-					return items;
-				}
-				
-				@Override
-				public HashMap<String, ItemStack> getDictionary() {
-					
-					HashMap<String, ItemStack> dictionnary = new HashMap<String, ItemStack>();
-					
-					String name = Lang.FLOWER_DROP.get().replace(LangTag.VALUE.toString(), probability + "%");
-					
-					dictionnary.put("X", getBackIcon());
-					dictionnary.put("F", new ItemBuilder(Material.RED_ROSE, name, (byte) 1).getItem()); 
-					
-					dictionnary.put("-",  new ItemBuilder(Material.WOOD_BUTTON, "§c-1%").setLore(Arrays.asList(name)).getItem());
-					dictionnary.put("+",  new ItemBuilder(Material.WOOD_BUTTON, "§a+1%").setLore(Arrays.asList(name)).getItem());
-					dictionnary.put("--",  new ItemBuilder(Material.STONE_BUTTON, "§c-5%").setLore(Arrays.asList(name)).getItem());
-					dictionnary.put("++",  new ItemBuilder(Material.STONE_BUTTON, "§a+5%").setLore(Arrays.asList(name)).getItem());
-					
-					return dictionnary;
-				}
-			};
 		}
 		
 		books = new HashMap<String, List<String>>();
 		books.put("§fOuvre Moi", Arrays.asList("Bon toutou !"));
+		
+		gui = new GuiBuilder() {
+			
+			@Override
+			public void onClick(GuiClickEvent event) {
+				
+				InventoryClickEvent e = event.getEvent();
+				e.setCancelled(true);
+				
+				if (e.getSlot() == 8) {
+					event.getPlayer().openInventory(GuiManager.INV_CONFIG_SCENARIOS.getInventory());
+					playClickSound(event.getPlayer());
+					return;
+				}
+				
+				if (e.getSlot() == 2) {
+					
+					probability = probability - 5;
+					if (probability < 1) probability = 1;
+					
+					event.getPlayer().playSound(event.getPlayer().getLocation(), Sound.WOOD_CLICK, 0.5f, 1f);
+					update();
+					return;
+				}
+				
+				
+				if (e.getSlot() == 3) {
+					
+					probability--;
+					if (probability < 1) probability = 1;
+					
+					event.getPlayer().playSound(event.getPlayer().getLocation(), Sound.WOOD_CLICK, 0.5f, 1f);
+					update();
+					return;
+				}
+				
+				if (e.getSlot() == 5) {
+					
+					probability++;
+					if (probability > 100) probability = 100;
+					
+					event.getPlayer().playSound(event.getPlayer().getLocation(), Sound.WOOD_CLICK, 0.5f, 1f);
+					update();
+					return;
+				}
+				
+				if (e.getSlot() == 6) {
+					
+					probability = probability + 5;
+					if (probability > 100) probability = 100;
+					
+					event.getPlayer().playSound(event.getPlayer().getLocation(), Sound.WOOD_CLICK, 0.5f, 1f);
+					update();
+					return;
+				}
+			}
+			
+			@Override
+			public String getTitle() {
+				return getName();
+			}
+			
+			@Override
+			public String[][] getMatrix() {
+
+				String[][] items = {
+						{" ", " ", "--", "-", "F", "+", "++", " ", "X"},
+				};
+				
+				return items;
+			}
+			
+			@Override
+			public HashMap<String, ItemStack> getDictionary() {
+				
+				HashMap<String, ItemStack> dictionnary = new HashMap<String, ItemStack>();
+				
+				String name = Lang.FLOWER_DROP.get().replace(LangTag.VALUE.toString(), probability + "%");
+				
+				dictionnary.put("X", getBackIcon());
+				dictionnary.put("F", new ItemBuilder(Material.RED_ROSE, name, (byte) 1).getItem()); 
+				
+				dictionnary.put("-",  new ItemBuilder(Material.WOOD_BUTTON, "§c-1%").setLore(Arrays.asList(name)).getItem());
+				dictionnary.put("+",  new ItemBuilder(Material.WOOD_BUTTON, "§a+1%").setLore(Arrays.asList(name)).getItem());
+				dictionnary.put("--",  new ItemBuilder(Material.STONE_BUTTON, "§c-5%").setLore(Arrays.asList(name)).getItem());
+				dictionnary.put("++",  new ItemBuilder(Material.STONE_BUTTON, "§a+5%").setLore(Arrays.asList(name)).getItem());
+				
+				return dictionnary;
+			}
+		};
 	}
 	
 	@Override

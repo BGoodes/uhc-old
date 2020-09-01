@@ -90,7 +90,7 @@ public class Wg_Flat extends ChunkGenerator {
     	
     }
     
-    private class OreGenerator extends BlockPopulator {
+   /* private class OreGenerator extends BlockPopulator {
 
 		@Override
 		public void populate(World world, Random random, Chunk chunk) {
@@ -126,7 +126,7 @@ public class Wg_Flat extends ChunkGenerator {
 			}
 		}
     	
-    }
+    }*/
     
    /* private class LakePopulator extends BlockPopulator {
 
@@ -214,6 +214,6 @@ public class Wg_Flat extends ChunkGenerator {
     
     @Override
     public List<BlockPopulator> getDefaultPopulators(World world) {
-    	return Arrays.asList(new TreePopulator(), new OreGenerator());
+    	return Arrays.asList(new TreePopulator());
     }
 }

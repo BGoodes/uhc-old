@@ -39,11 +39,6 @@ public class HasteyBoys extends Scenario {
 		gui = new GuiBuilder() {
 			
 			@Override
-			public Boolean titleIsDynamic() {
-				return false;
-			}
-			
-			@Override
 			public void onClick(GuiClickEvent event) {
 				
 				InventoryClickEvent e = event.getEvent();
@@ -78,8 +73,8 @@ public class HasteyBoys extends Scenario {
 						}
 					}
 					
+					playClickSound(event.getPlayer());
 					update();
-
 					return;
 				}
 			}
@@ -118,15 +113,15 @@ public class HasteyBoys extends Scenario {
 	private String[] levels = {"0", "I", "II", "III", "IV", "V", "VI", "VII", "VIII", "IX", "X"};
 	
 	private ItemStack getItem(Enchantment enchant) {
-		ItemBuilder builder = new ItemBuilder(Material.ENCHANTED_BOOK, "§d" + Lang.valueOf(enchant.getName()).get());
+		ItemBuilder builder = new ItemBuilder(Material.ENCHANTED_BOOK, getEnchantLevel(enchant), "§d" + Lang.valueOf("ENCH_" + enchant.getName()).get());
 		List<String> lore = new ArrayList<String>();
 		
 		if (getEnchantLevel(enchant) == 0) lore.add(Lang.INV_OFF.get());
-		else lore.add(Lang.ENCHANT_LEVEL.get().replace(LangTag.VALUE.toString(), levels[getEnchantLevel(enchant)]));
+		else lore.add("§7" + Lang.LEVEL.get() + " : §a" + levels[getEnchantLevel(enchant)]);
 		
 		lore.add("");
-		lore.add(Lang.INV_LEFT_CLICK.get().replace(LangTag.VALUE.toString(), " 1 " + Lang.LEVEL.get() + "."));
-		lore.add(Lang.INV_RIGHT_CLICK.get().replace(LangTag.VALUE.toString(), " 1 " + Lang.LEVEL.get() + "."));
+		lore.add(Lang.INV_LEFT_CLICK.get().replace(LangTag.VALUE.toString(), "1 " + Lang.LEVEL.get().toLowerCase() + "."));
+		lore.add(Lang.INV_RIGHT_CLICK.get().replace(LangTag.VALUE.toString(), "1 " + Lang.LEVEL.get().toLowerCase() + "."));
 		
 		builder.setLore(lore);
 		
@@ -176,7 +171,7 @@ public class HasteyBoys extends Scenario {
 			lore.add("§b" + Lang.ENCHANTMENTS.get() + " :");
 			
 			for (Entry<Enchantment, Integer> map : enchants.entrySet()) {
-				lore.add("§7" + Lang.valueOf(map.getKey().getName()).get() + " §a" +  levels[map.getValue()]);
+				lore.add("§7" + Lang.valueOf("ENCH_" + map.getKey().getName()).get() + " §a" +  levels[map.getValue()]);
 			}
 		}
 		

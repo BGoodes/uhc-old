@@ -21,11 +21,6 @@ public class Inv_Trees extends GuiBuilder {
 	public String getTitle() {
 		return Lang.INV_TREES.get();
 	}
-
-	@Override
-	public Boolean titleIsDynamic() {
-		return false;
-	}
 	
 	@Override
 	public String[][] getMatrix() {
@@ -52,7 +47,7 @@ public class Inv_Trees extends GuiBuilder {
 			dictionary.put("GL", getGlass((byte) 13));
 			
 			dictionary.put("A", new ItemBuilder(Material.APPLE, Lang.INV_TREES_DROP_APPLE.get()).getItem());
-			dictionary.put("A1", new ItemBuilder(Material.WOOD_BUTTON, Lang.INV_TREES_RATE.get().replace(LangTag.VALUE.toString(), "+" + game.getSettings().trees_apple + "%")).setLore(Arrays.asList(
+			dictionary.put("A1", new ItemBuilder(Material.WOOD_BUTTON, Lang.INV_TREES_RATE.get().replace(LangTag.VALUE.toString(), game.getSettings().trees_apple + "%")).setLore(Arrays.asList(
 					Lang.INV_LEFT_CLICK.get().replace(LangTag.VALUE.toString(), "0.1%"), 
 					Lang.INV_RIGHT_CLICK.get().replace(LangTag.VALUE.toString(), "0.1%"),	
 					" ",

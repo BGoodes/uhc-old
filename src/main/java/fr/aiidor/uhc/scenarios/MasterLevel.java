@@ -30,11 +30,6 @@ public class MasterLevel extends Scenario {
 		gui = new GuiBuilder() {
 			
 			@Override
-			public Boolean titleIsDynamic() {
-				return false;
-			}
-			
-			@Override
 			public void onClick(GuiClickEvent event) {
 				
 				InventoryClickEvent e = event.getEvent();
@@ -80,7 +75,7 @@ public class MasterLevel extends Scenario {
 				if (e.getSlot() == 6) {
 					
 					level += 5;
-					if (level < 1) level = 1;
+					if (level > 100) level = 100;
 					
 					event.getPlayer().playSound(event.getPlayer().getLocation(), Sound.WOOD_CLICK, 0.5f, 1f);
 					update();

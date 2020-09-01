@@ -116,7 +116,8 @@ public abstract class DWRole {
 		
 		String message = Lang.DW_ANNOUNCE_ROLE.get();
 		
-		message = message.replace(LangTag.ROLE_NAME.toString(), this.getName());
+		message = message.replace(LangTag.ROLE_CAMP_PREFIX.toString(), getRoleType().getBaseCamp().getPrefix() + "§o");
+		message = message.replace(LangTag.ROLE_NAME.toString(), getName());
 		message = message.replace(LangTag.DW_SECTARIAN.toString(), camp == DWCamp.SECTARIANS ? Lang.DW_SECTARIAN.get() : "");
 		message = message.replace(LangTag.GOAL.toString(), camp.getGoal());
 		message = message.replace(LangTag.POWER.toString(), getRoleType().getLore());

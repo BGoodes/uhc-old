@@ -36,11 +36,6 @@ public class Inv_Death_Stuff extends Gui {
 	}
 	
 	@Override
-	public Boolean titleIsDynamic() {
-		return false;
-	}
-	
-	@Override
 	public String getTitle() {
 		return Lang.INV_DEATH_ITEMS.get();
 	}

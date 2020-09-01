@@ -40,13 +40,14 @@ public class CatEyes extends Scenario {
 	
 	@Override
 	public void changeStateEvent(ChangeScenarioStateEvent e) {
-		if (e.getGame().isStart() && e.getState() == false) {
+		
+		super.changeStateEvent(e);
+		
+		if (e.getGame().isStart() && e.getState() == false && !e.isCancelled()) {
 			for (UHCPlayer player : e.getGame().getAlivePlayers()) {
 				player.removePotionEffect(PotionEffectType.NIGHT_VISION);
 			}
 		}
-		
-		super.changeStateEvent(e);
 	}
 	
 }

@@ -12,7 +12,8 @@ import org.bukkit.entity.Entity;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Ocelot;
 import org.bukkit.entity.Player;
-import org.bukkit.event.entity.PlayerDeathEvent;
+import org.bukkit.potion.PotionEffect;
+import org.bukkit.potion.PotionEffectType;
 import org.bukkit.scheduler.BukkitRunnable;
 
 import fr.aiidor.uhc.UHC;
@@ -21,6 +22,7 @@ import fr.aiidor.uhc.enums.LangTag;
 import fr.aiidor.uhc.game.Game;
 import fr.aiidor.uhc.game.UHCPlayer;
 import fr.aiidor.uhc.gamemodes.DevilWatches;
+import fr.aiidor.uhc.listeners.events.UHCPlayerDeathEvent;
 import net.minecraft.server.v1_8_R3.EnumParticle;
 import net.minecraft.server.v1_8_R3.PacketPlayOutWorldParticles;
 
@@ -34,44 +36,68 @@ public class DWEventManager {
 		corpse_tasks = new ArrayList<DWEventManager.CorpseTask>();
 	}
 	
-	public Boolean deathEvent(PlayerDeathEvent e, Game game, UHCPlayer p) {
+	public void deathEvent(UHCPlayerDeathEvent e) {
 		
-		Player player = e.getEntity();
+		Player player = e.getPlayer();
+		UHCPlayer p = e.getUHCPlayer();
+		Game game = e.getGame();
 		DevilWatches dw = (DevilWatches) game.getUHCMode();
 		
 		if (DW.isDWPlayer(p.getUUID())) {
 			DWplayer dwp = DW.getDWPlayer(p.getUUID());
 			
 			if (dwp.isProtected() && dwp.guardian.hasPower()) {
-				dwp.guardian.death(dwp);
-				p.revive(false, false);
 				
-				e.setDeathMessage(null);
-				e.setKeepInventory(true);
-				e.setKeepLevel(true);
-				return false;
+				dwp.guardian.death(dwp);
+				
+				e.setCancelTeleport(true);
+				e.setCancelled(true);
+				return;
 			}
 			
-			if (dw.playersHasRole()) {
+			if (dwp.hasRole()) {
 				
-				game.playSound(Sound.AMBIENCE_THUNDER, game.getSettings().death_sound_volume);	
-				game.broadcast(Lang.DW_DEATH_REASON.get()
+				e.setDeathSound(Sound.AMBIENCE_THUNDER);
+				e.setDeathMessage(
+						Lang.DW_DEATH_REASON.get()
 							.replace(LangTag.PLAYER_NAME.toString(), dwp.getUHCPlayer().getDisplayName())
 							.replace(LangTag.DW_SECTARIAN.toString(), dwp.getCamp() == DWCamp.SECTARIANS ? Lang.DW_SECTARIAN.get() : "")
 							.replace(LangTag.ROLE_NAME.toString(), dwp.getRole().getName())
+							.replace(LangTag.ROLE_CAMP_PREFIX.toString(), dwp.getRole().getRoleType().getBaseCamp().getPrefix() + "§o")
 						);
+				
+				if (dwp.getCamp().equals(DWCamp.DEMONS)) e.getLocation().getWorld().strikeLightningEffect(e.getLocation());
 			}
 			
-			Player killer = player.getKiller();
-			
-			if (killer != null) {
+			if (e.hasKiller()) {
 				
-				if (DW.hasRole(killer.getUniqueId())) {
-					DWplayer k = DW.getDWPlayer(killer.getUniqueId());
+				if (DW.hasRole(e.getKiller().getUUID())) {
+					DWplayer k = DW.getDWPlayer(e.getKiller().getUUID());
+					DWRole r = k.getRole();
 					
 					//KILLER
-					if (k.getRole().getRoleType() == DWRoleType.PROWLER && k.getRole().hasPower() && k.isAlive() && dwp.isAlive()) {
+					if (r.getRoleType() == DWRoleType.PROWLER && r.hasPower() && k.isAlive() && dwp.isAlive()) {
 						((Prowler) k.getRole()).kill(dwp.getCamp());
+					}
+					
+					if (r.getRoleType() == DWRoleType.GREEDY_DEMON && r.hasPower() && k.isAlive() && dwp.isAlive()) {
+						if (k.getUHCPlayer().isConnected()) {
+							Player killer = k.getUHCPlayer().getPlayer();
+							
+							killer.setMaxHealth(killer.getMaxHealth() + 1);
+							
+							if (r.getRoleType() == DWRoleType.GREEDY_DEMON) {
+								k.getUHCPlayer().addPotionEffect(new PotionEffect(PotionEffectType.DAMAGE_RESISTANCE, 20 * 60, 0));
+							}
+						}
+					}
+					
+					if (r.getRoleType() == DWRoleType.MISCHIEVOUS_DEMON) {
+						k.getUHCPlayer().addPotionEffect(new PotionEffect(PotionEffectType.SPEED, 20 * 60, 1));
+					}
+					
+					if (r.getRoleType() == DWRoleType.DEMON) {
+						k.getUHCPlayer().addPotionEffect(new PotionEffect(PotionEffectType.SPEED, 20 * 60, 0));
 					}
 					
 					if (dw.getGameRoles().containsKey(DWRoleType.CAT_LADY)) {
@@ -99,15 +125,13 @@ public class DWEventManager {
 			if (dw.getGameRoles().containsKey(DWRoleType.HUNTER)) {
 				
 				DWplayer k = null;	
-				if (killer != null && DW.hasRole(killer.getUniqueId())) k = DW.getDWPlayer(killer.getUniqueId());
+				if (e.hasKiller() && DW.hasRole(e.getKiller().getUUID())) k = DW.getDWPlayer(e.getKiller().getUUID());
 				
 				CorpseTask t = new CorpseTask(player.getLocation(), dwp, k, dw);
 				corpse_tasks.add(t);
 				t.runTaskTimer(UHC.getInstance(), 0, 20);
 			}
 		}
-		
-		return true;
 	}
 	
 	

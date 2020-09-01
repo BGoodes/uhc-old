@@ -17,11 +17,6 @@ public class Inv_Display_Life extends GuiBuilder {
 	public String getTitle() {
 		return Lang.INV_LIFE_DISPLAY_CONFIG.get();
 	}
-
-	@Override
-	public Boolean titleIsDynamic() {
-		return false;
-	}
 	
 	@Override
 	public String[][] getMatrix() {

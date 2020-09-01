@@ -57,13 +57,29 @@ public class ScenariosManager {
 		CUPID = new Cupid(this);
 		INVENTORS = new Inventors(this);
 		TIME_BOMB = new TimeBomb(this);
-		MYSTERY_TEAMS = new MysteryTeams(this);
 		BOW_SWAP = new BowSwap(this);
 		HIGHWAY_TO_HELL = new HighwayToHell(this);
 		SOUP = new Soup(this);
 		DOUBLE_JUMP = new DoubleJump(this);
 		TRACKER = new Tracker(this);
 		MASTER_LEVEL = new MasterLevel(this);
+		GOLDEN_RETRIEVER = new GoldenRetriever(this);
+		SPEEDY_MINER = new SpeedyMiner(this);
+		FENCE_HEAD = new FenceHead(this);
+		AUSTRALIAN_CRAFTING = new AutralianCrafting(this);
+		NO_WOODEN_TOOL = new NoWoodenTool(this);
+		OPEN_HOUSE = new OpenHouse(this);
+		DROPPING_COINS = new DroppingCoins(this);
+		NO_BUCKET = new NoBucket(this);
+		SWEAT_WORLD = new SweatWorld(this);
+		CHUNK_APOCALYPSE = new ChunkApocalypse(this);
+		ENCHANTING_CENTER = new EnchantingCenter(this);
+		MELEE_FUN = new MeleeFun(this);
+		PROGRESSIVE_SPEED = new ProgressiveSpeed(this);
+		WORLD_IS_SMALL = new WorldIsSmall(this);
+		BOMBERS = new Bombers(this);
+		SKYHIGH = new SkyHigh(this);
+		GAPZAP = new GapZap(this);
 		
 		for (Scenario s : scenarios) {
 			if (s instanceof ItemScenario) {
@@ -106,13 +122,29 @@ public class ScenariosManager {
 	public static Cupid CUPID;
 	public static Inventors INVENTORS;
 	public static TimeBomb TIME_BOMB;
-	public static MysteryTeams MYSTERY_TEAMS;
 	public static BowSwap BOW_SWAP;
 	public static HighwayToHell HIGHWAY_TO_HELL;
 	public static Soup SOUP;
 	public static DoubleJump DOUBLE_JUMP;
 	public static Tracker TRACKER;
 	public static MasterLevel MASTER_LEVEL;
+	public static GoldenRetriever GOLDEN_RETRIEVER;
+	public static SpeedyMiner SPEEDY_MINER;
+	public static FenceHead FENCE_HEAD;
+	public static AutralianCrafting AUSTRALIAN_CRAFTING;
+	public static NoWoodenTool NO_WOODEN_TOOL;
+	public static OpenHouse OPEN_HOUSE;
+	public static DroppingCoins DROPPING_COINS;
+	public static NoBucket NO_BUCKET;
+	public static SweatWorld SWEAT_WORLD;
+	public static ChunkApocalypse CHUNK_APOCALYPSE;
+	public static EnchantingCenter ENCHANTING_CENTER;
+	public static MeleeFun MELEE_FUN;
+	public static ProgressiveSpeed PROGRESSIVE_SPEED;
+	public static WorldIsSmall WORLD_IS_SMALL;
+	public static Bombers BOMBERS;
+	public static SkyHigh SKYHIGH;
+	public static GapZap GAPZAP;
 	
 	public List<Scenario> getScenarios() {
 		List<Scenario> list = new ArrayList<Scenario>();

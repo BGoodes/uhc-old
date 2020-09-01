@@ -33,17 +33,15 @@ public class TimeBomb extends Scenario {
 	public Integer boom_time;
 	private GuiBuilder gui;
 	
+	private List<Explode> tasks;
+	
 	public TimeBomb(ScenariosManager manager) {
 		super(manager);
 		
 		boom_time = 30;
+		tasks = new ArrayList<TimeBomb.Explode>();
 		
 		gui = new GuiBuilder() {
-			
-			@Override
-			public Boolean titleIsDynamic() {
-				return false;
-			}
 			
 			@Override
 			public void onClick(GuiClickEvent event) {
@@ -169,6 +167,15 @@ public class TimeBomb extends Scenario {
 		return gui;
 	}
 	
+	@Override
+	public void reload() {
+		List<Explode> t = new ArrayList<TimeBomb.Explode>(tasks);
+		
+		for (Explode explode : t) {
+			explode.stop();
+		}
+	}
+	
 	private BlockFace[] faces = {BlockFace.SOUTH, BlockFace.EAST, BlockFace.NORTH, BlockFace.WEST};
 	
 	public Boolean createChest(List<ItemStack> list, Location location) {
@@ -181,8 +188,12 @@ public class TimeBomb extends Scenario {
 				Chest chest = (Chest) b.getState();
 				
 				chest.getBlockInventory().setContents(list.toArray(new ItemStack[list.size()]));
-				if (boom_time > 0) new Explode(boom_time, Arrays.asList(b)).runTaskTimer(UHC.getInstance(), 0, 20);
-				else new Explode(boom_time, Arrays.asList(b)).boom();
+				
+				Explode task = new Explode(boom_time, Arrays.asList(b));
+				tasks.add(task);
+				
+				if (boom_time > 0) task.runTaskTimer(UHC.getInstance(), 0, 20);
+				else task.boom();
 					
 				return true;
 				
@@ -199,8 +210,12 @@ public class TimeBomb extends Scenario {
 						DoubleChest dchest = (DoubleChest) ((Chest) b2.getState()).getInventory().getHolder();
 						
 						dchest.getInventory().setContents(list.toArray(new ItemStack[list.size()]));
-						if (boom_time > 0) new Explode(boom_time, Arrays.asList(b, b2)).runTaskTimer(UHC.getInstance(), 0, 20);
-						else new Explode(boom_time, Arrays.asList(b, b2)).boom();
+						
+						Explode task = new Explode(boom_time, Arrays.asList(b, b2));
+						tasks.add(task);
+						
+						if (boom_time > 0) task.runTaskTimer(UHC.getInstance(), 0, 20);
+						else task.boom();
 							
 						return true;
 					}
@@ -218,7 +233,7 @@ public class TimeBomb extends Scenario {
 		
 		ArmorStand as;
 		
-		public Explode(int time ,List<Block> blocks) {
+		public Explode(int time, List<Block> blocks) {
 			this.time = time;
 			this.blocks = blocks;
 			
@@ -258,9 +273,11 @@ public class TimeBomb extends Scenario {
 			time --;
 		}
 		
-		private void stop() {
+		public void stop() {
 			cancel();
 			if (as != null) as.remove();
+			
+			tasks.remove(this);
 		}
 		
 		public void boom() {

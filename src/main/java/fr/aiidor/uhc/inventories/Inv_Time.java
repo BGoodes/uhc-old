@@ -16,11 +16,6 @@ public class Inv_Time extends GuiBuilder {
 	public String getTitle() {
 		return Lang.INV_TIME.get();
 	}
-
-	@Override
-	public Boolean titleIsDynamic() {
-		return false;
-	}
 	
 	@Override
 	public String[][] getMatrix() {

@@ -17,11 +17,6 @@ public class Inv_Stuff extends GuiBuilder {
 	public String getTitle() {
 		return Lang.INV_STUFF.get();
 	}
-
-	@Override
-	public Boolean titleIsDynamic() {
-		return false;
-	}
 	
 	@Override
 	public InventoryHolder getHolder() {
@@ -32,7 +27,7 @@ public class Inv_Stuff extends GuiBuilder {
 	public String[][] getMatrix() {
 		
 		String[][] item = {
-				{"C", "E", " ", " ", " ", " ", "P", "L", "X"},
+				{"C", "D", " ", " ", " ", " ", "P", "E", "X"},
 		};
 		
 		return item;
@@ -47,9 +42,9 @@ public class Inv_Stuff extends GuiBuilder {
 		dictionary.put("X", getBackIcon());
 		
 		dictionary.put("C", new ItemBuilder(Material.CHEST, Lang.INV_START_ITEMS.get()).getItem());
-		dictionary.put("E", new ItemBuilder(Material.ENDER_CHEST, Lang.INV_DEATH_ITEMS.get()).getItem());
+		dictionary.put("D", new ItemBuilder(Material.ENDER_CHEST, Lang.INV_DEATH_ITEMS.get()).getItem());
 		dictionary.put("P", new ItemBuilder(Material.BREWING_STAND_ITEM, Lang.INV_STUFF_POTIONS.get()).getItem());
-		dictionary.put("L", new ItemBuilder(Material.BOOK_AND_QUILL, Lang.INV_STUFF_LIMITS.get()).getItem());
+		dictionary.put("E", new ItemBuilder(Material.ENCHANTED_BOOK, Lang.INV_STUFF_ENCHANTS.get()).getItem());
 		
 		return dictionary;
 	}
@@ -63,6 +58,12 @@ public class Inv_Stuff extends GuiBuilder {
 		if (e.getSlot() == 8) {
 			playClickSound(event.getPlayer());
 			event.getPlayer().openInventory(GuiManager.INV_CONFIG.getInventory());
+			return;
+		}
+		
+		if (e.getSlot() == 7) {
+			playClickSound(event.getPlayer());
+			event.getPlayer().openInventory(GuiManager.INV_CONFIG_ENCHANTS.getInventory());
 			return;
 		}
 		

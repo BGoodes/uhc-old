@@ -45,11 +45,6 @@ public class FireLess extends Scenario {
 		gui = new GuiBuilder() {
 			
 			@Override
-			public Boolean titleIsDynamic() {
-				return false;
-			}
-			
-			@Override
 			public void onClick(GuiClickEvent event) {
 				
 				InventoryClickEvent e = event.getEvent();
@@ -59,30 +54,35 @@ public class FireLess extends Scenario {
 				
 				if (e.getSlot() == 0 && clicked.getType() == Material.BLAZE_POWDER) {
 					noFireDamage = !noFireDamage;
+					playClickSound(event.getPlayer());
 					update();
 					return;
 				}
 				
 				if (e.getSlot() == 1 && clicked.getType() == Material.FIREBALL) {
 					noFireTick = !noFireTick;
+					playClickSound(event.getPlayer());
 					update();
 					return;
 				}
 				
 				if (e.getSlot() == 2 && clicked.getType() == Material.LAVA_BUCKET) {
 					lava_bucket = !lava_bucket;
+					playClickSound(event.getPlayer());
 					update();
 					return;
 				}
 				
 				if (e.getSlot() == 3 && clicked.getType() == Material.FLINT_AND_STEEL) {
 					flint_and_steel = !flint_and_steel;
+					playClickSound(event.getPlayer());
 					update();
 					return;
 				}
 				
 				if (e.getSlot() == 7 && clicked.getType() == Material.BOOK) {
 					player_only = !player_only;
+					playClickSound(event.getPlayer());
 					update();
 					return;
 				}

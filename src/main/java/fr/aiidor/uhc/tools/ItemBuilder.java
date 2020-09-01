@@ -106,6 +106,15 @@ public class ItemBuilder {
 		return this;
 	}
 	
+	public ItemBuilder setBlinking() {
+		ItemMeta meta = item.getItemMeta();
+		meta.addEnchant(Enchantment.ARROW_INFINITE, 1, true);
+		meta.addItemFlags(ItemFlag.HIDE_ENCHANTS);
+		item.setItemMeta(meta);
+		
+		return this;
+	}
+	
 	public ItemBuilder addEnchant(Enchantment enchant, Integer level) {
 		ItemMeta meta = item.getItemMeta();
 		meta.addEnchant(enchant, level, true);

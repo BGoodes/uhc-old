@@ -14,7 +14,7 @@ public enum DWRoleType {
 	GURU(DWCamp.SECTARIANS, false),
 	
 	
-	DEMON(DWCamp.DEMONS, false),
+	DEMON(DWCamp.DEMONS, false), MISCHIEVOUS_DEMON(DWCamp.DEMONS, false), GREEDY_DEMON(DWCamp.DEMONS, false),
 	
 	
 	PROWLER(DWCamp.NEUTRALS, false);
@@ -46,6 +46,8 @@ public enum DWRoleType {
 			case INQUISITOR: return new Inquisitor(player, camp);
 			case DEMON: return new Demon(player, camp);
 			case CAT_LADY: return new CatLady(player, camp);
+			case MISCHIEVOUS_DEMON : return new MischievousDemon(player, camp);
+			case GREEDY_DEMON : return new GreedyDemon(player, camp);
 			default: return new Villager(player, camp);
 		}
 	}

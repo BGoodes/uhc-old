@@ -30,9 +30,25 @@ public class PortalEvents implements Listener {
 		
 		UHCWorld w = game.getUHCWorld(player.getWorld());
 		
-		if (w.hasOverWorld() && !w.getOverWorld().getName().equals(UHC.getInstance().getSettings().default_world)) {
+		if (!w.getOverworldState()) {
+			e.setCancelled(true);
+			return;
+		}
+		
+		if (e.getCause() == PlayerTeleportEvent.TeleportCause.NETHER_PORTAL && !w.getNetherState()) {
+			e.setCancelled(true);
+			return;
+		}
+		
+		if (e.getCause() == PlayerTeleportEvent.TeleportCause.END_PORTAL && !w.getEndState()) {
+			e.setCancelled(true);
+			return;
+		}
+		
+		if (!w.getOverWorld().getName().equals(UHC.getInstance().getSettings().default_world)) {
 			
 			if (e.getCause() == PlayerTeleportEvent.TeleportCause.NETHER_PORTAL) {
+
 				e.useTravelAgent(true);
 				e.getPortalTravelAgent().setCanCreatePortal(true);
 				
@@ -46,10 +62,11 @@ public class PortalEvents implements Listener {
 				}
 				
 				if (location != null) e.setTo(e.getPortalTravelAgent().findOrCreate(location));
+				else e.setCancelled(true);
 			}
 			
 			if (e.getCause() == PlayerTeleportEvent.TeleportCause.END_PORTAL) {
-				if (player.getWorld() == w.getOverWorld() && w.getEndState()) {
+				if (player.getWorld() == w.getOverWorld()) {
 					
 					Location loc = new Location(w.getEnd(), 100, 50, 0);
 					e.setTo(loc);
@@ -73,7 +90,7 @@ public class PortalEvents implements Listener {
 						}
 					}
 					
-				} else if (player.getWorld() == w.getEnd() && w.getOverworldState()) {
+				} else if (player.getWorld() == w.getEnd()) {
 					e.setTo(w.getOverWorld().getSpawnLocation());
 				}
 			}

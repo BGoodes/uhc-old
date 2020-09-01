@@ -5,7 +5,6 @@ import java.util.HashMap;
 import org.bukkit.Material;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.scoreboard.DisplaySlot;
 
 import fr.aiidor.uhc.UHC;
 import fr.aiidor.uhc.enums.Lang;
@@ -18,11 +17,6 @@ public class Inv_Life extends GuiBuilder {
 	@Override
 	public String getTitle() {
 		return Lang.INV_LIFE.get();
-	}
-
-	@Override
-	public Boolean titleIsDynamic() {
-		return false;
 	}
 	
 	@Override
@@ -55,7 +49,7 @@ public class Inv_Life extends GuiBuilder {
 			dictionary.put("A1", getConfigItem(null, Lang.INV_UHC_GAPPLES.get(), game.getSettings().uhc_apple));
 			
 			dictionary.put("D", new ItemBuilder(Material.SIGN, Lang.INV_LIFE_DISPLAY_CONFIG.get()).getItem());
-			dictionary.put("D1", getConfigItem(null, Lang.INV_LIFE_DISPLAY.get(), game.getSettings().display_life));
+			dictionary.put("D1", getConfigItem(null, Lang.INV_LIFE_DISPLAY.get(), game.getSettings().getDisplayLife()));
 		}
 		
 		return dictionary;
@@ -89,11 +83,8 @@ public class Inv_Life extends GuiBuilder {
 		}
 		
 		if (e.getSlot() == 19) {
-			game.getSettings().display_life = !game.getSettings().display_life;
+			game.getSettings().setDisplayLife(!game.getSettings().getDisplayLife());
 			playClickSound(event.getPlayer());
-			
-			if (game.getSettings().display_life && game.getSettings().display_head_life) game.getScoreboard().getObjective("Health").setDisplaySlot(DisplaySlot.BELOW_NAME);
-			else game.getScoreboard().getObjective("Health").setDisplaySlot(null);
 			
 			update();
 			return;

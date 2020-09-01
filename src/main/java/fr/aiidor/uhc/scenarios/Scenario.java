@@ -122,13 +122,13 @@ public abstract class Scenario {
 		return true;
 	}
 	
-	public void checkConditions() {
+	public void checkConditions(Boolean log) {
 		Game game = UHC.getInstance().getGameManager().getGame();
 		
 		for (Scenario s : game.getSettings().getActivatedScenarios()) {
 			if (!compatibleWith(s) || !s.compatibleWith(this)) {
 				
-				game.log(Lang.ST_ERROR_SCENARIO_COMPATIBILITY.get()
+				if (log) game.log(Lang.ST_ERROR_SCENARIO_COMPATIBILITY.get()
 						.replace(LangTag.VALUE_1.toString(), this.name)
 						.replace(LangTag.VALUE_2.toString(), s.getName())
 					);

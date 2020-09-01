@@ -18,7 +18,6 @@ import fr.aiidor.uhc.tools.ItemBuilder;
 public abstract class Gui {
 	
 	public abstract void onClick(GuiClickEvent event);
-	public abstract Boolean titleIsDynamic();
 	
 	public String getTitle() {
 		return getInventory().getTitle();
@@ -29,14 +28,9 @@ public abstract class Gui {
 	public void playClickSound(Player player) {
 		player.playSound(player.getLocation(), Sound.CLICK, 0.7f, 1f);
 	}
-		
+	
 	public Boolean isSameInventory(Inventory inv) {
-		
-		if ((!titleIsDynamic() && inv.getName().equals(getTitle())) || 
-		   (titleIsDynamic() && inv.getName().contains(getTitle()))) return true;
-		
-		else return false;
-		
+		return inv.getName().equals(getTitle());
 	}
 	
 	public ItemStack getBackIcon() {

@@ -15,19 +15,12 @@ import fr.aiidor.uhc.game.Game;
 import fr.aiidor.uhc.gamemodes.DevilWatches;
 import fr.aiidor.uhc.listeners.events.GuiClickEvent;
 import fr.aiidor.uhc.tools.ItemBuilder;
-import fr.aiidor.uhc.tools.SkullBuilder;
 
 public class Inv_Config extends GuiBuilder {
-
+	
 	@Override
 	public String getTitle() {
 		return Lang.INV_CONFIGURATION.get();
-	}
-
-
-	@Override
-	public Boolean titleIsDynamic() {
-		return false;
 	}
 	
 	@Override
@@ -58,7 +51,7 @@ public class Inv_Config extends GuiBuilder {
 		dictionary.put("S", new ItemBuilder(Material.SLIME_BALL, Lang.INV_START_GAME.get()).setGliding().getItem());
 		
 		dictionary.put("T", new ItemBuilder(Material.BANNER, (byte) 14, Lang.INV_TEAMS.get()).getItem());
-		dictionary.put("J", new SkullBuilder(Lang.INV_PLAYERS.get(), "B_Goodes").getSkull());
+		dictionary.put("J", new ItemBuilder(Material.SKULL_ITEM, Lang.INV_PLAYERS.get(), (byte) 3).setHeadOwner("B_Goodes").getItem());
 		dictionary.put("Y", new ItemBuilder(Material.CHEST, Lang.INV_STUFF.get()).getItem());
 		dictionary.put("O", new ItemBuilder(Material.WATCH, Lang.INV_TIME.get()).getItem());
 		dictionary.put("W", new ItemBuilder(Material.BEACON, Lang.INV_WORLD_BORDER.get()).getItem());
@@ -167,6 +160,12 @@ public class Inv_Config extends GuiBuilder {
 		if (e.getSlot() == 14) {
 			playClickSound(event.getPlayer());
 			event.getPlayer().openInventory(GuiManager.INV_CONFIG_WB.getInventory());
+			return;
+		}
+		
+		if (e.getSlot() == 15) {
+			playClickSound(event.getPlayer());
+			event.getPlayer().openInventory(GuiManager.INV_CONFIG_WORLDS.getInventory());
 			return;
 		}
 		

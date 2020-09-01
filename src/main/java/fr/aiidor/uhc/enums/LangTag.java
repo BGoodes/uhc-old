@@ -7,6 +7,10 @@ public enum LangTag {
 	INFO_PREFIX,
 	DW_PREFIX,
 	TG_PREFIX,
+	LG_PREFIX,
+	
+	AC_CANCEL,
+	AC_VALIDATE,
 	
 	EPISODE,
 	
@@ -65,6 +69,7 @@ public enum LangTag {
 	SCENARIO_NAME,
 	
 	ROLE_NAME,
+	ROLE_CAMP_PREFIX,
 	CAMP_NAME,
 	GOAL,
 	POWER,

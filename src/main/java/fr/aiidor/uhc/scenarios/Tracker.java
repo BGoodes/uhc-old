@@ -68,7 +68,7 @@ public class Tracker extends Scenario {
 		UHCPlayer player = null;
 		
 		for (UHCPlayer t : game.getPlayingPlayers()) {
-			if (p.distance(t) >= 0 && !p.equals(t)) {
+			if (p.distance(t) >= 5 && !p.equals(t)) {
 				
 				if (player == null) player = t;
 				else {

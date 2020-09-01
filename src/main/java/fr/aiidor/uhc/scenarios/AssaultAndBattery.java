@@ -45,11 +45,6 @@ public class AssaultAndBattery extends Scenario {
 		gui = new GuiBuilder() {
 			
 			@Override
-			public Boolean titleIsDynamic() {
-				return false;
-			}
-			
-			@Override
 			public void onClick(GuiClickEvent event) {
 				
 				InventoryClickEvent e = event.getEvent();
@@ -130,7 +125,7 @@ public class AssaultAndBattery extends Scenario {
 	}
 	
 	@Override
-	public void checkConditions() {
+	public void checkConditions(Boolean state) {
 		Game game = UHC.getInstance().getGameManager().getGame();
 		if (!game.hasTeam() || game.getSettings().getTeamSize() != 2) {
 			
@@ -138,7 +133,7 @@ public class AssaultAndBattery extends Scenario {
 			game.getSettings().setActivated(this, false);
 		}
 		
-		super.checkConditions();
+		super.checkConditions(state);
 	}
 	
 	@Override

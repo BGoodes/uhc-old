@@ -44,10 +44,12 @@ public class Inv_Scenarios_List extends Gui {
 		dictionary.put("G", new ItemBuilder(Material.STAINED_GLASS_PANE, (byte) 13, " ").getItem());
 	}
 	
+	
 	@Override
-	public Boolean titleIsDynamic() {
-		return true;
+	public Boolean isSameInventory(Inventory inv) {
+		return inv.getName().startsWith(getTitle());
 	}
+	
 	
 	@Override
 	public String getTitle() {

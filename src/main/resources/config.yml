@@ -1,11 +1,11 @@
 #########################################################
-#              UHC HOST -  Version 1.1                  #
+#              UHC HOST -  Version 1.2                  #
 #                 Author : B. Goodes                    #
 #########################################################
 
 World:
   default-world: 'world' #The name of the server's default world
-  world-name : 'world'
+  world-name : 'uhc'
   seed: 0   # 0 --> random
   dimension: "NORMAL" #NORMAL | NETHER | END
   type: "NORMAL" #NORMAL | LARGE_BIOMES | AMPLIFIED | FLAT | VERSION_1_1 | CUSTOMIZED

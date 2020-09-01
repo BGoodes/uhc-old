@@ -1,5 +1,5 @@
 name: UHC-HOST
-version: 1.1
+version: 1.2
 author: B. Goodes
 main: fr.aiidor.uhc.UHC
 commands:

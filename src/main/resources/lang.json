@@ -4,7 +4,8 @@
 	"info-prefix" : "§c§lInfo §8»",
 		
 	"dw-prefix" : "§4§lDW-UHC §8»",
-	"tg-prefix" : "§6Taupe§f-§cGun §8»",
+	"tg-prefix" : "§6Taupe §cGun §8»",
+	"lg-prefix" : "§4§lLoup-Garous §8»",
 	
 	"inventory" : {
 		
@@ -27,8 +28,11 @@
 		
 		"inv-on" : "§a[Activé]",
 		"inv-off" : "§c[Désactivé]",
+		"inv-random" : "§3[Aléatoire]",
 		"inv-state" : "§7État : ",
 		
+		"inv-locked" : "§c[Bloqué]",
+				
 		"inv-time-option" : "§7Temps : §a{value}",
 		"minute" : "min",
 		"second" : "s",
@@ -37,7 +41,11 @@
 		"secondes" : "secondes",
 		
 		"inv-probability-option" : "§7Probabilité : §a{value}",
-		
+				
+		"level" : "Niveau",
+		"search" : "Rechercher",
+		"settings" : "Paramètrer",
+				
 		"config-menu" : {
 		
 			"inv-start-game" : "§aLancer la partie ?",
@@ -52,7 +60,14 @@
 		
 			"inv-life" : "§dGestion de la vie",
 			"inv-loots" : "§aLes Loots",
-			"inv-rules" : "§5Les règles"
+			"inv-rules" : "§5Les règles",
+			
+			"inv-config" : "§dConfigurations préfaites"
+		},
+		
+		"config-configs" : {
+			"inv-config-load" : "§eCharger la configuration ?",
+			"inv-config-save" : "§eSauvergarder la configuration ?"
 		},
 		
 		"config-teams" : {
@@ -70,7 +85,7 @@
 		"config-stuff" : {
 			"inv-start-items" : "§aItems de départ",
 			"inv-death-items" : "§cItems à la mort",
-			"inv-stuff-limits" : "§bLimitations sur le stuff",
+			"inv-stuff-enchants" : "§5Gestion des enchantements",
 			"inv-stuff-potions" : "§bGestion des potions"
 		},
 		
@@ -87,6 +102,12 @@
 			"inv-wb-time-config" : "§3WorldBorder"
 		},
 		
+		"config-scenarios" : {
+			"inv-scenario-list" : "§2Les Scénarios :",
+			"inv-scenario-hide" : "§3Liste des scénarios",
+			"inv-scenario-random" : "§7Scénarios aléatoires : §6{value}"
+		},
+		
 		"config-wb" : {
 			"inv-wb-size" : "§7Taille initial : §a{wb-initial-size}",
 			"inv-wb-size-config" : "§aTaille initial",
@@ -94,6 +115,22 @@
 			"inv-wb-final-size-config" : "§cTaille final",
 			"inv-wb-speed" : "§7Vitesse : §b{wb-speed} bloc/s",
 			"inv-block-per-second" : "bloc/s"
+		},
+		
+		"config-worlds" : {
+			"inv-w-main-world" : "§6[Monde Principal]",
+			"inv-w-lobby-world" : "§b[Monde Lobby]",
+			"inv-w-overworld" : "§bOverworld",
+			"inv-w-nether" : "§cNether",
+			"inv-w-end" : "§9End",
+			"inv-w-generate-structure" : "§7Générer des structures",
+			"inv-w-type" : "§7Type de monde",
+			"inv-w-seed" : "§7Graine du monde",
+						
+			"inv-w-creation" : "§2Créer un monde",
+			"inv-w-settings" : "§eParamètrer un monde",
+			"inv-w-tp" : "§aSe téléporter ?",
+			"inv-w-delete" : "§cSupprimer ?"
 		},
 		
 		"config-life" : {
@@ -108,7 +145,7 @@
 			"inv-life-happle" : "§6Golden Head",
 			"inv-life-napple" : "§5Notch Apple",
 
-			"inv-life-abso" : "§bAbsorption : §7{value}",
+			"inv-life-abso" : "§bAbsorption : §f{value}",
 			"inv-life-effects" : "§5Gestions des effets"
 		},
 		
@@ -137,18 +174,19 @@
 			"FUN" : "§dFun",
 			"ANIME" : "§dAnime",
 			"OTHER" : "§dAutre"
-		},
-	
-		"inv-scenario-list" : "§2Les Scénarios :"
+		}
 	},
 	
 	"items" : {
-		"player-head-name" : "§cTête de §6{player-name}"
+		"player-head-name" : "§cTête de §6{player-name}",
+		"golden-head-name" : "§6Golden Head"
 	},
 	
 	"title" : {
 		"invincibility-bar" : "§7Invincibilité §8» §6{time}",
-		"bc-player-tp" : "§7Teleportation §8» §a{player-name}§7"
+		"bc-player-tp" : "§7Teleportation §8» §a{player-name}§7",
+		
+		"bc-world-generation" : "§eGénération d'un monde..."
 	},
 	
 	"permission" : {
@@ -161,8 +199,36 @@
 		"msg-private-send" : "§8[§7Moi §7-> §b{player-name} §8] §8» §6{value}",
 		"msg-private-receive" : "§8[§b{player-name} §7-> Moi §8] » §6{value}",
 		"msg-chat-team" : "§7[Equipe] §f{player-name} §8»§7 {value}",
-		"msg-chat-spec" : "§7[Spectateur] §f{player-name} §8»§7 {value}",
-		"msg-bow-damage" : "{prefix} §e{player-name} §7est maintenant à {value}"
+		"msg-bow-damage" : "{prefix} §e{player-name} §7est maintenant à {value}",
+		
+		"error" : {
+			"msg-error-scenario-list-off" : "{error} §cLa liste des scénarios a été désactivé.",
+			"msg-error-place-block" : "{error} §cVous ne pouvez pas poser de bloc dans cette zone.",
+			"msg-error-destroy-block" : "{error} §cVous ne pouvez pas casser de bloc dans cette zone."
+		},
+		
+		"action-chat" : {
+			"ac-cancel" : "Annuler",
+			"ac-validate" : "Valider",
+			"ac-cancel-message" : "{prefix} §aVotre précédente action dans le chat vient d'être retiré.",
+			"ac-chat" : " §8» §f{value}",
+			
+			"SCENARIO_SEARCH" : {
+				"action-message" : "{prefix} §2Ecrivez le nom du scénario que vous cherchez (écrivez \"{ac-cancel}\" pour annuler)."
+			},
+			
+			"WORLD_CREATION" : {
+				"action-message" : "{prefix} §2Ecrivez le nom du monde que vous voulez créer (écrivez \"{ac-cancel}\" pour annuler)."
+			},
+			
+			"WORLD_SEED" : {
+				"action-message" : "{prefix} §2Ecrivez la graine que vous voulez choisir (écrivez \"{ac-cancel}\" pour annuler)."
+			},
+			
+			"DELETE_WORLD" : {
+				"action-message" : "{prefix} §cEcrivez \"{ac-valider}\" pour supprimer le monde (écrivez \"{ac-cancel}\" pour annuler)."
+			}
+		}
 	},
 	
 	"announce" : {
@@ -302,7 +368,6 @@
 		"team-player-cannot-play" : "{prefix} §cVous n'avez pas eu d'équipe attribué ! Vous ne pourrez donc pas jouer cette partie.",
 		
 		"team-spec-name" : "@Spectateur",
-		"team-spec-prefix" : "§8[Spec] ",
 		
 		"team-color" : {
 			"GRAY" : "Gris",
@@ -357,7 +422,16 @@
 			"st-error-scenario-compatibility" : "{error} §cLe scénario §o{value-1}§c a été désactivé car il est incompatible avec le scénario §o{value-2}.",
 			"st-error-gamemode-compatibility" : "{error} §cLe scénario §o{value}§c a été désactivé car il est incompatible avec le mode de jeu §o{game-type}.",
 			"st-error-option-start" : "{error} §cVous ne pouvez pas modifier ce paramètre après le lancement de la partie.",
-			"st-error-option-pvp" : "{error} §cVous ne pouvez pas modifier ce paramètre après le lancement du pvp."
+			"st-error-option-pvp" : "{error} §cVous ne pouvez pas modifier ce paramètre après le lancement du pvp.",
+			
+			"st-error-world-generation" : "{error} §cLe monde \"{value}\" n'a pas été généré !",
+			"st-error-world-creation-size" : "{error} §cVous ne pouvez pas créer de monde supplémentaire. Vous pouvez cependant en supprimer un.",
+			"st-error-unload-fail" : "{error} §cCe monde \"{value}\" n'a pas pu être déchargé.",
+			"st-error-main-world" : "{error} §cVous ne pouvez pas supprimer le monde principal.",
+			"st-error-lobby-world" : "{error} §cVous ne pouvez pas supprimer le lobby.",
+			"st-error-world-exist" : "{error} §cCe monde existe déjà.",
+			
+			"st-error-server-restart" : "{error} §cVous ne pouvez pas faire cela car le serveur va redémarrer."
 		}
 	},
 
@@ -390,17 +464,24 @@
 		"cmd-help" : "{prefix} §eLa commande s'écrit : {command}.",
 		"cmd-error-invalid-argument" : "{error} §cLa commande s'écrit : {command}.",
 		"cmd-error-invalid-command" : "{error} §cCette commande n'existe pas !",
+		"cmd-error-off" : "{error} §cCette commande est désactivé",
 		"cmd-error-player-offline" : "{error} §cCe joueur n'est pas connecté ou n'existe pas !",
 		"cmd-error-player-offgame" : "{error} §cCe joueur n'est pas dans la partie.",
 		"cmd-error-player-dead" : "{error} §cVous ne pouvez pas effectuer cette commande sur un joueur mort.",
 		"cmd-error-player-alive" : "{error} Seul un joueur en vie peut effectuer cette commande.",
 		"cmd-error-player-not-dead" : "{error} §cVous ne pouvez pas effectuer cette commande sur un joueur vivant.",
 		"cmd-error-gamemode" : "{error} §cCette commande ne fonctionne qu'avec le mode de jeu §o{value}.",
+		"cmd-error-team" : "{error} §cVous devez avoir une équipe pour effectuer cette commande.",
+		"cmd-error-selector" : "{error} §cLe sélecteur \"{value}\" ne fonctionne pas avec cette commande.",
 		
 		"cmd-error-no-role" : "{error} §cVous devez avoir un rôle pour effectuer cette commande.",
 		"cmd-error-role" : "{error} §cVous devez être §o{role-name}§c pour effectuer cette commande.",
 					
-		"cmd-error-self-msg" : "{error} §cVous ne pouvez pas envoyer de message à vous-même."
+		"cmd-error-self-msg" : "{error} §cVous ne pouvez pas envoyer de message à vous-même.",
+		
+		"cmd-error-name-size" : "{error} §cLe nom ne doit pas dépasser les {value} caractères.",
+		
+		"cmd-execute" : "{prefix} §aLa commande a bien été executée."
 	},
 	
 	"join-state" : {
@@ -410,11 +491,30 @@
 	},
 	
 	"rank" : {
-		"PLAYER" : "§7Joueur",
-		"SPECTATOR" : "§7Spectateur",
-		"ORGA" : "§9Organisateur",
-		"HOST" : "§cJoueur",
-		"STAFF" : "§bJoueur"
+		"PLAYER" : {
+			"name" : "§7Joueur",
+			"prefix" : ""
+		},
+		
+		"SPECTATOR" : {
+			"name" : "§7Spectateur",
+			"prefix" : "§8§o[Spec] "
+		},
+		
+		"ORGA" : {
+			"name" : "§9Organisateur",
+			"prefix" : "§9[Orga] §r"
+		},
+		
+		"HOST" : {
+			"name" : "§cHost",
+			"prefix" : "§c[Host] §r"
+		},
+		
+		"STAFF" : {
+			"name" : "§5Staff",
+			"prefix" : "§3[Staff] §r"
+		}
 	},
 	
 	"kick-reason" : {
@@ -422,6 +522,7 @@
 	    "cause-game-whitelist" : "§dVous n'êtes pas sur la Whitelist !",
 	    "cause-game-slot" : "§cIl n'y a plus de place dans la partie !",
 		"cause-world-deleting" : "§eLe monde est en cours de suppression...",
+		"cause-world-generating" : "§eUn monde est en cours de génération...",
 		"cause-server-close" : "§cFermeture du serveur"
 	},
 	
@@ -518,7 +619,7 @@
 		
 		"enchanted-death" : {
 			"name" : "§cEnchanted Death",
-			"description" : "§7Vous ne pouvez pas crafter §fla table d'enchant§7.\n§7Le seul moyen de l'obtenir est de §ctuer un joueur !"
+			"description" : "§7Les joueurs ne peuvent pas crafter §fla table d'enchant§7.\n§7Le seul moyen de l'obtenir est de §ctuer un joueur !"
 		},
 		
 		"no-fall" : {
@@ -555,10 +656,10 @@
 		"assassins" : {
 			"name" : "§4Assassins",
 			"description" : "§7Chaque joueur se vera attribué §cune cible§7. On ne \n§7peut récupérer le stuff §fque sur notre cible \n§7ou sur une personne qui nous §fprend pour cible. \n§7Sinon le stuff §ane drop pas §7!",
-			"target-msg" : "{prefix} §6Votre objectif est d'abattre votre cible qui est §e{player-name}§6.",
-			"target-death-msg" : "{prefix} §6Votre cible est morte vous allez en recevoir une nouvelle.",
-			"no-target-msg" : "{prefix} §cVous n'avez pas reçu de cible !",
-			"no-stuff-drop" : "{prefix} §cLe stuff de {player-name} n'a pas été drop car il ne vous a pas pour cible et ce n'est pas votre cible.",
+			"target-msg" : "§4Assassin §8» §6Votre objectif est d'abattre votre cible qui est §e{player-name}§6.",
+			"target-death-msg" : "§4Assassin §8» §6Votre cible est morte vous allez en recevoir une nouvelle.",
+			"no-target-msg" : "§4Assassin §8» §cVous n'avez pas reçu de cible !",
+			"no-stuff-drop" : "§4Assassin §8» §cLe stuff de {player-name} n'a pas été drop car il ne vous a pas pour cible et ce n'est pas votre cible.",
 			"sb-target-name" : "§2La cible : §a{player-name}",
 			"sb-target-distance" : "§2Distance : §a{value}",
 			"tracker" : "§cTraqueur"
@@ -606,7 +707,7 @@
 		"final-heal" : {
 			"name" : "§dFinal Heal",
 			"description" : "§7Tous les joueurs sont §asoignés §7au moment du §cpvp.",
-			"bc-final-heal" : "{prefix} C'est l'heure du final Heal ! Tous les joueurs on été soignés."
+			"bc-final-heal" : "§dFinal Heal §8» C'est l'heure du final Heal ! Tous les joueurs on été soignés."
 		}, 
 				
 		"beta-zombie" : {
@@ -618,10 +719,10 @@
 			"name" : "§bAssault and Battery",
 			"description" : "§7Scénario jouable qu'en §6team de deux§7. Dans une équipe, \n§7un des joueurs ne peut jouer §aqu'à l'épée §7et l'autre \n§7ne peut jouer §aqu'à l'arc§7. Lors de §cla mort d'un joueur§7, \n§7son coéquippier n'a plus de limite.",
 			"condition" : "§eTO2",
-			"bc-announce-sword" : "{prefix} §bVous êtes §ol'épéiste §bde l'équipe ! Vous ne pouvez donc pas combattre avec l'arc tant que votre coéquipier est en vie.",
-			"bc-announce-bow" : "{prefix} §bVous êtes §ol'archer §bde l'équipe ! Vous ne pouvez donc pas combattre avec l'épée tant que votre coéquipier est en vie.",
-			"bc-announce-solo" : "{prefix} §bVous pouvez utiliser l'arc et l'épée car vous êtes le seul joueur de votre équipe.",
-			"bc-announce-use-all" : "{prefix} §6Votre coéquippier est mort ! Vous pouvez désormais utiliser l'arc et l'épée !"
+			"bc-announce-sword" : "§3Assault & Battery §8» §bVous êtes §ol'épéiste §bde l'équipe ! Vous ne pouvez donc pas combattre avec l'arc tant que votre coéquipier est en vie.",
+			"bc-announce-bow" : "§3Assault & Battery §8» §bVous êtes §ol'archer §bde l'équipe ! Vous ne pouvez donc pas combattre avec l'épée tant que votre coéquipier est en vie.",
+			"bc-announce-solo" : "§3Assault & Battery §8» §bVous pouvez utiliser l'arc et l'épée car vous êtes le seul joueur de votre équipe.",
+			"bc-announce-use-all" : "§3Assault & Battery §8» §6Votre coéquippier est mort ! Vous pouvez désormais utiliser l'arc et l'épée !"
 		},
 		
 		"blood-diamond" : {
@@ -633,6 +734,7 @@
 			"name" : "§eSuperheroes",
 			"description" : "§7Tous les joueurs obtiennent §fun pouvoir aléatoire§7.",
 			"powers" : "§a§nPouvoirs :",
+			"power-announce" : "§aSuperheroes §8» §7Vous avez le pouvoir §6\"{value}\"§7.",
 			"power" : {
 				"STRENGTH" : "§cForce",
 				"RESISTANCE" : "§7Résistance",
@@ -673,7 +775,7 @@
 		"inventors" : {
 			"name" : "§eInventors",
 			"description" : "§7Quand un joueur §fcraft en premier un item,\n§7il est affiché dans le chat.",
-			"invention" : "§e{player-name}§6 à inventé :§f {value} §6!"
+			"invention" : "§eInventor §8» §e{player-name}§6 à inventé :§f {value} §6!"
 		}, 
 		
 		"mystery-teams" : {
@@ -704,33 +806,158 @@
 		"tracker" : {
 			"name" : "§cTracker",
 			"description" : "§7En faisant §fclique droit §7avec un compas en main,\n§7vous pouvez §ctraquer§7 le joueur le plus proche.",
-			"tracker-no-target" : "{prefix} §cLe Traqueur n'a pas trouvé de cible.",
-			"tracker-target" : "{prefix} §eVous ciblez §l{player-name}§e qui se trouve à {value} blocs."
+			"tracker-no-target" : "§cTraqueur §8» §cLe Traqueur n'a pas trouvé de cible.",
+			"tracker-target" : "§cTraqueur §8» §eVous ciblez §l{player-name}§e qui se trouve à {value} blocs."
 		},
 		
 		"master-level" : {
 			"name" : "§2Master Level",
 			"description" : "§7Permet de choisir §fle niveau des joueurs§7 en début de partie.",
 			"start-level" : "§aNiveau : §e{value}"
+		},
+		
+		"golden-retriever" : {
+			"name" : "§eGolden Retriever",
+			"description" : "§7Lorsque qu'un joueur §cmeurt§7, il drop une §egolden head§7."
+		},
+		
+		"speedy-miner" : {
+			"name" : "§bSpeedy Miner",
+			"description" : "§7Lorsque vous vous trouvez sous la couche \n§fy=32§7, vous obtenez §fdes effets de potion§7."
+		},
+		
+		"fence-head" : {
+			"name" : "§cFence Head",
+			"description" : "§7Lorsque qu'un joueur §cmeurt§7, sa tête apparaît sur une clotûre."
+		},
+		
+		"australian-crafting" : {
+			"name" : "§eAustralian Crafting",
+			"description" : "§7Tous les crafts sont §frenversés\n§7(le haut est en bas et inversement)."
+		},
+		
+		"no-wooden-tool" : {
+			"name" : "§6No Wooden Tool",
+			"description" : "§7Les §fmatériaux des outils §7sont améliorés."
+		},
+		
+		"open-house" : {
+			"name" : "§2Open House",
+			"description" : "§7Chaque joueur peut §cvoler dans l'inventaire §7des autres \n§7en faisant §fsneak + clique droit§7."
+		},
+		
+		"dropping-coins" : {
+			"name" : "§eDropping Coins",
+			"description" : "§7A chaque fois qu'un joueur prend §cun dégât§7, \n§un §fitem aléatoire§7 de son stuff §fest drop§7."
+		},
+		
+		"no-bucket" : {
+			"name" : "§9No Bucket",
+			"description" : "§7Permet de désactiver les §fseaux d'eau/lave§7.",
+			"water-bucket" : "§9Seau d'eau"
+		},
+				
+		"sweat-world" : {
+			"name" : "§3Sweat World",
+			"description" : "§7Permet de §fgénérer un monde §7spécialement conçu pour §cle pvp§7."
+		},
+		
+		"chunk-apocalypse" : {
+			"name" : "§cChunk Apocalypse",
+			"description" : "§7Un certain pourcentage des chunks est §fremplacé par de l'air§7."
+		},
+		
+		"enchanting-center" : {
+			"name" : "§dEnchanting Center",
+			"description" : "§7Les joueurs ne peuvent pas crafter §fla table d'enchant§7.\n§7Cependant une §ftable d'enchantement §7est généré au centre de la carte.",
+			"enchant-table-generation-error" : "{error} §cLa table d'enchantement n'a pas pu être généré au 0 0 donc le scénario \"Enchanting Table\" a été désactivé."
+		},
+			
+		"melee-fun" : {
+			"name" : "§bMeleeFun",
+			"description" : "§7Il n'y a plus §fde délai §7entre chaque coup§7."
+		},
+		
+		"progressive-speed" : {
+			"name" : "§bProgressive Speed",
+			"description" : "§7Tous les joueurs commencent avec §fl'effet vitesse I§7\n§7et à chaque §ckill§7, cet effet augmente de niveau§7."
+		},
+		
+		"world-is-small" : {
+			"name" : "§aWorld Is Small",
+			"description" : "§7Tous les joueurs commencent §fau même endroit§7."
+		},
+		
+		"bombers" : {
+			"name" : "§4Bombers",
+			"description" : "§7Tous les joueurs recoivent en début de partie un\n§fbriquet solidité X§7 et chaque §cmobs tué §7drop de la §6tnt§7."
+		},
+		
+		"skyhigh" : {
+			"name" : "§bSkyHigh",
+			"description" : "§7A partir de §fl'activation du pvp§7, tous les joueurs en dessous \n§7de la couche y = 200 §cperdrons de la vie §7à raison de 1 coeur \n§7toutes les 30 secondes.",
+			"skyhigh-announce" : "§bSkyHigh §8» §cIl est temps de monter à une couche supérieux ou égal à y = 200 si vous ne voulez pas mourrir.",
+			"skyhigh-damage" : "§bSkyHigh §8» §cVous venez de perdre 1 coeur car vous êtes sous la couche y = 200."
+		},
+		
+		"gapzap" : {
+			"name" : "§eGapZap",
+			"description" : "§7Quand un joueur prend un dégât, §fil pert ses effets\n§fde régénération§7."
 		}
 	},
 	
 	"enchants" : {
-		"level" : "Niveau",
 		"enchantments" : "Les Enchantements",
 		
+		"ARROW_DAMAGE" : "Power",	
+		"ARROW_FIRE" : "Flame",		
+		"ARROW_INFINITE" : "Infinity",		
+		"ARROW_KNOCKBACK" : "Punch",		
+		"DAMAGE_ALL" : "Sharpness",
+		"DAMAGE_ARTHROPODS" : "Bane Of Arthropods",
+		"DAMAGE_UNDEAD" : "Smite",
+		"DEPTH_STRIDER" : "Depth Strider",
+		"DIG_SPEED" : "Efficiency",
 		"DURABILITY" : "Unbreaking",
-		"DIG-SPEED" : "Efficiency",
-		"LOOT-BONUS-BLOCKS" : "Fortune",
-		"SILK-TOUCH" : "Silk Touch"
+		"FIRE_ASPECT" : "Fire Aspect",
+		"KNOCKBACK" : "Knockback",
+		"LOOT_BONUS_BLOCKS" : "Fortune",
+		"LOOT_BONUS_MOBS" : "Looting",
+		"LUCK" : "Luck of the Sea",
+		"LURE" : "Lure",
+		"OXYGEN" : "Respiration",	
+		"PROTECTION_ENVIRONMENTAL" : "Protection",		
+		"PROTECTION_EXPLOSIONS" : "Blast Protection",		
+		"PROTECTION_FALL" : "Feather Falling",		
+		"PROTECTION_FIRE" : "Fire Protection",
+		"PROTECTION_PROJECTILE" : "Projectile Protection",
+		"SILK_TOUCH" : "Silk Touch",
+		"THORNS" : "Thorns",
+		"WATER_WORKER" : "Aqua Affinity"
 	},
 		
+	"potions" : {
+		"potions" : "Les Potions",
+		
+		"SPEED" : "Vitesse",
+		"FAST_DIGGING" : "Célérité",
+		"DAMAGE_RESISTANCE" : "Résistance"
+	},
+	
 	"gamemodes" : {
 	
 		"taupe-gun" : {
 			"tg-mole" : "Taupe",
+			"tg-mole-prefix" : "§4T§f{value} §c",
 			"tg-mole-selection" : "{tg-prefix} §6Les taupes on été selectionnées !",
-			"tg-mole-announce" : "{tg-prefix} §cVous êtes taupe, vous devez donc trahir votre équipe actuel afin de gagner avec votre vrai équipe. Pour cela vous disposez d'un kit de départ récupérable à l'aide de la commande /t claim. Vous pouvez aussi parler avec votre équipe avec la commande /t chat."
+			"tg-mole-announce" : "{tg-prefix} §cVous êtes §otaupe§c, vous devez donc trahir votre f actuel afin de gagner avec votre vraie équipe. Pour cela, vous disposez d'un kit de départ récupérable à l'aide de la commande /t claim. De plus, vous pouvez parler avec votre équipe avec la commande /t chat. Enfin, vous pouvez révéler votre vrai nature avec la commande /t reveal qui, en échange de la perte de votre couverture, vous octroie un pomme d'or.",
+			"tg-super-mole-announce" : "{tg-prefix} §4Vous êtes finalement une §osuper taupe§4 ! Vous devez par conséquent gagner seul. En faisant /t reveal une seconde fois, vous révélez votre nature contre une pomme d'or.",
+			"tg-mole-reveal" : "{tg-prefix} §l§c{player-name} §cse révèle être taupe !",
+			"tg-mole-super-reveal" : "{tg-prefix} §l§4{player-name} §4se révèle être super taupe !",
+			
+			"tg-cmd-error-mole" : "{error} §cVous devez être §oTaupe §cpour effectuer cette commande.",
+			"tg-cmd-error-reveal" : "{error} §cVous vous êtes déjà révélé.",
+			"tg-cmd-error-kit" : "{error} §cVous avez déjà récupéré votre kit."
 		},
 		
 		"devil-watches" : {
@@ -739,35 +966,35 @@
 				"VILLAGERS" : {
 					"name" : "§aVillageois",
 					"member" : "villageois",
-					"goal" : "§9Votre objectif de ramener la paix dans le village en tuant démons et sectaires.",
+					"goal" : "§7Votre objectif de ramener la paix dans le village en tuant démons et sectaires.",
 					"victory-message" : "{dw-prefix} §a§lVictoire du village : la paix par l'extermination des démons a été accomplit."
 				},
 				
 				"SECTARIANS" : {
-					"name" : "§cSectaires",
+					"name" : "§dSectaires",
 					"member" : "sectaire",
-					"goal" : "§9Votre objectif est de ressusciter le devil en gagnant avec la secte.",
+					"goal" : "§7Votre objectif est de ressusciter le devil en gagnant avec la secte.",
 					"victory-message" : "{dw-prefix} §5§lVictoire de la secte qui vont désormais permettre au devil de revenir à la vie."
 				},
 				
 				"DEMONS" : {
-					"name" : "§4Démons",
+					"name" : "§cDémons",
 					"member" : "démon",
-					"goal" : "§9Votre objectif est gagner avec les démons en tuant le village et la secte.",
+					"goal" : "§7Votre objectif est gagner avec les démons en tuant le village et la secte.",
 					"victory-message" : "{dw-prefix} §c§lVictoire des démons qui ont tués tout le monde."
 				},
 				
 				"SOLOS" : {
-					"name" : "§6Solos",
+					"name" : "§eSolos",
 					"member" : "solo",
-					"goal" : "§9Votre objectif est de tuer tout le monde.",
+					"goal" : "§7Votre objectif est de tuer tout le monde.",
 					"victory-message" : "{dw-prefix} §e§lVictoire de {player-name} qui a tué tout le monde."
 				},
 				
 				"NEUTRALS" : {
 					"name" : "§bNeutres",
 					"member" : "neutre",
-					"goal" : "§9Vous êtes neutre et par conséquent vous n'avez actuellement pas d'objectif.",
+					"goal" : "§7Vous êtes neutre et par conséquent vous n'avez actuellement pas d'objectif.",
 					"victory-message" : "{dw-prefix} §b§lPersonne ne remporte la partie car il ne reste plus que des joueurs neutres."
 				}
 			},
@@ -776,41 +1003,41 @@
 				
 				"VILLAGER" : {
 					"name" : "Simple Villageois",
-					"lore" : "§9Cependant, vous ne disposez pas de pouvoir spéciaux. Cependant, vous receverez en début de partie les outils et compétences permettant d'exercer votre profession."
+					"lore" : "§7Vous ne disposez pas de pouvoir spéciaux. Cependant, vous receverez en début de partie les outils et compétences permettant d'exercer votre profession."
 				},
 				
 				"villager-type" : {
 					"MINOR" : {
 						"name" : "Mineur",
-						"lore" : "§9Vous diposez ainsi d'une pioche en diamant efficacité 2 et de l'effet haste I permanent."
+						"lore" : "§7Vous diposez ainsi d'une pioche en diamant efficacité 2 et de l'effet §6haste I §7permanent."
 					},
 				
 					"SMITH" : {
 						"name" : "Forgeron",
-						"lore" : "§9Vous disposez ainsi d'une enclume mais aussi d'un livre tranchant II et d'un livre protection II."
+						"lore" : "§7Vous disposez ainsi d'une enclume mais aussi d'un livre tranchant II et d'un livre protection II."
 					},
 					
 					"BOOKSELLER" : {
 						"name" : "Libraire",
-						"lore" : "§9Vous disposez ainsi de 8 livres et de 12 bouteilles d'XP."
+						"lore" : "§7Vous disposez ainsi de 8 livres et de 12 bouteilles d'XP."
 					},
 					
 					"GUARD" : {
 						"name" : "Garde",
-						"lore" : "§9Vous disposez ainsi d'un casque en diamant."
+						"lore" : "§7Vous disposez ainsi d'un casque en diamant."
 					}
 				},
 				
 				"HUNTER" : {
 					"name" : "Chasseur",
-					"lore" : "§9Lorsque vous utilisez votre arc, plus vous êtes loin de votre cible, plus vous lui infligez de dégats ; à raison de 10% de dégats supplémentaires tous les 15 blocs.Vous disposez aussi de deux capacités passives : \n\"Pistage\" vous permettant d'analyser la dépouille d'un joueur pendant les 5 premières minutes suivant sa mort. \n\"Dépeceur\" augmentant le taux de drop du cuir et des têtes. Enfin, vous avez un livre puissance IV.",
+					"lore" : "§7Lorsque vous utilisez votre arc, plus vous êtes loin de votre cible, §fplus vous lui infligez de dégats§7 ; à raison de 10% de dégats supplémentaires tous les 15 blocs.Vous disposez aussi de deux capacités passives : \n\"Pistage\" vous permettant d'analyser la dépouille d'un joueur pendant les 5 premières minutes suivant sa mort. \n\"Dépeceur\" augmentant le taux de drop du cuir et des têtes. Enfin, vous avez un livre puissance IV.",
 					"dw-hunter-inspect-null" : "{dw-prefix} §eVous avez trouvé la dépouille de §l{player-name}§e. Cependant, celui ci n'a visiblement pas été tué de la main d'un joueur.",
 					"dw-hunter-inspect-locate" : "{dw-prefix} §6Vous avez trouvé la dépouille de §l{player-name}§6. Vous arrivez alors à savoir que son tueur se trouve en : §e{value}."
 				},
 				
 				"GUARDIAN" : {
 					"name" : "Gardien",
-					"lore" : "§9Chaque épisode vous avez la possibilité de protéger un joueur (y compris vous même) lui confiant ainsi l'effet résistance I durant l'épisode complet. Si votre protégé vient à mourrir, il survivra mais vous perdrez votre pouvoir.",
+					"lore" : "§7Chaque épisode vous avez la possibilité de protéger un joueur (y compris vous même) lui confiant ainsi l'effet §9résistance I §7durant l'épisode complet. Si votre protégé vient à mourrir, il survivra mais vous perdrez votre pouvoir.",
 					
 					"dw-guardian-can-use" : "{dw-prefix} §bVous pouvez désormais veiller sur un joueur avec la commande /dw protect <pseudo>. Vous avez 5 minutes pour effectuer cette commande.",
 										
@@ -823,7 +1050,7 @@
 				
 				"GURU" : {
 					"name" : "Gourou",
-					"lore" : "§9Vous êtes le chef de la secte, c'est pour cela que vous disposez de la liste complète des membres. De plus, chaque épisode vous pourrez envoyer un message à tous les sectaires (mais seulement la nuit).",
+					"lore" : "§7Vous êtes le chef de la secte, c'est pour cela que vous disposez de la liste complète des membres. De plus, chaque épisode vous pourrez envoyer un message à tous les sectaires (mais seulement la nuit).",
 					"dw-guru-use" : "{dw-prefix} §bVous pouvez à nouveau faire une annonce aux sectaires avec la commande /dw announce <message> mais seulement la nuit.",
 					"dw-guru-bc" : "§4§lLa secte §8» §c{value}",
 					"dw-announce-night" : "{dw-prefix} §cLes annonces ne peuvent êtres faites que la nuit."
@@ -831,39 +1058,39 @@
 				
 				"PROPHET" : {
 					"name" : "Prophète",
-					"lore" : "§9Vous pouvez, 3 fois dans la partie, découvir le rôle et camp d'un joueur contre un coeur permanent grâce à la commande /dw see <pseudo>.",
+					"lore" : "§7Vous pouvez, 3 fois dans la partie, découvir le rôle et camp d'un joueur §ccontre un coeur permanent §7grâce à la commande §e/dw see <pseudo>§7.",
 					"dw-prophet-prophecy" : "{dw-prefix} §bLa prophétie vous dit que §l{player-name}§b est §o{role-name}§b du coté des {camp-name}."
 				},
 				
 				"MOUNTEBANK" : {
 					"name" : "Saltimbanque",
-					"lore" : "§9En tant que maître des accrobaties, vous disposez de l'effet vitesse I permanent. De plus, vous pouvez faire un super saut en faisant sneak + saut. Enfin, vous recevez un livre Chute amorti IV et 3 ender pearls."
+					"lore" : "§7En tant que maître des accrobaties, vous disposez de l'effet §bvitesse I permanent.§7 De plus, vous pouvez faire un §asuper saut §7en faisant §esneak + saut§7. Enfin, vous recevez un livre Chute amorti IV et 3 ender pearls."
 				},
 				
 				"PROWLER" : {
 					"name" : "Rôdeur",
-					"lore" : "§9En tant que maître des mauvais coups, vous pouvez accomplir un méfait pour changer de camp. Si vous tuez un sectaire, vous rejoignez le village pour fuir la secte et si vous tuez un villageois, vous rejoignez la secte pour fuir le village. De plus, vous êtes discret et fort quand vous enlevez votre armure pendant la moitié du temps de chaque épisode. Enfin, vous disposez de l'effet vitesse I permanent.",
+					"lore" : "§7En tant que maître des mauvais coups, vous pouvez accomplir des méfaits pour changer de camp. Si vous tuez un sectaire, vous rejoignez le village pour fuir la secte et si vous tuez un villageois, vous rejoignez la secte pour fuir le village. De plus, vous avez les effets §finvisibilité I §7et §cforce I §7quand vous enlevez votre armure pendant la moitié du temps de chaque épisode. Enfin, vous disposez de l'effet §bvitesse I §7permanent.",
 					"dw-prowler-join" : "{dw-prefix} §cVous avez tué un {value-1}, vous rejoignez donc les {camp-name} pour fuir les {value-2}."
 				},
 				
 				"HERMIT" : {
 					"name" : "Hermite",
-					"lore" : "§9Vous êtes le reclut du village n'ayant ainsi pas l'habitude de cotôyer les villageois. Vous aurez donc l'effet faiblesse I si 4 personnes ou plus vous entourent (dans un rayon de 30 blocs). Si seulement 3 personnes vous entourent, vous n'avez pas d'effet. Cependant cette solitude vous a permis d'être plus fort ce qui vous permet de bénéficier au contraire de l'effet force I de jour et résistance I de nuit quand 2 personnes ou moins vous entourent. Enfin, si vous êtes seul ou en tête à tête avec un joueur, vous gagnez l'effet vitesse I."
+					"lore" : "§7Vous êtes le reclut du village n'ayant ainsi pas l'habitude de cotôyer les villageois. Vous aurez donc l'effet §8faiblesse I §7si 4 personnes ou plus vous entourent (dans un rayon de 30 blocs). Si seulement 3 personnes vous entourent, vous n'avez pas d'effet. Cependant cette solitude vous a permis d'être plus fort ce qui vous permet de bénéficier au contraire de l'effet §cforce I §7de jour et §9résistance I §7de nuit quand 2 personnes ou moins vous entourent. Enfin, si vous êtes seul ou en tête à tête avec un joueur, vous gagnez l'effet §bvitesse I§7."
 				},
 				
 				"INQUISITOR" : {
 					"name" : "Inquisiteur",
-					"lore" : "§9En tant que membre de l'inquisition, vous cherchez à combattre les hérésies. La Foi qui vous anime vous permet d'obtenir l'effet force I le jour."
+					"lore" : "§7En tant que membre de l'inquisition, vous cherchez à combattre les hérésies. La Foi qui vous anime vous permet d'obtenir l'effet §cforce I §7le jour."
 				},
 				
 				"DEMON" : {
 					"name" : "Démon mineur",
-					"lore" : "§9En tant que de démon de bas rang, vous disposez de l'effet force I la nuit."
+					"lore" : "§7En tant que de démon de bas rang, vous disposez de l'effet §cforce I §7la nuit. De plus, quand vous commettez un meurtre, vous obtenez l'effet §bvitesse I§7 pendant 1 minute."
 				},
 				
 				"CAT_LADY" : {
 					"name" : "Dame aux chats",
-					"lore" : "§9Vous entretenez une relation particulière, et même mystique, avec vos chats. Vous pouvez les entendre vous murmurer des informations sur les autres villageois. Quand ils sont témoin d'un meurtre ou d'un rituel, ils vous le murmure. Vous pouvez utiliser la commande /dw cat pour invoquer un chat sachant que vous ne pouvez pas en avoir plus de 3 en même temps. Enfin, vous ne prenez pas de dégâts de chute car les chats retombent toujours sur leurs pattes.",
+					"lore" : "§7Vous entretenez une relation particulière, et même mystique, avec vos chats. Vous pouvez les entendre vous murmurer des informations sur les autres villageois. Quand ils sont témoin d'un meurtre ou d'un rituel, ils vous le murmure. Vous pouvez utiliser la commande §e/dw cat §7pour invoquer un chat sachant que vous ne pouvez pas en avoir plus de 3 en même temps. Enfin, vous ne prenez pas de dégâts de chute car les chats retombent toujours sur leurs pattes.",
 					"dw-cat-meow" : "§dMiaou !",
 					"dw-cat-whisper" : "{dw-prefix} §dUn chat vous murmure {value}.",
 					"dw-cat-whisper-death" : "qu'il va mourrir.",
@@ -871,14 +1098,25 @@
 					"dw-cat-whisper-death-killer" : "qu'il va mourrir de la main de §l{player-name}§d",
 					"dw-cat-whisper-kill" : "qu'il vu §l{player-name} §dse faire tuer par §l{value}§d",
 					"dw-cat-number" : "{dw-prefix} §cVous ne pouvez pas avoir plus de 3 chats en même temps."
+				},
+				
+				"MISCHIEVOUS_DEMON" : {
+					"name" : "Démon Espiègle",
+					"lore" : "§7Vous êtes un démon particulièrement malicieux. Comme tous les démons, vous disposez d'un effet §cforce I §7la nuit. De plus, lorsque vous retirez votre armure, vous devenez §finvisible§7. Enfin, quand vous commettez un meurtre, vous obtenez l'effet §bvitesse II§7 pendant 1 minute."
+				},
+				
+				"GREEDY_DEMON" : {
+					"name" : "Démon Avide",
+					"lore" : "§7Vous êtes un démon avide de puissance bien que cela puisse vous causer du tord. De ce fait, à chaque début de nuit, vous gagnez §e1 demi coeur d'absorbtion §7par joueur (sauf démon) vous entourant dans un rayon de 50 blocs. Cependant, chaque joueur présent dans cette zone perd un demi coeur et reçoit un message le prévenant. De plus, à chaque meurtre, vous gagnez §d1 demi coeur permanent§f ainsi que l'effet §8résistance I§7 pendant 1 minute.. Enfin, vous avez §cforce I §7la nuit.",
+					"dw-greedy-prevent" : "{dw-uhc} §cVous sentez la présence d'un §odémon avide§c..."
 				}
 			},
 			
 			"announce" : {
-				"dw-announce-role" : "{dw-prefix} §9Vous êtes §o{role-name}{dw-sectarian}§9.\n{goal} {power}",
+				"dw-announce-role" : "{dw-prefix} §7Vous êtes {role-camp-prefix}{role-name}{dw-sectarian}§7.\n§7{goal} {power}",
 				"dw-sectarian" : "§5 (Sectaire)",
-				"dw-seal" : "§dVous faites partie de la secte et avez reçut le sceau du devil. Par conséquence, en effectuant des rituels vous pouvez acquérir des pouvoirs démoniaques.",
-				"dw-death-reason" : "§d===================§5§kO§d===================\n§9Le village a perdu un de ses membres §l{player-name}§9,\n§9il était §o{role-name}{dw-sectarian}.\n§d=======================================\n",
+				"dw-seal" : "{dw-prefix} §dVous faites partie de la secte et avez reçut le sceau du devil. Par conséquence, en effectuant des rituels vous pouvez acquérir des pouvoirs démoniaques.",
+				"dw-death-reason" : "§8» §e{player-name}§7 est mort, il était {role-camp-prefix}{role-name}{dw-sectarian} §8«",
 				"dw-victory-drawn" : "{dw-prefix} §7Tout le monde est mort donc personne ne gagne la partie."
 			},
 			
@@ -897,6 +1135,42 @@
 				"dw-item-holy-water" : "§bEau bénite",
 				"inv-dw-compo" : "§5Gestion de la composition"
 			}
+		},
+		
+		"werewolf" : {
+			"camps" : {
+				"VILLAGERS" : {
+					"name" : "",
+					"goal" : "",
+					"victory-message" : ""
+				},
+				
+				"WEREWOLVES" : {
+					"name" : "",
+					"goal" : "",
+					"victory-message" : ""
+				},
+				
+				"SOLOS" : {
+					"name" : "",
+					"goal" : "",
+					"victory-message" : ""
+				},
+				
+				"NEUTRALS" : {
+					"name" : "",
+					"goal" : "",
+					"victory-message" : ""
+				}
+			},
+			
+			"roles" : {
+				"VILLAGER" : {
+				},
+				
+				"WEREWOLF" : {
+				}
+			}
 		}
 	},
 	
@@ -913,7 +1187,8 @@
 		"cage-generate": "The cage has been generated at spawn !",
 		
 		"files" : {
-			"lang-file-load" : "Lang file has been loaded !"
+			"lang-file-load" : "Lang file has been loaded !",
+			"file-created" : "The file {value} has been created."
 		}
 	}
 }

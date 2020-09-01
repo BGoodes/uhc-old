@@ -1,11 +1,11 @@
 
 package fr.aiidor.uhc.game;
 
+import java.util.List;
 import java.util.Set;
 import java.util.UUID;
 
 import org.bukkit.Bukkit;
-import org.bukkit.World;
 import org.bukkit.entity.Player;
 
 import fr.aiidor.uhc.UHC;
@@ -14,11 +14,11 @@ import fr.aiidor.uhc.enums.Lang;
 import fr.aiidor.uhc.enums.Permission;
 import fr.aiidor.uhc.enums.PlayerState;
 import fr.aiidor.uhc.enums.TeamType;
-import fr.aiidor.uhc.enums.UHCFile;
 import fr.aiidor.uhc.gamemodes.UHCMode;
 import fr.aiidor.uhc.scenarios.Scenario;
 import fr.aiidor.uhc.tools.Titles;
 import fr.aiidor.uhc.tools.UHCItem;
+import fr.aiidor.uhc.world.UHCWorld;
 
 public class GameManager {
 	
@@ -37,12 +37,55 @@ public class GameManager {
 		this.game = game;
 	}
 	
-	public Game createGame(String name, UHCMode mode, GameSettings settings, Player host, Set<UHCPlayer> players, World world) {
-		this.game = new Game(name, mode, settings, host, players, world);
+	public Game createGame(String name, UHCMode mode, GameSettings settings, Player host, Set<UHCPlayer> players, UHCWorld world, List<UHCWorld> worlds) {
+		this.game = new Game(name, mode, settings, host, players,  world, worlds);
 		return game;
 	}
 	
 	public void restartGame() {
+		
+		reload();
+		Set<UHCPlayer> players = game.getAllPlayers();
+		
+		
+		createGame(game.getName(), game.getUHCMode(), game.getSettings(), null, null, game.getMainWorld(), game.getUHCWorlds());
+		
+		if (UHC.getInstance().getSettings().hasCage()) {
+			UHC.getInstance().getSettings().cage.create();
+		}
+		
+		for (UHCPlayer p : players) {
+			
+			if (p.isConnected()) {
+				
+				Player player = p.getPlayer();
+				player.setScoreboard(game.getScoreboard());
+				
+				UHCPlayer np = new UHCPlayer(player, PlayerState.ALIVE, p.getRank(), game);
+				game.addUHCPlayer(np);
+				
+				np.reset();
+				
+				player.teleport(UHC.getInstance().getSettings().lobby);
+				
+				if (np.hasPermission(Permission.CONFIG)) {
+					player.getInventory().setItem(4, UHCItem.config_chest);
+				}
+				
+				if (game.hasTeam()) {
+					if (game.getSettings().team_type == TeamType.CHOOSE) {
+						if (np.hasTeam()) {
+							player.getInventory().setItem(8, UHCItem.getTeamSelecter(np.getTeam()));
+						} else {
+							player.getInventory().setItem(8, UHCItem.getTeamSelecter());
+						}
+					}
+				}
+			}
+		}
+	}
+	
+	public void reload() {
 		
 		if (game.isRunning()) game.getRunner().stop();
 		
@@ -51,55 +94,17 @@ public class GameManager {
 		}
 		
 		game.getUHCMode().stop();
-		
-		Set<UHCPlayer> players = game.getAllPlayers();
-		
-		
-		createGame(game.getName(), game.getUHCMode(), game.getSettings(), null, null, game.getMainWorld().getOverWorld());
-		
-		if (UHC.getInstance().getSettings().hasCage()) {
-			UHC.getInstance().getSettings().cage.create();
-		}
-		
-		for (UHCPlayer p : players) {
-			
-			p.reset();
-			
-			if (p.isConnected()) {
-				
-				Player player = p.getPlayer();
-				player.setScoreboard(game.getScoreboard());
-				
-				game.addUHCPlayer(new UHCPlayer(player, PlayerState.ALIVE, p.getRank(), game));
-				
-				player.teleport(UHC.getInstance().getSettings().lobby);
-				
-				if (p.hasPermission(Permission.CONFIG)) {
-					player.getInventory().setItem(4, UHCItem.getConfigChest());
-				}
-				
-				if (game.hasTeam()) {
-					if (game.getSettings().team_type == TeamType.CHOOSE) {
-						if (p.hasTeam()) {
-							player.getInventory().setItem(8, UHCItem.getTeamSelecter(p.getTeam()));
-						} else {
-							player.getInventory().setItem(8, UHCItem.getTeamSelecter());
-						}
-					}
-				}
-			}
-
-		}
 	}
 	
 	
 	public void stopGame() {
 		
-		if (game.isRunning()) game.getRunner().stop();
-		
+		if (!hasGame()) return;
 		game.setState(GameState.ENDING);
 		
-		if (UHCFile.CONFIG.getYamlConfig().getBoolean("ServerManager.server-restart")) {
+		if (game.isRunning()) game.getRunner().stop();
+		
+		if (UHC.getInstance().getSettings().server_restart) {
 			
 			Bukkit.broadcastMessage(Lang.BC_SERVER_RESTART.get());
 			
@@ -139,7 +144,7 @@ public class GameManager {
 		if (!game.getSettings().can_win) return;
 		
 		if (game.getAlivePlayers().isEmpty()) {
-			Bukkit.broadcastMessage(Lang.BC_DRAW.get());
+			game.broadcast(Lang.BC_DRAW.get());
 			
 			for (UHCPlayer p : game.getIngamePlayers()) {
 				if (p.isConnected()) {

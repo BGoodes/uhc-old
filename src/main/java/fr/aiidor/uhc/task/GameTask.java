@@ -2,6 +2,8 @@ package fr.aiidor.uhc.task;
 
 import org.bukkit.Sound;
 import org.bukkit.entity.Player;
+import org.bukkit.potion.PotionEffect;
+import org.bukkit.potion.PotionEffectType;
 
 import fr.aiidor.uhc.UHC;
 import fr.aiidor.uhc.enums.GameState;
@@ -135,15 +137,21 @@ public class GameTask extends UHCTask {
 				Integer min = timer/60;
 				
 				if (min%(10/m) == 0) {
-					if (min%(20/m) == 0) game.getWorlds().forEach(w->w.setTime(23500));
-					else game.getWorlds().forEach(w->w.setTime(13500));
+					if (min%(20/m) == 0) {
+						
+						game.getWorlds().forEach(w->w.setTime(23500));
+						game.getUHCMode().day(episode);
+					} else {
+						
+						game.getWorlds().forEach(w->w.setTime(13500));
+						game.getUHCMode().night(episode);
+					}
 				}
 			}
 		}
 		
 		//-----------------------------------
 		playerRunnable();
-		game.getUHCMode().run();
 		
 		if (timer >= next_ep) {
 			//NEW EPISODE
@@ -166,6 +174,7 @@ public class GameTask extends UHCTask {
 			this.next_ep = timer + settings.ep_time * 60;
 		}
 		
+		game.getUHCMode().run();
 		UHC.getInstance().getGameManager().end();
 	}
 	
@@ -187,6 +196,11 @@ public class GameTask extends UHCTask {
 	}
 	
 	public void pvpStart() {
+		
+		if (ScenariosManager.SKYHIGH.isActivated()) {
+			game.broadcast(Lang.SKYHIGH_ANNOUNCE.get());
+		}
+		
 		if (ScenariosManager.ASSASSINS.isActivated()) {
 			ScenariosManager.ASSASSINS.start(game);
 		}
@@ -201,12 +215,26 @@ public class GameTask extends UHCTask {
 	}
 	
 	public void playerRunnable() {
-		for (UHCPlayer player : game.getPlayingPlayers()) {
-			if (player.isConnected()) {
-				Player p = player.getPlayer();
+		for (UHCPlayer p : game.getPlayingPlayers()) {
+			
+			Player player = p.getPlayer();
+			
+			if (ScenariosManager.CAT_EYES.isActivated()) {
+				p.addPotionEffect(ScenariosManager.CAT_EYES.nightVision);
+			}
 				
-				if (ScenariosManager.CAT_EYES.isActivated()) {
-					p.addPotionEffect(ScenariosManager.CAT_EYES.nightVision);
+			if (ScenariosManager.SPEEDY_MINER.isActivated()) {
+				ScenariosManager.SPEEDY_MINER.setEffects(p);
+			}
+			
+			if (ScenariosManager.PROGRESSIVE_SPEED.isActivated()) {
+				p.addPotionEffect(new PotionEffect(PotionEffectType.SPEED, Integer.MAX_VALUE, p.getKills()));
+			}
+			
+			if (ScenariosManager.SKYHIGH.isActivated()) {
+				if (game.isPvpTime() && timer%30 == 0 && player.getLocation().getBlockY() < 200) {
+					player.damage(2);
+					player.sendMessage(Lang.SKYHIGH_DAMAGE.get());
 				}
 			}
 		}

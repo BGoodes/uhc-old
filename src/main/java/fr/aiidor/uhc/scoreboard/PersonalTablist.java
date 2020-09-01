@@ -28,7 +28,7 @@ public class PersonalTablist {
 		
 		if (UHC.getInstance().getGameManager().hasGame()) {
 			Game game = UHC.getInstance().getGameManager().getGame();
-			
+				
 			top.append(game.getName());
 			
 			Integer tps = 0;
@@ -39,8 +39,6 @@ public class PersonalTablist {
 			top.append("\n" + Lang.TL_CONNEXION.get()
 					.replace(LangTag.VALUE_1.toString(), ""+((CraftPlayer) player).getHandle().ping)
 					.replace(LangTag.VALUE_2.toString(), ""+tps));
-			
-			bottom.append("\n");
 		}
 		
 		set(top.toString(), bottom.toString());

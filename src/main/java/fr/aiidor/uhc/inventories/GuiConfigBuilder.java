@@ -93,12 +93,6 @@ public abstract class GuiConfigBuilder extends Gui {
 				return;
 			}
 		}
-		
-	}
-	
-	@Override
-	public Boolean titleIsDynamic() {
-		return false;
 	}
 	
 	public abstract String getTitle();

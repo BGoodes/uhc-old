@@ -24,6 +24,7 @@ import fr.aiidor.uhc.UHC;
 import fr.aiidor.uhc.enums.Lang;
 import fr.aiidor.uhc.enums.LangTag;
 import fr.aiidor.uhc.enums.Permission;
+import fr.aiidor.uhc.enums.PlayerState;
 import fr.aiidor.uhc.enums.UHCType;
 import fr.aiidor.uhc.game.Game;
 import fr.aiidor.uhc.game.GameManager;
@@ -46,6 +47,14 @@ public class PlayerInteractEvents implements Listener {
 		
 		UHCPlayer p = game.getUHCPlayer(player.getUniqueId());
 		ItemStack hand = e.getItem();
+		
+		if (p.getState() == PlayerState.DYING) {
+			e.setCancelled(true);
+			return;
+		}
+		
+		game.getSettings().enchantLimiter(hand);
+		
 		
 		if (e.getAction() == Action.RIGHT_CLICK_AIR || e.getAction() == Action.RIGHT_CLICK_BLOCK) {
 			
@@ -166,6 +175,22 @@ public class PlayerInteractEvents implements Listener {
 		if (!game.isHere(player.getUniqueId())) return;
 		
 		UHCPlayer p = game.getUHCPlayer(player.getUniqueId());
+		
+		if (!game.isStart()) return;
+		
+		if (e.getRightClicked() instanceof Player) {
+			Player clicked = (Player) e.getRightClicked();
+			
+			if (game.isHere(clicked.getUniqueId()) && p.isAlive()) {
+				UHCPlayer c = game.getUHCPlayer(clicked.getUniqueId());
+				
+				if (ScenariosManager.OPEN_HOUSE.isActivated() && player.isSneaking()) {
+					if (c.isAlive()) {
+						player.openInventory(clicked.getInventory());
+					}
+				}
+			}
+		}
 		
 		//GAMEMODES
 		if (game.getUHCMode().getUHCType() == UHCType.DEVIL_WATCHES) {

@@ -13,6 +13,7 @@ import fr.aiidor.uhc.game.Game;
 import fr.aiidor.uhc.game.GameManager;
 import fr.aiidor.uhc.game.UHCPlayer;
 import fr.aiidor.uhc.scenarios.ScenariosManager;
+import fr.aiidor.uhc.tools.UHCItem;
 
 public class CraftEvents implements Listener {
 	
@@ -29,14 +30,25 @@ public class CraftEvents implements Listener {
 			CraftingInventory inv = e.getInventory();
 			
 			if (inv.getResult() == null) return;
+			
+			if (inv.getResult().equals(UHCItem.golden_head) && (!game.getSettings().golden_head || !game.getSettings().uhc_apple)) {
+				inv.setResult(new ItemStack(Material.AIR));
+				return;
+			}
+			
 			Material result = inv.getResult().getType();
 			
 			if (result == Material.ENCHANTMENT_TABLE) {
 				
-				if (ScenariosManager.ENCHANTED_DEATH.isActivated()) {
+				if (ScenariosManager.ENCHANTED_DEATH.isActivated() || ScenariosManager.ENCHANTING_CENTER.isActivated()) {
 					inv.setResult(new ItemStack(Material.AIR));
 					return;
 				}
+			}
+			
+			
+			if (ScenariosManager.NO_WOODEN_TOOL.isActivated()) {
+				inv.setResult(ScenariosManager.NO_WOODEN_TOOL.changeItem(inv.getResult()));
 			}
 			
 			if (result.name().endsWith("_SPADE") || result.name().endsWith("_PICKAXE") || result.name().endsWith("_AXE")) {

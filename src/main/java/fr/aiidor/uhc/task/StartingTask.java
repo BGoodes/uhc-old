@@ -23,11 +23,18 @@ public class StartingTask extends UHCTask {
 	@Override
 	public void launch() {
 		
+		if (game.getMainWorld().getMainWorld() == null) {
+			game.log(Lang.ST_ERROR_WORLD_GENERATION.get());
+			return;
+		}
+		
+		if (game.isRunning()) game.getRunner().stop();
+		
 		game.setRunner(this);
 		game.setState(GameState.STARTING);
 		
 		for (Scenario s : game.getSettings().getActivatedScenarios()) {
-			s.checkConditions();
+			s.checkConditions(true);
 		}
 		
 		this.runTaskTimer(UHC.getInstance(), 0, 20);

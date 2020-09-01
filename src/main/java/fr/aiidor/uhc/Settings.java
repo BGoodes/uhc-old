@@ -3,6 +3,7 @@ package fr.aiidor.uhc;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.World;
+import org.bukkit.WorldType;
 import org.bukkit.configuration.file.FileConfiguration;
 
 import fr.aiidor.uhc.enums.UHCFile;
@@ -13,10 +14,15 @@ public class Settings {
 	public Boolean remove_op;
 	public Boolean op_to_staff;
 	public Boolean log_game_bc; 
+	public Boolean server_restart;
 	
 	public String default_world;
+	public WorldType default_world_type;
+	public Boolean default_generate_structure;
+	public Long default_seed;
 	
 	public Location lobby;
+	public Boolean lobby_protection;
 	public Cage cage;
 	
 	public Settings() {
@@ -25,8 +31,13 @@ public class Settings {
 		remove_op = config.getBoolean("Permissions.remove-op");
 		op_to_staff = config.getBoolean("Permissions.set-op-to-staff");
 		log_game_bc = config.getBoolean("ServerManager.log-game-broadcast");
+		server_restart = config.getBoolean("ServerManager.server-restart");
 		
 		default_world = config.getString("World.default-world");
+		
+		default_seed = config.getLong("World.seed");
+		default_world_type = WorldType.valueOf(config.getString("World.type").toUpperCase());
+		default_generate_structure = config.getBoolean("World.generate-structures");
 		
 		//GET LOBBY
 		String worldname = config.getString("World.world-name");
@@ -44,7 +55,7 @@ public class Settings {
 			lobby = new Location(Bukkit.getWorld(worldname), 0, 150, 0);
 		}
 		
-		
+		lobby_protection = !lobby_name.equalsIgnoreCase(config.getString("World.world-name"));
 	}
 	
 	public World getLobbyWorld() {

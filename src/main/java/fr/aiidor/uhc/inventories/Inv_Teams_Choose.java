@@ -48,13 +48,13 @@ public class Inv_Teams_Choose extends Gui {
 	}
 	
 	@Override
-	public Boolean titleIsDynamic() {
-		return true;
+	public String getTitle() {
+		return Lang.INV_TEAM_CHOOSE.get();
 	}
 	
 	@Override
-	public String getTitle() {
-		return Lang.INV_TEAM_CHOOSE.get();
+	public Boolean isSameInventory(Inventory inv) {
+		return inv.getName().startsWith(getTitle());
 	}
 	
 	@Override
@@ -87,7 +87,7 @@ public class Inv_Teams_Choose extends Gui {
 				playClickSound(event.getPlayer());
 				
 				if (player.hasTeam()) {
-					player.leaveTeam();
+					player.leaveTeam(true);
 					event.getPlayer().closeInventory();
 				}
 				return;
@@ -98,7 +98,7 @@ public class Inv_Teams_Choose extends Gui {
 					if (clicked.getItemMeta().getDisplayName().equals(t.getName())) {
 						
 						playClickSound(event.getPlayer());
-						if (!t.isInTeam(player)) t.join(player);
+						if (!t.isInTeam(player)) t.join(player, true);
 						event.getPlayer().closeInventory();
 						return;
 					}

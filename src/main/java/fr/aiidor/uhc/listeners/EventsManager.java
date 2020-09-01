@@ -18,6 +18,7 @@ import org.bukkit.event.inventory.FurnaceBurnEvent;
 import org.bukkit.event.player.PlayerBucketEmptyEvent;
 import org.bukkit.event.player.PlayerBucketFillEvent;
 import org.bukkit.event.player.PlayerDropItemEvent;
+import org.bukkit.event.player.PlayerGameModeChangeEvent;
 import org.bukkit.event.player.PlayerMoveEvent;
 import org.bukkit.event.player.PlayerPickupItemEvent;
 import org.bukkit.event.player.PlayerToggleFlightEvent;
@@ -32,6 +33,7 @@ import fr.aiidor.dwuhc.DWRole;
 import fr.aiidor.dwuhc.DWRoleType;
 import fr.aiidor.uhc.UHC;
 import fr.aiidor.uhc.enums.Lang;
+import fr.aiidor.uhc.enums.PlayerState;
 import fr.aiidor.uhc.enums.UHCType;
 import fr.aiidor.uhc.game.Game;
 import fr.aiidor.uhc.game.GameManager;
@@ -60,7 +62,25 @@ public class EventsManager implements Listener {
 		pm.registerEvents(new DeathEvents(), uhc);
 		pm.registerEvents(new CraftEvents(), uhc);
 		pm.registerEvents(new PortalEvents(), uhc);
-		pm.registerEvents(uhc.getGuiManager(), uhc);
+		pm.registerEvents(new WorldEvents(), uhc);
+		pm.registerEvents(new InventoryEvents(), uhc);
+		pm.registerEvents(new AchievementsEvents(), uhc);
+	}
+	
+	@EventHandler
+	public void changeGamemodeEvent(PlayerGameModeChangeEvent e) {
+		
+		GameManager gm = UHC.getInstance().getGameManager();
+		if (!gm.hasGame()) return;
+		
+		Game game = gm.getGame();
+		Player player = e.getPlayer();
+		
+		if (!game.isHere(player.getUniqueId())) return;
+		
+		if (ScenariosManager.BELIEVE_FLY.isActivated()) {
+			player.setAllowFlight(true);
+		}
 	}
 	
 	@EventHandler
@@ -106,6 +126,12 @@ public class EventsManager implements Listener {
 		
 		if (!game.isHere(player.getUniqueId())) return;
 		
+		UHCPlayer p = game.getUHCPlayer(player.getUniqueId());
+		
+		if (p.getState() == PlayerState.DYING) {
+			e.setCancelled(true);
+			return;
+		}
 	}
 	
 	@EventHandler
@@ -120,8 +146,15 @@ public class EventsManager implements Listener {
 		
 		ItemStack item = e.getItemDrop().getItemStack();
 		
-		if (item.isSimilar(UHCItem.getConfigChest())) {
+		if (item.isSimilar(UHCItem.config_chest)) {
 			e.getItemDrop().remove();
+		}
+		
+		UHCPlayer p = game.getUHCPlayer(player.getUniqueId());
+		
+		if (p.getState() == PlayerState.DYING) {
+			e.setCancelled(true);
+			return;
 		}
 		
 		if (!game.isStart() && player.getGameMode() != GameMode.CREATIVE) {
@@ -213,8 +246,26 @@ public class EventsManager implements Listener {
 		if (!game.isHere(player.getUniqueId())) return;
 		
 		if (e.getBucket() == Material.LAVA_BUCKET) {
+			
+			if (ScenariosManager.NO_BUCKET.isActivated() && player.getGameMode() != GameMode.CREATIVE) {
+				if (!ScenariosManager.NO_BUCKET.lava) {
+					e.setCancelled(true);
+					return;
+				}
+			}
+			
 			if (ScenariosManager.FIRELESS.isActivated() && player.getGameMode() != GameMode.CREATIVE) {
 				if (!ScenariosManager.FIRELESS.lava_bucket) {
+					e.setCancelled(true);
+					return;
+				}
+			}
+		}
+		
+		if (e.getBucket() == Material.WATER_BUCKET) {
+			
+			if (ScenariosManager.NO_BUCKET.isActivated() && player.getGameMode() != GameMode.CREATIVE) {
+				if (!ScenariosManager.NO_BUCKET.water) {
 					e.setCancelled(true);
 					return;
 				}
@@ -223,7 +274,7 @@ public class EventsManager implements Listener {
 	}
 	
 	@EventHandler
-	public void playerEmptyBucketEvent(PlayerBucketFillEvent e) {
+	public void playerFillBucketEvent(PlayerBucketFillEvent e) {
 		GameManager gm = UHC.getInstance().getGameManager();
 		if (!gm.hasGame()) return;
 
@@ -231,6 +282,18 @@ public class EventsManager implements Listener {
 		Player player = e.getPlayer();
 		
 		if (!game.isHere(player.getUniqueId())) return;
+		
+		if (ScenariosManager.NO_BUCKET.isActivated() && player.getGameMode() != GameMode.CREATIVE) {
+			if (e.getBucket() == Material.LAVA_BUCKET && !ScenariosManager.NO_BUCKET.lava) {
+				e.setCancelled(true);
+				return;
+			}
+			
+			if (e.getBucket() == Material.WATER && !ScenariosManager.NO_BUCKET.water) {
+				e.setCancelled(true);
+				return;
+			}
+		}
 		
 		if (ScenariosManager.STINGY_WORLD.isActivated() && ScenariosManager.STINGY_WORLD.stingyLakes) {
 			if (e.getItemStack().getType() != Material.MILK_BUCKET) {

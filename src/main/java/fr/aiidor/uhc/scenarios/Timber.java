@@ -50,7 +50,7 @@ public class Timber extends Scenario {
 			b.breakNaturally();
 		}
 
-		if (limit == 30) return;
+		if (limit > 30) return;
 		
 		for (BlockFace face : BlockFace.values()) {
 			if (b.getRelative(face).getType() == mat) {

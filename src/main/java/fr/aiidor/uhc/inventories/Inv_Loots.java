@@ -18,11 +18,6 @@ public class Inv_Loots extends GuiBuilder {
 	public String getTitle() {
 		return Lang.INV_LOOTS.get();
 	}
-
-	@Override
-	public Boolean titleIsDynamic() {
-		return false;
-	}
 	
 	@Override
 	public String[][] getMatrix() {

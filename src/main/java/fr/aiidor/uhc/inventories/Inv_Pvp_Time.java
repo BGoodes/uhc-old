@@ -9,7 +9,6 @@ import fr.aiidor.uhc.UHC;
 import fr.aiidor.uhc.enums.Lang;
 import fr.aiidor.uhc.game.Game;
 import fr.aiidor.uhc.game.GameSettings;
-import fr.aiidor.uhc.listeners.events.GuiClickEvent;
 import fr.aiidor.uhc.tools.ItemBuilder;
 
 public class Inv_Pvp_Time extends GuiConfigBuilder {
@@ -21,7 +20,7 @@ public class Inv_Pvp_Time extends GuiConfigBuilder {
 	
 	@Override
 	public boolean startProtection() {
-		return false;
+		return true;
 	}
 	
 	@Override
@@ -47,19 +46,6 @@ public class Inv_Pvp_Time extends GuiConfigBuilder {
 			if (s.pvp_time <= 0) s.pvp_time = 0;
 			if (s.pvp_time >= 120) s.pvp_time = 120;
 		}
-	}
-	
-	@Override
-	public void addValue(Integer value, GuiClickEvent event) {
-		
-		if (event.getGame().isPvpTime()) {
-			event.getPlayer().sendMessage(Lang.ST_ERROR_OPTION_PVP.get());
-			event.getPlayer().closeInventory();
-			playClickSound(event.getPlayer());
-			return;
-		}
-		
-		super.addValue(value, event);
 	}
 
 	@Override

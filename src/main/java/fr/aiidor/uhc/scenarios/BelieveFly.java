@@ -3,10 +3,11 @@ package fr.aiidor.uhc.scenarios;
 import java.util.Arrays;
 import java.util.List;
 
+import org.bukkit.GameMode;
 import org.bukkit.Material;
 
 import fr.aiidor.uhc.enums.Category;
-import fr.aiidor.uhc.enums.Lang;
+import fr.aiidor.uhc.game.UHCPlayer;
 import fr.aiidor.uhc.listeners.events.ChangeScenarioStateEvent;
 
 public class BelieveFly extends Scenario {
@@ -43,13 +44,19 @@ public class BelieveFly extends Scenario {
 	
 	@Override
 	public void changeStateEvent(ChangeScenarioStateEvent e) {
-		if (!e.getGame().isWaiting()) {
-			
-			e.getPlayer().closeInventory();
-			e.getPlayer().sendMessage(Lang.ST_ERROR_SCENARIO_START.get());
-			e.setCancelled(true);
-		}
-		
 		super.changeStateEvent(e);
+		
+		if (e.getState()) {
+			for (UHCPlayer p : e.getGame().getAllConnectedPlayers()) {
+				p.getPlayer().setAllowFlight(true);
+			}
+		}
+		else {
+			for (UHCPlayer p : e.getGame().getPlayingPlayers()) {
+				if (p.getPlayer().getGameMode() == GameMode.SURVIVAL || p.getPlayer().getGameMode() == GameMode.ADVENTURE) {
+					p.getPlayer().setAllowFlight(false);
+				}	
+			}
+		}
 	}
 }

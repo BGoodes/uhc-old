@@ -21,11 +21,6 @@ public class Inv_Worldborder extends GuiBuilder {
 	public String getTitle() {
 		return Lang.INV_WORLD_BORDER.get();
 	}
-
-	@Override
-	public Boolean titleIsDynamic() {
-		return false;
-	}
 	
 	@Override
 	public String[][] getMatrix() {

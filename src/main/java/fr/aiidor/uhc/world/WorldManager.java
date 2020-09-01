@@ -21,6 +21,7 @@ import org.bukkit.WorldType;
 import fr.aiidor.uhc.UHC;
 import fr.aiidor.uhc.enums.Lang;
 import fr.aiidor.uhc.enums.LangTag;
+import fr.aiidor.uhc.listeners.events.GenerateWorldEvent;
 
 public class WorldManager {
 	
@@ -90,10 +91,12 @@ public class WorldManager {
 		c.environment(environment);
 		c.type(type);
 		c.generateStructures(generateStructures);
-		c.generator(new Wg_Flat());
 		
 		if (UHC.getInstance().getGameManager().hasGame()) {
+			GenerateWorldEvent event = new GenerateWorldEvent(c, UHC.getInstance().getGameManager().getGame());
+			Bukkit.getServer().getPluginManager().callEvent(event);
 			
+			if (event.isCancelled()) return;
 		}
 		
 		c.createWorld();

@@ -19,7 +19,7 @@ import fr.aiidor.uhc.UHC;
 public enum UHCFile {
 	
 	CONFIG("config.yml"),
-	LANG("lang.json", "Lang");
+	LANG("lang.json", "lang");
 	
 	private final String fileName;
 	private final File dataFolder;

@@ -17,11 +17,6 @@ public class Inv_Dw extends GuiBuilder {
 	public String getTitle() {
 		return UHCType.DEVIL_WATCHES.getName();
 	}
-
-	@Override
-	public Boolean titleIsDynamic() {
-		return false;
-	}
 	
 	@Override
 	public String[][] getMatrix() {

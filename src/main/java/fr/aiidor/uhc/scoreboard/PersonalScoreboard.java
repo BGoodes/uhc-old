@@ -56,11 +56,11 @@ public class PersonalScoreboard {
     		Game game = uhc.getGameManager().getGame();
     		GameState gameState = game.getState();
     		
-    		if (game.getSettings().display_head_life && game.getSettings().display_life) {
+    		if (game.getSettings().getDisplayLife() && game.getSettings().getDisplayHeadLife()) {
     			
-    			game.getScoreboard().getObjective("Health").getScore(player.getName()).setScore(
-    					(int) (Math.round((player.getHealth() + ((CraftPlayer) player).getHandle().getAbsorptionHearts())* 100D) / 100D * 5D)
-    				);
+    			game.getScoreboard().getObjective("name_h").getScore(player.getName()).setScore(
+        				(int) (Math.round((player.getHealth() + ((CraftPlayer) player).getHandle().getAbsorptionHearts())* 100D) / 100D * 5D)
+        			);
     		}
     		
     		//if (game.hasHost())  objectiveSign.setDisplayName(game.getName() + " §8» §7§o" + game.getHost().getName()); MODE KILL

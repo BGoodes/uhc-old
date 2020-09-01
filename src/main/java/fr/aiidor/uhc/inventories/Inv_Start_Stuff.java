@@ -37,11 +37,6 @@ public class Inv_Start_Stuff extends Gui {
 	}
 	
 	@Override
-	public Boolean titleIsDynamic() {
-		return false;
-	}
-	
-	@Override
 	public String getTitle() {
 		return Lang.INV_START_ITEMS.get();
 	}

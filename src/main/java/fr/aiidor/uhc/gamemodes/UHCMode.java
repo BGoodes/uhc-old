@@ -36,7 +36,10 @@ public abstract class UHCMode {
 	
 	public abstract void begin();
 	public abstract void episode(Integer ep);
+	
 	public abstract void run();
+	public void day(Integer ep) {}
+	public void night(Integer ep) {}
 	
 	public void end() {
 		
@@ -64,6 +67,29 @@ public abstract class UHCMode {
 			}
 		} else {
 			
+			if (game.getAlivePlayers().size() == 1) {
+				UHCPlayer winner = (UHCPlayer) game.getAlivePlayers().toArray()[0];
+				if (!winner.hasTeam()) {
+					
+					Bukkit.broadcastMessage(Lang.BC_SOLO_VICTORY.get().replace(LangTag.PLAYER_NAME.toString(), winner.getDisplayName()));
+					
+					if (winner.isConnected()) {
+						
+						new Titles(winner.getPlayer()).sendTitle(Lang.BC_VICTORY_TITLE_LINE_1.get(), Lang.BC_VICTORY_TITLE_LINE_2.get(), 60);
+						FireWork(winner, Color.PURPLE);
+					}
+			
+					for (UHCPlayer p : game.getIngamePlayers()) {
+						if (p.isConnected() && p.isDead()) {
+							new Titles(p.getPlayer()).sendTitle(Lang.BC_LOSE_TITLE_LINE_1.get(), Lang.BC_LOSE_TITLE_LINE_2.get(), 60);
+						}
+					}
+					
+					UHC.getInstance().getGameManager().stopGame();
+					return;
+				}
+			}
+			
 			if (game.getAliveTeams().size() == 1) {
 				
 				if (ScenariosManager.ONLY_ONE_WINNER.isActivated()) {
@@ -90,8 +116,6 @@ public abstract class UHCMode {
 					UHC.getInstance().getGameManager().stopGame();
 					break;
 				}
-				
-				
 			}
 		}
 	}
