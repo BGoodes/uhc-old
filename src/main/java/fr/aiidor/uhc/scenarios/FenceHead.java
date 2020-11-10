@@ -26,7 +26,7 @@ public class FenceHead extends Scenario {
 
 	@Override
 	public Material getIcon() {
-		return Material.SKULL;
+		return Material.SKULL_ITEM;
 	}
 
 	@Override

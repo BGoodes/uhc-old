@@ -12,7 +12,6 @@ import org.bukkit.inventory.ItemStack;
 import fr.aiidor.uhc.UHC;
 import fr.aiidor.uhc.enums.Category;
 import fr.aiidor.uhc.game.UHCPlayer;
-import fr.aiidor.uhc.listeners.events.ChangeScenarioStateEvent;
 import fr.aiidor.uhc.tools.ItemBuilder;
 
 public class GoodGame extends Scenario {
@@ -50,12 +49,6 @@ public class GoodGame extends Scenario {
 	@Override
 	public List<Category> getCategories() {
 		return Arrays.asList(Category.OTHER);
-	}
-	
-	@Override
-	public void changeStateEvent(ChangeScenarioStateEvent e) {
-		death = false;
-		super.changeStateEvent(e);
 	}
 	
 	public void giveItem(UHCPlayer p) {

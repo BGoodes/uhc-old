@@ -70,6 +70,8 @@ public class Tracker extends Scenario {
 		for (UHCPlayer t : game.getPlayingPlayers()) {
 			if (p.distance(t) >= 5 && !p.equals(t)) {
 				
+				if (p.hasTeam() && p.getTeam().isInTeam(t)) continue;
+				
 				if (player == null) player = t;
 				else {
 					if (p.distance(t) >= 0) player = p.distance(t) < p.distance(player) ? t : player;

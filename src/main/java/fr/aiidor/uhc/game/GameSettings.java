@@ -33,7 +33,7 @@ public class GameSettings {
 	
 	private Game game;
 
-	private Integer spec_slots;
+	private Integer spec_slots = 10;
 	
 	//CHAT
 	public Boolean chat = true;
@@ -136,8 +136,6 @@ public class GameSettings {
 	public GameSettings(Game game) {
 		
 		this.game = game;
-		
-		this.spec_slots = 10;
 		
 		this.setTeamSize(1);
 		

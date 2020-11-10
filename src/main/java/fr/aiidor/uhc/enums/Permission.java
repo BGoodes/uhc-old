@@ -2,7 +2,7 @@ package fr.aiidor.uhc.enums;
 
 public enum Permission {
 	
-	ALL, NONE, CONFIG, RESTART, INVSEE, REVIVE, KICK,
+	ALL, NONE, CONFIG, INVSEE, REVIVE, KICK, RANK,
 	LOG, ALERT, CHAT, 
 	
 	CLEAR("bukkit.command.clear"), DIFFICULTY("bukkit.command.difficulty"), EFFECT("bukkit.command.effect "), ENCHANT("bukkit.command.enchant"), 

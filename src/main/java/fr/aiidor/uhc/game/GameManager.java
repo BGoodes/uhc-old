@@ -5,7 +5,6 @@ import java.util.List;
 import java.util.Set;
 import java.util.UUID;
 
-import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 
 import fr.aiidor.uhc.UHC;
@@ -16,6 +15,7 @@ import fr.aiidor.uhc.enums.PlayerState;
 import fr.aiidor.uhc.enums.TeamType;
 import fr.aiidor.uhc.gamemodes.UHCMode;
 import fr.aiidor.uhc.scenarios.Scenario;
+import fr.aiidor.uhc.task.StopTask;
 import fr.aiidor.uhc.tools.Titles;
 import fr.aiidor.uhc.tools.UHCItem;
 import fr.aiidor.uhc.world.UHCWorld;
@@ -47,6 +47,7 @@ public class GameManager {
 		reload();
 		Set<UHCPlayer> players = game.getAllPlayers();
 		
+		if (game.isRunning()) game.getRunner().cancel();
 		
 		createGame(game.getName(), game.getUHCMode(), game.getSettings(), null, null, game.getMainWorld(), game.getUHCWorlds());
 		
@@ -105,21 +106,7 @@ public class GameManager {
 		if (game.isRunning()) game.getRunner().stop();
 		
 		if (UHC.getInstance().getSettings().server_restart) {
-			
-			Bukkit.broadcastMessage(Lang.BC_SERVER_RESTART.get());
-			
-			Bukkit.getScheduler().runTaskLater(UHC.getInstance(), new Runnable() {
-				
-				@Override
-				public void run() {
-					
-					for (Player p : Bukkit.getOnlinePlayers()) {
-						p.kickPlayer(Lang.CAUSE_SERVER_CLOSE.get());
-					}
-					
-					Bukkit.shutdown();
-				}
-			}, 20 * 60);
+			new StopTask(game).launch();
 		}
 	}
 	

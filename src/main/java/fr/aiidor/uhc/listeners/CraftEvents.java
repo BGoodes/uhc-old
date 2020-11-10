@@ -1,6 +1,7 @@
 package fr.aiidor.uhc.listeners;
 
 import org.bukkit.Material;
+import org.bukkit.entity.HumanEntity;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.inventory.CraftItemEvent;
@@ -61,23 +62,33 @@ public class CraftEvents implements Listener {
 					inv.setResult(ScenariosManager.HASTEY_BOYS.setEnchants(inv.getResult()));
 				}
 			}
+			
+			if (ScenariosManager.INVENTORS.isActivated() && ScenariosManager.INVENTORS.isInvented(inv.getResult().getType())) {
+				inv.setResult(ScenariosManager.INVENTORS.property(inv.getResult()));
+			}
 		}
 	}
 	
 	@EventHandler
-	public void ChangeCraft(CraftItemEvent e) {
+	public void Craft(CraftItemEvent e) {
 		
 		GameManager gm = UHC.getInstance().getGameManager();
 		if (!gm.hasGame()) return;
 
 		Game game = gm.getGame();
+		HumanEntity player = e.getView().getPlayer();
 		
-		if (!game.isHere(e.getView().getPlayer().getUniqueId())) return;
+		if (!game.isHere(player.getUniqueId())) return;
 		
-		UHCPlayer p = game.getUHCPlayer(e.getView().getPlayer().getUniqueId());
+		UHCPlayer p = game.getUHCPlayer(player.getUniqueId());
 		
-		if (ScenariosManager.INVENTORS.isActivated() && !game.isStart()) {
-			ScenariosManager.INVENTORS.hasInvented(p, e.getCurrentItem(), game);
+		if (ScenariosManager.INVENTORS.isActivated() && game.isStart()) {
+			if (!ScenariosManager.INVENTORS.craft(p, e.getCurrentItem(), game)) {
+				e.setCancelled(true);
+				return;
+			}
+			
+			//if (p.isConnected()) p.getPlayer().updateInventory();
 		}
 	}
 }

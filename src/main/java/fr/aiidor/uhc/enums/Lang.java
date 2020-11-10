@@ -155,6 +155,8 @@ public enum Lang {
 	INV_W_TYPE("inventory/config-worlds"),
 	INV_W_SEED("inventory/config-worlds"),
 	INV_W_DELETE("inventory/config-worlds"),
+	INV_W_REGEN("inventory/config-worlds"),
+	INV_W_AUTOREGEN("inventory/config-worlds"),
 	
 	INV_UHC_GAPPLES("inventory/config-life"),
 	INV_GAPPLES_CONFIG("inventory/config-life"),
@@ -211,10 +213,14 @@ public enum Lang {
 	INVINCIBILITY_BAR("title"),
 	BC_PLAYER_TP("title"),
 	BC_WORLD_GENERATION("title"),
+	BC_WORLD_GENERATION_END("title"),
 	
 	PM_ERROR_CHAT("permission"),
 	
 	ST_BECOME_HOST("staff"),
+	
+	ST_DIFFICULTY("staff"),
+	
 	ST_ERROR_GAME_START("staff/error"),
 	ST_ERROR_GAME_CANCEL("staff/error"),
 	ST_ERROR_NO_GAME("staff/error"),
@@ -228,6 +234,7 @@ public enum Lang {
 	ST_ERROR_WORLD_GENERATION("staff/error"),
 	ST_ERROR_WORLD_CREATION_SIZE("staff/error"),
 	ST_ERROR_UNLOAD_FAIL("staff/error"),
+	ST_ERROR_DELETING_FAIL("staff/error"),
 	ST_ERROR_MAIN_WORLD("staff/error"),
 	ST_ERROR_LOBBY_WORLD("staff/error"),
 	ST_ERROR_WORLD_EXIST("staff/error"),
@@ -298,6 +305,7 @@ public enum Lang {
 	BC_SOLO_VICTORY("announce/end"),
 	BC_TEAM_VICTORY("announce/end"),
 	BC_SERVER_RESTART("announce/end"),
+	BC_SERVER_RESTART_CANCEL("announce/end"),
 	
 	//COMMANDS
 	CMD_ERROR_PERM("commands"),
@@ -388,8 +396,20 @@ public enum Lang {
 	
 	ENCHANT_TABLE_GENERATION_ERROR("scenarios/enchanting-center"),
 	
+	SKYHIGH_ANNOUNCE_START("scenarios/skyhigh"),
 	SKYHIGH_ANNOUNCE("scenarios/skyhigh"),
 	SKYHIGH_DAMAGE("scenarios/skyhigh"),
+	
+	CRAFT_PROPERTY("scenarios/inventors"),
+	CRAFT_ERROR("scenarios/inventors"),
+	
+	DIAMOND_DROP("scenarios/diamond-isnt"),
+	
+	EGG_DROP("scenarios/oviparous"),
+	
+	NETHERIBUS_ANNOUNCE_START("scenarios/netheribus"),
+	NETHERIBUS_ANNOUNCE("scenarios/netheribus"),
+	NETHERIBUS_DAMAGE("scenarios/netheribus"),
 	
 	//MOTD
 	MOTD_WAITING_LINE_1("1", "motd/WAITING"),

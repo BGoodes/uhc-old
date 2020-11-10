@@ -14,6 +14,7 @@ import org.bukkit.inventory.ItemStack;
 import fr.aiidor.uhc.UHC;
 import fr.aiidor.uhc.enums.ActionChat;
 import fr.aiidor.uhc.enums.Lang;
+import fr.aiidor.uhc.enums.LangTag;
 import fr.aiidor.uhc.game.Game;
 import fr.aiidor.uhc.listeners.events.GuiClickEvent;
 import fr.aiidor.uhc.tools.ItemBuilder;
@@ -77,11 +78,12 @@ public class Inv_Worlds extends GuiBuilder {
 	}
 	
 	private void setLobbyItem(Inventory inv, World world) {
+		
 		ItemBuilder item = new ItemBuilder(Material.COMPASS, "§a" + world.getName());
 		item.setLore(Lang.INV_W_LOBBY_WORLD.get());
 		inv.setItem(0, item.getItem());
 		
-		ItemBuilder sign = new ItemBuilder(Material.SIGN);
+		ItemBuilder sign = new ItemBuilder(Material.SIGN, Lang.INV_W_TP.get());
 		inv.setItem(18, sign.getItem());
 	}
 	
@@ -136,6 +138,7 @@ public class Inv_Worlds extends GuiBuilder {
 			}
 			
 			if (game.getUHCWorlds().size() >= 6) {
+				
 				game.setWorldPanel(null);
 				event.getPlayer().sendMessage(Lang.ST_ERROR_WORLD_CREATION_SIZE.get());
 				event.getPlayer().closeInventory();
@@ -167,11 +170,17 @@ public class Inv_Worlds extends GuiBuilder {
 						}
 						
 						playClickSound(event.getPlayer());
-						event.getPlayer().openInventory(new Inv_World_Settings().getInventory(w));
+						event.getPlayer().openInventory(((Inv_World_Settings)GuiManager.INV_WORLD_SETTINGS).getInventory(w));
 						return;
 					}
 				}
 			}
+		}
+		
+		if (e.getSlot() == 18) {
+			event.getPlayer().closeInventory();
+			event.getPlayer().teleport(UHC.getInstance().getSettings().lobby);
+			return;
 		}
 		
 		if (e.getSlot() >= 20 && e.getSlot() < 26) {
@@ -183,6 +192,11 @@ public class Inv_Worlds extends GuiBuilder {
 							event.getPlayer().sendMessage(Lang.ST_ERROR_OPTION_START.get());
 							event.getPlayer().closeInventory();
 							playClickSound(event.getPlayer());
+							return;
+						}
+						
+						if (!w.getMainWorldState()) {
+							event.getPlayer().sendMessage(Lang.ST_ERROR_WORLD_GENERATION.get().replace(LangTag.VALUE.toString(), w.getMainWorldName()));
 							return;
 						}
 						

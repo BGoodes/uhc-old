@@ -27,12 +27,14 @@ import fr.aiidor.uhc.enums.PlayerState;
 import fr.aiidor.uhc.enums.TeamType;
 import fr.aiidor.uhc.game.Game;
 import fr.aiidor.uhc.game.UHCPlayer;
+import fr.aiidor.uhc.listeners.events.ChangeScenarioStateEvent;
 import fr.aiidor.uhc.scenarios.ItemScenario;
 import fr.aiidor.uhc.scenarios.Scenario;
 import fr.aiidor.uhc.scenarios.ItemScenario.GiveTime;
 import fr.aiidor.uhc.scenarios.ScenariosManager;
 import fr.aiidor.uhc.team.UHCTeam;
 import fr.aiidor.uhc.tools.Teleportation;
+import fr.aiidor.uhc.world.UHCWorld;
 
 public class LoadingTask extends UHCTask {
 
@@ -56,9 +58,52 @@ public class LoadingTask extends UHCTask {
 		
 		timer = 20;
 		
+		for (Scenario s : game.getSettings().getActivatedScenarios()) {
+			s.checkConditions(true);
+		}
+		
+		//SCENARIOS RANDOM
+		Integer n = game.getSettings().random_scenarios;
+
+		if (n != 0) {
+			
+			List<Scenario> scenarios = UHC.getInstance().getScenarioManager().getScenarios();
+			if (n == -1) n = new Random().nextInt(scenarios.size());
+			
+			for (int i = n; i > 0; i--) {
+				Scenario scenario = scenarios.get(new Random().nextInt(scenarios.size()));
+				
+				ChangeScenarioStateEvent scenario_event = new ChangeScenarioStateEvent(scenario, !game.getSettings().IsActivated(scenario), null, game);
+				
+				scenario.changeStateEvent(scenario_event);
+				
+				if (scenario_event.isCancelled()) continue;
+				
+				game.getSettings().setActivated(scenario, !game.getSettings().IsActivated(scenario));
+			}
+		}
+		
 		game.setState(GameState.LOADING);
 		game.getMainWorld().getMainWorld().setTime(23500 - 20 * timer);
 		
+		
+		//REGEN
+		Boolean regenWorld = false;
+		
+		for (Scenario s : game.getSettings().getActivatedScenarios()) {
+			if (s.needWorldGeneration()) {
+				regenWorld = true;
+				break;
+			}
+		}
+		
+		if (regenWorld) {
+			for (UHCWorld w : game.getUHCWorlds()) {
+				if (w.canRegen()) w.regenerate();
+			}
+		}
+		
+		//WORLDS
 		for (World w : game.getWorlds()) {
 			WorldBorder wb = w.getWorldBorder();
 			
@@ -67,6 +112,7 @@ public class LoadingTask extends UHCTask {
 			wb.setDamageBuffer(0);	
 		}
 		
+		//PLAYERS
 		for (UHCPlayer p : game.getAllPlayers()) {
 			if (p.isConnected()) {
 				
@@ -198,12 +244,11 @@ public class LoadingTask extends UHCTask {
 		
 		game.broadcast(Lang.BC_TELEPORTATION.get());
 		
-		//TP
+		//TP + EFFETCTS
 		for (UHCPlayer player : game.getAlivePlayers()) {
 			if (player.isConnected()) {
 				Player p = player.getPlayer();
 				
-				//EFFECT
 				p.addPotionEffect(new PotionEffect(PotionEffectType.BLINDNESS, Integer.MAX_VALUE, 0, true, true));
 				p.addPotionEffect(new PotionEffect(PotionEffectType.INVISIBILITY, Integer.MAX_VALUE, 0, true, true));
 				p.addPotionEffect(new PotionEffect(PotionEffectType.SLOW, Integer.MAX_VALUE, 255, true, true));
@@ -225,23 +270,6 @@ public class LoadingTask extends UHCTask {
 		}
 		
 		if (UHC.getInstance().getSettings().hasCage()) UHC.getInstance().getSettings().cage.destroy();
-		
-		Integer n = game.getSettings().random_scenarios;
-		
-		if (n != 0) {
-			
-			List<Scenario> scenarios = UHC.getInstance().getScenarioManager().getScenarios();
-			if (n == -1) n = new Random().nextInt(scenarios.size());
-			
-			for (int i = n; i > 0; i--) {
-				Scenario scenario = scenarios.get(new Random().nextInt(scenarios.size()));
-				game.getSettings().setActivated(scenario, true);
-			}
-			
-			for (Scenario s : game.getSettings().getActivatedScenarios()) {
-				s.checkConditions(false);
-			}
-		}
 		
 		game.setRunner(this);
 		runTaskTimer(UHC.getInstance(), 0, 20);
@@ -294,6 +322,10 @@ public class LoadingTask extends UHCTask {
 						player.setLevel(ScenariosManager.MASTER_LEVEL.level);
 					}
 					
+					if (ScenariosManager.INFINITE_ENCHANTER.isActivated()) {
+						player.setLevel(1000);
+					}
+					
 					if (game.getSettings().start_abso > 0) {
 						((CraftPlayer) player).getHandle().setAbsorptionHearts(game.getSettings().start_abso * 2);
 					}
@@ -307,6 +339,14 @@ public class LoadingTask extends UHCTask {
 				} else {
 					game.removeUHCPlayer(p);
 				}
+			}
+			
+			if (ScenariosManager.NETHERIBUS.isActivated() && game.getSettings().pvp_time != 0) {
+				game.broadcast(Lang.NETHERIBUS_ANNOUNCE.get());
+			}
+			
+			if (ScenariosManager.SKYHIGH.isActivated() && game.getSettings().pvp_time != 0) {
+				game.broadcast(Lang.SKYHIGH_ANNOUNCE.get());
 			}
 			
 			if (ScenariosManager.SUPER_HEROES.isActivated()) {

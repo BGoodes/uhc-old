@@ -40,8 +40,8 @@ import fr.aiidor.uhc.game.UHCPlayer;
 import fr.aiidor.uhc.gamemodes.DevilWatches;
 import fr.aiidor.uhc.listeners.events.UHCPlayerDeathEvent;
 import fr.aiidor.uhc.scenarios.ItemScenario;
-import fr.aiidor.uhc.scenarios.ScenariosManager;
 import fr.aiidor.uhc.scenarios.ItemScenario.GiveTime;
+import fr.aiidor.uhc.scenarios.ScenariosManager;
 import fr.aiidor.uhc.tools.Teleportation;
 
 public class DeathEvents implements Listener {
@@ -88,6 +88,7 @@ public class DeathEvents implements Listener {
 
 		Game game = gm.getGame();
 		LivingEntity ent = e.getEntity();
+		
 		//CUTCLEAN
 		if (!game.getWorlds().contains(e.getEntity().getWorld())) return;
 		
@@ -137,6 +138,10 @@ public class DeathEvents implements Listener {
 			ScenariosManager.BOMBERS.addDrops(ent.getKiller(), e.getDrops());
 		}
 		
+		if (ScenariosManager.OVIPAROUS.isActivated()) {
+			ScenariosManager.OVIPAROUS.addDrops(ent, e.getDrops());
+		}
+		
 		if (!(ent instanceof Player)) {
 			if (ScenariosManager.STINGY_WORLD.isActivated() && ScenariosManager.STINGY_WORLD.stingyMobs) {
 				e.getDrops().clear();
@@ -156,6 +161,7 @@ public class DeathEvents implements Listener {
 		Player player = e.getEntity();
 		Player killer = player.getKiller();
 		
+		if (!game.isStart()) return;
 		if (!game.isHere(player.getUniqueId())) return;
 		
 		UHCPlayer p = game.getUHCPlayer(player.getUniqueId());
@@ -269,6 +275,16 @@ public class DeathEvents implements Listener {
 				ScenariosManager.FENCE_HEAD.generate(e.getLocation(), p.getName(), up);
 			}
 			
+            if (ScenariosManager.REINCARNATION.isActivated()) {
+            	ScenariosManager.REINCARNATION.spawnRandomEntity(e.getLocation());
+            }
+            
+            if (ScenariosManager.ENDER_REPLACEMENT.isActivated()) {
+            	for (UHCPlayer pl : game.getPlayingPlayers()) {
+            		pl.getPlayer().teleport(e.getLocation());
+            	}
+            }
+			
 			if (game.getSettings().death_lightning) {
 				e.getLocation().getWorld().strikeLightningEffect(e.getLocation());
 			}
@@ -280,7 +296,6 @@ public class DeathEvents implements Listener {
 				}
 			}
 
-			
 			if (e.getDroppedExp() > 0) {
 				ExperienceOrb orb = (ExperienceOrb) e.getLocation().getWorld().spawnEntity(e.getLocation(), EntityType.EXPERIENCE_ORB);
 				orb.setExperience(e.getDroppedExp());

@@ -74,12 +74,17 @@ public class ScenariosManager {
 		SWEAT_WORLD = new SweatWorld(this);
 		CHUNK_APOCALYPSE = new ChunkApocalypse(this);
 		ENCHANTING_CENTER = new EnchantingCenter(this);
-		MELEE_FUN = new MeleeFun(this);
 		PROGRESSIVE_SPEED = new ProgressiveSpeed(this);
 		WORLD_IS_SMALL = new WorldIsSmall(this);
 		BOMBERS = new Bombers(this);
 		SKYHIGH = new SkyHigh(this);
 		GAPZAP = new GapZap(this);
+		INFINITE_ENCHANTER = new InfiniteEnchanter(this);
+		DIAMOND_ISNT = new DiamondIsnt(this);
+		REINCARNATION = new Reincarnation(this);
+		OVIPAROUS = new Oviparous(this);
+		ENDER_REPLACEMENT = new EnderReplacement(this);
+		NETHERIBUS = new Netheribus(this);
 		
 		for (Scenario s : scenarios) {
 			if (s instanceof ItemScenario) {
@@ -139,12 +144,17 @@ public class ScenariosManager {
 	public static SweatWorld SWEAT_WORLD;
 	public static ChunkApocalypse CHUNK_APOCALYPSE;
 	public static EnchantingCenter ENCHANTING_CENTER;
-	public static MeleeFun MELEE_FUN;
 	public static ProgressiveSpeed PROGRESSIVE_SPEED;
 	public static WorldIsSmall WORLD_IS_SMALL;
 	public static Bombers BOMBERS;
 	public static SkyHigh SKYHIGH;
 	public static GapZap GAPZAP;
+	public static InfiniteEnchanter INFINITE_ENCHANTER;
+	public static DiamondIsnt DIAMOND_ISNT;
+	public static Reincarnation REINCARNATION;
+	public static Oviparous OVIPAROUS;
+	public static EnderReplacement ENDER_REPLACEMENT;
+	public static Netheribus NETHERIBUS;
 	
 	public List<Scenario> getScenarios() {
 		List<Scenario> list = new ArrayList<Scenario>();

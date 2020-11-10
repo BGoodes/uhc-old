@@ -44,37 +44,46 @@ public class CommandHost extends UHCCommand {
 		
 		Game game = uhc.getGameManager().getGame();
 		
+		if (!(sender instanceof Player)) {
+			sender.sendMessage(Lang.ERROR_COMMAND_PLAYER.get());
+			return true;
+		}
+		
 		if (args.length == 0) {
 			if (!game.hasHost()) {
 				
 				//BECOME HOST
-				if (sender instanceof Player) {
-					
-					Player player = (Player) sender;
-					String perm = "uhc.host";
-					
-					if (!player.hasPermission(perm)) {
-						player.sendMessage(Lang.CMD_ERROR_PERM.get().replace(LangTag.PERM.toString(), perm));
-						return true;
-					}
-					
-					if (game.isHere(player.getUniqueId())) {
-						game.getUHCPlayer(player.getUniqueId()).setRank(Rank.HOST);
-						
-						if (!game.isStart()) player.getInventory().setItem(4, UHCItem.config_chest);
-						player.sendMessage(Lang.ST_BECOME_HOST.get());
-						player.playSound(player.getLocation(), Sound.LEVEL_UP, 0.7f, 1);
-						return true; 
-					}
+				Player player = (Player) sender;
+				String perm = "uhc.host";
+				
+				if (!player.hasPermission(perm)) {
+					player.sendMessage(Lang.CMD_ERROR_PERM.get().replace(LangTag.PERM.toString(), perm));
+					return true;
 				}
+				
+				if (game.isHere(player.getUniqueId())) {
+					game.getUHCPlayer(player.getUniqueId()).setRank(Rank.HOST);
+					
+					if (!game.isStart()) player.getInventory().setItem(4, UHCItem.config_chest);
+					
+					player.sendMessage(Lang.ST_BECOME_HOST.get());
+					player.playSound(player.getLocation(), Sound.LEVEL_UP, 0.7f, 1);
+					return true; 	
+
+				}
+				
+			} else {
+				//TOUTES LES COMMANDES
+				sender.sendMessage("§eLes commandes : "
+						+ "\n §6- " + "/" + label.toLowerCase() + " config"
+						+ "\n §6- " + "/" + label.toLowerCase() + " broadcast §f<message>"
+						+ "\n §6- " + "/" + label.toLowerCase() + " invsee §f<player>"
+						+ "\n §6- " + "/" + label.toLowerCase() + " revive §f<player>"
+						+ "\n §6- " + "/" + label.toLowerCase() + " restart"
+
+						);
 			}
 			
-			//TOUTES LES COMMANDES
-			return true;
-		}
-		
-		if (!(sender instanceof Player)) {
-			sender.sendMessage(Lang.ERROR_COMMAND_PLAYER.get());
 			return true;
 		}
 		
@@ -84,7 +93,7 @@ public class CommandHost extends UHCCommand {
 			
 			if (args.length != 1) {
 				player.sendMessage(Lang.CMD_ERROR_INVALID_ARGUMENT.get().replace(LangTag.COMMAND.toString(), 
-						"/host config"));
+						"/" + label.toLowerCase() + " config"));
 				return true;
 			}
 			
@@ -97,16 +106,17 @@ public class CommandHost extends UHCCommand {
 			return true;
 		}
 		
+		//RESTART ------------------------------------
 		if (args[0].equalsIgnoreCase("restart")) {
 			
 			if (args.length != 1) {
 				player.sendMessage(Lang.CMD_ERROR_INVALID_ARGUMENT.get().replace(LangTag.COMMAND.toString(), 
-						"/host restart"));
+						"/" + label.toLowerCase() + " restart"));
 				return true;
 			}
 			
-			if (!game.getSettings().playerHasPermission(player, Permission.RESTART)) {
-				player.sendMessage(Lang.CMD_ERROR_PERM.get().replace(LangTag.PERM.toString(), Permission.RESTART.toString()));
+			if (!player.hasPermission("uhc.command.restart")) {
+				player.sendMessage(Lang.CMD_ERROR_PERM.get().replace(LangTag.PERM.toString(), "uhc.command.restart"));
 				return true;
 			}
 			
@@ -119,14 +129,15 @@ public class CommandHost extends UHCCommand {
 			return true;
 		}
 		
+		//BROADCAST -------------------------------------
 		if (args[0].equalsIgnoreCase("broadcast")) {
 			if (args.length == 1) {
-				player.sendMessage(Lang.CMD_HELP.get().replace(LangTag.COMMAND.toString(), "/host broadcast <message>"));
+				player.sendMessage(Lang.CMD_HELP.get().replace(LangTag.COMMAND.toString(), "/" + label.toLowerCase() + " broadcast <message>"));
 				return true;
 			}
 			
 			if (args.length < 2) {
-				player.sendMessage(Lang.CMD_ERROR_INVALID_ARGUMENT.get().replace(LangTag.COMMAND.toString(), "/host broadcast <message>"));
+				player.sendMessage(Lang.CMD_ERROR_INVALID_ARGUMENT.get().replace(LangTag.COMMAND.toString(), "/" + label.toLowerCase() + " broadcast <message>"));
 				return true;
 			}
 			
@@ -149,7 +160,7 @@ public class CommandHost extends UHCCommand {
 		
 		if (args[0].equalsIgnoreCase("invsee")) {
 			
-			String command = "/host invsee <player>";
+			String command = "/" + label.toLowerCase() + " invsee <player>";
 			if (args.length == 1) {
 				player.sendMessage(Lang.CMD_HELP.get().replace(LangTag.COMMAND.toString(), command));
 				return true;
@@ -177,7 +188,7 @@ public class CommandHost extends UHCCommand {
 		
 		if (args[0].equalsIgnoreCase("revive")) {
 			
-			String command = "/host revive <player>";
+			String command = "/" + label.toLowerCase() + " revive <player>";
 			if (args.length == 1) {
 				player.sendMessage(Lang.CMD_HELP.get().replace(LangTag.COMMAND.toString(), command));
 				return true;
@@ -208,12 +219,14 @@ public class CommandHost extends UHCCommand {
 			}
 			
 			UHCPlayer t = game.getUHCPlayer(target.getUniqueId());
+			
 			if (!t.isDead()) {
 				player.sendMessage(Lang.CMD_ERROR_PLAYER_NOT_DEAD.get());
 				return true;
 			}
 			
 			t.revive();
+			
 			game.broadcast(Lang.BC_REVIVE.get().replace(LangTag.PLAYER_NAME.toString(), t.getDisplayName()));
 			return true;
 		}

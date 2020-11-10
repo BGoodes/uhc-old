@@ -6,7 +6,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Random;
 
-import org.bukkit.Chunk;
+import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.Sound;
 import org.bukkit.block.Block;
@@ -22,12 +22,13 @@ import fr.aiidor.uhc.inventories.GuiManager;
 import fr.aiidor.uhc.listeners.events.GuiClickEvent;
 import fr.aiidor.uhc.tools.ItemBuilder;
 
-public class ChunkApocalypse extends Scenario {
+public class DiamondIsnt extends DropScenario {
 	
-	private Integer percent = 5;
+	private int probability = 100;
+	
 	private Gui gui;
 	
-	public ChunkApocalypse(ScenariosManager manager) {
+	public DiamondIsnt(ScenariosManager manager) {
 		super(manager);
 		
 		gui = new GuiBuilder() {
@@ -46,18 +47,19 @@ public class ChunkApocalypse extends Scenario {
 				
 				if (e.getSlot() == 2) {
 					
-					percent -= 5;
-					if (percent < 1) percent = 1;
+					probability = probability - 5;
+					if (probability < 1) probability = 1;
 					
 					event.getPlayer().playSound(event.getPlayer().getLocation(), Sound.WOOD_CLICK, 0.5f, 1f);
 					update();
 					return;
 				}
 				
+				
 				if (e.getSlot() == 3) {
 					
-					percent--;
-					if (percent < 1) percent = 1;
+					probability--;
+					if (probability < 1) probability = 1;
 					
 					event.getPlayer().playSound(event.getPlayer().getLocation(), Sound.WOOD_CLICK, 0.5f, 1f);
 					update();
@@ -66,19 +68,18 @@ public class ChunkApocalypse extends Scenario {
 				
 				if (e.getSlot() == 5) {
 					
-					percent++;
-					if (percent > 90) percent = 90;
+					probability++;
+					if (probability > 100) probability = 100;
 					
 					event.getPlayer().playSound(event.getPlayer().getLocation(), Sound.WOOD_CLICK, 0.5f, 1f);
 					update();
 					return;
 				}
 				
-				
 				if (e.getSlot() == 6) {
 					
-					percent += 5;
-					if (percent > 100) percent = 100;
+					probability = probability + 5;
+					if (probability > 100) probability = 100;
 					
 					event.getPlayer().playSound(event.getPlayer().getLocation(), Sound.WOOD_CLICK, 0.5f, 1f);
 					update();
@@ -106,13 +107,13 @@ public class ChunkApocalypse extends Scenario {
 				
 				HashMap<String, ItemStack> dictionnary = new HashMap<String, ItemStack>();
 				
-				String name = Lang.INV_PROBABILITY_OPTION.get().replace(LangTag.VALUE.toString(), percent.toString() + "%");
+				String name = Lang.DIAMOND_DROP.get().replace(LangTag.VALUE.toString(), probability + "%");
+				
 				dictionnary.put("X", getBackIcon());
-				dictionnary.put("F", new ItemBuilder(Material.ANVIL, name).getItem());
+				dictionnary.put("F", new ItemBuilder(Material.DIAMOND_ORE, name).getItem()); 
 				
 				dictionnary.put("-",  new ItemBuilder(Material.WOOD_BUTTON, "§c-1%").setLore(Arrays.asList(name)).getItem());
 				dictionnary.put("+",  new ItemBuilder(Material.WOOD_BUTTON, "§a+1%").setLore(Arrays.asList(name)).getItem());
-				
 				dictionnary.put("--",  new ItemBuilder(Material.STONE_BUTTON, "§c-5%").setLore(Arrays.asList(name)).getItem());
 				dictionnary.put("++",  new ItemBuilder(Material.STONE_BUTTON, "§a+5%").setLore(Arrays.asList(name)).getItem());
 				
@@ -126,9 +127,29 @@ public class ChunkApocalypse extends Scenario {
 		List<String> lore = new ArrayList<String>();
 		
 		lore.add(" ");
-		lore.add(Lang.INV_PROBABILITY_OPTION.get().replace(LangTag.VALUE.toString(), percent.toString() + "%"));
+		lore.add(Lang.DIAMOND_DROP.get().replace(LangTag.VALUE.toString(), probability + "%"));
 		
 		return lore;
+	}
+	
+	@Override
+	public String getID() {
+		return "diamond-isnt";
+	}
+
+	@Override
+	public Material getIcon() {
+		return Material.DIAMOND_ORE;
+	}
+
+	@Override
+	public Boolean isOriginal() {
+		return true;
+	}
+
+	@Override
+	public List<Category> getCategories() {
+		return Arrays.asList(Category.FUN);
 	}
 	
 	@Override
@@ -136,42 +157,21 @@ public class ChunkApocalypse extends Scenario {
 		return gui;
 	}
 	
-	@Override
-	public String getID() {
-		return "chunk-apocalypse";
-	}
-
-	@Override
-	public Material getIcon() {
-		return Material.NETHERRACK;
-	}
-
-	@Override
-	public Boolean isOriginal() {
-		return false;
-	}
-
-	@Override
-	public List<Category> getCategories() {
-		return Arrays.asList(Category.GENERATION);
-	}
-	
-	public Boolean apocalypse(Chunk c) {
+	public Boolean dropItem(Block b) {
 		
-		if (new Random().nextInt(100) <= percent) {
+		if (b.getType() != Material.DIAMOND_ORE) return false;
+		
+		if (probability == 100 || new Random().nextInt(100) <= probability) {
+			Location loc = b.getLocation().clone().add(0.5, 0.5, 0.5);
 			
-			for (int x = 0; x < 16; x++) {
-				for (int y = 0; y <= 131; y++) {
-					for (int z = 0; z < 16; z++) {
-	                    Block block = c.getBlock(x, y, z);
-	                    if (block.getType() != Material.AIR) block.setType(Material.AIR, false);
-					}
-				}
-			}
-			
+			b.getWorld().dropItem(loc, getRandomItemstack());
 			return true;
+			
+		} else {	
+			b.setType(Material.AIR);
 		}
 		
 		return false;
 	}
+
 }

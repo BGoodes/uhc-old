@@ -25,8 +25,11 @@ public abstract class ItemScenario extends Scenario {
 	public void changeStateEvent(ChangeScenarioStateEvent e) {
 		if (e.getGame().isStart() && giveTime() == GiveTime.LOADING) {
 			
-			e.getPlayer().closeInventory();
-			e.getPlayer().sendMessage(Lang.ST_ERROR_SCENARIO_START.get());
+			if (e.getPlayer() != null) {
+				e.getPlayer().closeInventory();
+				e.getPlayer().sendMessage(Lang.ST_ERROR_SCENARIO_START.get());
+			}
+			
 			e.setCancelled(true);
 		}
 	}

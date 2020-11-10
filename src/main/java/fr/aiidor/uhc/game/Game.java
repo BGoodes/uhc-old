@@ -224,6 +224,14 @@ public class Game {
 		worlds.remove(w);
 	}
 	
+	public UHCWorld getUHCWorld(String worldname) {
+		for (UHCWorld w : worlds) {
+			if (w.getOverWorldName().equals(worldname)) return w;
+		}
+		
+		return null;
+	}
+	
 	public UHCWorld getUHCWorld(World world) {
 		for (UHCWorld w : worlds) {
 			if (w.getAll().contains(world)) return w;
@@ -234,6 +242,10 @@ public class Game {
 	
 	public Boolean isUHCWorld(World world) {
 		return getUHCWorld(world) != null;
+	}
+	
+	public Boolean isUHCWorld(String worldname) {
+		return getUHCWorld(worldname) != null;
 	}
 	
 	public void setMainWorld(UHCWorld w) {
@@ -350,14 +362,6 @@ public class Game {
 		return getUHCPlayer(uuid) != null;
 	}
 	
-	public void addUHCPlayer(Player player) {
-		if (player.isOp() && UHC.getInstance().getSettings().op_to_staff) {
-			addUHCPlayer(new UHCPlayer(player, PlayerState.ALIVE, Rank.STAFF, this));
-		} else {
-			addUHCPlayer(new UHCPlayer(player, PlayerState.ALIVE, Rank.PLAYER, this));
-		}
-	}
-	
 	public void addUHCPlayer(UHCPlayer player) {
 		players.add(player);
 	}
@@ -401,7 +405,7 @@ public class Game {
 		
 		if (getSettings().getJoinState().equals(JoinState.WHITELIST)) {
 			
-			if (player.hasPermission("whitelist.bypass")) return true;
+			if (player.hasPermission("uhc.bypass.whitelist")) return true;
 			if (isWhitelisted(player))	return true;
 		}
 		

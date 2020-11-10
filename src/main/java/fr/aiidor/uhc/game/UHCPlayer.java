@@ -200,7 +200,6 @@ public class UHCPlayer {
 		
 		return false;
 	}
-	
 	public List<ItemStack> giveItem = new ArrayList<ItemStack>();
 	
 	public void giveItem(ItemStack item) {
@@ -346,10 +345,6 @@ public class UHCPlayer {
 				if (ScenariosManager.BELIEVE_FLY.isActivated()) {
 					player.setAllowFlight(true);
 				}
-				
-				if (ScenariosManager.MELEE_FUN.isActivated()) {
-					ScenariosManager.MELEE_FUN.resetMeleeFun(player);
-				}
 			}
 
 			
@@ -388,6 +383,8 @@ public class UHCPlayer {
 		if (isConnected()) {
 			
 			Player player = getPlayer();
+			
+			player.setScoreboard(game.getScoreboard());
 			
 			if (isSpec())  {
 				

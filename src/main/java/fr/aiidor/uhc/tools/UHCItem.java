@@ -22,4 +22,8 @@ public class UHCItem {
 	public static ItemStack getTeamSelecter() {
 		return team_selecter;
 	}
+	
+	public static Material getFromID(String id) {
+		return Material.matchMaterial(id.replace("minecraft:", "").replaceAll("wooden", "wood").replaceAll("golden", "gold").replaceAll("shovel", "spade"));
+	}
 }

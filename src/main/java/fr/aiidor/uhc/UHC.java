@@ -5,7 +5,6 @@ import java.util.concurrent.ScheduledExecutorService;
 
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
-import org.bukkit.World;
 import org.bukkit.World.Environment;
 import org.bukkit.WorldType;
 import org.bukkit.command.PluginCommand;
@@ -52,8 +51,15 @@ public class UHC extends JavaPlugin {
     private TablistManager tablistManager;
     
     //PERMISSIONS
-    //whitelist.bypass
-    //uhc.host
+    /*
+     * uhc.host
+     * uhc.staff
+     * 
+     * uhc.command.restart
+     * 
+     * uhc.bypass.slot
+     * uhc.bypass.whitelist
+     */
     
 	@Override
 	public void onEnable() {
@@ -128,6 +134,11 @@ public class UHC extends JavaPlugin {
 		pc_host.setExecutor(cmd_host);
 		pc_host.setTabCompleter(cmd_host);
 		
+		pc_host = getCommand("h");
+		
+		pc_host.setExecutor(cmd_host);
+		pc_host.setTabCompleter(cmd_host);
+		
 		CommandDW cmd_dw = new CommandDW();
 		PluginCommand pc_dw = getCommand("dw");
 		
@@ -159,7 +170,7 @@ public class UHC extends JavaPlugin {
 		getServer().addRecipe(recipe);
 		
         Bukkit.getConsoleSender().sendMessage("§e---------------------------------");
-        Bukkit.getConsoleSender().sendMessage("§fPlugin UHC HOST - Version 1.2");     
+        Bukkit.getConsoleSender().sendMessage("§fPlugin UHC HOST - Version 1.3");     
         Bukkit.getConsoleSender().sendMessage("§6Author : B. Goodes");
         Bukkit.getConsoleSender().sendMessage("§e---------------------------------");
 	}
@@ -173,11 +184,10 @@ public class UHC extends JavaPlugin {
 			Game game = gameManager.getGame();
 			
 			if (UHCFile.CONFIG.getYamlConfig().getBoolean("ServerManager.delete-worlds")) {
-				for (World w : game.getWorlds()) {
-					new WorldManager(w.getName()).deleteWorld();
+				for (UHCWorld w : game.getUHCWorlds()) {
+					w.delete();
 				}
 			}
-			
 			
 			gameManager.reload();
 		}

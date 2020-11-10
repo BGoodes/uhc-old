@@ -49,7 +49,7 @@ public class Inv_Scenarios_Settings extends GuiBuilder {
 			
 			Integer s = game.getSettings().random_scenarios;
 			
-			ItemBuilder item = new ItemBuilder(Material.COMPASS, s, Lang.INV_SCENARIO_RANDOM.get().replace(LangTag.VALUE.toString(), s > 0 ? s+"" : s == 0 ? Lang.INV_OFF.get() : Lang.INV_RANDOM.get()));
+			ItemBuilder item = new ItemBuilder(Material.COMPASS, s, Lang.INV_SCENARIO_RANDOM.get().replace(LangTag.VALUE.toString(), s > 0 ? s + "" : s == 0 ? Lang.INV_OFF.get() : Lang.INV_RANDOM.get()));
 			
 			List<String> lore = new ArrayList<String>();
 			

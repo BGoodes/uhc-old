@@ -181,12 +181,15 @@ public class Inv_World_Creation extends GuiBuilder {
 			UHCWorld w = new UHCWorld(panel.overworld_name, panel.getWorldName(panel.main_dimension));
 			
 			playClickSound(event.getPlayer());
-			event.getPlayer().closeInventory();
+			event.getPlayer().closeInventory(); 
 
-			if (!w.isGenerate()) w.generate(event.getGame().getWorldPanel());
+			event.getGame().addUHCWorld(w);
+			
+			if (!w.isGenerate()) {
+				w.generate(event.getGame().getWorldPanel());
+			}
 			
 			event.getGame().setWorldPanel(null);
-			if (w.isGenerate()) event.getGame().addUHCWorld(w);
 			return;
 		}
 		

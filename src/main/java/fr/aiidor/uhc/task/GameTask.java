@@ -1,6 +1,9 @@
 package fr.aiidor.uhc.task;
 
+import org.bukkit.Location;
 import org.bukkit.Sound;
+import org.bukkit.World;
+import org.bukkit.World.Environment;
 import org.bukkit.entity.Player;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
@@ -13,6 +16,7 @@ import fr.aiidor.uhc.game.Game;
 import fr.aiidor.uhc.game.GameSettings;
 import fr.aiidor.uhc.game.UHCPlayer;
 import fr.aiidor.uhc.scenarios.ScenariosManager;
+import fr.aiidor.uhc.tools.Teleportation;
 import fr.aiidor.uhc.tools.Titles;
 
 public class GameTask extends UHCTask {
@@ -112,7 +116,10 @@ public class GameTask extends UHCTask {
 				
 				game.playSound(Sound.ENDERDRAGON_GROWL, 0.6f);
 				game.broadcast(Lang.BC_WB_START.get().replace(LangTag.VALUE.toString(), settings.wb_size_min.toString()));
-				game.getMainWorld().getMainWorld().getWorldBorder().setSize(settings.wb_size_min * 2, (long) ((settings.wb_size_max - settings.wb_size_min) / settings.wb_speed) * 2);
+				
+				for (World w : game.getWorlds())  {
+					w.getWorldBorder().setSize(settings.wb_size_min * 2, (long) ((settings.wb_size_max - settings.wb_size_min) / settings.wb_speed) * 2);
+				}
 			}
 			else {
 				Integer time = settings.wb_time * 60 - timer;
@@ -197,8 +204,12 @@ public class GameTask extends UHCTask {
 	
 	public void pvpStart() {
 		
+		if (ScenariosManager.NETHERIBUS.isActivated()) {
+			game.broadcast(Lang.NETHERIBUS_ANNOUNCE_START.get());
+		}
+		
 		if (ScenariosManager.SKYHIGH.isActivated()) {
-			game.broadcast(Lang.SKYHIGH_ANNOUNCE.get());
+			game.broadcast(Lang.SKYHIGH_ANNOUNCE_START.get());
 		}
 		
 		if (ScenariosManager.ASSASSINS.isActivated()) {
@@ -218,24 +229,40 @@ public class GameTask extends UHCTask {
 		for (UHCPlayer p : game.getPlayingPlayers()) {
 			
 			Player player = p.getPlayer();
+			World world = player.getWorld();
 			
 			if (ScenariosManager.CAT_EYES.isActivated()) {
 				p.addPotionEffect(ScenariosManager.CAT_EYES.nightVision);
 			}
 				
+			if (ScenariosManager.INFINITE_ENCHANTER.isActivated()) {
+				player.setLevel(1000);
+			}
+			
 			if (ScenariosManager.SPEEDY_MINER.isActivated()) {
 				ScenariosManager.SPEEDY_MINER.setEffects(p);
 			}
 			
 			if (ScenariosManager.PROGRESSIVE_SPEED.isActivated()) {
-				p.addPotionEffect(new PotionEffect(PotionEffectType.SPEED, Integer.MAX_VALUE, p.getKills()));
+				p.addPotionEffect(new PotionEffect(PotionEffectType.SPEED, Integer.MAX_VALUE, p.getKills(), false, false));
 			}
 			
-			if (ScenariosManager.SKYHIGH.isActivated()) {
-				if (game.isPvpTime() && timer%30 == 0 && player.getLocation().getBlockY() < 200) {
+			if (game.isPvpTime() && timer%30 == 0) {
+				
+				if (ScenariosManager.NETHERIBUS.isActivated() && player.getWorld().getEnvironment() != Environment.NETHER) {
+					player.damage(2);
+					player.sendMessage(Lang.NETHERIBUS_DAMAGE.get());
+				}
+				
+				if (ScenariosManager.SKYHIGH.isActivated() && player.getLocation().getBlockY() < 200) {
 					player.damage(2);
 					player.sendMessage(Lang.SKYHIGH_DAMAGE.get());
 				}
+			}
+			
+			if (timer < 60 && ScenariosManager.CHUNK_APOCALYPSE.isActivated() && player.getLocation().getY() < 0) {
+				Location loc = Teleportation.getRandomLocation(player.getWorld(), (int) world.getWorldBorder().getSize()/2 - 20);
+				player.teleport(loc);
 			}
 		}
 	}

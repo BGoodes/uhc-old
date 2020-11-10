@@ -10,7 +10,6 @@ import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
 import fr.aiidor.uhc.enums.Category;
-import fr.aiidor.uhc.listeners.events.ChangeScenarioStateEvent;
 import fr.aiidor.uhc.tools.ItemBuilder;
 
 public class Bombers extends ItemScenario {
@@ -43,9 +42,6 @@ public class Bombers extends ItemScenario {
 	public GiveTime giveTime() {
 		return GiveTime.LOADING;
 	}
-	
-	@Override
-	public void changeStateEvent(ChangeScenarioStateEvent e) {}
 
 	@Override
 	public List<ItemStack> getItems() {

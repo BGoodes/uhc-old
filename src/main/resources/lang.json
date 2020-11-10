@@ -1,6 +1,6 @@
 {
 	"prefix" : "§5§lUHC §8»",
-	"error" : "§6§lErreur §8»",
+	"error" : "§6Erreur §8»",
 	"info-prefix" : "§c§lInfo §8»",
 		
 	"dw-prefix" : "§4§lDW-UHC §8»",
@@ -85,7 +85,7 @@
 		"config-stuff" : {
 			"inv-start-items" : "§aItems de départ",
 			"inv-death-items" : "§cItems à la mort",
-			"inv-stuff-enchants" : "§5Gestion des enchantements",
+			"inv-stuff-enchants" : "§5Limites des enchantements",
 			"inv-stuff-potions" : "§bGestion des potions"
 		},
 		
@@ -130,7 +130,9 @@
 			"inv-w-creation" : "§2Créer un monde",
 			"inv-w-settings" : "§eParamètrer un monde",
 			"inv-w-tp" : "§aSe téléporter ?",
-			"inv-w-delete" : "§cSupprimer ?"
+			"inv-w-regen" : "§6Régénérer ?",
+			"inv-w-delete" : "§cSupprimer ?",
+			"inv-w-autoregen" : "§bRégénération automatique"
 		},
 		
 		"config-life" : {
@@ -186,7 +188,8 @@
 		"invincibility-bar" : "§7Invincibilité §8» §6{time}",
 		"bc-player-tp" : "§7Teleportation §8» §a{player-name}§7",
 		
-		"bc-world-generation" : "§eGénération d'un monde..."
+		"bc-world-generation" : "§eGénération d'un monde...",
+		"bc-world-generation-end" : "§aGénération terminée !"
 	},
 	
 	"permission" : {
@@ -356,7 +359,8 @@
 		 	"bc-team-victory" : "{prefix} §f§l§k!!!§6 L'équipe §e{team-name} §6remporte la partie ! §f§l§k!!!",
 		 	
 		 			
-			"bc-server-restart" : "{prefix} §cFermeture du serveur dans 1 minute !"
+			"bc-server-restart" : "{prefix} §cFermeture du serveur dans 1 minute !",
+			"bc-server-restart-cancel" : "{prefix} §aFermeture du serveur annulé !"
 		 }
 	},
 	
@@ -410,7 +414,9 @@
 	"staff" : {
 		"st-become-host" : "{prefix} §dVous êtes désormais le Host de la partie ! (Faites /host pour voir toutes les commandes.)",
 		
-	"error" : {
+		"st-difficulty" : "{prefix} §eDifficulté : {value}",
+		
+		"error" : {
 			"st-error-no-game" : "{error} §cIl n'y a aucune partie en cours !",
 			"st-error-game-start" : "{error} §cCette partie est déjà lancé !",
 			"st-error-game-cancel" : "{error} §cVous ne pouvez plus annuler le lancement !",
@@ -427,6 +433,7 @@
 			"st-error-world-generation" : "{error} §cLe monde \"{value}\" n'a pas été généré !",
 			"st-error-world-creation-size" : "{error} §cVous ne pouvez pas créer de monde supplémentaire. Vous pouvez cependant en supprimer un.",
 			"st-error-unload-fail" : "{error} §cCe monde \"{value}\" n'a pas pu être déchargé.",
+			"st-error-deleting-fail" : "{error} §cCe monde \"{value}\" n'a pas pu être supprimé.",
 			"st-error-main-world" : "{error} §cVous ne pouvez pas supprimer le monde principal.",
 			"st-error-lobby-world" : "{error} §cVous ne pouvez pas supprimer le lobby.",
 			"st-error-world-exist" : "{error} §cCe monde existe déjà.",
@@ -667,7 +674,7 @@
 		
 		"bedbomb" : {
 			"name" : "§6BedBomb",
-			"description" : "§7Les lits §6explosent§7 lorsque que l'on interagit avec\n§7dans§ftoutes les dimensions§7."
+			"description" : "§7Les lits §6explosent§7 lorsque que l'on interagit avec\n§7dans §ftoutes les dimensions§7."
 		},
 		
 		"timebomb" : {
@@ -774,14 +781,11 @@
 		
 		"inventors" : {
 			"name" : "§eInventors",
-			"description" : "§7Quand un joueur §fcraft en premier un item,\n§7il est affiché dans le chat.",
-			"invention" : "§eInventor §8» §e{player-name}§6 à inventé :§f {value} §6!"
+			"description" : "§7Quand un joueur §fcraft en premier un item,\n§7il est affiché dans le chat. Il devient alors \n§ale propriétaire §7de cet item et chaque personne\n§7voulant le craft lui devra §6un lingot d'or.",
+			"invention" : "§eInventor §8» §e{player-name}§6 vient d'inventer :§f {value} §6!",
+			"craft-property" : "§6Inventeur : §e{value}",
+			"craft-error" : "{error} §cVous devez posséder 1 lingot d'or pour effectuer ce craft."
 		}, 
-		
-		"mystery-teams" : {
-			"name" : "§5Mystery Teams",
-			"description" : "§7Les pseudos des joueurs §fsont brouillé§7."
-		},
 		
 		"bow-swap" : {
 			"name" : "§3Bow Swap",
@@ -848,7 +852,7 @@
 		
 		"dropping-coins" : {
 			"name" : "§eDropping Coins",
-			"description" : "§7A chaque fois qu'un joueur prend §cun dégât§7, \n§un §fitem aléatoire§7 de son stuff §fest drop§7."
+			"description" : "§7A chaque fois qu'un joueur prend §cun dégât§7, \n§fun §fitem aléatoire§7 de son stuff §fest drop§7."
 		},
 		
 		"no-bucket" : {
@@ -864,18 +868,13 @@
 		
 		"chunk-apocalypse" : {
 			"name" : "§cChunk Apocalypse",
-			"description" : "§7Un certain pourcentage des chunks est §fremplacé par de l'air§7."
+			"description" : "§7Un certain pourcentage des chunks est §fremplacé par de l'air.§7\n§c[!] Bon serveur recommandé !"
 		},
 		
 		"enchanting-center" : {
 			"name" : "§dEnchanting Center",
 			"description" : "§7Les joueurs ne peuvent pas crafter §fla table d'enchant§7.\n§7Cependant une §ftable d'enchantement §7est généré au centre de la carte.",
 			"enchant-table-generation-error" : "{error} §cLa table d'enchantement n'a pas pu être généré au 0 0 donc le scénario \"Enchanting Table\" a été désactivé."
-		},
-			
-		"melee-fun" : {
-			"name" : "§bMeleeFun",
-			"description" : "§7Il n'y a plus §fde délai §7entre chaque coup§7."
 		},
 		
 		"progressive-speed" : {
@@ -896,13 +895,49 @@
 		"skyhigh" : {
 			"name" : "§bSkyHigh",
 			"description" : "§7A partir de §fl'activation du pvp§7, tous les joueurs en dessous \n§7de la couche y = 200 §cperdrons de la vie §7à raison de 1 coeur \n§7toutes les 30 secondes.",
-			"skyhigh-announce" : "§bSkyHigh §8» §cIl est temps de monter à une couche supérieux ou égal à y = 200 si vous ne voulez pas mourrir.",
+			"skyhigh-announce" : "§bSkyHigh §8» §7Le scénario skyhight sera actif à l'activation du pvp.",
+			"skyhigh-announce-start" : "§bSkyHigh §8» §cIl est temps de monter à une couche supérieur ou égal à y = 200 si vous ne voulez pas mourrir !",
 			"skyhigh-damage" : "§bSkyHigh §8» §cVous venez de perdre 1 coeur car vous êtes sous la couche y = 200."
 		},
 		
 		"gapzap" : {
 			"name" : "§eGapZap",
 			"description" : "§7Quand un joueur prend un dégât, §fil pert ses effets\n§fde régénération§7."
+		},
+		
+		"infinite-enchanter" : {
+			"name" : "§5Infinite Enchanter",
+			"description" : "§7Tous les joueurs ont de l'expérience à l'infini."
+		},
+		
+		"diamond-isnt" : {
+			"name" : "§3Diamond isn't diamond",
+			"description" : "§7Chaque minerais de diamant drop un i§ftem aléatoire§7 \n§7en §fquantité aléatoire §7!",
+			"diamond-drop" : "§2Probabilité de drop d'un minerai : §a{value}"
+		},
+		
+		"reincarnation" : {
+			"name" : "§5Réincarnation",
+			"description" : "§7Quand un joueur meurt, un §fmob random §7prend\n§7sa place !"
+		},
+		
+		"oviparous" : {
+			"name" : "§2Oviparous",
+			"description" : "§7Quand un mob meurt, §fil drop un oeuf §7de\n§7son espèce.",
+			"egg-drop" : "§2Probabilité de drop d'un oeuf : §a{value}"
+		},
+		
+		"ender-replacement" : {
+			"name" : "§3Ender Replacement",
+			"description" : "§7Quand un §cjoueur meurt, §7tous les §fautres joueurs\n§fsont téléporté§7 à lui."
+		},
+		
+		"netheribus" : {
+			"name" : "§4Netheribus",
+			"description" : "§7A partir de §fl'activation du pvp§7, tous les joueurs dans l'overworld \n§cperdrons de la vie §7à raison de 1 coeur toutes les 30 secondes.",
+			"netheribus-announce" : "§4Netheribus §8» §7Le scénario netheribus sera actif à l'activation du pvp.",
+			"netheribus-announce-start" : "§4Netheribus §8» §cIl est temps d'aller dans le nether si vous ne voulez pas mourrir !",
+			"netheribus-damage" : "§4Netheribus §8» §cVous venez de perdre 1 coeur car vous êtes dans l'overworld."
 		}
 	},
 	

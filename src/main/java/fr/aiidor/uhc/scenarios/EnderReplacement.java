@@ -7,20 +7,20 @@ import org.bukkit.Material;
 
 import fr.aiidor.uhc.enums.Category;
 
-public class SkyHigh extends Scenario {
+public class EnderReplacement extends Scenario {
 	
-	public SkyHigh(ScenariosManager manager) {
+	public EnderReplacement(ScenariosManager manager) {
 		super(manager);
 	}
 	
 	@Override
 	public String getID() {
-		return "skyhigh";
+		return "ender-replacement";
 	}
 
 	@Override
 	public Material getIcon() {
-		return Material.FEATHER;
+		return Material.ENDER_PEARL;
 	}
 
 	@Override
@@ -29,13 +29,7 @@ public class SkyHigh extends Scenario {
 	}
 
 	@Override
-	public Boolean compatibleWith(Scenario scenario) {
-		if (scenario.equals(ScenariosManager.NETHERIBUS)) return false;
-		return true;
-	}
-	
-	@Override
 	public List<Category> getCategories() {
-		return Arrays.asList(Category.SURVIVAL, Category.FUN);
+		return Arrays.asList(Category.PVP, Category.FUN);
 	}
 }

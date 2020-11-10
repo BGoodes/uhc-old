@@ -1,5 +1,7 @@
 package fr.aiidor.uhc.listeners;
 
+import org.bukkit.Bukkit;
+import org.bukkit.Sound;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -41,9 +43,28 @@ public class PlayerConnexionEvents implements Listener {
 		if (!game.join(player)) return;	
 		
 		if (game.getState() == GameState.WAITING) {
+			
+			//HOST =================================
+			if (UHC.getInstance().getSettings().auto_host && player.hasPermission("uhc.host") && !game.hasHost()) {
+				
+				if (!game.isHere(player.getUniqueId())) game.addUHCPlayer(new UHCPlayer(player, PlayerState.ALIVE, Rank.HOST, game));
+				else game.getUHCPlayer(player.getUniqueId()).setRank(Rank.HOST);
+				
+				Bukkit.getScheduler().runTaskLater(UHC.getInstance(), new Runnable() {
 					
+					@Override
+					public void run() {
+						player.sendMessage(Lang.ST_BECOME_HOST.get());
+						player.playSound(player.getLocation(), Sound.LEVEL_UP, 0.7f, 1);
+					}
+				}, 1);
+			}
+			
+			//ADD PLAYER =============================
 			if (!game.isHere(player.getUniqueId())) {
-				game.addUHCPlayer(player);
+				
+				if (player.hasPermission("uhc.staff")) game.addUHCPlayer(new UHCPlayer(player, PlayerState.ALIVE, Rank.STAFF, game));
+				else game.addUHCPlayer(new UHCPlayer(player, PlayerState.ALIVE, Rank.PLAYER, game));
 			}
 				
 			UHCPlayer p = game.getUHCPlayer(player.getUniqueId());
@@ -85,7 +106,7 @@ public class PlayerConnexionEvents implements Listener {
 			//SPEC VERIF
 			UHCPlayer p = new UHCPlayer(player, PlayerState.SPECTATOR, Rank.SPECTATOR, game);
 			
-			if (player.isOp() && UHC.getInstance().getSettings().op_to_staff) {
+			if (player.hasPermission("uhc.staff")) {
 				p = new UHCPlayer(player, PlayerState.SPECTATOR, Rank.STAFF, game);
 			}
 			
@@ -107,10 +128,13 @@ public class PlayerConnexionEvents implements Listener {
 		UHC.getInstance().getTablistManager().onLogout(player);
 		
 		if (!gm.hasGame()) return;
+		
+		e.setQuitMessage(null);
+		
 		Game game = gm.getGame();
 		
 		if (!game.isHere(player.getUniqueId())) {
-			e.setQuitMessage(Lang.BC_SPECTATOR_LEAVE.get().replace(LangTag.PLAYER_NAME.toString(), player.getName()));
+			//e.setQuitMessage(Lang.BC_SPECTATOR_LEAVE.get().replace(LangTag.PLAYER_NAME.toString(), player.getName()));
 			return;
 		}
 		

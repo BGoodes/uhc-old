@@ -41,8 +41,11 @@ public class WorldIsSmall extends Scenario {
 			
 		if (!e.getGame().isWaiting()) {
 			e.setCancelled(true);
-			e.getPlayer().sendMessage(Lang.ST_ERROR_SCENARIO_START.get());
-			e.getPlayer().closeInventory();
+			
+			if (e.getPlayer() != null) {
+				e.getPlayer().sendMessage(Lang.ST_ERROR_SCENARIO_START.get());
+				e.getPlayer().closeInventory();
+			}
 		}
 	}
 }

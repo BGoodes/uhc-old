@@ -40,7 +40,7 @@ public class SuperHeroes extends Scenario {
 		
 		Power.STRENGTH.effects.add(new PotionEffect(PotionEffectType.INCREASE_DAMAGE, Integer.MAX_VALUE, 0, false, false));
 		
-		Power.RESISTANCE.effects.add(new PotionEffect(PotionEffectType.DAMAGE_RESISTANCE, Integer.MAX_VALUE, 1, false, false));
+		Power.RESISTANCE.effects.add(new PotionEffect(PotionEffectType.DAMAGE_RESISTANCE, Integer.MAX_VALUE, 0, false, false));
 		
 		Power.SPEED.effects.add(new PotionEffect(PotionEffectType.SPEED, Integer.MAX_VALUE, 1, false, false));
 		Power.SPEED.effects.add(new PotionEffect(PotionEffectType.FAST_DIGGING, Integer.MAX_VALUE, 0, false, false));
@@ -145,9 +145,13 @@ public class SuperHeroes extends Scenario {
 		super.changeStateEvent(e);
 		
 		if (!e.getGame().isWaiting()) {
+			
+			if (e.getPlayer() != null) {
+				e.getPlayer().sendMessage(Lang.ST_ERROR_SCENARIO_START.get());
+				e.getPlayer().closeInventory();
+			}
+			
 			e.setCancelled(true);
-			e.getPlayer().sendMessage(Lang.ST_ERROR_SCENARIO_START.get());
-			e.getPlayer().closeInventory();
 		}
 	}
 	

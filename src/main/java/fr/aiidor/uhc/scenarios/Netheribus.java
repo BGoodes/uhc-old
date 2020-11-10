@@ -7,20 +7,20 @@ import org.bukkit.Material;
 
 import fr.aiidor.uhc.enums.Category;
 
-public class SkyHigh extends Scenario {
+public class Netheribus extends Scenario {
 	
-	public SkyHigh(ScenariosManager manager) {
+	public Netheribus(ScenariosManager manager) {
 		super(manager);
 	}
 	
 	@Override
 	public String getID() {
-		return "skyhigh";
+		return "netheribus";
 	}
 
 	@Override
 	public Material getIcon() {
-		return Material.FEATHER;
+		return Material.NETHER_BRICK;
 	}
 
 	@Override
@@ -30,7 +30,7 @@ public class SkyHigh extends Scenario {
 
 	@Override
 	public Boolean compatibleWith(Scenario scenario) {
-		if (scenario.equals(ScenariosManager.NETHERIBUS)) return false;
+		if (scenario.equals(ScenariosManager.SKYHIGH)) return false;
 		return true;
 	}
 	

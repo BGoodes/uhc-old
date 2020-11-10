@@ -102,8 +102,11 @@ public class Assassins extends Scenario {
 	public void changeStateEvent(ChangeScenarioStateEvent e) {
 		if (e.getGame().isPvpTime()) {
 			e.setCancelled(true);
-			e.getPlayer().sendMessage(Lang.ST_ERROR_SCENARIO_PVP.get());
-			e.getPlayer().closeInventory();
+			
+			if (e.getPlayer() != null) {
+				e.getPlayer().sendMessage(Lang.ST_ERROR_SCENARIO_PVP.get());
+				e.getPlayer().closeInventory();
+			}
 		}
 		
 		super.changeStateEvent(e);

@@ -1,5 +1,8 @@
 package fr.aiidor.uhc.listeners;
 
+import java.util.Arrays;
+import java.util.List;
+
 import org.bukkit.GameMode;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -35,6 +38,9 @@ import fr.aiidor.uhc.scenarios.ScenariosManager;
 
 public class PlayerInteractEvents implements Listener {
 	
+	private List<EntityType> monsterEgg = Arrays.asList(EntityType.IRON_GOLEM, EntityType.WITHER, EntityType.ENDER_DRAGON);
+	
+	@SuppressWarnings("deprecation")
 	@EventHandler
 	public void playerInteractEvent(PlayerInteractEvent e) {
 		GameManager gm = UHC.getInstance().getGameManager();
@@ -97,11 +103,25 @@ public class PlayerInteractEvents implements Listener {
 		if (hand != null) {
 			
 			if (e.getAction() == Action.RIGHT_CLICK_BLOCK && game.isStart()) {
+				Block target = e.getClickedBlock();
+				
+				if (target != null && hand.getType() == Material.MONSTER_EGG) {
+					for (EntityType t : monsterEgg) {
+						if (hand.getDurability() == t.getTypeId()) {
+							
+							if (hand.getAmount() - 1 <= 0) hand.setType(Material.AIR);
+							else hand.setAmount(hand.getAmount() - 1);
+							
+							e.setCancelled(true);
+							target.getLocation().getWorld().spawnEntity(target.getLocation(), t);
+						}
+					}
+				}
 				
 				//FIRELESS
 				if (ScenariosManager.FIRELESS.isActivated() && player.getGameMode() != GameMode.CREATIVE) {
 					if (!ScenariosManager.FIRELESS.flint_and_steel) {
-						if (hand != null && hand.getType() == Material.FLINT_AND_STEEL) {
+						if (hand.getType() == Material.FLINT_AND_STEEL) {
 							e.setCancelled(true);
 						}
 					}
@@ -109,15 +129,14 @@ public class PlayerInteractEvents implements Listener {
 				
 				//TNT_FLY
 				if (ScenariosManager.TNTFLY.isActivated() && ScenariosManager.TNTFLY.chain) {
-					if (hand != null && hand.getType() == Material.FLINT_AND_STEEL) {
-						Block Target = e.getClickedBlock();
-						if (Target != null && Target.getType() == Material.TNT) {
+					if (hand.getType() == Material.FLINT_AND_STEEL) {
+						if (target != null && target.getType() == Material.TNT) {
 							
-								Target.setType(Material.AIR);
+							target.setType(Material.AIR);
 							e.setCancelled(true);
 								
-							Location location = Target.getLocation().add(0.5, 0.25, 0.5);
-							TNTPrimed tnt = (TNTPrimed) Target.getWorld().spawnEntity(location, EntityType.PRIMED_TNT);
+							Location location = target.getLocation().add(0.5, 0.25, 0.5);
+							TNTPrimed tnt = (TNTPrimed) target.getWorld().spawnEntity(location, EntityType.PRIMED_TNT);
 							tnt.setVelocity(new Vector(0, 0.25, 0));
 							
 							tnt.teleport(location);

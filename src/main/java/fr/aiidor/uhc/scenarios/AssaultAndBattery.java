@@ -16,6 +16,7 @@ import org.bukkit.inventory.ItemStack;
 import fr.aiidor.uhc.UHC;
 import fr.aiidor.uhc.enums.Category;
 import fr.aiidor.uhc.enums.Lang;
+import fr.aiidor.uhc.enums.LangTag;
 import fr.aiidor.uhc.enums.UHCType;
 import fr.aiidor.uhc.game.Game;
 import fr.aiidor.uhc.game.UHCPlayer;
@@ -55,6 +56,7 @@ public class AssaultAndBattery extends Scenario {
 				if (e.getSlot() == 0 && clicked.getType() == Material.BOOK) {
 					pvp_only = !pvp_only;
 					update();
+					playClickSound(event.getPlayer());
 					return;
 				}
 				
@@ -125,28 +127,33 @@ public class AssaultAndBattery extends Scenario {
 	}
 	
 	@Override
-	public void checkConditions(Boolean state) {
+	public void checkConditions(Boolean log) {
 		Game game = UHC.getInstance().getGameManager().getGame();
 		if (!game.hasTeam() || game.getSettings().getTeamSize() != 2) {
 			
-			game.log(Lang.ERROR_CONDITION_TO2.get());
+			if (log) game.log(Lang.ERROR_CONDITION_TO2.get().replace(LangTag.VALUE.toString(), Lang.removeColor(getName())));
 			game.getSettings().setActivated(this, false);
 		}
 		
-		super.checkConditions(state);
+		super.checkConditions(log);
 	}
 	
 	@Override
 	public void changeStateEvent(ChangeScenarioStateEvent e) {
 		if (e.getGame().isPvpTime()) {
 			e.setCancelled(true);
-			e.getPlayer().sendMessage(Lang.ST_ERROR_SCENARIO_PVP.get());
-			e.getPlayer().closeInventory();
+			
+			if (e.getPlayer() != null) {
+				e.getPlayer().sendMessage(Lang.ST_ERROR_SCENARIO_PVP.get());
+				e.getPlayer().closeInventory();
+			}
 		
 		} else if ((!e.getGame().hasTeam() || e.getGame().getSettings().getTeamSize() != 2) && e.getState() == true) {
 			e.setCancelled(true);
-			e.getPlayer().sendMessage(Lang.ST_ERROR_SCENARIO_CONDITION.get());
-			e.getPlayer().closeInventory();
+			if (e.getPlayer() != null) {
+				e.getPlayer().sendMessage(Lang.ST_ERROR_SCENARIO_CONDITION.get());
+				e.getPlayer().closeInventory();
+			}
 		}
 		
 		super.changeStateEvent(e);

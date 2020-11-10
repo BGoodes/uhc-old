@@ -99,6 +99,14 @@ public class BlockEvents implements Listener {
 			}
 		}
 		
+		if (ScenariosManager.DIAMOND_ISNT.isActivated() && player.getGameMode() != GameMode.CREATIVE) {
+			if (ScenariosManager.DIAMOND_ISNT.dropItem(b)) {
+				e.setCancelled(true);
+				b.setType(Material.AIR);
+				return;
+			}
+		}
+		
 		if (ScenariosManager.STINGY_WORLD.isActivated() && ScenariosManager.STINGY_WORLD.stingyBlocks) {
 			e.setCancelled(true);
 			
@@ -127,18 +135,13 @@ public class BlockEvents implements Listener {
 			
 			if (player.getItemInHand() != null && player.getItemInHand().getType() == Material.SHEARS) {
 				if (game.getSettings().trees_shears) {
-						
-					ItemStack shear = player.getItemInHand();
-					shear.setDurability((short) (shear.getDurability() -1));
-						
-					e.setCancelled(true);
-					leavesDrop(game.getSettings(), b);
+					leavesDrop(game.getSettings(), b, true);
 					return;
 				}
 					
 			} else {
 				e.setCancelled(true);
-				leavesDrop(game.getSettings(), b);
+				leavesDrop(game.getSettings(), b, false);
 				return;
 			}
 		}
@@ -191,15 +194,15 @@ public class BlockEvents implements Listener {
 		
 		if (game.getSettings().uhc_trees) {
 			e.setCancelled(true);
-			leavesDrop(game.getSettings(), e.getBlock());
+			leavesDrop(game.getSettings(), e.getBlock(), false);
 		}
 	}
 	
 	@SuppressWarnings("deprecation")
-	private void leavesDrop(GameSettings settings, Block l) {
+	private void leavesDrop(GameSettings settings, Block l, Boolean shears) {
 		Collection<ItemStack> drops = l.getDrops();
 		
-		for (ItemStack i : drops) {
+		for (ItemStack i : drops) {	
 			if (i.getType() == Material.SAPLING && settings.trees_sapling) {
 				l.getWorld().dropItemNaturally(l.getLocation().add(0.5, 0, 0.5), i);
 			}
@@ -211,10 +214,13 @@ public class BlockEvents implements Listener {
 				if (settings.trees_apple * 10 >= new Random().nextInt(1000)) {
 					if (!settings.trees_gapple) l.getWorld().dropItemNaturally(l.getLocation().add(0.5, 0, 0.5), new ItemStack(Material.APPLE));
 					else l.getWorld().dropItemNaturally(l.getLocation().add(0.5, 0, 0.5), new ItemStack(Material.GOLDEN_APPLE));
+					
+					l.setType(Material.AIR);
+					return;
 				}
 			}
 		}
 		
-		l.setType(Material.AIR);
+		if (!shears) l.setType(Material.AIR);
 	}
 }

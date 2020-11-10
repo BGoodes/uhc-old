@@ -32,4 +32,9 @@ public class SweatWorld extends Scenario {
 	public List<Category> getCategories() {
 		return Arrays.asList(Category.GENERATION, Category.PVP);
 	}
+	
+	@Override
+	public Boolean needWorldGeneration() {
+		return true;
+	}
 }

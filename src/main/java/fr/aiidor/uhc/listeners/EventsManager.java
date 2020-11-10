@@ -65,6 +65,7 @@ public class EventsManager implements Listener {
 		pm.registerEvents(new WorldEvents(), uhc);
 		pm.registerEvents(new InventoryEvents(), uhc);
 		pm.registerEvents(new AchievementsEvents(), uhc);
+		pm.registerEvents(new CommandEvent(), uhc);
 	}
 	
 	@EventHandler

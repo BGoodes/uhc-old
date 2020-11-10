@@ -11,8 +11,10 @@ import fr.aiidor.uhc.tools.Cage;
 
 public class Settings {
 	
+	public Boolean auto_host;
+	
 	public Boolean remove_op;
-	public Boolean op_to_staff;
+	public Boolean op_to_host;
 	public Boolean log_game_bc; 
 	public Boolean server_restart;
 	
@@ -22,14 +24,17 @@ public class Settings {
 	public Long default_seed;
 	
 	public Location lobby;
-	public Boolean lobby_protection;
+	public Boolean lobby_player_damage;
+	
 	public Cage cage;
 	
 	public Settings() {
 		FileConfiguration config = UHCFile.CONFIG.getYamlConfig();
 		
+		auto_host = config.getBoolean("Game.auto-host");
+		
 		remove_op = config.getBoolean("Permissions.remove-op");
-		op_to_staff = config.getBoolean("Permissions.set-op-to-staff");
+		op_to_host = config.getBoolean("Permissions.set-op-to-host");
 		log_game_bc = config.getBoolean("ServerManager.log-game-broadcast");
 		server_restart = config.getBoolean("ServerManager.server-restart");
 		
@@ -55,7 +60,7 @@ public class Settings {
 			lobby = new Location(Bukkit.getWorld(worldname), 0, 150, 0);
 		}
 		
-		lobby_protection = !lobby_name.equalsIgnoreCase(config.getString("World.world-name"));
+		lobby_player_damage = config.getBoolean("Lobby.player-damage");
 	}
 	
 	public World getLobbyWorld() {

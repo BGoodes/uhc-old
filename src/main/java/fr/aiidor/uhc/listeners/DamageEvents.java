@@ -21,6 +21,7 @@ import org.bukkit.potion.PotionEffectType;
 
 import fr.aiidor.dwuhc.DWRole;
 import fr.aiidor.dwuhc.DWRoleType;
+import fr.aiidor.uhc.Settings;
 import fr.aiidor.uhc.UHC;
 import fr.aiidor.uhc.enums.GameState;
 import fr.aiidor.uhc.enums.Lang;
@@ -43,6 +44,16 @@ public class DamageEvents implements Listener {
 		if (!gm.hasGame()) return;
 
 		Game game = gm.getGame();
+		
+		Settings settings = UHC.getInstance().getSettings();
+		
+		if (!settings.lobby_player_damage && !game.isStart() && e.getEntity().getWorld().equals(settings.getLobbyWorld())) {
+			if (e.getEntity() instanceof Player) {
+				if (game.isHere(((Player) e.getEntity()).getUniqueId())) e.setCancelled(true);
+				return;
+			}
+		}
+		
 		if (!game.getWorlds().contains(e.getEntity().getWorld())) return;
 		
 		if (ScenariosManager.FIRELESS.isActivated()) {
@@ -176,10 +187,6 @@ public class DamageEvents implements Listener {
 			if (game.isHere(player.getUniqueId())) {
 				
 				UHCPlayer p = game.getUHCPlayer(player.getUniqueId());
-				
-				if (ScenariosManager.MELEE_FUN.isActivated()) {
-					player.setNoDamageTicks(0);
-				}
 				
 				if (e.getDamager() instanceof Projectile) {
 					Projectile pj = (Projectile) e.getDamager();

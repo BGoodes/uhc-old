@@ -59,12 +59,16 @@ public abstract class Scenario {
 			for (Scenario s : game.getSettings().getActivatedScenarios()) {
 				if (!compatibleWith(s) || !s.compatibleWith(this)) {
 					
-					e.getPlayer().sendMessage(Lang.ST_ERROR_SCENARIO_COMPATIBILITY.get()
-							.replace(LangTag.VALUE_1.toString(), Lang.removeColor(this.name))
-							.replace(LangTag.VALUE_2.toString(), Lang.removeColor(s.getName()))
-						);
+					if (e.getPlayer() != null) {
+						
+						e.getPlayer().getPlayer().sendMessage(Lang.ST_ERROR_SCENARIO_COMPATIBILITY.get()
+								.replace(LangTag.VALUE_1.toString(), Lang.removeColor(this.name))
+								.replace(LangTag.VALUE_2.toString(), Lang.removeColor(s.getName()))
+							);
+						
+						e.getPlayer().closeInventory();
+					}
 					
-					e.getPlayer().closeInventory();
 					e.setCancelled(true);
 					return;
 				}
@@ -74,6 +78,10 @@ public abstract class Scenario {
 	}
 	
 	public abstract String getID();
+	
+	public Boolean needWorldGeneration() {
+		return false;
+	}
 	
 	public String getName() {
 		return name;
@@ -125,6 +133,8 @@ public abstract class Scenario {
 	public void checkConditions(Boolean log) {
 		Game game = UHC.getInstance().getGameManager().getGame();
 		
+		if (!isActivated()) return;
+		
 		for (Scenario s : game.getSettings().getActivatedScenarios()) {
 			if (!compatibleWith(s) || !s.compatibleWith(this)) {
 				
@@ -134,6 +144,7 @@ public abstract class Scenario {
 					);
 				
 				game.getSettings().setActivated(this, false);
+				return;
 			}
 		}
 	}

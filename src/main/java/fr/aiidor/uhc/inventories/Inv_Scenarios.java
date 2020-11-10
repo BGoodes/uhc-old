@@ -56,7 +56,7 @@ public class Inv_Scenarios extends Gui {
 	
 	@Override
 	public Boolean isSameInventory(Inventory inv) {
-		return inv.getName().startsWith(getTitle());
+		return inv.getName().startsWith(getTitle()) && !inv.getName().contains(Lang.SETTINGS.get());
 	}
 	
 	@Override
@@ -82,8 +82,8 @@ public class Inv_Scenarios extends Gui {
 		
 		if (e.getSlot() == 6) {
 			event.getPlayer().closeInventory();
-			playClickSound(event.getPlayer());
 			
+			playClickSound(event.getPlayer());
 			ActionChat.AddActionChat(event.getPlayer(), ActionChat.SCENARIO_SEARCH);
 			return;
 		}
