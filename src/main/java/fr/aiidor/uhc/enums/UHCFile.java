@@ -72,6 +72,7 @@ public enum UHCFile {
 			return null;
 		}
 	}
+	
 	public JSONObject getJSONObject(String path) { 
 		JSONObject object = getJSONConfig();
 		

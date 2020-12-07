@@ -85,6 +85,15 @@ public class ScenariosManager {
 		OVIPAROUS = new Oviparous(this);
 		ENDER_REPLACEMENT = new EnderReplacement(this);
 		NETHERIBUS = new Netheribus(this);
+		BEST_PVE = new BestPve(this);
+		URBAN = new Urban(this);
+		VILLAGER_MADNESS = new VillagerMadness(this);
+		KILL_THE_WITCH = new KillTheWitch(this);
+		BIOME_APOCALYPSE = new BiomeApocalypse(this);
+		HELL = new Hell(this);
+		COORDONOIA = new Coordonoia(this);
+		BIOME_CENTER = new BiomeCenter(this);
+		AIIDOR_HARDCORE = new AiidorHardcore(this);
 		
 		for (Scenario s : scenarios) {
 			if (s instanceof ItemScenario) {
@@ -155,6 +164,15 @@ public class ScenariosManager {
 	public static Oviparous OVIPAROUS;
 	public static EnderReplacement ENDER_REPLACEMENT;
 	public static Netheribus NETHERIBUS;
+	public static BestPve BEST_PVE;
+	public static Urban URBAN;
+	public static VillagerMadness VILLAGER_MADNESS;
+	public static KillTheWitch KILL_THE_WITCH;
+	public static BiomeApocalypse BIOME_APOCALYPSE;
+	public static Hell HELL;
+	public static Coordonoia COORDONOIA;
+	public static BiomeCenter BIOME_CENTER;
+	public static AiidorHardcore AIIDOR_HARDCORE;
 	
 	public List<Scenario> getScenarios() {
 		List<Scenario> list = new ArrayList<Scenario>();
@@ -202,12 +220,23 @@ public class ScenariosManager {
 		
 		if (cat == Category.ALL) return getScenarios();
 		List<Scenario> list = new ArrayList<Scenario>();
-				
+		
+		if (cat == Category.ORIGINALS) {
+			for (Scenario scenario : getScenarios()) {
+				if (scenario.isOriginal()) {
+					list.add(scenario);
+				}
+			}
+			
+			return list;
+		}
+		
 		for (Scenario scenario : getScenarios()) {
 			if (scenario.getCategories().contains(cat)) {
 				list.add(scenario);
 			}
 		}
+		
 		return list;
 	}
 	

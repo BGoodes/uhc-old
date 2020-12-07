@@ -37,6 +37,7 @@ public class Tracker extends Scenario {
 	@Override
 	public Boolean compatibleWith(Scenario scenario) {
 		if (scenario.equals(ScenariosManager.ASSASSINS)) return false;
+		if (scenario.equals(ScenariosManager.KILL_THE_WITCH)) return false;
 		return true;
 	}
 	

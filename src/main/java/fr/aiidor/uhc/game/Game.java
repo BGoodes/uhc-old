@@ -32,8 +32,8 @@ import fr.aiidor.uhc.task.StartingTask;
 import fr.aiidor.uhc.task.UHCTask;
 import fr.aiidor.uhc.task.WaitingTask;
 import fr.aiidor.uhc.team.UHCTeam;
-import fr.aiidor.uhc.tools.Titles;
-import fr.aiidor.uhc.tools.UHCItem;
+import fr.aiidor.uhc.utils.Titles;
+import fr.aiidor.uhc.utils.UHCItem;
 import fr.aiidor.uhc.world.UHCWorld;
 import fr.aiidor.uhc.world.WorldManager;
 import fr.aiidor.uhc.world.WorldPanel;
@@ -131,6 +131,7 @@ public class Game {
 	
 	public void setUHCMode(UHCMode uhc_mode) {
 		this.uhc_mode = uhc_mode;
+		uhc_mode.loading();
 	}
 	
 	public Scoreboard getScoreboard() {
@@ -202,6 +203,13 @@ public class Game {
 	
 	public List<UHCWorld> getUHCWorlds() {
 		return worlds;
+	}
+	
+	public Boolean canRegenWorlds() {
+		for (UHCWorld w : worlds) {
+			if (w.canRegen()) return true;
+		}
+		return false;
 	}
 	
 	public Boolean hasWorldPanel() {
@@ -283,6 +291,12 @@ public class Game {
 		
 		if (getAlivePlayers().isEmpty()) return null;
 		return (UHCPlayer) getAlivePlayers().toArray()[new Random().nextInt(getAlivePlayers().size())];
+	}
+	
+	public UHCPlayer getRandomPlayingPlayer() {
+		
+		if (getPlayingPlayers().isEmpty()) return null;
+		return (UHCPlayer) getPlayingPlayers().toArray()[new Random().nextInt(getAlivePlayers().size())];
 	}
 	
 	public Set<UHCPlayer> getAllPlayers() {
@@ -368,13 +382,15 @@ public class Game {
 	
 	public void removeUHCPlayer(UHCPlayer player) {
 		
+		
 		if (player.hasTeam()) player.leaveTeam(true);
 		
-		if (player.getRank() == Rank.HOST || player.getRank() == Rank.ORGA) {
-			player.setState(PlayerState.DEAD);
-			return;
+		if (isStart()) {
+			if (player.getRank() == Rank.HOST || player.getRank() == Rank.ORGA) {
+				player.setState(PlayerState.DEAD);
+				return;
+			}
 		}
-		
 		
 		players.remove(player);
 	}
@@ -493,7 +509,6 @@ public class Game {
 	
 	public void destroyTeams() {
 		
-		//RESET LES NOMS
 		if (!isStart()) {
 			for (UHCPlayer p : getPlayingPlayers()) {
 				p.getPlayer().getInventory().removeItem(UHCItem.getTeamSelecter());
@@ -521,13 +536,30 @@ public class Game {
 		return teams;
 	}
 	
-	public List<UHCTeam> getAliveTeams() {
+	public List<UHCTeam> getPlayingTeams() {
 		List<UHCTeam> teams = new ArrayList<UHCTeam>();
 		
 		if (hasTeam()) {
 			for (UHCTeam t : getTeams()) {
 				for (UHCPlayer p : t.getPlayers()) {
 					if (p.isConnected() && p.isAlive()) {
+						teams.add(t);
+						break;
+					}
+				}
+			}
+		}
+		
+		return teams;
+	}
+	
+	public List<UHCTeam> getAliveTeams() {
+		List<UHCTeam> teams = new ArrayList<UHCTeam>();
+		
+		if (hasTeam()) {
+			for (UHCTeam t : getTeams()) {
+				for (UHCPlayer p : t.getPlayers()) {
+					if (p.isAlive()) {
 						teams.add(t);
 						break;
 					}

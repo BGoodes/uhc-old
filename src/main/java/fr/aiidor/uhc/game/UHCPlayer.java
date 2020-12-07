@@ -11,6 +11,8 @@ import org.bukkit.GameMode;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.craftbukkit.v1_8_R3.entity.CraftPlayer;
+import org.bukkit.entity.Entity;
+import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.PlayerInventory;
@@ -24,7 +26,8 @@ import fr.aiidor.uhc.enums.PlayerState;
 import fr.aiidor.uhc.enums.Rank;
 import fr.aiidor.uhc.scenarios.ScenariosManager;
 import fr.aiidor.uhc.team.UHCTeam;
-import fr.aiidor.uhc.tools.Teleportation;
+import fr.aiidor.uhc.utils.MCMath;
+import fr.aiidor.uhc.utils.Teleportation;
 import net.minecraft.server.v1_8_R3.EntityPlayer;
 import net.minecraft.server.v1_8_R3.PacketPlayInClientCommand;
 import net.minecraft.server.v1_8_R3.PacketPlayInClientCommand.EnumClientCommand;
@@ -166,7 +169,6 @@ public class UHCPlayer {
 	}
 	
 	public void revive() {
-		
 		if (isConnected()) {
 			
 			setState(PlayerState.ALIVE);
@@ -188,8 +190,15 @@ public class UHCPlayer {
 
 			if (level != null) player.setLevel(level);
 			
-	    	if (death_loc != null) player.teleport(death_loc);
-	    	else new Teleportation(this).revive(300).teleport();
+	    	if (death_loc != null && MCMath.distance2D(game.getSettings().map_center, death_loc.toVector()) < (death_loc.getWorld().getWorldBorder().getSize() / 2) - 10) {
+	    		
+	    		for (Entity e : death_loc.getWorld().getNearbyEntities(death_loc, 4, 4, 4)) {
+	    			if (e != null && e.getType() == EntityType.DROPPED_ITEM) e.remove();
+	    		}
+	    		
+	    		player.teleport(death_loc);
+	    		
+	    	} else new Teleportation(this).revive(300).teleport();
 		}
 	}
 	
@@ -242,7 +251,6 @@ public class UHCPlayer {
 	}
 	
 	public Integer getPotionAmplifier(PotionEffectType pe) {
-		
 		if (isConnected()) {
 			for (PotionEffect p : getPlayer().getActivePotionEffects()) {
 				if (pe.equals(p.getType())) return p.getAmplifier();

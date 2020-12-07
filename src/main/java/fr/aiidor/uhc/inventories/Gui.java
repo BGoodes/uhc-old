@@ -13,7 +13,7 @@ import org.bukkit.inventory.ItemStack;
 import fr.aiidor.uhc.enums.Lang;
 import fr.aiidor.uhc.game.UHCPlayer;
 import fr.aiidor.uhc.listeners.events.GuiClickEvent;
-import fr.aiidor.uhc.tools.ItemBuilder;
+import fr.aiidor.uhc.utils.ItemBuilder;
 
 public abstract class Gui {
 	

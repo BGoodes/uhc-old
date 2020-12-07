@@ -2,12 +2,11 @@ package fr.aiidor.uhc.enums;
 
 import fr.aiidor.uhc.gamemodes.Classic;
 import fr.aiidor.uhc.gamemodes.DevilWatches;
-import fr.aiidor.uhc.gamemodes.TaupeGun;
 import fr.aiidor.uhc.gamemodes.UHCMode;
 
 public enum UHCType {
 	
-	CLASSIC, DEVIL_WATCHES, TAUPE_GUN;
+	CLASSIC, DEVIL_WATCHES;
 	
 	private final String name;
 	private final String tabName;
@@ -27,8 +26,7 @@ public enum UHCType {
 	
 	public UHCMode getNew() {
 		if (this == CLASSIC) return new Classic();
-		if (this == DEVIL_WATCHES) return new DevilWatches();
-		if (this == TAUPE_GUN) return new TaupeGun();
+		if (this == CLASSIC) return new DevilWatches();
 		return null;
 	}
 }

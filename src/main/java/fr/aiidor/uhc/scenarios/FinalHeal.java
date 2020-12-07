@@ -51,7 +51,7 @@ public class FinalHeal extends Scenario {
 
 	@Override
 	public List<Category> getCategories() {
-		return Arrays.asList(Category.PVP);
+		return Arrays.asList(Category.SURVIVAL);
 	}
 	
 	public void heal(Game game) {

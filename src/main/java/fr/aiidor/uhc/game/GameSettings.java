@@ -21,6 +21,7 @@ import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 import org.bukkit.scoreboard.DisplaySlot;
+import org.bukkit.util.Vector;
 
 import fr.aiidor.uhc.enums.JoinState;
 import fr.aiidor.uhc.enums.Permission;
@@ -52,6 +53,9 @@ public class GameSettings {
 	public Integer ep_time = 20;
 	public Integer wb_time = 60;
 	
+	public Boolean uhc_cycle = false;
+	public Boolean double_uhc_cycle = false;
+	
 	public Boolean can_win = true;
 	 
 	//POTION
@@ -75,6 +79,12 @@ public class GameSettings {
 	public Boolean trees_shears = false;
 	public Boolean trees_sapling = true;
 	public Boolean trees_gapple = false;
+
+	public Boolean uhc_silex = true;
+	public Integer silex_drop = 10;
+	
+	public Boolean uhc_pearls = true;
+	public Integer pearls_drop = 50;
 	
 	//LIFE
 	private Boolean display_life = true;
@@ -113,21 +123,20 @@ public class GameSettings {
 	public List<ItemStack> startItems;
 	public List<ItemStack> deathItems;
 	
-	public HashMap<Rank, List<Permission>> permissions;
-	
 	//WORLDBORDER
 	public Integer wb_size_max;
 	public Integer wb_size_min;
 	public Double wb_speed;
 	public Integer wb_damage = 2;
 	
-	//TIME
-	public Boolean uhc_cycle = false;
-	public Boolean double_uhc_cycle = false;
+	public Vector map_center = new Vector(0, 100, 0);
 	
 	private JoinState join_state = JoinState.CLOSE;
 	private Set<String> whitelist = new HashSet<String>();
 	private List<Scenario> scenarios = new ArrayList<Scenario>();
+	
+	
+	public HashMap<Rank, List<Permission>> permissions;
 	
 	//SCENARIOS
 	public Boolean scenarios_list = true;
@@ -176,7 +185,7 @@ public class GameSettings {
 		this.permissions = new HashMap<Rank, List<Permission>>();
 		
 		this.permissions.put(Rank.HOST, Arrays.asList(Permission.ALL));
-		this.permissions.put(Rank.ORGA, Arrays.asList(Permission.ALL));
+		this.permissions.put(Rank.ORGA, Arrays.asList(Permission.CHAT, Permission.ALERT, Permission.LOG, Permission.CONFIG, Permission.INVSEE, Permission.KICK, Permission.MC_COMMANDS));
 		this.permissions.put(Rank.STAFF, Arrays.asList(Permission.ALL));
 		this.permissions.put(Rank.PLAYER, Arrays.asList(Permission.CHAT));
 		this.permissions.put(Rank.SPECTATOR, Arrays.asList(Permission.NONE));
@@ -249,6 +258,8 @@ public class GameSettings {
 	}
 
 	public void setTeamSize(Integer teamSize) {
+		
+		if (teamSize == team_size) return;
 		this.team_size = teamSize;
 		
 		if (team_size == 1) {

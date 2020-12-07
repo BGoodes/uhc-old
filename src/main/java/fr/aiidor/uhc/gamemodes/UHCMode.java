@@ -20,7 +20,7 @@ import fr.aiidor.uhc.game.Game;
 import fr.aiidor.uhc.game.UHCPlayer;
 import fr.aiidor.uhc.scenarios.ScenariosManager;
 import fr.aiidor.uhc.team.UHCTeam;
-import fr.aiidor.uhc.tools.Titles;
+import fr.aiidor.uhc.utils.Titles;
 
 public abstract class UHCMode {
 	
@@ -32,12 +32,15 @@ public abstract class UHCMode {
 	
 	public abstract UHCType getUHCType();
 	public abstract void checkConditions();
-	public abstract void loading();
 	
+	public abstract void init();
+	public abstract void loading();
 	public abstract void begin();
+	
+	public abstract void firstEpisode();
 	public abstract void episode(Integer ep);
 	
-	public abstract void run();
+	public abstract void run(Integer timer);
 	public void day(Integer ep) {}
 	public void night(Integer ep) {}
 	
@@ -45,8 +48,8 @@ public abstract class UHCMode {
 		
 		if (!game.hasTeam()) {
 			
-			if (game.getAlivePlayers().size() == 1) {
-				for (UHCPlayer player : game.getAlivePlayers()) {
+			if (game.getPlayingPlayers().size() == 1) {
+				for (UHCPlayer player : game.getPlayingPlayers()) {
 					
 					Bukkit.broadcastMessage(Lang.BC_SOLO_VICTORY.get().replace(LangTag.PLAYER_NAME.toString(), player.getDisplayName()));
 					if (player.isConnected()) {
@@ -67,8 +70,8 @@ public abstract class UHCMode {
 			}
 		} else {
 			
-			if (game.getAlivePlayers().size() == 1) {
-				UHCPlayer winner = (UHCPlayer) game.getAlivePlayers().toArray()[0];
+			if (game.getPlayingPlayers().size() == 1) {
+				UHCPlayer winner = (UHCPlayer) game.getPlayingPlayers().toArray()[0];
 				if (!winner.hasTeam()) {
 					
 					Bukkit.broadcastMessage(Lang.BC_SOLO_VICTORY.get().replace(LangTag.PLAYER_NAME.toString(), winner.getDisplayName()));
@@ -90,7 +93,7 @@ public abstract class UHCMode {
 				}
 			}
 			
-			if (game.getAliveTeams().size() == 1) {
+			if (game.getPlayingTeams().size() == 1) {
 				
 				if (ScenariosManager.ONLY_ONE_WINNER.isActivated()) {
 					game.destroyTeams();
@@ -99,7 +102,7 @@ public abstract class UHCMode {
 					return;
 				}
 				
-				for (UHCTeam team : game.getAliveTeams()) {
+				for (UHCTeam team : game.getPlayingTeams()) {
 					
 					Bukkit.broadcastMessage(Lang.BC_TEAM_VICTORY.get().replace(LangTag.TEAM_NAME.toString(), team.getName()));
 					

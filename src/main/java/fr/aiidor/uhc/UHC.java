@@ -14,11 +14,9 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.ShapedRecipe;
 import org.bukkit.plugin.java.JavaPlugin;
 
-import fr.aiidor.uhc.commands.CommandDW;
 import fr.aiidor.uhc.commands.CommandHost;
 import fr.aiidor.uhc.commands.CommandMessage;
 import fr.aiidor.uhc.commands.CommandScenario;
-import fr.aiidor.uhc.commands.CommandTG;
 import fr.aiidor.uhc.enums.Lang;
 import fr.aiidor.uhc.enums.UHCFile;
 import fr.aiidor.uhc.enums.UHCType;
@@ -29,8 +27,8 @@ import fr.aiidor.uhc.listeners.EventsManager;
 import fr.aiidor.uhc.scenarios.ScenariosManager;
 import fr.aiidor.uhc.scoreboard.ScoreboardManager;
 import fr.aiidor.uhc.scoreboard.TablistManager;
-import fr.aiidor.uhc.tools.Cage;
-import fr.aiidor.uhc.tools.UHCItem;
+import fr.aiidor.uhc.utils.Cage;
+import fr.aiidor.uhc.utils.UHCItem;
 import fr.aiidor.uhc.world.UHCWorld;
 import fr.aiidor.uhc.world.WorldManager;
 
@@ -104,7 +102,7 @@ public class UHC extends JavaPlugin {
 		//GAME CREATION
 		if (UHCFile.CONFIG.getYamlConfig().getBoolean("Game.create-default-game")) {	
 			
-			UHCType gm = UHCType.valueOf(UHCFile.CONFIG.getYamlConfig().getString("Game.default-game-mode"));
+			UHCType gm = UHCType.CLASSIC;
 			
 			Environment env = Environment.valueOf(config.getString("World.dimension").toUpperCase());
 			String mainworld = worldname;
@@ -139,21 +137,8 @@ public class UHC extends JavaPlugin {
 		pc_host.setExecutor(cmd_host);
 		pc_host.setTabCompleter(cmd_host);
 		
-		CommandDW cmd_dw = new CommandDW();
-		PluginCommand pc_dw = getCommand("dw");
-		
-		pc_dw.setExecutor(cmd_dw);
-		pc_dw.setTabCompleter(cmd_dw);
-		
 		getCommand("msg").setExecutor(new CommandMessage());
 		getCommand("scenarios").setExecutor(new CommandScenario());
-		
-		CommandTG cmd_tg = new CommandTG();
-		
-		getCommand("taupe").setExecutor(cmd_tg);
-		getCommand("taupe").setTabCompleter(cmd_tg);
-		getCommand("t").setExecutor(cmd_tg);
-		getCommand("t").setTabCompleter(cmd_tg);
 		
 		//SCOREBOARD
         scheduledExecutorService = Executors.newScheduledThreadPool(16);
@@ -162,6 +147,7 @@ public class UHC extends JavaPlugin {
 
         tablistManager = new TablistManager();
         
+        //CRAFTS
 		ShapedRecipe recipe = new ShapedRecipe(UHCItem.golden_head);
 		recipe.shape(new String[] { "GGG", "GHG", "GGG" });
 	    recipe.setIngredient('G', Material.GOLD_INGOT);
@@ -169,8 +155,9 @@ public class UHC extends JavaPlugin {
 		 
 		getServer().addRecipe(recipe);
 		
+		//AFFICHAGE FINAL
         Bukkit.getConsoleSender().sendMessage("§e---------------------------------");
-        Bukkit.getConsoleSender().sendMessage("§fPlugin UHC HOST - Version 1.3");     
+        Bukkit.getConsoleSender().sendMessage("§fPlugin UHC HOST - Version 1.4");     
         Bukkit.getConsoleSender().sendMessage("§6Author : B. Goodes");
         Bukkit.getConsoleSender().sendMessage("§e---------------------------------");
 	}

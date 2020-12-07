@@ -11,11 +11,12 @@ import org.bukkit.inventory.ItemStack;
 
 import fr.aiidor.uhc.enums.Lang;
 import fr.aiidor.uhc.listeners.events.GuiClickEvent;
-import fr.aiidor.uhc.tools.ItemBuilder;
+import fr.aiidor.uhc.utils.ItemBuilder;
 
 public abstract class GuiConfigBuilder extends Gui {
 	
 	private HashMap<String, ItemStack> dictionnary;
+	
 	private String[][] matrix = {
 			{"C", "B", "B", "B", "B", "B", "B", "B", "C"},
 			{"B", " ", " ", " ", "O", " ", " ", " ", "B"},

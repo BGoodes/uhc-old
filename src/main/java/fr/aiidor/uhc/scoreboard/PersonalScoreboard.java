@@ -36,7 +36,7 @@ public class PersonalScoreboard {
     private final UUID uuid;
     private final ObjectiveSign objectiveSign;
 
-    public PersonalScoreboard(Player player){
+    public PersonalScoreboard(Player player) {
         this.player = player;
         uuid = player.getUniqueId();
         objectiveSign = new ObjectiveSign("sidebar", "DevPlugin");

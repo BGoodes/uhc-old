@@ -10,6 +10,7 @@ import org.bukkit.entity.Entity;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Skeleton;
 import org.bukkit.entity.Skeleton.SkeletonType;
+import org.bukkit.entity.Slime;
 
 public abstract class MobScenario extends Scenario {
 
@@ -45,6 +46,14 @@ public abstract class MobScenario extends Scenario {
         	Skeleton skel = (Skeleton) spawn;
         	if (new Random().nextBoolean()) {
         		skel.setSkeletonType(SkeletonType.WITHER);
+        	}
+        }
+        
+        if (choose == EntityType.SLIME) {
+        	if (new Random().nextInt(8) == 0) {
+        		Slime slime = (Slime) spawn;
+        		
+        		slime.setSize(10);
         	}
         }
 	}

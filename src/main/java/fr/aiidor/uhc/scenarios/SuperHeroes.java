@@ -119,7 +119,7 @@ public class SuperHeroes extends Scenario {
 
 	@Override
 	public List<Category> getCategories() {
-		return Arrays.asList(Category.PVP);
+		return Arrays.asList(Category.PVP, Category.FUN);
 	}
 	
 	@Override

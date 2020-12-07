@@ -17,7 +17,6 @@ import fr.aiidor.uhc.UHC;
 import fr.aiidor.uhc.enums.Category;
 import fr.aiidor.uhc.enums.Lang;
 import fr.aiidor.uhc.enums.LangTag;
-import fr.aiidor.uhc.enums.UHCType;
 import fr.aiidor.uhc.game.Game;
 import fr.aiidor.uhc.game.UHCPlayer;
 import fr.aiidor.uhc.inventories.Gui;
@@ -116,12 +115,6 @@ public class AssaultAndBattery extends Scenario {
 	}
 	
 	@Override
-	public Boolean compatibleWith(UHCType type) {
-		if (type == UHCType.DEVIL_WATCHES) return false;
-		return true;
-	}
-	
-	@Override
 	public Gui getSettings() {
 		return gui;
 	}
@@ -159,15 +152,15 @@ public class AssaultAndBattery extends Scenario {
 		super.changeStateEvent(e);
 	}
 	
-	public Boolean canUseSword(UHCPlayer p) {
-		if (sword.contains(p) || (!bow.contains(p) && !sword.contains(p))) {
+	public Boolean canUseSword(UHCPlayer player) {
+		if (sword.contains(player) || (!bow.contains(player) && !sword.contains(player))) {
 			return true;
 		}
 		return false;
 	}
 	
-	public Boolean canUseBow(UHCPlayer p) {
-		if (bow.contains(p) || (!bow.contains(p) && !sword.contains(p))) {
+	public Boolean canUseBow(UHCPlayer player) {
+		if (bow.contains(player) || (!bow.contains(player) && !sword.contains(player))) {
 			return true;
 		}
 		return false;
@@ -189,21 +182,21 @@ public class AssaultAndBattery extends Scenario {
 		}
 	}
 	
-	private UHCPlayer getSoloPlayer(UHCTeam t) {
-		if (t.getAlivePlayers().size() == 1) {
-				for (UHCPlayer pl : t.getAlivePlayers()) {
+	private UHCPlayer getSoloPlayer(UHCTeam team) {
+		if (team.getAlivePlayers().size() == 1) {
+				for (UHCPlayer pl : team.getAlivePlayers()) {
 					return pl;
 			}
 		}
 		return null;
 	}
 	
-	private UHCPlayer getOtherPlayer(UHCPlayer p) {
-		if (p.hasTeam()) {
-			UHCTeam t = p.getTeam();
+	private UHCPlayer getOtherPlayer(UHCPlayer player) {
+		if (player.hasTeam()) {
+			UHCTeam t = player.getTeam();
 			if (t.getSize() == 2 && t.getAlivePlayers().size() == 2) {
-				for (UHCPlayer pl : t.getAlivePlayers()) {
-					if (!p.equals(pl)) return pl;
+				for (UHCPlayer p : t.getAlivePlayers()) {
+					if (!player.equals(p)) return p;
 				}
 			}
 		}

@@ -7,7 +7,7 @@ import java.util.concurrent.ConcurrentLinkedQueue;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.entity.Player;
 
-import fr.aiidor.uhc.tools.Reflection;
+import fr.aiidor.uhc.utils.Reflection;
 import net.minecraft.server.v1_8_R3.IScoreboardCriteria;
 import net.minecraft.server.v1_8_R3.PacketPlayOutScoreboardDisplayObjective;
 import net.minecraft.server.v1_8_R3.PacketPlayOutScoreboardObjective;

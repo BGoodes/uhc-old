@@ -71,7 +71,7 @@ public class AutralianCrafting extends Scenario {
 
 	@Override
 	public List<Category> getCategories() {
-		return Arrays.asList(Category.OTHER);
+		return Arrays.asList(Category.FUN);
 	}
 	
 	@Override

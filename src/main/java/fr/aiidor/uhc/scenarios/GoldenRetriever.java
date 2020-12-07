@@ -7,7 +7,7 @@ import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
 
 import fr.aiidor.uhc.enums.Category;
-import fr.aiidor.uhc.tools.UHCItem;
+import fr.aiidor.uhc.utils.UHCItem;
 
 public class GoldenRetriever extends ItemScenario {
 	

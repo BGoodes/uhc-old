@@ -16,8 +16,8 @@ import fr.aiidor.uhc.game.Game;
 import fr.aiidor.uhc.game.GameSettings;
 import fr.aiidor.uhc.game.UHCPlayer;
 import fr.aiidor.uhc.scenarios.ScenariosManager;
-import fr.aiidor.uhc.tools.Teleportation;
-import fr.aiidor.uhc.tools.Titles;
+import fr.aiidor.uhc.utils.Teleportation;
+import fr.aiidor.uhc.utils.Titles;
 
 public class GameTask extends UHCTask {
 
@@ -105,6 +105,14 @@ public class GameTask extends UHCTask {
 			if (ScenariosManager.ASSASSINS.isActivated() && !ScenariosManager.ASSASSINS.compass) {
 				ScenariosManager.ASSASSINS.setDistance();
 			}
+			
+			if (ScenariosManager.COORDONOIA.isActivated() && timer%60 == 0 && (timer/60)%ScenariosManager.KILL_THE_WITCH.time == 0) {
+				ScenariosManager.COORDONOIA.leak(game);
+			}
+			
+			if (ScenariosManager.KILL_THE_WITCH.isActivated() && timer%60 == 0 && (timer/60)%ScenariosManager.KILL_THE_WITCH.time == 0) {
+				ScenariosManager.KILL_THE_WITCH.findWitch(game);
+			}
 		}
 		
 		//-----------------------------------
@@ -148,6 +156,7 @@ public class GameTask extends UHCTask {
 						
 						game.getWorlds().forEach(w->w.setTime(23500));
 						game.getUHCMode().day(episode);
+						
 					} else {
 						
 						game.getWorlds().forEach(w->w.setTime(13500));
@@ -158,15 +167,14 @@ public class GameTask extends UHCTask {
 		}
 		
 		//-----------------------------------
-		playerRunnable();
-		
 		if (timer >= next_ep) {
 			//NEW EPISODE
 			game.broadcast(Lang.BC_EPISODE_END.get());
 			
 			
 			if (episode == 1) {
-				game.getUHCMode().begin();
+				
+				game.getUHCMode().firstEpisode();
 				
 				if (game.getSettings().uhc_cycle) {
 					
@@ -181,7 +189,9 @@ public class GameTask extends UHCTask {
 			this.next_ep = timer + settings.ep_time * 60;
 		}
 		
-		game.getUHCMode().run();
+		playerRunnable();
+		
+		game.getUHCMode().run(timer);
 		UHC.getInstance().getGameManager().end();
 	}
 	
@@ -247,7 +257,7 @@ public class GameTask extends UHCTask {
 				p.addPotionEffect(new PotionEffect(PotionEffectType.SPEED, Integer.MAX_VALUE, p.getKills(), false, false));
 			}
 			
-			if (game.isPvpTime() && timer%30 == 0) {
+			if (timer != 0 && game.isPvpTime() && timer%30 == 0) {
 				
 				if (ScenariosManager.NETHERIBUS.isActivated() && player.getWorld().getEnvironment() != Environment.NETHER) {
 					player.damage(2);
@@ -260,7 +270,17 @@ public class GameTask extends UHCTask {
 				}
 			}
 			
-			if (timer < 60 && ScenariosManager.CHUNK_APOCALYPSE.isActivated() && player.getLocation().getY() < 0) {
+			if (ScenariosManager.BEST_PVE.isActivated()) {
+				if (timer != 0 && timer%60 == 0 && (timer/60)%ScenariosManager.BEST_PVE.time == 0) {
+					ScenariosManager.BEST_PVE.increase();
+				}
+			}
+			
+			if (game.isPvpTime() && ScenariosManager.KILL_THE_WITCH.isActivated()) {
+				ScenariosManager.KILL_THE_WITCH.track(p);
+			}
+			
+			if (timer < game.getSettings().invincibility_time * 60 && ScenariosManager.CHUNK_APOCALYPSE.isActivated() && player.getLocation().getY() < 0) {
 				Location loc = Teleportation.getRandomLocation(player.getWorld(), (int) world.getWorldBorder().getSize()/2 - 20);
 				player.teleport(loc);
 			}

@@ -16,8 +16,8 @@ import fr.aiidor.uhc.enums.TeamType;
 import fr.aiidor.uhc.gamemodes.UHCMode;
 import fr.aiidor.uhc.scenarios.Scenario;
 import fr.aiidor.uhc.task.StopTask;
-import fr.aiidor.uhc.tools.Titles;
-import fr.aiidor.uhc.tools.UHCItem;
+import fr.aiidor.uhc.utils.Titles;
+import fr.aiidor.uhc.utils.UHCItem;
 import fr.aiidor.uhc.world.UHCWorld;
 
 public class GameManager {

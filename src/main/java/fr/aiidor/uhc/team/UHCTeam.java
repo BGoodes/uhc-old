@@ -17,10 +17,9 @@ import fr.aiidor.uhc.UHC;
 import fr.aiidor.uhc.enums.Lang;
 import fr.aiidor.uhc.enums.LangTag;
 import fr.aiidor.uhc.enums.TeamColor;
-import fr.aiidor.uhc.enums.UHCType;
 import fr.aiidor.uhc.game.Game;
 import fr.aiidor.uhc.game.UHCPlayer;
-import fr.aiidor.uhc.tools.ItemBuilder;
+import fr.aiidor.uhc.utils.ItemBuilder;
 
 public class UHCTeam {
 	
@@ -168,10 +167,6 @@ public class UHCTeam {
 	public void broadcast(String message) {
 		for (UHCPlayer p : getConnectedPlayers()) {
 			p.getPlayer().sendMessage(message);
-		}
-		
-		if (game.getUHCMode().getUHCType() == UHCType.TAUPE_GUN) {
-			
 		}
 		
 		if (UHC.getInstance().getSettings().log_game_bc) {

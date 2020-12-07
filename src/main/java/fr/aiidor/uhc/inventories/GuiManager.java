@@ -20,55 +20,50 @@ public class GuiManager {
 	public GuiManager() {
 		inventories = new HashSet<Gui>();
 		
-		INV_CONFIG = createInventory(new Inv_Config());
-		INV_CONFIG_SCENARIOS = createInventory(new Inv_Scenarios());
-		INV_CONFIG_SCENARIOS_SETTINGS = createInventory(new Inv_Scenarios_Settings());
-		INV_CONFIG_STUFF = createInventory(new Inv_Stuff());
-		INV_CONFIG_ENCHANTS = createInventory(new Inv_Enchants());
-		INV_CONFIG_WORLDS = createInventory(new Inv_Worlds());
-		INV_WORLD_CREATION = createInventory(new Inv_World_Creation());
-		INV_WORLD_SETTINGS = createInventory(new Inv_World_Settings());
+		INV_CONFIG = createInventory(new GuiConfig());
+		INV_CONFIG_SCENARIOS = createInventory(new GuiScenarios());
+		INV_CONFIG_SCENARIOS_SETTINGS = createInventory(new GuiScenariosSettings());
+		INV_CONFIG_STUFF = createInventory(new GuiStuff());
+		INV_CONFIG_ENCHANTS = createInventory(new GuiEnchants());
+		INV_CONFIG_WORLDS = createInventory(new GuiWorlds());
+		INV_WORLD_CREATION = createInventory(new GuiWorldCreation());
+		INV_WORLD_SETTINGS = createInventory(new GuiWorldSettings());
 		
-		INV_CONFIG_START_STUFF = createInventory(new Inv_Start_Stuff());
-		INV_CONFIG_DEATH_STUFF = createInventory(new Inv_Death_Stuff());
-		INV_CONFIG_PLAYERS = createInventory(new Inv_Players());
+		INV_CONFIG_START_STUFF = createInventory(new GuiStartStuff());
+		INV_CONFIG_DEATH_STUFF = createInventory(new GuiDeathStuff());
+		INV_CONFIG_PLAYERS = createInventory(new GuiPlayers());
 		
-		INV_TEAMS_CHOOSE = createInventory(new Inv_Teams_Choose());
-		INV_CONFIG_TEAMS = createInventory(new Inv_Teams());
-		
-		
-		INV_TEAM_NUMBER = createInventory(new Inv_Team_Number());
-		INV_TEAM_SIZE = createInventory(new Inv_Team_Size());
-		
-		INV_SCENARIO_LIST = createInventory(new Inv_Scenarios_List());
-		
-		INV_CONFIG_LOOTS = createInventory(new Inv_Loots());
-		INV_CONFIG_TREES = createInventory(new Inv_Trees());
-		
-		INV_CONFIG_WB = createInventory(new Inv_Worldborder());
-		INV_CONFIG_WB_SIZE = createInventory(new Inv_Wb_Size());
-		INV_CONFIG_WB_FINAL_SIZE = createInventory(new Inv_Wb_Final_Size());
-		
-		INV_CONFIG_TIME = createInventory(new Inv_Time());
-		INV_CONFIG_INVINCIBILITY_TIME = createInventory(new Inv_Invincibility_Time());
-		INV_CONFIG_PVP_TIME = createInventory(new Inv_Pvp_Time());
-		INV_CONFIG_WB_TIME = createInventory(new Inv_Wb_Time());
-		INV_CONFIG_EP1_TIME = createInventory(new Inv_Ep1_Time());
-		INV_CONFIG_EP_TIME = createInventory(new Inv_Ep_Time());
-		
-		INV_CONFIG_LIFE = createInventory(new Inv_Life());
-		INV_CONFIG_LIFE_APPLE = createInventory(new Inv_Life_Apples());
-		
-		INV_CONFIG_GAPPLES = createInventory(new Inv_Life_Gapples());
-		INV_CONFIG_NAPPLES = createInventory(new Inv_Life_Napples());
-		INV_CONFIG_HAPPLES = createInventory(new Inv_Life_Happles());
-		
-		INV_CONFIG_DISPLAY_LIFE = createInventory(new Inv_Display_Life());
+		INV_TEAMS_CHOOSE = createInventory(new GuiTeamChoose());
+		INV_CONFIG_TEAMS = createInventory(new GuiTeams());
 		
 		
-		//DW
-		INV_CONFIG_DW = createInventory(new Inv_Dw());
-		INV_CONFIG_DW_COMPO = createInventory(new Inv_Dw_Compo());
+		INV_TEAM_NUMBER = createInventory(new GuiTeamNumber());
+		INV_TEAM_SIZE = createInventory(new GuiTeamSize());
+		
+		INV_SCENARIO_LIST = createInventory(new GuiScenariosList());
+		
+		INV_CONFIG_LOOTS = createInventory(new GuiLoots());
+		INV_CONFIG_TREES = createInventory(new GuiTrees());
+		
+		INV_CONFIG_WB = createInventory(new GuiWorldborder());
+		INV_CONFIG_WB_SIZE = createInventory(new GuiWbSize());
+		INV_CONFIG_WB_FINAL_SIZE = createInventory(new GuiWbFinalSize());
+		
+		INV_CONFIG_TIME = createInventory(new GuiTime());
+		INV_CONFIG_INVINCIBILITY_TIME = createInventory(new GuiInvincibityTime());
+		INV_CONFIG_PVP_TIME = createInventory(new GuiPvpTime());
+		INV_CONFIG_WB_TIME = createInventory(new GuiWbTime());
+		INV_CONFIG_EP1_TIME = createInventory(new GuiEpisode1Time());
+		INV_CONFIG_EP_TIME = createInventory(new GuiEpisodeTime());
+		
+		INV_CONFIG_LIFE = createInventory(new GuiHealth());
+		INV_CONFIG_LIFE_APPLE = createInventory(new GuiHealthApples());
+		
+		INV_CONFIG_GAPPLES = createInventory(new GuiHealthGapple());
+		INV_CONFIG_NAPPLES = createInventory(new GuiHealthNapples());
+		INV_CONFIG_HAPPLES = createInventory(new GuiHealthHapples());
+		
+		INV_CONFIG_DISPLAY_LIFE = createInventory(new GuiDisplayHealth());
 		
 		for (Scenario scenario : UHC.getInstance().getScenarioManager().getScenarios()) {
 			if (scenario.hasSettings()) {
@@ -116,11 +111,6 @@ public class GuiManager {
 	public static Gui INV_CONFIG_HAPPLES;
 
 	public static Gui INV_CONFIG_DISPLAY_LIFE;
-	
-	//DW
-	public static Gui INV_CONFIG_DW;
-	public static Gui INV_CONFIG_DW_COMPO;
-	
 	
 	public Gui createInventory(Gui inv) {
 		inventories.add(inv);

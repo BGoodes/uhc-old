@@ -35,6 +35,8 @@ public enum Rank {
 		if (perms.contains(Permission.NONE)) return false;
 		if (perms.contains(Permission.ALL)) return true;
 		
+		if (perms.contains(Permission.MC_COMMANDS) && perm.isMCCommand()) return true;
+		
 		return perms.contains(perm);
 	}
 }

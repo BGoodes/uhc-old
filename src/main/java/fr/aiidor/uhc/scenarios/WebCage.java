@@ -7,7 +7,7 @@ import org.bukkit.Location;
 import org.bukkit.Material;
 
 import fr.aiidor.uhc.enums.Category;
-import fr.aiidor.uhc.tools.Cage;
+import fr.aiidor.uhc.utils.Cage;
 
 public class WebCage extends Scenario {
 	

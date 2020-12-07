@@ -14,7 +14,7 @@ import org.bukkit.event.entity.EntityDeathEvent;
 import org.bukkit.inventory.ItemStack;
 
 import fr.aiidor.uhc.enums.Category;
-import fr.aiidor.uhc.tools.XpOrb;
+import fr.aiidor.uhc.utils.XpOrb;
 
 public class CutClean extends Scenario {
 	

@@ -12,7 +12,7 @@ import org.bukkit.inventory.ItemStack;
 import fr.aiidor.uhc.UHC;
 import fr.aiidor.uhc.enums.Category;
 import fr.aiidor.uhc.game.UHCPlayer;
-import fr.aiidor.uhc.tools.ItemBuilder;
+import fr.aiidor.uhc.utils.ItemBuilder;
 
 public class GoodGame extends Scenario {
 	

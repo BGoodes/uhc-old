@@ -20,9 +20,9 @@ public class UHCWorld {
 	private String nether;
 	private String end;
 	
-	private Boolean overworld_state = true;
-	private Boolean nether_state = true;
-	private Boolean end_state = false;
+	public Boolean overworld_state = true;
+	public Boolean nether_state = true;
+	public Boolean end_state = false;
 	
 	private Boolean regen = false;
 	
@@ -140,18 +140,6 @@ public class UHCWorld {
 		return end != null && isGenerate(end) && end_state;
 	}
 	
-	public void setOverworldState(Boolean state) {
-		this.overworld_state = state;
-	}
-	
-	public void getNetherState(Boolean state) {
-		this.nether_state = state;
-	}
-	
-	public void getEndState(Boolean state) {
-		this.end_state = state;
-	}
-	
 	public List<World> getAll() {
 		List<World> wl = new ArrayList<World>();
 		if (hasOverWorld()) {
@@ -175,6 +163,14 @@ public class UHCWorld {
 	
 	public String getOverWorldName() {
 		return overworld;
+	}
+	
+	public String getNetherName() {
+		return nether;
+	}
+	
+	public String getEndName() {
+		return end;
 	}
 	
 	public World getMainWorld() {

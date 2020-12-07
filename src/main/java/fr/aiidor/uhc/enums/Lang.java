@@ -17,9 +17,8 @@ public enum Lang {
 	PREFIX,
 	ERROR,
 	INFO_PREFIX,
+	
 	DW_PREFIX,
-	TG_PREFIX,
-	LG_PREFIX,
 	
 	//ENCHANTS
 	ENCHANTMENTS("enchants"),
@@ -156,6 +155,7 @@ public enum Lang {
 	INV_W_SEED("inventory/config-worlds"),
 	INV_W_DELETE("inventory/config-worlds"),
 	INV_W_REGEN("inventory/config-worlds"),
+	INV_W_PREGEN("inventory/config-worlds"),
 	INV_W_AUTOREGEN("inventory/config-worlds"),
 	
 	INV_UHC_GAPPLES("inventory/config-life"),
@@ -180,6 +180,9 @@ public enum Lang {
 	INV_TREES_SHEARS("inventory/config-loots"),
 	INV_TREES_GOLDEN_APPLE("inventory/config-loots"),
 	INV_TREES_DROP_SAPLING("inventory/config-loots"),
+	
+	INV_SILEX("inventory/config-loots"),
+	INV_PEARLS("inventory/config-loots"),
 	
 	INV_SCENARIO_LIST("inventory/config-scenarios"),
 	INV_SCENARIO_HIDE("inventory/config-scenarios"),
@@ -229,6 +232,7 @@ public enum Lang {
 	ST_ERROR_SCENARIO_PVP("staff/error"),
 	ST_ERROR_SCENARIO_CONDITION("staff/error"),
 	ST_ERROR_SCENARIO_COMPATIBILITY("staff/error"),
+	ST_ERROR_GAMEMODE_COMPATIBILITY("staff/error"),
 	ST_ERROR_OPTION_START("staff/error"),
 	ST_ERROR_OPTION_PVP("staff/error"),
 	ST_ERROR_WORLD_GENERATION("staff/error"),
@@ -239,6 +243,7 @@ public enum Lang {
 	ST_ERROR_LOBBY_WORLD("staff/error"),
 	ST_ERROR_WORLD_EXIST("staff/error"),
 	ST_ERROR_SERVER_RESTART("staff/error"),
+	ST_ERROR_DESACTIVATE_MAIN_WORLD("staff/error"),
 	
 	MSG_CHAT("message"),
 	MSG_CHAT_TEAM("message"),
@@ -340,6 +345,9 @@ public enum Lang {
 	PVP_ONLY("scenarios"),
 	ERROR_CONDITION_TO2("scenarios"),
 	
+	SCENARIO_PERIOD("scenarios"),
+	
+	
 	FURNACE_SPEED("scenarios/fastsmelting"),
 	
 	FLOWER_DROP("scenarios/flower-power"),
@@ -411,6 +419,16 @@ public enum Lang {
 	NETHERIBUS_ANNOUNCE("scenarios/netheribus"),
 	NETHERIBUS_DAMAGE("scenarios/netheribus"),
 	
+	BEST_PVE_INCREASE("scenarios/best-pve"),
+	BEST_PVE_DAMAGE("scenarios/best-pve"),
+	
+	WITCH_ANNOUNCE("scenarios/kill-the-witch"),
+	
+	COORDONOIA_ANNOUNCE("scenarios/coordonoia"),
+	
+	BIOME_DISTANCE("scenarios/biome-center"),
+	BIOME_TYPE("scenarios/biome-center"),
+	
 	//MOTD
 	MOTD_WAITING_LINE_1("1", "motd/WAITING"),
 	MOTD_WAITING_LINE_2("2", "motd/WAITING"),
@@ -434,67 +452,6 @@ public enum Lang {
 	CAUSE_WORLD_DELETING("kick-reason"),
 	CAUSE_WORLD_GENERATING("kick-reason"),
 	CAUSE_SERVER_CLOSE("kick-reason"),
-	
-	TG_MOLE("gamemodes/taupe-gun"),
-	TG_MOLE_PREFIX("gamemodes/taupe-gun"),
-	TG_MOLE_SELECTION("gamemodes/taupe-gun"),
-	TG_MOLE_ANNOUNCE("gamemodes/taupe-gun"),
-	TG_SUPER_MOLE_ANNOUNCE("gamemodes/taupe-gun"),
-	TG_MOLE_REVEAL("gamemodes/taupe-gun"),
-	TG_SUPER_MOLE_REVEAL("gamemodes/taupe-gun"),
-	
-	TG_CMD_ERROR_MOLE("gamemodes/taupe-gun"),
-	TG_CMD_ERROR_REVEAL("gamemodes/taupe-gun"),
-	TG_CMD_ERROR_KIT("gamemodes/taupe-gun"),
-	
-	DW_ANNOUNCE_ROLE("gamemodes/devil-watches/announce"),
-	DW_SECTARIAN("gamemodes/devil-watches/announce"),
-	DW_SEAL("gamemodes/devil-watches/announce"),
-	DW_DEATH_REASON("gamemodes/devil-watches/announce"),
-	
-	DW_VICTORY_DRAW("gamemodes/devil-watches/announce"),
-	DW_VICTORY_WIN("gamemodes/devil-watches/announce"),
-	DW_VICTORY_SOLO("gamemodes/devil-watches/announce"),
-	
-	DW_ERROR_NO_POWER("gamemodes/devil-watches/message"),
-	DW_ERROR_NO_POWER_EPISODE("gamemodes/devil-watches/message"),
-	DW_ERROR_NO_POWER_EPISODE_TIME("gamemodes/devil-watches/message"),
-	DW_ERROR_NO_POWER_USE("gamemodes/devil-watches/message"),
-	DW_ERROR_POWER_TIME_LIMIT_EPISODE("gamemodes/devil-watches/message"),
-	DW_SECTARIANS_LIST("gamemodes/devil-watches/message"),
-	DW_DEMONS_LIST("gamemodes/devil-watches/message"),
-	DW_NEW_SECTARIAN("gamemodes/devil-watches/message"),
-	
-	DW_HUNTER_INSPECT_NULL("gamemodes/devil-watches/roles/HUNTER"),
-	DW_HUNTER_INSPECT_LOCATE("gamemodes/devil-watches/roles/HUNTER"),
-	
-	DW_GURU_USE("gamemodes/devil-watches/roles/GURU"),
-	DW_GURU_BC("gamemodes/devil-watches/roles/GURU"),
-	DW_ANNOUNCE_NIGHT("gamemodes/devil-watches/roles/GURU"),
-	
-	DW_GUARDIAN_CAN_USE("gamemodes/devil-watches/roles/GUARDIAN"),
-	DW_GUARDIAN_ERROR_TARGET("gamemodes/devil-watches/roles/GUARDIAN"),
-	DW_GUARDIAN_PROTECTION_MSG("gamemodes/devil-watches/roles/GUARDIAN"),
-	DW_GUARDIAN_PROTECTED_MSG("gamemodes/devil-watches/roles/GUARDIAN"),
-	DW_GUARDIAN_PROTECTED_DEATH_MSG("gamemodes/devil-watches/roles/GUARDIAN"),
-	DW_GUARDIAN_PROTECTED_DEATH("gamemodes/devil-watches/roles/GUARDIAN"),
-	
-	DW_PROPHET_PROPHECY("gamemodes/devil-watches/roles/PROPHET"),
-	
-	DW_PROWLER_JOIN("gamemodes/devil-watches/roles/PROWLER"),
-	
-	DW_CAT_MEOW("gamemodes/devil-watches/roles/CAT_LADY"),
-	DW_CAT_WHISPER("gamemodes/devil-watches/roles/CAT_LADY"),
-	DW_CAT_WHISPER_DEATH("gamemodes/devil-watches/roles/CAT_LADY"),
-	DW_CAT_WHISPER_DEATH_AROUND("gamemodes/devil-watches/roles/CAT_LADY"),
-	DW_CAT_WHISPER_DEATH_KILLER("gamemodes/devil-watches/roles/CAT_LADY"),
-	DW_CAT_WHISPER_KILL("gamemodes/devil-watches/roles/CAT_LADY"),
-	DW_CAT_NUMBER("gamemodes/devil-watches/roles/CAT_LADY"),
-	
-	DW_GREEDY_PREVENT("gamemodes/devil-watches/roles/GREEDY_DEMON"),
-	
-	DW_ITEM_HOLY_WATER("gamemodes/devil-watches/inventory"),
-	INV_DW_COMPO("gamemodes/devil-watches/inventory"),
 	
 	//CONSOLE
 	ERROR_WORLD_NOT_FOUND("console"),
@@ -569,8 +526,6 @@ public enum Lang {
 		value = value.replace(LangTag.INFO_PREFIX.toString(), VALUES.get(INFO_PREFIX));
 		
 		value = value.replace(LangTag.DW_PREFIX.toString(), VALUES.get(DW_PREFIX));
-		value = value.replace(LangTag.TG_PREFIX.toString(), VALUES.get(TG_PREFIX));
-		value = value.replace(LangTag.LG_PREFIX.toString(), VALUES.get(LG_PREFIX));
 		
 		value = value.replace(LangTag.AC_CANCEL.toString(), VALUES.get(AC_CANCEL));
 		value = value.replace(LangTag.AC_VALIDATE.toString(), VALUES.get(AC_VALIDATE));
@@ -619,6 +574,9 @@ public enum Lang {
 			
 			if (game.getState() == GameState.RUNNING) value = value.replace(LangTag.MAX_PLAYERS.toString(), game.getInGamePlayerCount().toString());
 			else value = value.replace(LangTag.MAX_PLAYERS.toString(), settings.getSlots().toString());
+			
+			/*if (game.hasHost())
+			else */
 			
 			if (game.isRunning()) {
 				value = value.replace(LangTag.TIMER_S.toString(), game.getTask().getTimeString("%s"));

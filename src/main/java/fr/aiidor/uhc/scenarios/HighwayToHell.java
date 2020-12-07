@@ -41,7 +41,7 @@ public class HighwayToHell extends ItemScenario {
 
 	@Override
 	public List<Category> getCategories() {
-		return Arrays.asList(Category.SURVIVAL);
+		return Arrays.asList(Category.RUN);
 	}
 	
 

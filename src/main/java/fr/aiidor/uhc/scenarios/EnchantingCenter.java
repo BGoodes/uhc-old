@@ -8,8 +8,8 @@ import org.bukkit.Material;
 import org.bukkit.World;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
+import org.bukkit.util.Vector;
 
-import fr.aiidor.uhc.UHC;
 import fr.aiidor.uhc.enums.Category;
 import fr.aiidor.uhc.enums.Lang;
 import fr.aiidor.uhc.game.Game;
@@ -57,8 +57,10 @@ public class EnchantingCenter extends Scenario {
 	}
 
 	
-	public void spawnEnchantTable(World world) {
-		table_loc = new Location(world, 0, world.getMaxHeight(), 0);
+	public void spawnEnchantTable(Game game, World world) {
+		Vector center = game.getSettings().map_center;
+		
+		table_loc = new Location(world, center.getX(), world.getMaxHeight(), center.getZ());
 		
 		while (table_loc.getY() > 0) {
 			Block b = table_loc.getBlock();
@@ -68,8 +70,6 @@ public class EnchantingCenter extends Scenario {
 			}
 			else table_loc.subtract(0, 1, 0);
 		}
-		
-		Game game = UHC.getInstance().getGameManager().getGame();
 			
 		game.log(Lang.ENCHANT_TABLE_GENERATION_ERROR.get());
 		game.getSettings().setActivated(this, false);

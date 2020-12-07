@@ -4,12 +4,9 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Random;
 
-import org.bukkit.Chunk;
 import org.bukkit.Material;
 import org.bukkit.Sound;
-import org.bukkit.block.Block;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.ItemStack;
 
@@ -20,11 +17,11 @@ import fr.aiidor.uhc.inventories.Gui;
 import fr.aiidor.uhc.inventories.GuiBuilder;
 import fr.aiidor.uhc.inventories.GuiManager;
 import fr.aiidor.uhc.listeners.events.GuiClickEvent;
-import fr.aiidor.uhc.tools.ItemBuilder;
+import fr.aiidor.uhc.utils.ItemBuilder;
 
 public class ChunkApocalypse extends Scenario {
 	
-	private Integer percent = 5;
+	public Integer percent = 5;
 	private Gui gui;
 	
 	public ChunkApocalypse(ScenariosManager manager) {
@@ -154,24 +151,5 @@ public class ChunkApocalypse extends Scenario {
 	@Override
 	public List<Category> getCategories() {
 		return Arrays.asList(Category.GENERATION);
-	}
-	
-	public Boolean apocalypse(Chunk c) {
-		
-		if (new Random().nextInt(100) <= percent) {
-			
-			for (int x = 0; x < 16; x++) {
-				for (int y = 0; y <= 131; y++) {
-					for (int z = 0; z < 16; z++) {
-	                    Block block = c.getBlock(x, y, z);
-	                    if (block.getType() != Material.AIR) block.setType(Material.AIR, false);
-					}
-				}
-			}
-			
-			return true;
-		}
-		
-		return false;
 	}
 }

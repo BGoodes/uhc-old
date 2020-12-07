@@ -17,6 +17,7 @@ import org.bukkit.craftbukkit.v1_8_R3.entity.CraftPlayer;
 import org.bukkit.entity.Player;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
+import org.bukkit.util.Vector;
 
 import fr.aiidor.uhc.UHC;
 import fr.aiidor.uhc.enums.ActionChat;
@@ -29,11 +30,11 @@ import fr.aiidor.uhc.game.Game;
 import fr.aiidor.uhc.game.UHCPlayer;
 import fr.aiidor.uhc.listeners.events.ChangeScenarioStateEvent;
 import fr.aiidor.uhc.scenarios.ItemScenario;
-import fr.aiidor.uhc.scenarios.Scenario;
 import fr.aiidor.uhc.scenarios.ItemScenario.GiveTime;
+import fr.aiidor.uhc.scenarios.Scenario;
 import fr.aiidor.uhc.scenarios.ScenariosManager;
 import fr.aiidor.uhc.team.UHCTeam;
-import fr.aiidor.uhc.tools.Teleportation;
+import fr.aiidor.uhc.utils.Teleportation;
 import fr.aiidor.uhc.world.UHCWorld;
 
 public class LoadingTask extends UHCTask {
@@ -73,19 +74,21 @@ public class LoadingTask extends UHCTask {
 			for (int i = n; i > 0; i--) {
 				Scenario scenario = scenarios.get(new Random().nextInt(scenarios.size()));
 				
-				ChangeScenarioStateEvent scenario_event = new ChangeScenarioStateEvent(scenario, !game.getSettings().IsActivated(scenario), null, game);
+				if (scenario.isActivated()) continue;
+				if (scenario.needWorldGeneration() && !game.canRegenWorlds()) continue;
 				
+				ChangeScenarioStateEvent scenario_event = new ChangeScenarioStateEvent(scenario, true, null, game);
 				scenario.changeStateEvent(scenario_event);
 				
-				if (scenario_event.isCancelled()) continue;
+				if (!scenario_event.isCancelled()) game.getSettings().setActivated(scenario, !game.getSettings().IsActivated(scenario));;
 				
-				game.getSettings().setActivated(scenario, !game.getSettings().IsActivated(scenario));
 			}
 		}
 		
 		game.setState(GameState.LOADING);
 		game.getMainWorld().getMainWorld().setTime(23500 - 20 * timer);
 		
+		game.getUHCMode().loading();
 		
 		//REGEN
 		Boolean regenWorld = false;
@@ -106,9 +109,11 @@ public class LoadingTask extends UHCTask {
 		//WORLDS
 		for (World w : game.getWorlds()) {
 			WorldBorder wb = w.getWorldBorder();
+			Vector c = game.getSettings().map_center;
 			
 			wb.setSize(game.getSettings().wb_size_max * 2);
 			wb.setDamageAmount(game.getSettings().wb_damage);
+			wb.setCenter(c.getX(), c.getZ());
 			wb.setDamageBuffer(0);	
 		}
 		
@@ -291,10 +296,10 @@ public class LoadingTask extends UHCTask {
 			game.broadcast(Lang.BC_GAME_START.get());
 			game.broadcast("§8-------------------------------");
 			
-			game.getUHCMode().loading();
+			game.getUHCMode().begin();
 			
 			if (ScenariosManager.ENCHANTING_CENTER.isActivated()) {
-				ScenariosManager.ENCHANTING_CENTER.spawnEnchantTable(game.getMainWorld().getMainWorld());
+				ScenariosManager.ENCHANTING_CENTER.spawnEnchantTable(game, game.getMainWorld().getMainWorld());
 			}
 			
 			for (UHCPlayer p : game.getIngamePlayers()) {
@@ -324,6 +329,10 @@ public class LoadingTask extends UHCTask {
 					
 					if (ScenariosManager.INFINITE_ENCHANTER.isActivated()) {
 						player.setLevel(1000);
+					}
+					
+					if (ScenariosManager.BEST_PVE.isActivated()) {
+						ScenariosManager.BEST_PVE.add(p);
 					}
 					
 					if (game.getSettings().start_abso > 0) {

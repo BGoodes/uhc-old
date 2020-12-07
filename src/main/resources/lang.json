@@ -1,1229 +1,1 @@
-{
-	"prefix" : "§5§lUHC §8»",
-	"error" : "§6Erreur §8»",
-	"info-prefix" : "§c§lInfo §8»",
-		
-	"dw-prefix" : "§4§lDW-UHC §8»",
-	"tg-prefix" : "§6Taupe §cGun §8»",
-	"lg-prefix" : "§4§lLoup-Garous §8»",
-	
-	"inventory" : {
-		
-		"inv-configuration" : "§d§lConfiguration",
-		"inv-team-choose" : "§fChoisir une équipe",
-		"inv-team-random" : "§fÉquipe §7§nAléatoire§r",
-		
-		"inv-exit" : "§4Sortir §lX",
-		"inv-back" : "§4Revenir en arrière «",
-		"inv-next-page" : "§aPage suivante »",
-		"inv-last-page" : "§cPage précédente «",
-		
-		"inv-left-click" : "§eClique gauche : §aAjouter {value}",
-		"inv-right-click" : "§eClique droit : §cRetirer {value}",
-		
-		"inv-left-shift-click" : "§emaj + Clique gauche : §aAjouter {value}",
-		"inv-right-shift-click" : "§emaj + Clique droit : §cRetirer {value}",
-		
-		"inv-right-click-option" : "§e§oClique droit pour configurer",
-		
-		"inv-on" : "§a[Activé]",
-		"inv-off" : "§c[Désactivé]",
-		"inv-random" : "§3[Aléatoire]",
-		"inv-state" : "§7État : ",
-		
-		"inv-locked" : "§c[Bloqué]",
-				
-		"inv-time-option" : "§7Temps : §a{value}",
-		"minute" : "min",
-		"second" : "s",
-		
-		"minutes" : "minutes",
-		"secondes" : "secondes",
-		
-		"inv-probability-option" : "§7Probabilité : §a{value}",
-				
-		"level" : "Niveau",
-		"search" : "Rechercher",
-		"settings" : "Paramètrer",
-				
-		"config-menu" : {
-		
-			"inv-start-game" : "§aLancer la partie ?",
-			"inv-cancel-game" : "§cAnnuler le lancement ?",
-			"inv-teams" : "§6Gestion des équipes",
-			"inv-players" : "§eGestion des joueurs",
-			"inv-stuff" : "§aGestion du stuff",
-			"inv-time" : "§9Gestion du temps",
-			"inv-world-border" : "§dGestion de la World Border",
-			"inv-worlds" : "§3Gestion des Mondes",
-			"inv-scenarios" : "§bLes scénarios",
-		
-			"inv-life" : "§dGestion de la vie",
-			"inv-loots" : "§aLes Loots",
-			"inv-rules" : "§5Les règles",
-			
-			"inv-config" : "§dConfigurations préfaites"
-		},
-		
-		"config-configs" : {
-			"inv-config-load" : "§eCharger la configuration ?",
-			"inv-config-save" : "§eSauvergarder la configuration ?"
-		},
-		
-		"config-teams" : {
-			"inv-team-size" : "§7Tailles des équipes §8: §a{team-size}",
-			"inv-team-size-config" : "§aTailes des équipes",
-			"inv-team-number" : "§7Nombre d'équipes §8: §a{team-number}",
-			"inv-team-number-config" : "§aNombre d'équipes",
-			"inv-team-type" : "§7Type d'équipes §8» §a{team-type}"
-		},
-		
-		"config-players" : {
-			"inv-join-state" : "§7État de la partie §8» §a{join-state}"
-		},
-		
-		"config-stuff" : {
-			"inv-start-items" : "§aItems de départ",
-			"inv-death-items" : "§cItems à la mort",
-			"inv-stuff-enchants" : "§5Limites des enchantements",
-			"inv-stuff-potions" : "§bGestion des potions"
-		},
-		
-		"config-time" : {
-			"inv-invincibility-time" : "§2Invincibilité : §a{invincibility-time} min",
-			"inv-invincibility-time-config" : "§2Invincibilité",
-			"inv-pvp-time" : "§4Pvp : §c{pvp-time} min",
-			"inv-pvp-time-config" : "§4Pvp",
-			"inv-ep1-time" : "§6Episode 1 : §e{episode1-time} min",
-			"inv-ep1-time-config" : "§6Episode 1",
-			"inv-ep-time" : "§6Episode : §e{episode-time} min",
-			"inv-ep-time-config" : "§6Episode",
-			"inv-wb-time" : "§3WorldBorder : §b{wb-time} min",
-			"inv-wb-time-config" : "§3WorldBorder"
-		},
-		
-		"config-scenarios" : {
-			"inv-scenario-list" : "§2Les Scénarios :",
-			"inv-scenario-hide" : "§3Liste des scénarios",
-			"inv-scenario-random" : "§7Scénarios aléatoires : §6{value}"
-		},
-		
-		"config-wb" : {
-			"inv-wb-size" : "§7Taille initial : §a{wb-initial-size}",
-			"inv-wb-size-config" : "§aTaille initial",
-			"inv-wb-final-size" : "§7Taille final : §c{wb-final-size}",
-			"inv-wb-final-size-config" : "§cTaille final",
-			"inv-wb-speed" : "§7Vitesse : §b{wb-speed} bloc/s",
-			"inv-block-per-second" : "bloc/s"
-		},
-		
-		"config-worlds" : {
-			"inv-w-main-world" : "§6[Monde Principal]",
-			"inv-w-lobby-world" : "§b[Monde Lobby]",
-			"inv-w-overworld" : "§bOverworld",
-			"inv-w-nether" : "§cNether",
-			"inv-w-end" : "§9End",
-			"inv-w-generate-structure" : "§7Générer des structures",
-			"inv-w-type" : "§7Type de monde",
-			"inv-w-seed" : "§7Graine du monde",
-						
-			"inv-w-creation" : "§2Créer un monde",
-			"inv-w-settings" : "§eParamètrer un monde",
-			"inv-w-tp" : "§aSe téléporter ?",
-			"inv-w-regen" : "§6Régénérer ?",
-			"inv-w-delete" : "§cSupprimer ?",
-			"inv-w-autoregen" : "§bRégénération automatique"
-		},
-		
-		"config-life" : {
-			"inv-gapples-config" : "§6Gestion des pommes d'or",
-			"inv-uhc-gapples" : "§eUHC Gapples",
-			"inv-life-display-config" : "§5Gestion affichage de la vie",
-			"inv-life-display" : "§eAffichage de la vie",
-			"inv-life-display-head" : "§bAffichage au dessus de la tête",
-			"inv-life-display-bow" : "§bAffichage quand touché à l'arc",
-			
-			"inv-life-gapple" : "§eGolden Apple",
-			"inv-life-happle" : "§6Golden Head",
-			"inv-life-napple" : "§5Notch Apple",
-
-			"inv-life-abso" : "§bAbsorption : §f{value}",
-			"inv-life-effects" : "§5Gestions des effets"
-		},
-		
-		"config-loots" : {
-			"inv-uhc-drop" : "§eDrop UHC",
-			"inv-trees" : "§2Loots des arbres",
-			"inv-trees-drop-apple" : "§aTaux de drop des pommes",
-			"inv-trees-rate" : "§6Taux : §e{value}",
-			"inv-trees-all-trees" : "§2Tous les types d'arbres drop des pommes",
-			"inv-trees-shears" : "§eCisaille drop pomme",
-			"inv-trees-golden-apple" : "§dDrop des pommes d'or",
-			"inv-trees-drop-sapling" : "§aDrop des pousses"
-		},
-		
-			
-		"inv-categories" : "§5§oCatégories : §d",
-		"inv-category" : "§7Catégorie §8» §6",
-	
-		"categories" : {
-			"ALL" : "§aTout",
-			"RUN" : "§dRun",
-			"PVP" : "§dPvp",
-			"SURVIVAL" : "§dSurvie",
-			"GENERATION" : "§dGénération",
-			"ENCHANTMENT" : "§dEnchantement",
-			"FUN" : "§dFun",
-			"ANIME" : "§dAnime",
-			"OTHER" : "§dAutre"
-		}
-	},
-	
-	"items" : {
-		"player-head-name" : "§cTête de §6{player-name}",
-		"golden-head-name" : "§6Golden Head"
-	},
-	
-	"title" : {
-		"invincibility-bar" : "§7Invincibilité §8» §6{time}",
-		"bc-player-tp" : "§7Teleportation §8» §a{player-name}§7",
-		
-		"bc-world-generation" : "§eGénération d'un monde...",
-		"bc-world-generation-end" : "§aGénération terminée !"
-	},
-	
-	"permission" : {
-		"pm-error-chat" : "{prefix} §cVous ne pouvez pas parler dans le chat !"
-	},
-	
-	"message" : {
-		"msg-chat" : "§f{player-name} §8»§7 {value}",
-		"msg-chat-off" : "{prefix} §cLe chat est désactivé !",
-		"msg-private-send" : "§8[§7Moi §7-> §b{player-name} §8] §8» §6{value}",
-		"msg-private-receive" : "§8[§b{player-name} §7-> Moi §8] » §6{value}",
-		"msg-chat-team" : "§7[Equipe] §f{player-name} §8»§7 {value}",
-		"msg-bow-damage" : "{prefix} §e{player-name} §7est maintenant à {value}",
-		
-		"error" : {
-			"msg-error-scenario-list-off" : "{error} §cLa liste des scénarios a été désactivé.",
-			"msg-error-place-block" : "{error} §cVous ne pouvez pas poser de bloc dans cette zone.",
-			"msg-error-destroy-block" : "{error} §cVous ne pouvez pas casser de bloc dans cette zone."
-		},
-		
-		"action-chat" : {
-			"ac-cancel" : "Annuler",
-			"ac-validate" : "Valider",
-			"ac-cancel-message" : "{prefix} §aVotre précédente action dans le chat vient d'être retiré.",
-			"ac-chat" : " §8» §f{value}",
-			
-			"SCENARIO_SEARCH" : {
-				"action-message" : "{prefix} §2Ecrivez le nom du scénario que vous cherchez (écrivez \"{ac-cancel}\" pour annuler)."
-			},
-			
-			"WORLD_CREATION" : {
-				"action-message" : "{prefix} §2Ecrivez le nom du monde que vous voulez créer (écrivez \"{ac-cancel}\" pour annuler)."
-			},
-			
-			"WORLD_SEED" : {
-				"action-message" : "{prefix} §2Ecrivez la graine que vous voulez choisir (écrivez \"{ac-cancel}\" pour annuler)."
-			},
-			
-			"DELETE_WORLD" : {
-				"action-message" : "{prefix} §cEcrivez \"{ac-valider}\" pour supprimer le monde (écrivez \"{ac-cancel}\" pour annuler)."
-			}
-		}
-	},
-	
-	"announce" : {
-		
-		"bc-player-join" : "{prefix} §7{player-name} §aa rejoint la partie !",
-		"bc-spectator-join" : "{prefix} §7{player-name} §aa rejoint la partie ! §b(Spectateur)",
-		"bc-player-leave" : "{prefix} §7{player-name} §ca quitté la partie !",
-		"bc-spectator-leave" : "{prefix} §7{player-name} §ca quitté la partie ! §b(Spectateur)",
-		
-		"bc-invincibility-end" : "{prefix} §7Vous n'êtes désormais plus §ainvincible §7!",
-		"bc-pvp-wait" : "{prefix} §7Le pvp sera activé dans §a{time} minute(s).",
-		"bc-pvp-start" : "{prefix} §7Le pvp est désormais §aactivé §7!",
-		"bc-episode-end": "§d-------- Fin Episode {episode} --------",
-		
-		"bc-wb-wait": "{prefix} §7Réduction de la bordure dans §a{time} minute(s).",
-		"bc-wb-start": "{prefix} §7La bordure va désormais réduire jusqu'en §a{value} x {value}.",
-		
-		"bc-broadcast" : "§8-------------------------------\n{info-prefix} §6{value}\n§8-------------------------------",
-		
-		"bc-revive" : "{info-prefix} §aLe joueur {player-name}§a a été ramené à la vie !",
-		
-		"death" : {
-			"bc-death": "§8» §e{player-name} §7{reason} §8«",
-			"bc-death-kill": "§8» §e{player-name} §7a été tué par §c{killer-name} §8«",
-			"bc-death-hide": "§8» §e{player-name} §7est mort ! §8«",
-			
-			"reasons" : {
-				"FALL" : {
-					"0" : "s'est cassé la gueule",
-					"1" : "est tombé de haut",
-					"2" : "s'est cassé la pipe",
-					"3" : "a glissé chef"
-				},
-				
-				"LAVA" : {
-					"0" : "est mort carbonisé",
-					"1" : "est tombé dans un volcan",
-					"2" : "est tombé dans la lave"
-				},
-							
-				"FIRE" : {
-					"0" : "est mort carbonisé",
-					"1" : "a oublié d'éteindre le gaz"
-				},
-			
-				"FIRE_TICK" : {
-					"0" : "est mort carbonisé",
-					"1" : "a oublié d'éteindre le gaz"
-				},
-				
-				"DROWNING" : {
-					"0" : "pensait pouvoir respirer dans l'eau",
-					"1" : "est mort noyé"
-				},
-				
-				"SUICIDE" : {
-					"0" : "en avait marre de la vie"
-				},
-				
-				"ENTITY_EXPLOSION" : {
-					"0" : "a été désintégré dans une explosion",
-					"1" : "est mort explosé"
-				},
-				
-				"BLOCK_EXPLOSION" : {
-					"0" : "a été désintégré dans une explosion",
-					"1" : "est mort explosé"
-				},
-				
-				"STARVATION" : {
-					"0" : "est mort de faim",
-					"1" : "n'a pas mangé depuis un moment"
-				},
-				
-				"MAGIC" : {
-					"0" : "s'est fait ensorcellé",
-					"1" : "est mort par la magie"
-				},
-				
-				"THORNS" : {
-					"0" : "a fait un câlin à un hérisson",
-					"1" : "s'est fait piqué les fesses"
-				},
-				
-				"null" : {
-					"0" : "est mort"
-				}
-			}
-		},
-		
-		"starting" : {
-			"bc-game-starting" : "{prefix} §7La partie commence dans §a{timer-s} §7secondes !",
-			"bc-game-start-cancel" : "{prefix} §cLe lancement vient d'être annulé !",
-			"bc-game-start" : "{prefix} §7La partie est lancé, §aBonne chance §7!"
-		},
-		
-		"loading" : {
-			"bc-random-teams" : "{prefix} §7Il y a en tout §a{team-count} §7équipe(s) pour §a{player-count} §7joueur(s).",
-			"bc-teams-loading" : "{prefix} §7Il y a en tout §a{team-count} §7équipe(s) pour §a{player-count} §7joueur(s).",
-			"bc-players-loading" : "{prefix} §7Il y a §a{player-count} §7joueur(s) dans la partie.",
-			"bc-teleportation-loading" : "{prefix} §7Zones de téléportation en cours de recherche...",
-			"bc-teleportation-find" : "{prefix} §7Les zones de téléportation on été trouvées !",
-			"bc-chunk-loading" : "{prefix} §7Les chunks sont en cours de prégénération...",
-			"bc-teleportation" : "{prefix} §7Les joueurs vont être §atéléportés §7!"
-		 },
-		 
-		 "end" : {
-			"bc-victory-title" : {
-				"0" : "§aVictoire !",
-				"1" : ""
-			},
-			
-			"bc-lose-title" : {
-				"0" : "§cDéfaite !",
-				"1" : ""
-			},
-			
-			"bc-draw-title" : {
-				"0" : "§7Egalité !",
-				"1" : ""
-			},
-			
-			"bc-draw" : "{prefix} §f§l§k!!!§6 Tous le monde est mort donc personne ne gagne la partie ! §f§l§k!!!",
-		 	"bc-solo-victory" : "{prefix} §f§l§k!!!§6 Le joueur §e{player-name} §6remporte la partie ! §f§l§k!!!",
-		 	"bc-team-victory" : "{prefix} §f§l§k!!!§6 L'équipe §e{team-name} §6remporte la partie ! §f§l§k!!!",
-		 	
-		 			
-			"bc-server-restart" : "{prefix} §cFermeture du serveur dans 1 minute !",
-			"bc-server-restart-cancel" : "{prefix} §aFermeture du serveur annulé !"
-		 }
-	},
-	
-	"team" : {
-		"team-join" : "{prefix} §aVous rejoignez l'équipe {team-name} §a!",
-		"team-leave" : "{prefix} §cVous venez de quitter l'équipe {team-name}§c.",
-		"team-full" : "{prefix} §cErreur, cette équipe est complète !",
-		"team-players" : "§eJoueurs : §a{team-player-count}§7/{team-size}",
-		"team-player-cannot-play" : "{prefix} §cVous n'avez pas eu d'équipe attribué ! Vous ne pourrez donc pas jouer cette partie.",
-		
-		"team-spec-name" : "@Spectateur",
-		
-		"team-color" : {
-			"GRAY" : "Gris",
-			"RED" : "Rouge",
-			"GOLD" : "Orange",
-			"YELLOW" : "Jaune",
-			"GREEN" : "Slime",
-			"AQUA" : "Bleu clair",
-			"LIGHT_PURPLE" : "Violet",
-			"BLUE" : "Bleu",
-			"DARK_PURPLE" : "Mauve",
-			"DARK_AQUA" : "Cyan",
-			"DARK_GREEN" : "Vert"
-		},
-		
-		"team-type" : {
-			"CHOOSE" : "§aÉquipes prédéfinis",
-			"RANDOM" : "§aÉquipes aléatoires",
-			"CREATE" : "§aÉquipes modifiable"
-		}
-	},
-	
-	"uhc-type" : {
-		"CLASSIC" : {
-			"name" : "§aClassique",
-			"tab-name" : "§5§lUHC"
-		},
-		
-		"TAUPE_GUN" : {
-			"name" : "§cTaupe §6Gun",
-			"tab-name" : "§cTaupe §6Gun"
-		},
-		
-		"DEVIL_WATCHES" : {
-			"name" : "§4Devil Watches",
-			"tab-name" : "§4§lDW UHC"
-		}
-	},
-	
-	"staff" : {
-		"st-become-host" : "{prefix} §dVous êtes désormais le Host de la partie ! (Faites /host pour voir toutes les commandes.)",
-		
-		"st-difficulty" : "{prefix} §eDifficulté : {value}",
-		
-		"error" : {
-			"st-error-no-game" : "{error} §cIl n'y a aucune partie en cours !",
-			"st-error-game-start" : "{error} §cCette partie est déjà lancé !",
-			"st-error-game-cancel" : "{error} §cVous ne pouvez plus annuler le lancement !",
-			"st-error-perm" : "{error} §cVous n'avez pas la permission pour effectuer ceci !",
-			
-			"st-error-scenario-start" : "{error} §cL'état de ce scénario ne peut être changé qu'avant le lancement de la partie.",
-			"st-error-scenario-pvp" : "{error} §cL'état de ce scénario ne peut être changé qu'avant le pvp.",
-			"st-error-scenario-condition" : "{error} §cLes conditions nécessaires à l'activation de ce scénario ne sont pas respectées.",
-			"st-error-scenario-compatibility" : "{error} §cLe scénario §o{value-1}§c a été désactivé car il est incompatible avec le scénario §o{value-2}.",
-			"st-error-gamemode-compatibility" : "{error} §cLe scénario §o{value}§c a été désactivé car il est incompatible avec le mode de jeu §o{game-type}.",
-			"st-error-option-start" : "{error} §cVous ne pouvez pas modifier ce paramètre après le lancement de la partie.",
-			"st-error-option-pvp" : "{error} §cVous ne pouvez pas modifier ce paramètre après le lancement du pvp.",
-			
-			"st-error-world-generation" : "{error} §cLe monde \"{value}\" n'a pas été généré !",
-			"st-error-world-creation-size" : "{error} §cVous ne pouvez pas créer de monde supplémentaire. Vous pouvez cependant en supprimer un.",
-			"st-error-unload-fail" : "{error} §cCe monde \"{value}\" n'a pas pu être déchargé.",
-			"st-error-deleting-fail" : "{error} §cCe monde \"{value}\" n'a pas pu être supprimé.",
-			"st-error-main-world" : "{error} §cVous ne pouvez pas supprimer le monde principal.",
-			"st-error-lobby-world" : "{error} §cVous ne pouvez pas supprimer le lobby.",
-			"st-error-world-exist" : "{error} §cCe monde existe déjà.",
-			
-			"st-error-server-restart" : "{error} §cVous ne pouvez pas faire cela car le serveur va redémarrer."
-		}
-	},
-
-	"scoreboard" : {
-		"sb-line" : "§8»§m---------------§8« ",
-		
-		"sb-episode" : "§dEpisode {episode}",
-		"sb-players" : "§7Joueurs : §a{player-count}",
-		"sb-teams" : "§7Equipes : §a{team-count} §f({player-count})",
-		"sb-kills" : "§7Kills : §a{value}",
-
-		"sb-waiting" : "§6Partie en attente !",
-		"sb-starting" : "§6Lancement :§e {timer-s}s",
-		"sb-loading" : "§6Chargement...",
-		
-		"sb-timer" : "§7Timer :§6 {timer-m}",
-		"sb-border" : "§7Border :§6 {value}",
-		
-		"sb-host" : "§cHost : §6{player-name}",
-		
-		"sb-kill-score" : "§4§lKills :"
-	},
-	
-	"tablist" : {
-		"tl-connexion" : "§6Ping : §e{value-1}ms §f| §6TPS : §e{value-2}"
-	},
-	
-	"commands" : {
-		"cmd-error-perm" : "{error} §cVous n'avez pas la permission pour effectuer cette commande.",
-		"cmd-help" : "{prefix} §eLa commande s'écrit : {command}.",
-		"cmd-error-invalid-argument" : "{error} §cLa commande s'écrit : {command}.",
-		"cmd-error-invalid-command" : "{error} §cCette commande n'existe pas !",
-		"cmd-error-off" : "{error} §cCette commande est désactivé",
-		"cmd-error-player-offline" : "{error} §cCe joueur n'est pas connecté ou n'existe pas !",
-		"cmd-error-player-offgame" : "{error} §cCe joueur n'est pas dans la partie.",
-		"cmd-error-player-dead" : "{error} §cVous ne pouvez pas effectuer cette commande sur un joueur mort.",
-		"cmd-error-player-alive" : "{error} Seul un joueur en vie peut effectuer cette commande.",
-		"cmd-error-player-not-dead" : "{error} §cVous ne pouvez pas effectuer cette commande sur un joueur vivant.",
-		"cmd-error-gamemode" : "{error} §cCette commande ne fonctionne qu'avec le mode de jeu §o{value}.",
-		"cmd-error-team" : "{error} §cVous devez avoir une équipe pour effectuer cette commande.",
-		"cmd-error-selector" : "{error} §cLe sélecteur \"{value}\" ne fonctionne pas avec cette commande.",
-		
-		"cmd-error-no-role" : "{error} §cVous devez avoir un rôle pour effectuer cette commande.",
-		"cmd-error-role" : "{error} §cVous devez être §o{role-name}§c pour effectuer cette commande.",
-					
-		"cmd-error-self-msg" : "{error} §cVous ne pouvez pas envoyer de message à vous-même.",
-		
-		"cmd-error-name-size" : "{error} §cLe nom ne doit pas dépasser les {value} caractères.",
-		
-		"cmd-execute" : "{prefix} §aLa commande a bien été executée."
-	},
-	
-	"join-state" : {
-		"OPEN" : "§aOuvert",
-		"CLOSE" : "§cFermé",
-		"WHITELIST" : "§dWhitelist"
-	},
-	
-	"rank" : {
-		"PLAYER" : {
-			"name" : "§7Joueur",
-			"prefix" : ""
-		},
-		
-		"SPECTATOR" : {
-			"name" : "§7Spectateur",
-			"prefix" : "§8§o[Spec] "
-		},
-		
-		"ORGA" : {
-			"name" : "§9Organisateur",
-			"prefix" : "§9[Orga] §r"
-		},
-		
-		"HOST" : {
-			"name" : "§cHost",
-			"prefix" : "§c[Host] §r"
-		},
-		
-		"STAFF" : {
-			"name" : "§5Staff",
-			"prefix" : "§3[Staff] §r"
-		}
-	},
-	
-	"kick-reason" : {
-	    "cause-game-close" : "§cCette partie est fermée !",
-	    "cause-game-whitelist" : "§dVous n'êtes pas sur la Whitelist !",
-	    "cause-game-slot" : "§cIl n'y a plus de place dans la partie !",
-		"cause-world-deleting" : "§eLe monde est en cours de suppression...",
-		"cause-world-generating" : "§eUn monde est en cours de génération...",
-		"cause-server-close" : "§cFermeture du serveur"
-	},
-	
-	"motd" : {
-	
-		"WAITING" : {
-			"1" : "§6UHC HOST §7| §b1.8 §7[{join-state}§7]",
-			"2" : "§2» §aEn attente de joueur §2«"
-		},
-		
-		"STARTING" : {
-			"1" : "§6UHC HOST §7| §b1.8",
-			"2" : "§7Lancement de la partie dans : §a{timer-s} §7seconde(s)."
-		},
-		
-		"LOADING" : {
-			"1" : "§6UHC HOST §7| §b1.8",
-			"2" : "§6Chargement de la partie en cours..."
-		},
-		
-		"RUNNING" : {
-			"1" : "§6UHC HOST §7| §b1.8",
-			"2" : "§7La partie est en cours !"
-		},
-		
-		"ENDING" : {
-			"1" : "§6UHC HOST §7| §b1.8",
-			"2" : "§cRedémarrage en cours..." 
-		}
-	},
-	
-	"scenarios" : {
-		
-		"scenario" : "Scénario",
-		"condition" : "Condition(s)",
-		"error-condition-to2" : "{error} §cLe scénario {value} n'a pas pu être activé car il ne fonctionne que avec des équipes de deux joueurs.",
-		
-		"pvp-only" : "§cSeulement en Pvp",
-	
-		"cutclean" : {
-			"name" : "§6CutClean",
-			"description" : "§7Les items se cuisent §fautomatiquement\n§7dès leur obtention."
-		},
-		
-		"fastsmelting" : {
-			"name" : "§6Fast Smelting",
-			"description" : "§7Les items se cuisent §fplus rapidement§7.",
-			"furnace-speed" : "§6Vitesse du four : §e{value}"
-		},
-		
-		"hastey-boys" : {
-			"name" : "§bHastey Boys",
-			"description" : "§7Tous les outils sont §faméliorés§7.",
-			"enchant-level" : "§7Niveau : §a{value}"
-		},
-		
-		"hastey-babies" : {
-			"name" : "§bHastey Babies",
-			"description" : "§7Tous les outils sont §faméliorés§7 (mais juste un peu)."
-		},
-		
-		"timber" : {
-			"name" : "§aTimber",
-			"description" : "§7Permet de casser les arbres en §fun seul coup §7!"
-		},
-		
-		"rodless" : {
-			"name" : "§cRodLess",
-			"description" : "§7Permet de désactiver les\n§fcannes à pêche, boules de neige §7et §foeufs§7.",
-			"rod" : "§6Canne à pêche",
-			"snowball" : "§bBoule de neige",
-			"egg" : "§eOeuf"
-		},
-		
-		"fireless" : {
-			"name" : "§6FireLess",
-			"description" : "§7Permet de désactiver les\n§fdégâts de feu§7 ou certains items en rapport.",
-			"no-fire-damage" : "§6Pas de dégâts par le feu",
-			"no-fire-tick" : "§6Pas de ticks de feu",
-			"lava-bucket" : "§cSeau de lave",
-			"flint-and-steel" : "§cBriquet",
-			"player-only" : "§bSeulement sur les joueurs"
-		},
-		
-		"bleeding-sweets" : {
-			"name" : "§dBleeding sweets",
-			"description" : "§7Lorsque qu'un joueur meurt, il drop :\n §8» §a1 §fdiamant\n §8» §a5 §flingots d'or\n §8» §a16 §fflèches\n §8» §a1 §ffil"
-		},
-		
-		"gone-fishing" : {
-			"name" : "§3Gone Fishing",
-			"description" : "§7Lors de votre spawn vous obtenez :\n §8» §a1 §fcanne à pêche §b(luck 250 / u250) \n §8» §a20 §fenclumes"
-		},
-		
-		"enchanted-death" : {
-			"name" : "§cEnchanted Death",
-			"description" : "§7Les joueurs ne peuvent pas crafter §fla table d'enchant§7.\n§7Le seul moyen de l'obtenir est de §ctuer un joueur !"
-		},
-		
-		"no-fall" : {
-			"name" : "§aNo fall",
-			"description" : "§7Les joueurs ne prennent plus de §fdégât de chute §7!"
-		},
-		
-		"believe-fly" : {
-			"name" : "§dI believe I can fly",
-			"description" : "§7Les joueurs on probablement bu du §c§nredbull§7."
-		},
-		
-		"no-clean-up" : {
-			"name" : "§dNo Clean Up",
-			"description" : "§7Les joueurs sont §fautomatiquement heal §7après un kill."
-		},
-		
-		"flower-power" : {
-			"name" : "§dFlower Power",
-			"description" : "§7Chaque fleur drop un i§ftem aléatoire§7 en §fquantité aléatoire §7!",
-			"flower-drop" : "§2Probabilité de drop d'une fleur : §a{value}"
-		},
-		
-		"cat-eyes" : {
-			"name" : "§5Cat Eyes",
-			"description" : "§7Tous les joueurs détiennent §fl'effet §fnight vision§7."
-		},
-		
-		"eggs" : {
-			"name" : "§6Eggs",
-			"description" : "§7Les oeufs font apparaître des §fmobs randoms §7!"
-		},
-
-		"assassins" : {
-			"name" : "§4Assassins",
-			"description" : "§7Chaque joueur se vera attribué §cune cible§7. On ne \n§7peut récupérer le stuff §fque sur notre cible \n§7ou sur une personne qui nous §fprend pour cible. \n§7Sinon le stuff §ane drop pas §7!",
-			"target-msg" : "§4Assassin §8» §6Votre objectif est d'abattre votre cible qui est §e{player-name}§6.",
-			"target-death-msg" : "§4Assassin §8» §6Votre cible est morte vous allez en recevoir une nouvelle.",
-			"no-target-msg" : "§4Assassin §8» §cVous n'avez pas reçu de cible !",
-			"no-stuff-drop" : "§4Assassin §8» §cLe stuff de {player-name} n'a pas été drop car il ne vous a pas pour cible et ce n'est pas votre cible.",
-			"sb-target-name" : "§2La cible : §a{player-name}",
-			"sb-target-distance" : "§2Distance : §a{value}",
-			"tracker" : "§cTraqueur"
-		},
-		
-		"bedbomb" : {
-			"name" : "§6BedBomb",
-			"description" : "§7Les lits §6explosent§7 lorsque que l'on interagit avec\n§7dans §ftoutes les dimensions§7."
-		},
-		
-		"timebomb" : {
-			"name" : "§6TimeBomb",
-			"description" : "§7Le stuff est posé §fdans un coffre§7 quand un joueur §cmeurt§7,\n§7il §6explose §7au bout de d'un certain nombre de secondes."
-		},
-		
-		"stingy-world" : {
-			"name" : "§2Stingy World",
-			"description" : "§7Les mobs et les blocks ne drop §fplus aucun item §7!",
-			"stingy-blocks" : "§aStingy Blocks",
-			"stingy-mobs" : "§cStingy Mobs",
-			"stingy-trees" : "§2Stingy Trees",
-			"stingy-lakes" : "§bStingy Lakes",
-			"stingy-bombs" : "§4Stingy Bombs"
-		},
-		
-		"tnt-fly" : {
-			"name" : "§cTnt Fly",
-			"description" : "§7Permet d'augmenter le knockback §fd'une explosion§7.",
-			"tnt-boost" : "§bBuff knockback",
-			"tnt-reduction" : "§cNerf dommage",
-			"tnt-chain" : "§eTnt liées"
-		},
-		
-		
-		"eternal-items" : {
-			"name" : "§5Eternal Items",
-			"description" : "§7Les items ne §fdespawn plus§7."
-		},
-		
-		"good-game" : {
-			"name" : "§aGood Game",
-			"description" : "§7Le premier joueur à dire gg après §cla mort§7 \n§7d'un autre joueur reçoit §fun item aléatoire. \n§8» §a1 §fdiamant\n§8» §a3 §flingots d'or\n§8» §a5 §flingots de fer\n§8» §a1 §fgâteau"
-		},
-		
-		"final-heal" : {
-			"name" : "§dFinal Heal",
-			"description" : "§7Tous les joueurs sont §asoignés §7au moment du §cpvp.",
-			"bc-final-heal" : "§dFinal Heal §8» C'est l'heure du final Heal ! Tous les joueurs on été soignés."
-		}, 
-				
-		"beta-zombie" : {
-			"name" : "§2Beta Zombie",
-			"description" : "§7Les zombies drop §fdes plumes §7à leur §cmort."
-		},
-		
-		"assault-and-battery" : {
-			"name" : "§bAssault and Battery",
-			"description" : "§7Scénario jouable qu'en §6team de deux§7. Dans une équipe, \n§7un des joueurs ne peut jouer §aqu'à l'épée §7et l'autre \n§7ne peut jouer §aqu'à l'arc§7. Lors de §cla mort d'un joueur§7, \n§7son coéquippier n'a plus de limite.",
-			"condition" : "§eTO2",
-			"bc-announce-sword" : "§3Assault & Battery §8» §bVous êtes §ol'épéiste §bde l'équipe ! Vous ne pouvez donc pas combattre avec l'arc tant que votre coéquipier est en vie.",
-			"bc-announce-bow" : "§3Assault & Battery §8» §bVous êtes §ol'archer §bde l'équipe ! Vous ne pouvez donc pas combattre avec l'épée tant que votre coéquipier est en vie.",
-			"bc-announce-solo" : "§3Assault & Battery §8» §bVous pouvez utiliser l'arc et l'épée car vous êtes le seul joueur de votre équipe.",
-			"bc-announce-use-all" : "§3Assault & Battery §8» §6Votre coéquippier est mort ! Vous pouvez désormais utiliser l'arc et l'épée !"
-		},
-		
-		"blood-diamond" : {
-			"name" : "§cBlood diamond",
-			"description" : "§7Quand un joueur mine §bdu diamant§7, il §cperd de la vie."
-		},
-		
-		"superheroes" : {
-			"name" : "§eSuperheroes",
-			"description" : "§7Tous les joueurs obtiennent §fun pouvoir aléatoire§7.",
-			"powers" : "§a§nPouvoirs :",
-			"power-announce" : "§aSuperheroes §8» §7Vous avez le pouvoir §6\"{value}\"§7.",
-			"power" : {
-				"STRENGTH" : "§cForce",
-				"RESISTANCE" : "§7Résistance",
-				"SPEED" : "§bVitesse",
-				"DOUBLE_HEALTH" : "§aDouble Vie",
-				"JUMP_BOOST" : "§eJump Boost",
-				"INVICIBILITY" : "§fInvisibilité"
-			}
-		},
-		
-		"bookception" : {
-			"name" : "§dBookception",
-			"description" : "§7Quand un joueur §cmeurt§7, il drop un §flivre \n§fenchanté §7aléatoire."
-		},
-		
-		"only-one-winner" : {
-			"name" : "§cOnly One Winner",
-			"description" : "§7La dernière équipe en vie §csera dissoute§7 pour ne laisser §aqu'un vainqueur.",
-			"bc-one-winner" : "{prefix} §cIl n'y aura qu'un seul gagnant : la dernière équipe à été dissoute."
-		},
-		
-		"web-cage" : {
-			"name" : "§cWebcage",
-			"description" : "§7Quand un joueur §cest tué§7, il génère §fune cage §7de toiles d'araignées."
-		},
-		
-		"puppy-power" : {
-			"name" : "§aPuppy Power",
-			"description" : "§7Tous les joueurs obtiennent, en début de partie :\n §8» §a64 §foeufs de loup \n §8» §a64 §f §fos \n §8» §a64 §f viandes de zombie"
-		},
-		
-		"cupid" : {
-			"name" : "§dCupid",
-			"description" : "§7Quand un joueur touche un autre à l'arc, \n§7il vol §fun certain pourcentage de vie§7.",
-			"cupid-heal" : "§7Vole §d{value}% §7de vie."
-		}, 
-		
-		"inventors" : {
-			"name" : "§eInventors",
-			"description" : "§7Quand un joueur §fcraft en premier un item,\n§7il est affiché dans le chat. Il devient alors \n§ale propriétaire §7de cet item et chaque personne\n§7voulant le craft lui devra §6un lingot d'or.",
-			"invention" : "§eInventor §8» §e{player-name}§6 vient d'inventer :§f {value} §6!",
-			"craft-property" : "§6Inventeur : §e{value}",
-			"craft-error" : "{error} §cVous devez posséder 1 lingot d'or pour effectuer ce craft."
-		}, 
-		
-		"bow-swap" : {
-			"name" : "§3Bow Swap",
-			"description" : "§7Quand un joueur touche un autre à l'arc, il y une probabilité \n§7que les deux joueurs §féchangent leurs positions."
-		}, 
-		
-		"highway-to-hell" : {
-			"name" : "§4Highway to hell",
-			"description" : "§7Tous les joueurs obtiennent, §fen début de partie,\n§7de quoi aller dans §cle nether."
-		},
-		
-		"soup" : {
-			"name" : "§aSoup",
-			"description" : "§7Quand un joueur §futilise une soupe,§7 il la consomme\n§7instantanément regagnant ainsi de la vie."
-		},
-		
-		"double-jump" : {
-			"name" : "§bDouble Jump",
-			"description" : "§7Les joueurs peuvent effectuer §fun double saut."
-		},
-		
-		"tracker" : {
-			"name" : "§cTracker",
-			"description" : "§7En faisant §fclique droit §7avec un compas en main,\n§7vous pouvez §ctraquer§7 le joueur le plus proche.",
-			"tracker-no-target" : "§cTraqueur §8» §cLe Traqueur n'a pas trouvé de cible.",
-			"tracker-target" : "§cTraqueur §8» §eVous ciblez §l{player-name}§e qui se trouve à {value} blocs."
-		},
-		
-		"master-level" : {
-			"name" : "§2Master Level",
-			"description" : "§7Permet de choisir §fle niveau des joueurs§7 en début de partie.",
-			"start-level" : "§aNiveau : §e{value}"
-		},
-		
-		"golden-retriever" : {
-			"name" : "§eGolden Retriever",
-			"description" : "§7Lorsque qu'un joueur §cmeurt§7, il drop une §egolden head§7."
-		},
-		
-		"speedy-miner" : {
-			"name" : "§bSpeedy Miner",
-			"description" : "§7Lorsque vous vous trouvez sous la couche \n§fy=32§7, vous obtenez §fdes effets de potion§7."
-		},
-		
-		"fence-head" : {
-			"name" : "§cFence Head",
-			"description" : "§7Lorsque qu'un joueur §cmeurt§7, sa tête apparaît sur une clotûre."
-		},
-		
-		"australian-crafting" : {
-			"name" : "§eAustralian Crafting",
-			"description" : "§7Tous les crafts sont §frenversés\n§7(le haut est en bas et inversement)."
-		},
-		
-		"no-wooden-tool" : {
-			"name" : "§6No Wooden Tool",
-			"description" : "§7Les §fmatériaux des outils §7sont améliorés."
-		},
-		
-		"open-house" : {
-			"name" : "§2Open House",
-			"description" : "§7Chaque joueur peut §cvoler dans l'inventaire §7des autres \n§7en faisant §fsneak + clique droit§7."
-		},
-		
-		"dropping-coins" : {
-			"name" : "§eDropping Coins",
-			"description" : "§7A chaque fois qu'un joueur prend §cun dégât§7, \n§fun §fitem aléatoire§7 de son stuff §fest drop§7."
-		},
-		
-		"no-bucket" : {
-			"name" : "§9No Bucket",
-			"description" : "§7Permet de désactiver les §fseaux d'eau/lave§7.",
-			"water-bucket" : "§9Seau d'eau"
-		},
-				
-		"sweat-world" : {
-			"name" : "§3Sweat World",
-			"description" : "§7Permet de §fgénérer un monde §7spécialement conçu pour §cle pvp§7."
-		},
-		
-		"chunk-apocalypse" : {
-			"name" : "§cChunk Apocalypse",
-			"description" : "§7Un certain pourcentage des chunks est §fremplacé par de l'air.§7\n§c[!] Bon serveur recommandé !"
-		},
-		
-		"enchanting-center" : {
-			"name" : "§dEnchanting Center",
-			"description" : "§7Les joueurs ne peuvent pas crafter §fla table d'enchant§7.\n§7Cependant une §ftable d'enchantement §7est généré au centre de la carte.",
-			"enchant-table-generation-error" : "{error} §cLa table d'enchantement n'a pas pu être généré au 0 0 donc le scénario \"Enchanting Table\" a été désactivé."
-		},
-		
-		"progressive-speed" : {
-			"name" : "§bProgressive Speed",
-			"description" : "§7Tous les joueurs commencent avec §fl'effet vitesse I§7\n§7et à chaque §ckill§7, cet effet augmente de niveau§7."
-		},
-		
-		"world-is-small" : {
-			"name" : "§aWorld Is Small",
-			"description" : "§7Tous les joueurs commencent §fau même endroit§7."
-		},
-		
-		"bombers" : {
-			"name" : "§4Bombers",
-			"description" : "§7Tous les joueurs recoivent en début de partie un\n§fbriquet solidité X§7 et chaque §cmobs tué §7drop de la §6tnt§7."
-		},
-		
-		"skyhigh" : {
-			"name" : "§bSkyHigh",
-			"description" : "§7A partir de §fl'activation du pvp§7, tous les joueurs en dessous \n§7de la couche y = 200 §cperdrons de la vie §7à raison de 1 coeur \n§7toutes les 30 secondes.",
-			"skyhigh-announce" : "§bSkyHigh §8» §7Le scénario skyhight sera actif à l'activation du pvp.",
-			"skyhigh-announce-start" : "§bSkyHigh §8» §cIl est temps de monter à une couche supérieur ou égal à y = 200 si vous ne voulez pas mourrir !",
-			"skyhigh-damage" : "§bSkyHigh §8» §cVous venez de perdre 1 coeur car vous êtes sous la couche y = 200."
-		},
-		
-		"gapzap" : {
-			"name" : "§eGapZap",
-			"description" : "§7Quand un joueur prend un dégât, §fil pert ses effets\n§fde régénération§7."
-		},
-		
-		"infinite-enchanter" : {
-			"name" : "§5Infinite Enchanter",
-			"description" : "§7Tous les joueurs ont de l'expérience à l'infini."
-		},
-		
-		"diamond-isnt" : {
-			"name" : "§3Diamond isn't diamond",
-			"description" : "§7Chaque minerais de diamant drop un i§ftem aléatoire§7 \n§7en §fquantité aléatoire §7!",
-			"diamond-drop" : "§2Probabilité de drop d'un minerai : §a{value}"
-		},
-		
-		"reincarnation" : {
-			"name" : "§5Réincarnation",
-			"description" : "§7Quand un joueur meurt, un §fmob random §7prend\n§7sa place !"
-		},
-		
-		"oviparous" : {
-			"name" : "§2Oviparous",
-			"description" : "§7Quand un mob meurt, §fil drop un oeuf §7de\n§7son espèce.",
-			"egg-drop" : "§2Probabilité de drop d'un oeuf : §a{value}"
-		},
-		
-		"ender-replacement" : {
-			"name" : "§3Ender Replacement",
-			"description" : "§7Quand un §cjoueur meurt, §7tous les §fautres joueurs\n§fsont téléporté§7 à lui."
-		},
-		
-		"netheribus" : {
-			"name" : "§4Netheribus",
-			"description" : "§7A partir de §fl'activation du pvp§7, tous les joueurs dans l'overworld \n§cperdrons de la vie §7à raison de 1 coeur toutes les 30 secondes.",
-			"netheribus-announce" : "§4Netheribus §8» §7Le scénario netheribus sera actif à l'activation du pvp.",
-			"netheribus-announce-start" : "§4Netheribus §8» §cIl est temps d'aller dans le nether si vous ne voulez pas mourrir !",
-			"netheribus-damage" : "§4Netheribus §8» §cVous venez de perdre 1 coeur car vous êtes dans l'overworld."
-		}
-	},
-	
-	"enchants" : {
-		"enchantments" : "Les Enchantements",
-		
-		"ARROW_DAMAGE" : "Power",	
-		"ARROW_FIRE" : "Flame",		
-		"ARROW_INFINITE" : "Infinity",		
-		"ARROW_KNOCKBACK" : "Punch",		
-		"DAMAGE_ALL" : "Sharpness",
-		"DAMAGE_ARTHROPODS" : "Bane Of Arthropods",
-		"DAMAGE_UNDEAD" : "Smite",
-		"DEPTH_STRIDER" : "Depth Strider",
-		"DIG_SPEED" : "Efficiency",
-		"DURABILITY" : "Unbreaking",
-		"FIRE_ASPECT" : "Fire Aspect",
-		"KNOCKBACK" : "Knockback",
-		"LOOT_BONUS_BLOCKS" : "Fortune",
-		"LOOT_BONUS_MOBS" : "Looting",
-		"LUCK" : "Luck of the Sea",
-		"LURE" : "Lure",
-		"OXYGEN" : "Respiration",	
-		"PROTECTION_ENVIRONMENTAL" : "Protection",		
-		"PROTECTION_EXPLOSIONS" : "Blast Protection",		
-		"PROTECTION_FALL" : "Feather Falling",		
-		"PROTECTION_FIRE" : "Fire Protection",
-		"PROTECTION_PROJECTILE" : "Projectile Protection",
-		"SILK_TOUCH" : "Silk Touch",
-		"THORNS" : "Thorns",
-		"WATER_WORKER" : "Aqua Affinity"
-	},
-		
-	"potions" : {
-		"potions" : "Les Potions",
-		
-		"SPEED" : "Vitesse",
-		"FAST_DIGGING" : "Célérité",
-		"DAMAGE_RESISTANCE" : "Résistance"
-	},
-	
-	"gamemodes" : {
-	
-		"taupe-gun" : {
-			"tg-mole" : "Taupe",
-			"tg-mole-prefix" : "§4T§f{value} §c",
-			"tg-mole-selection" : "{tg-prefix} §6Les taupes on été selectionnées !",
-			"tg-mole-announce" : "{tg-prefix} §cVous êtes §otaupe§c, vous devez donc trahir votre f actuel afin de gagner avec votre vraie équipe. Pour cela, vous disposez d'un kit de départ récupérable à l'aide de la commande /t claim. De plus, vous pouvez parler avec votre équipe avec la commande /t chat. Enfin, vous pouvez révéler votre vrai nature avec la commande /t reveal qui, en échange de la perte de votre couverture, vous octroie un pomme d'or.",
-			"tg-super-mole-announce" : "{tg-prefix} §4Vous êtes finalement une §osuper taupe§4 ! Vous devez par conséquent gagner seul. En faisant /t reveal une seconde fois, vous révélez votre nature contre une pomme d'or.",
-			"tg-mole-reveal" : "{tg-prefix} §l§c{player-name} §cse révèle être taupe !",
-			"tg-mole-super-reveal" : "{tg-prefix} §l§4{player-name} §4se révèle être super taupe !",
-			
-			"tg-cmd-error-mole" : "{error} §cVous devez être §oTaupe §cpour effectuer cette commande.",
-			"tg-cmd-error-reveal" : "{error} §cVous vous êtes déjà révélé.",
-			"tg-cmd-error-kit" : "{error} §cVous avez déjà récupéré votre kit."
-		},
-		
-		"devil-watches" : {
-			
-			"camps" : {
-				"VILLAGERS" : {
-					"name" : "§aVillageois",
-					"member" : "villageois",
-					"goal" : "§7Votre objectif de ramener la paix dans le village en tuant démons et sectaires.",
-					"victory-message" : "{dw-prefix} §a§lVictoire du village : la paix par l'extermination des démons a été accomplit."
-				},
-				
-				"SECTARIANS" : {
-					"name" : "§dSectaires",
-					"member" : "sectaire",
-					"goal" : "§7Votre objectif est de ressusciter le devil en gagnant avec la secte.",
-					"victory-message" : "{dw-prefix} §5§lVictoire de la secte qui vont désormais permettre au devil de revenir à la vie."
-				},
-				
-				"DEMONS" : {
-					"name" : "§cDémons",
-					"member" : "démon",
-					"goal" : "§7Votre objectif est gagner avec les démons en tuant le village et la secte.",
-					"victory-message" : "{dw-prefix} §c§lVictoire des démons qui ont tués tout le monde."
-				},
-				
-				"SOLOS" : {
-					"name" : "§eSolos",
-					"member" : "solo",
-					"goal" : "§7Votre objectif est de tuer tout le monde.",
-					"victory-message" : "{dw-prefix} §e§lVictoire de {player-name} qui a tué tout le monde."
-				},
-				
-				"NEUTRALS" : {
-					"name" : "§bNeutres",
-					"member" : "neutre",
-					"goal" : "§7Vous êtes neutre et par conséquent vous n'avez actuellement pas d'objectif.",
-					"victory-message" : "{dw-prefix} §b§lPersonne ne remporte la partie car il ne reste plus que des joueurs neutres."
-				}
-			},
-			
-			"roles" : {
-				
-				"VILLAGER" : {
-					"name" : "Simple Villageois",
-					"lore" : "§7Vous ne disposez pas de pouvoir spéciaux. Cependant, vous receverez en début de partie les outils et compétences permettant d'exercer votre profession."
-				},
-				
-				"villager-type" : {
-					"MINOR" : {
-						"name" : "Mineur",
-						"lore" : "§7Vous diposez ainsi d'une pioche en diamant efficacité 2 et de l'effet §6haste I §7permanent."
-					},
-				
-					"SMITH" : {
-						"name" : "Forgeron",
-						"lore" : "§7Vous disposez ainsi d'une enclume mais aussi d'un livre tranchant II et d'un livre protection II."
-					},
-					
-					"BOOKSELLER" : {
-						"name" : "Libraire",
-						"lore" : "§7Vous disposez ainsi de 8 livres et de 12 bouteilles d'XP."
-					},
-					
-					"GUARD" : {
-						"name" : "Garde",
-						"lore" : "§7Vous disposez ainsi d'un casque en diamant."
-					}
-				},
-				
-				"HUNTER" : {
-					"name" : "Chasseur",
-					"lore" : "§7Lorsque vous utilisez votre arc, plus vous êtes loin de votre cible, §fplus vous lui infligez de dégats§7 ; à raison de 10% de dégats supplémentaires tous les 15 blocs.Vous disposez aussi de deux capacités passives : \n\"Pistage\" vous permettant d'analyser la dépouille d'un joueur pendant les 5 premières minutes suivant sa mort. \n\"Dépeceur\" augmentant le taux de drop du cuir et des têtes. Enfin, vous avez un livre puissance IV.",
-					"dw-hunter-inspect-null" : "{dw-prefix} §eVous avez trouvé la dépouille de §l{player-name}§e. Cependant, celui ci n'a visiblement pas été tué de la main d'un joueur.",
-					"dw-hunter-inspect-locate" : "{dw-prefix} §6Vous avez trouvé la dépouille de §l{player-name}§6. Vous arrivez alors à savoir que son tueur se trouve en : §e{value}."
-				},
-				
-				"GUARDIAN" : {
-					"name" : "Gardien",
-					"lore" : "§7Chaque épisode vous avez la possibilité de protéger un joueur (y compris vous même) lui confiant ainsi l'effet §9résistance I §7durant l'épisode complet. Si votre protégé vient à mourrir, il survivra mais vous perdrez votre pouvoir.",
-					
-					"dw-guardian-can-use" : "{dw-prefix} §bVous pouvez désormais veiller sur un joueur avec la commande /dw protect <pseudo>. Vous avez 5 minutes pour effectuer cette commande.",
-										
-					"dw-guardian-error-target" : "{dw-prefix} §cVous ne pouvez pas veiller deux fois sur la même personne d'affilé.",
-					"dw-guardian-protection-msg" : "{dw-prefix} §eVous veillez désormais sur §l{player-name} §edurant tout l'épisode.",
-					"dw-guardian-protected-msg" : "{dw-prefix} §aLe §oGardien §aveille sur vous, par conséquent si vous venez à mourrir cet épisode, vous survivrez. De plus vous obtenez l'effet resistance I durant toute cette période.",
-					"dw-guardian-protected-death-msg" : "{dw-prefix} §cVotre protégé viens de mourrir, vous lui sauvez donc la vie mais perdez votre pouvoir.",
-					"dw-guardian-protected-death" : "{dw-prefix} §aVous êtes mort mais grâce au pouvoir du §oGardien §aqui veille sur vous, vous survivez."
-				},
-				
-				"GURU" : {
-					"name" : "Gourou",
-					"lore" : "§7Vous êtes le chef de la secte, c'est pour cela que vous disposez de la liste complète des membres. De plus, chaque épisode vous pourrez envoyer un message à tous les sectaires (mais seulement la nuit).",
-					"dw-guru-use" : "{dw-prefix} §bVous pouvez à nouveau faire une annonce aux sectaires avec la commande /dw announce <message> mais seulement la nuit.",
-					"dw-guru-bc" : "§4§lLa secte §8» §c{value}",
-					"dw-announce-night" : "{dw-prefix} §cLes annonces ne peuvent êtres faites que la nuit."
-				},
-				
-				"PROPHET" : {
-					"name" : "Prophète",
-					"lore" : "§7Vous pouvez, 3 fois dans la partie, découvir le rôle et camp d'un joueur §ccontre un coeur permanent §7grâce à la commande §e/dw see <pseudo>§7.",
-					"dw-prophet-prophecy" : "{dw-prefix} §bLa prophétie vous dit que §l{player-name}§b est §o{role-name}§b du coté des {camp-name}."
-				},
-				
-				"MOUNTEBANK" : {
-					"name" : "Saltimbanque",
-					"lore" : "§7En tant que maître des accrobaties, vous disposez de l'effet §bvitesse I permanent.§7 De plus, vous pouvez faire un §asuper saut §7en faisant §esneak + saut§7. Enfin, vous recevez un livre Chute amorti IV et 3 ender pearls."
-				},
-				
-				"PROWLER" : {
-					"name" : "Rôdeur",
-					"lore" : "§7En tant que maître des mauvais coups, vous pouvez accomplir des méfaits pour changer de camp. Si vous tuez un sectaire, vous rejoignez le village pour fuir la secte et si vous tuez un villageois, vous rejoignez la secte pour fuir le village. De plus, vous avez les effets §finvisibilité I §7et §cforce I §7quand vous enlevez votre armure pendant la moitié du temps de chaque épisode. Enfin, vous disposez de l'effet §bvitesse I §7permanent.",
-					"dw-prowler-join" : "{dw-prefix} §cVous avez tué un {value-1}, vous rejoignez donc les {camp-name} pour fuir les {value-2}."
-				},
-				
-				"HERMIT" : {
-					"name" : "Hermite",
-					"lore" : "§7Vous êtes le reclut du village n'ayant ainsi pas l'habitude de cotôyer les villageois. Vous aurez donc l'effet §8faiblesse I §7si 4 personnes ou plus vous entourent (dans un rayon de 30 blocs). Si seulement 3 personnes vous entourent, vous n'avez pas d'effet. Cependant cette solitude vous a permis d'être plus fort ce qui vous permet de bénéficier au contraire de l'effet §cforce I §7de jour et §9résistance I §7de nuit quand 2 personnes ou moins vous entourent. Enfin, si vous êtes seul ou en tête à tête avec un joueur, vous gagnez l'effet §bvitesse I§7."
-				},
-				
-				"INQUISITOR" : {
-					"name" : "Inquisiteur",
-					"lore" : "§7En tant que membre de l'inquisition, vous cherchez à combattre les hérésies. La Foi qui vous anime vous permet d'obtenir l'effet §cforce I §7le jour."
-				},
-				
-				"DEMON" : {
-					"name" : "Démon mineur",
-					"lore" : "§7En tant que de démon de bas rang, vous disposez de l'effet §cforce I §7la nuit. De plus, quand vous commettez un meurtre, vous obtenez l'effet §bvitesse I§7 pendant 1 minute."
-				},
-				
-				"CAT_LADY" : {
-					"name" : "Dame aux chats",
-					"lore" : "§7Vous entretenez une relation particulière, et même mystique, avec vos chats. Vous pouvez les entendre vous murmurer des informations sur les autres villageois. Quand ils sont témoin d'un meurtre ou d'un rituel, ils vous le murmure. Vous pouvez utiliser la commande §e/dw cat §7pour invoquer un chat sachant que vous ne pouvez pas en avoir plus de 3 en même temps. Enfin, vous ne prenez pas de dégâts de chute car les chats retombent toujours sur leurs pattes.",
-					"dw-cat-meow" : "§dMiaou !",
-					"dw-cat-whisper" : "{dw-prefix} §dUn chat vous murmure {value}.",
-					"dw-cat-whisper-death" : "qu'il va mourrir.",
-					"dw-cat-whisper-death-around" : "qu'il va mourrir entouré de :\n{value}",
-					"dw-cat-whisper-death-killer" : "qu'il va mourrir de la main de §l{player-name}§d",
-					"dw-cat-whisper-kill" : "qu'il vu §l{player-name} §dse faire tuer par §l{value}§d",
-					"dw-cat-number" : "{dw-prefix} §cVous ne pouvez pas avoir plus de 3 chats en même temps."
-				},
-				
-				"MISCHIEVOUS_DEMON" : {
-					"name" : "Démon Espiègle",
-					"lore" : "§7Vous êtes un démon particulièrement malicieux. Comme tous les démons, vous disposez d'un effet §cforce I §7la nuit. De plus, lorsque vous retirez votre armure, vous devenez §finvisible§7. Enfin, quand vous commettez un meurtre, vous obtenez l'effet §bvitesse II§7 pendant 1 minute."
-				},
-				
-				"GREEDY_DEMON" : {
-					"name" : "Démon Avide",
-					"lore" : "§7Vous êtes un démon avide de puissance bien que cela puisse vous causer du tord. De ce fait, à chaque début de nuit, vous gagnez §e1 demi coeur d'absorbtion §7par joueur (sauf démon) vous entourant dans un rayon de 50 blocs. Cependant, chaque joueur présent dans cette zone perd un demi coeur et reçoit un message le prévenant. De plus, à chaque meurtre, vous gagnez §d1 demi coeur permanent§f ainsi que l'effet §8résistance I§7 pendant 1 minute.. Enfin, vous avez §cforce I §7la nuit.",
-					"dw-greedy-prevent" : "{dw-uhc} §cVous sentez la présence d'un §odémon avide§c..."
-				}
-			},
-			
-			"announce" : {
-				"dw-announce-role" : "{dw-prefix} §7Vous êtes {role-camp-prefix}{role-name}{dw-sectarian}§7.\n§7{goal} {power}",
-				"dw-sectarian" : "§5 (Sectaire)",
-				"dw-seal" : "{dw-prefix} §dVous faites partie de la secte et avez reçut le sceau du devil. Par conséquence, en effectuant des rituels vous pouvez acquérir des pouvoirs démoniaques.",
-				"dw-death-reason" : "§8» §e{player-name}§7 est mort, il était {role-camp-prefix}{role-name}{dw-sectarian} §8«",
-				"dw-victory-drawn" : "{dw-prefix} §7Tout le monde est mort donc personne ne gagne la partie."
-			},
-			
-			"message" : {
-				"dw-error-no-power" : "{dw-prefix} §cVous n'avez actuellement plus accès a vos pouvoirs.",
-				"dw-error-no-power-episode" : "{dw-prefix} §cVous avez déjà utilisé votre pouvoir pendant cet épisode.",
-				"dw-error-no-power-episode-time" : "{dw-prefix} §cVous avez déjà utilisé votre pouvoir pendant cet épisode ou avez attendu trop longtemps.",
-				"dw-error-no-power-use" : "{dw-prefix} §cVous avez déjà utilisé votre pouvoir {value} fois.",
-				"dw-error-power-time-limit-episode" : "{dw-prefix} §cVous avez attendu trop longtemps, vous ne pourrez donc utiliser votre pouvoir qu'à partir du prochain épisode !",
-				"dw-sectarians-list" : "§5Liste des sectaires : {value}",
-				"dw-demons-list" : "§4Liste des démons : {value}",
-				"dw-new-sectarian" : "§5{dw-prefix} Un nouveau membre a rejoint la secte. Faites /dw role pour connaître son identité."
-			},
-			
-			"inventory" : {
-				"dw-item-holy-water" : "§bEau bénite",
-				"inv-dw-compo" : "§5Gestion de la composition"
-			}
-		},
-		
-		"werewolf" : {
-			"camps" : {
-				"VILLAGERS" : {
-					"name" : "",
-					"goal" : "",
-					"victory-message" : ""
-				},
-				
-				"WEREWOLVES" : {
-					"name" : "",
-					"goal" : "",
-					"victory-message" : ""
-				},
-				
-				"SOLOS" : {
-					"name" : "",
-					"goal" : "",
-					"victory-message" : ""
-				},
-				
-				"NEUTRALS" : {
-					"name" : "",
-					"goal" : "",
-					"victory-message" : ""
-				}
-			},
-			
-			"roles" : {
-				"VILLAGER" : {
-				},
-				
-				"WEREWOLF" : {
-				}
-			}
-		}
-	},
-	
-	"console" : {
-		
-		"error-world-not-found" : "The \"{world-name}\" world does not exist !",
-		"error-world-exist" : "The \"{world-name}\" world already exists !",
-		"world-generation" : "Creation of the \"{world-name}\" world is in progress ...",
-		"world-deleting" : "Deleting world \"{world-name}\" is in progress ...",
-		"world-deleting-done" : "The world \"{world-name}\" has been deleted.",
-		"error-world-deleting-fail" : "The \"{world-name}\" world delete has failed.",
-		"error-command-player": "Seul un joueur peut effectuer cette commande !",
-		
-		"cage-generate": "The cage has been generated at spawn !",
-		
-		"files" : {
-			"lang-file-load" : "Lang file has been loaded !",
-			"file-created" : "The file {value} has been created."
-		}
-	}
-}
+{	"prefix" : "§5§lUHC §8»",	"error" : "§6Erreur §8»",	"info-prefix" : "§c§lInfo §8»",		"dw-prefix" : "§4§lDW-UHC §8»",		"inventory" : {				"inv-configuration" : "§d§lConfiguration",		"inv-team-choose" : "§fChoisir une équipe",		"inv-team-random" : "§fÉquipe §7§nAléatoire§r",				"inv-exit" : "§4Sortir §lX",		"inv-back" : "§4Revenir en arrière «",		"inv-next-page" : "§aPage suivante »",		"inv-last-page" : "§cPage précédente «",				"inv-left-click" : "§eClique gauche : §aAjouter {value}",		"inv-right-click" : "§eClique droit : §cRetirer {value}",				"inv-left-shift-click" : "§emaj + Clique gauche : §aAjouter {value}",		"inv-right-shift-click" : "§emaj + Clique droit : §cRetirer {value}",				"inv-right-click-option" : "§e§oClique droit pour configurer",				"inv-on" : "§a[Activé]",		"inv-off" : "§c[Désactivé]",		"inv-random" : "§3[Aléatoire]",		"inv-state" : "§7État : ",				"inv-locked" : "§c[Bloqué]",						"inv-time-option" : "§7Temps : §a{value}",		"minute" : "min",		"second" : "s",				"minutes" : "minutes",		"secondes" : "secondes",				"inv-probability-option" : "§7Probabilité : §a{value}",						"level" : "Niveau",		"search" : "§eRechercher",		"settings" : "§aParamètrer",						"config-menu" : {					"inv-start-game" : "§aLancer la partie ?",			"inv-cancel-game" : "§cAnnuler le lancement ?",			"inv-teams" : "§6Gestion des équipes",			"inv-players" : "§eGestion des joueurs",			"inv-stuff" : "§aGestion du stuff",			"inv-time" : "§9Gestion du temps",			"inv-world-border" : "§dGestion de la World Border",			"inv-worlds" : "§3Gestion des Mondes",			"inv-scenarios" : "§2Les scénarios",					"inv-life" : "§dGestion de la vie",			"inv-loots" : "§aLes Loots",			"inv-rules" : "§5Les règles",						"inv-config" : "§dConfigurations préfaites"		},				"config-configs" : {			"inv-config-load" : "§eCharger la configuration ?",			"inv-config-save" : "§eSauvergarder la configuration ?"		},				"config-teams" : {			"inv-team-size" : "§7Tailles des équipes §8: §a{team-size}",			"inv-team-size-config" : "§aTailes des équipes",			"inv-team-number" : "§7Nombre d'équipes §8: §a{team-number}",			"inv-team-number-config" : "§aNombre d'équipes",			"inv-team-type" : "§7Type d'équipes §8» §a{team-type}"		},				"config-players" : {			"inv-join-state" : "§7État de la partie §8» §a{join-state}"		},				"config-stuff" : {			"inv-start-items" : "§aItems de départ",			"inv-death-items" : "§cItems à la mort",			"inv-stuff-enchants" : "§5Limites des enchantements",			"inv-stuff-potions" : "§bGestion des potions"		},				"config-time" : {			"inv-invincibility-time" : "§2Invincibilité : §a{invincibility-time} min",			"inv-invincibility-time-config" : "§2Invincibilité",			"inv-pvp-time" : "§4Pvp : §c{pvp-time} min",			"inv-pvp-time-config" : "§4Pvp",			"inv-ep1-time" : "§6Episode 1 : §e{episode1-time} min",			"inv-ep1-time-config" : "§6Episode 1",			"inv-ep-time" : "§6Episode : §e{episode-time} min",			"inv-ep-time-config" : "§6Episode",			"inv-wb-time" : "§3WorldBorder : §b{wb-time} min",			"inv-wb-time-config" : "§3WorldBorder"		},				"config-scenarios" : {			"inv-scenario-list" : "§2Les Scénarios :",			"inv-scenario-hide" : "§3Liste des scénarios",			"inv-scenario-random" : "§7Scénarios aléatoires : §6{value}"		},				"config-wb" : {			"inv-wb-size" : "§7Taille initial : §a{wb-initial-size}",			"inv-wb-size-config" : "§aTaille initial",			"inv-wb-final-size" : "§7Taille final : §c{wb-final-size}",			"inv-wb-final-size-config" : "§cTaille final",			"inv-wb-speed" : "§7Vitesse : §b{wb-speed} bloc/s",			"inv-block-per-second" : "bloc/s"		},				"config-worlds" : {			"inv-w-main-world" : "§6[Monde Principal]",			"inv-w-lobby-world" : "§b[Monde Lobby]",			"inv-w-overworld" : "§bOverworld",			"inv-w-nether" : "§cNether",			"inv-w-end" : "§9End",			"inv-w-generate-structure" : "§7Générer des structures",			"inv-w-type" : "§7Type de monde",			"inv-w-seed" : "§7Graine du monde",									"inv-w-creation" : "§2Créer un monde",			"inv-w-settings" : "§eParamètrer un monde",			"inv-w-tp" : "§aSe téléporter ?",			"inv-w-regen" : "§6Regénérer ?",			"inv-w-pregen" : "§5Prégénérer ?",			"inv-w-delete" : "§cSupprimer ?",			"inv-w-autoregen" : "§bRegénération automatique"		},				"config-life" : {			"inv-gapples-config" : "§6Gestion des pommes d'or",			"inv-uhc-gapples" : "§eUHC Gapples",			"inv-life-display-config" : "§5Gestion affichage de la vie",			"inv-life-display" : "§eAffichage de la vie",			"inv-life-display-head" : "§bAffichage au dessus de la tête",			"inv-life-display-bow" : "§bAffichage quand touché à l'arc",						"inv-life-gapple" : "§eGolden Apple",			"inv-life-happle" : "§6Golden Head",			"inv-life-napple" : "§5Notch Apple",			"inv-life-abso" : "§bAbsorption : §f{value}",			"inv-life-effects" : "§5Gestions des effets"		},				"config-loots" : {			"inv-uhc-drop" : "§eDrop UHC",			"inv-trees" : "§2Loots des arbres",			"inv-trees-drop-apple" : "§aTaux de drop des pommes",			"inv-trees-rate" : "§6Taux : §e{value}",			"inv-trees-all-trees" : "§2Tous les types d'arbres drop des pommes",			"inv-trees-shears" : "§eCisaille drop pomme",			"inv-trees-golden-apple" : "§dDrop des pommes d'or",			"inv-trees-drop-sapling" : "§aDrop des pousses",						"inv-silex" : "§7Drop du silex : §a{value}%",			"inv-pearls" : "§7Drop des enderpearls : §a{value}%"		},							"inv-categories" : "§5§oCatégories : §d",		"inv-category" : "§7Catégorie §8» §6",			"categories" : {			"ALL" : "§aTout",			"RUN" : "§dRun",			"PVP" : "§dPvp",			"SURVIVAL" : "§dSurvie",			"GENERATION" : "§dGénération",			"ENCHANTMENT" : "§dEnchantement",			"FUN" : "§dFun",			"OTHER" : "§dAutre",			"ORIGINALS" : "§6Original"		}	},		"items" : {		"player-head-name" : "§cTête de §6{player-name}",		"golden-head-name" : "§6Golden Head"	},		"title" : {		"invincibility-bar" : "§7Invincibilité §8» §6{time}",		"bc-player-tp" : "§7Teleportation §8» §a{player-name}§7",				"bc-world-generation" : "§eGénération d'un monde...",		"bc-world-generation-end" : "§aGénération terminée !"	},		"permission" : {		"pm-error-chat" : "{prefix} §cVous ne pouvez pas parler dans le chat !"	},		"message" : {		"msg-chat" : "§f{player-name} §8»§7 {value}",		"msg-chat-off" : "{prefix} §cLe chat est désactivé !",		"msg-private-send" : "§8[§7Moi §7-> §b{player-name} §8] §8» §6{value}",		"msg-private-receive" : "§8[§b{player-name} §7-> Moi §8] » §6{value}",		"msg-chat-team" : "§7[Equipe] §f{player-name} §8»§7 {value}",		"msg-bow-damage" : "{prefix} §e{player-name} §7est maintenant à {value}",				"error" : {			"msg-error-scenario-list-off" : "{error} §cLa liste des scénarios a été désactivé.",			"msg-error-place-block" : "{error} §cVous ne pouvez pas poser de bloc dans cette zone.",			"msg-error-destroy-block" : "{error} §cVous ne pouvez pas casser de bloc dans cette zone."		},				"action-chat" : {			"ac-cancel" : "Annuler",			"ac-validate" : "Valider",			"ac-cancel-message" : "{prefix} §aVotre précédente action dans le chat vient d'être retiré.",			"ac-chat" : " §8» §f{value}",						"SCENARIO_SEARCH" : {				"action-message" : "{prefix} §2Ecrivez le nom du scénario que vous cherchez (écrivez \"{ac-cancel}\" pour annuler)."			},						"WORLD_CREATION" : {				"action-message" : "{prefix} §2Ecrivez le nom du monde que vous voulez créer (écrivez \"{ac-cancel}\" pour annuler)."			},						"WORLD_SEED" : {				"action-message" : "{prefix} §2Ecrivez la graine que vous voulez choisir (écrivez \"{ac-cancel}\" pour annuler)."			},						"DELETE_WORLD" : {				"action-message" : "{prefix} §cEcrivez \"{ac-valider}\" pour supprimer le monde (écrivez \"{ac-cancel}\" pour annuler)."			}		}	},		"announce" : {				"bc-player-join" : "{prefix} §7{player-name} §aa rejoint la partie !",		"bc-spectator-join" : "{prefix} §7{player-name} §aa rejoint la partie ! §b(Spectateur)",		"bc-player-leave" : "{prefix} §7{player-name} §ca quitté la partie !",		"bc-spectator-leave" : "{prefix} §7{player-name} §ca quitté la partie ! §b(Spectateur)",				"bc-invincibility-end" : "{prefix} §7Vous n'êtes désormais plus §ainvincible §7!",		"bc-pvp-wait" : "{prefix} §7Le pvp sera activé dans §a{time} minute(s).",		"bc-pvp-start" : "{prefix} §7Le pvp est désormais §aactivé §7!",		"bc-episode-end": "§d-------- Fin Episode {episode} --------",				"bc-wb-wait": "{prefix} §7Réduction de la bordure dans §a{time} minute(s).",		"bc-wb-start": "{prefix} §7La bordure va désormais réduire jusqu'en §a{value} x {value}.",				"bc-broadcast" : "§8-------------------------------\n{info-prefix} §6{value}\n§8-------------------------------",				"bc-revive" : "{info-prefix} §aLe joueur {player-name}§a a été ramené à la vie !",				"death" : {			"bc-death": "§8» §e{player-name} §7{reason} §8«",			"bc-death-kill": "§8» §e{player-name} §7a été tué par §c{killer-name} §8«",			"bc-death-hide": "§8» §e{player-name} §7est mort ! §8«",						"reasons" : {				"FALL" : {					"0" : "s'est cassé la gueule",					"1" : "est tombé de haut",					"2" : "s'est cassé la pipe",					"3" : "a glissé chef"				},								"LAVA" : {					"0" : "est mort carbonisé",					"1" : "est tombé dans un volcan",					"2" : "est tombé dans la lave"				},											"FIRE" : {					"0" : "est mort carbonisé",					"1" : "a oublié d'éteindre le gaz"				},							"FIRE_TICK" : {					"0" : "est mort carbonisé",					"1" : "a oublié d'éteindre le gaz"				},								"DROWNING" : {					"0" : "pensait pouvoir respirer dans l'eau",					"1" : "est mort noyé"				},								"SUICIDE" : {					"0" : "en avait marre de la vie"				},								"ENTITY_EXPLOSION" : {					"0" : "a été désintégré dans une explosion",					"1" : "est mort explosé"				},								"BLOCK_EXPLOSION" : {					"0" : "a été désintégré dans une explosion",					"1" : "est mort explosé"				},								"STARVATION" : {					"0" : "est mort de faim",					"1" : "n'a pas mangé depuis un moment"				},								"MAGIC" : {					"0" : "s'est fait ensorcellé",					"1" : "est mort par la magie"				},								"THORNS" : {					"0" : "a fait un câlin à un hérisson",					"1" : "s'est fait piqué les fesses"				},								"null" : {					"0" : "est mort"				}			}		},				"starting" : {			"bc-game-starting" : "{prefix} §7La partie commence dans §a{timer-s} §7secondes !",			"bc-game-start-cancel" : "{prefix} §cLe lancement vient d'être annulé !",			"bc-game-start" : "{prefix} §7La partie est lancé, §aBonne chance §7!"		},				"loading" : {			"bc-random-teams" : "{prefix} §7Il y a en tout §a{team-count} §7équipe(s) pour §a{player-count} §7joueur(s).",			"bc-teams-loading" : "{prefix} §7Il y a en tout §a{team-count} §7équipe(s) pour §a{player-count} §7joueur(s).",			"bc-players-loading" : "{prefix} §7Il y a §a{player-count} §7joueur(s) dans la partie.",			"bc-teleportation-loading" : "{prefix} §7Zones de téléportation en cours de recherche...",			"bc-teleportation-find" : "{prefix} §7Les zones de téléportation on été trouvées !",			"bc-chunk-loading" : "{prefix} §7Les chunks sont en cours de prégénération...",			"bc-teleportation" : "{prefix} §7Les joueurs vont être §atéléportés §7!"		 },		 		 "end" : {			"bc-victory-title" : {				"0" : "§aVictoire !",				"1" : ""			},						"bc-lose-title" : {				"0" : "§cDéfaite !",				"1" : ""			},						"bc-draw-title" : {				"0" : "§7Egalité !",				"1" : ""			},						"bc-draw" : "{prefix} §f§l§k!!!§6 Tous le monde est mort donc personne ne gagne la partie ! §f§l§k!!!",		 	"bc-solo-victory" : "{prefix} §f§l§k!!!§6 Le joueur §e{player-name} §6remporte la partie ! §f§l§k!!!",		 	"bc-team-victory" : "{prefix} §f§l§k!!!§6 L'équipe §e{team-name} §6remporte la partie ! §f§l§k!!!",		 			 						"bc-server-restart" : "{prefix} §cFermeture du serveur dans 1 minute !",			"bc-server-restart-cancel" : "{prefix} §aFermeture du serveur annulé !"		 }	},		"team" : {		"team-join" : "{prefix} §aVous rejoignez l'équipe {team-name} §a!",		"team-leave" : "{prefix} §cVous venez de quitter l'équipe {team-name}§c.",		"team-full" : "{prefix} §cErreur, cette équipe est complète !",		"team-players" : "§eJoueurs : §a{team-player-count}§7/{team-size}",		"team-player-cannot-play" : "{prefix} §cVous n'avez pas eu d'équipe attribué ! Vous ne pourrez donc pas jouer cette partie.",				"team-spec-name" : "@Spectateur",				"team-color" : {			"GRAY" : "Gris",			"RED" : "Rouge",			"GOLD" : "Orange",			"YELLOW" : "Jaune",			"GREEN" : "Slime",			"AQUA" : "Bleu clair",			"LIGHT_PURPLE" : "Violet",			"BLUE" : "Bleu",			"DARK_PURPLE" : "Mauve",			"DARK_AQUA" : "Cyan",			"DARK_GREEN" : "Vert"		},				"team-type" : {			"CHOOSE" : "§aÉquipes prédéfinis",			"RANDOM" : "§aÉquipes aléatoires",			"CREATE" : "§aÉquipes modifiable"		}	},		"uhc-type" : {		"CLASSIC" : {			"name" : "§aClassique",			"tab-name" : "§5§lUHC"		},				"DEVIL_WATCHES" : {			"name" : "§4Devil Watches",			"tab-name" : "§4§lDW UHC"		}	},		"staff" : {		"st-become-host" : "{prefix} §dVous êtes désormais le Host de la partie ! (Faites /host pour voir toutes les commandes.)",				"st-difficulty" : "{prefix} §eDifficulté : {value}",				"error" : {			"st-error-no-game" : "{error} §cIl n'y a aucune partie en cours !",			"st-error-game-start" : "{error} §cCette partie est déjà lancé !",			"st-error-game-cancel" : "{error} §cVous ne pouvez plus annuler le lancement !",			"st-error-perm" : "{error} §cVous n'avez pas la permission pour effectuer ceci !",						"st-error-scenario-start" : "{error} §cL'état de ce scénario ne peut être changé qu'avant le lancement de la partie.",			"st-error-scenario-pvp" : "{error} §cL'état de ce scénario ne peut être changé qu'avant le pvp.",			"st-error-scenario-condition" : "{error} §cLes conditions nécessaires à l'activation de ce scénario ne sont pas respectées.",			"st-error-scenario-compatibility" : "{error} §cLe scénario §o{value-1}§c a été désactivé car il est incompatible avec le scénario §o{value-2}.",			"st-error-gamemode-compatibility" : "{error} §cLe scénario §o{value}§c a été désactivé car il est incompatible avec le mode de jeu §o{game-type}.",			"st-error-option-start" : "{error} §cVous ne pouvez pas modifier ce paramètre après le lancement de la partie.",			"st-error-option-pvp" : "{error} §cVous ne pouvez pas modifier ce paramètre après le lancement du pvp.",						"st-error-world-generation" : "{error} §cLe monde \"{value}\" n'a pas été généré !",			"st-error-world-creation-size" : "{error} §cVous ne pouvez pas créer de monde supplémentaire. Vous pouvez cependant en supprimer un.",			"st-error-unload-fail" : "{error} §cCe monde \"{value}\" n'a pas pu être déchargé.",			"st-error-deleting-fail" : "{error} §cCe monde \"{value}\" n'a pas pu être supprimé.",			"st-error-main-world" : "{error} §cVous ne pouvez pas supprimer le monde principal.",			"st-error-lobby-world" : "{error} §cVous ne pouvez pas supprimer le lobby.",			"st-error-world-exist" : "{error} §cCe monde existe déjà.",			"st-error-desactivate-main-world" : "{error} §cVous ne pouvez pas désactiver le monde principal.",						"st-error-server-restart" : "{error} §cVous ne pouvez pas faire cela car le serveur va redémarrer."		}	},	"scoreboard" : {		"sb-line" : "§8»§m---------------§8« ",				"sb-episode" : "§dEpisode {episode}",		"sb-players" : "§7Joueurs : §a{player-count}",		"sb-teams" : "§7Equipes : §a{team-count} §f({player-count})",		"sb-kills" : "§7Kills : §a{value}",		"sb-waiting" : "§6Partie en attente !",		"sb-starting" : "§6Lancement :§e {timer-s}s",		"sb-loading" : "§6Chargement...",				"sb-timer" : "§7Timer :§6 {timer-m}",		"sb-border" : "§7Border :§6 {value}",				"sb-host" : "§cHost : §6{player-name}",				"sb-kill-score" : "§4§lKills :"	},		"tablist" : {		"tl-connexion" : "§6Ping : §e{value-1}ms §f| §6TPS : §e{value-2}"	},		"commands" : {		"cmd-error-perm" : "{error} §cVous n'avez pas la permission pour effectuer cette commande.",		"cmd-help" : "{prefix} §eLa commande s'écrit : {command}.",		"cmd-error-invalid-argument" : "{error} §cLa commande s'écrit : {command}.",		"cmd-error-invalid-command" : "{error} §cCette commande n'existe pas !",		"cmd-error-off" : "{error} §cCette commande est désactivé",		"cmd-error-player-offline" : "{error} §cCe joueur n'est pas connecté ou n'existe pas !",		"cmd-error-player-offgame" : "{error} §cCe joueur n'est pas dans la partie.",		"cmd-error-player-dead" : "{error} §cVous ne pouvez pas effectuer cette commande sur un joueur mort.",		"cmd-error-player-alive" : "{error} Seul un joueur en vie peut effectuer cette commande.",		"cmd-error-player-not-dead" : "{error} §cVous ne pouvez pas effectuer cette commande sur un joueur vivant.",		"cmd-error-gamemode" : "{error} §cCette commande ne fonctionne qu'avec le mode de jeu §o{value}.",		"cmd-error-team" : "{error} §cVous devez avoir une équipe pour effectuer cette commande.",		"cmd-error-selector" : "{error} §cLe sélecteur \"{value}\" ne fonctionne pas avec cette commande.",				"cmd-error-no-role" : "{error} §cVous devez avoir un rôle pour effectuer cette commande.",		"cmd-error-role" : "{error} §cVous devez être §o{role-name}§c pour effectuer cette commande.",							"cmd-error-self-msg" : "{error} §cVous ne pouvez pas envoyer de message à vous-même.",				"cmd-error-name-size" : "{error} §cLe nom ne doit pas dépasser les {value} caractères.",				"cmd-execute" : "{prefix} §aLa commande a bien été executée."	},		"join-state" : {		"OPEN" : "§aOuvert",		"CLOSE" : "§cFermé",		"WHITELIST" : "§dWhitelist"	},		"rank" : {		"PLAYER" : {			"name" : "§7Joueur",			"prefix" : ""		},				"SPECTATOR" : {			"name" : "§7Spectateur",			"prefix" : "§8§o[Spec] "		},				"ORGA" : {			"name" : "§9Organisateur",			"prefix" : "§9[Orga] §r"		},				"HOST" : {			"name" : "§cHost",			"prefix" : "§c[Host] §r"		},				"STAFF" : {			"name" : "§5Staff",			"prefix" : "§3[Staff] §r"		}	},		"kick-reason" : {	    "cause-game-close" : "§cCette partie est fermée !",	    "cause-game-whitelist" : "§dVous n'êtes pas sur la Whitelist !",	    "cause-game-slot" : "§cIl n'y a plus de place dans la partie !",		"cause-world-deleting" : "§eLe monde est en cours de suppression...",		"cause-world-generating" : "§eUn monde est en cours de génération...",		"cause-server-close" : "§cFermeture du serveur"	},		"motd" : {			"WAITING" : {			"1" : "§6UHC HOST §7| §b1.8 §7[{join-state}§7]",			"2" : "§2» §aEn attente de joueur §2«"		},				"STARTING" : {			"1" : "§6UHC HOST §7| §b1.8",			"2" : "§7Lancement de la partie dans : §a{timer-s} §7seconde(s)."		},				"LOADING" : {			"1" : "§6UHC HOST §7| §b1.8",			"2" : "§6Chargement de la partie en cours..."		},				"RUNNING" : {			"1" : "§6UHC HOST §7| §b1.8",			"2" : "§7La partie est en cours !"		},				"ENDING" : {			"1" : "§6UHC HOST §7| §b1.8",			"2" : "§cRedémarrage en cours..." 		}	},		"scenarios" : {				"scenario" : "Scénario",		"condition" : "Condition(s)",		"error-condition-to2" : "{error} §cLe scénario {value} n'a pas pu être activé car il ne fonctionne que avec des équipes de deux joueurs.",				"scenario-period" : "§7Période : §a{value} min",							"pvp-only" : "§cSeulement en Pvp",			"cutclean" : {			"name" : "§6CutClean",			"description" : "§7Les items se cuisent §fautomatiquement\n§7dès leur obtention."		},				"fastsmelting" : {			"name" : "§6Fast Smelting",			"description" : "§7Les items se cuisent §fplus rapidement§7.",			"furnace-speed" : "§6Vitesse du four : §e{value}"		},				"hastey-boys" : {			"name" : "§bHastey Boys",			"description" : "§7Tous les outils sont §faméliorés§7.",			"enchant-level" : "§7Niveau : §a{value}"		},				"hastey-babies" : {			"name" : "§bHastey Babies",			"description" : "§7Tous les outils sont §faméliorés§7 (mais juste un peu)."		},				"timber" : {			"name" : "§aTimber",			"description" : "§7Permet de casser les arbres en §fun seul coup §7!"		},				"rodless" : {			"name" : "§cRodLess",			"description" : "§7Permet de désactiver les\n§fcannes à pêche, boules de neige §7et §foeufs§7.",			"rod" : "§6Canne à pêche",			"snowball" : "§bBoule de neige",			"egg" : "§eOeuf"		},				"fireless" : {			"name" : "§6FireLess",			"description" : "§7Permet de désactiver les\n§fdégâts de feu§7 ou certains items en rapport.",			"no-fire-damage" : "§6Pas de dégâts par le feu",			"no-fire-tick" : "§6Pas de ticks de feu",			"lava-bucket" : "§cSeau de lave",			"flint-and-steel" : "§cBriquet",			"player-only" : "§bSeulement sur les joueurs"		},				"bleeding-sweets" : {			"name" : "§dBleeding sweets",			"description" : "§7Lorsque qu'un joueur meurt, il drop :\n §8» §a1 §fdiamant\n §8» §a5 §flingots d'or\n §8» §a16 §fflèches\n §8» §a1 §ffil"		},				"gone-fishing" : {			"name" : "§3Gone Fishing",			"description" : "§7Lors de votre spawn vous obtenez :\n §8» §a1 §fcanne à pêche §b(luck 250 / u250) \n §8» §a20 §fenclumes"		},				"enchanted-death" : {			"name" : "§cEnchanted Death",			"description" : "§7Les joueurs ne peuvent pas crafter §fla table d'enchant§7.\n§7Le seul moyen de l'obtenir est de §ctuer un joueur !"		},				"no-fall" : {			"name" : "§aNo fall",			"description" : "§7Les joueurs ne prennent plus de §fdégât de chute §7!"		},				"believe-fly" : {			"name" : "§dI believe I can fly",			"description" : "§7Les joueurs on probablement bu du §c§nredbull§7."		},				"no-clean-up" : {			"name" : "§dNo Clean Up",			"description" : "§7Les joueurs sont §fautomatiquement heal §7après un kill."		},				"flower-power" : {			"name" : "§dFlower Power",			"description" : "§7Les fleurs peuvent drop un i§ftem aléatoire§7 en §fquantité \n§faléatoire §7!",			"flower-drop" : "§2Probabilité de drop d'une fleur : §a{value}"		},				"cat-eyes" : {			"name" : "§5Cat Eyes",			"description" : "§7Tous les joueurs détiennent §fl'effet §fnight vision§7."		},				"eggs" : {			"name" : "§6Eggs",			"description" : "§7Les oeufs font apparaître des §fmobs randoms §7!"		},		"assassins" : {			"name" : "§4Assassins",			"description" : "§7Chaque joueur se vera attribué §cune cible§7. On ne \n§7peut récupérer le stuff §fque sur notre cible \n§7ou sur une personne qui nous §fprend pour cible. \n§7Sinon le stuff §ane drop pas §7!",			"target-msg" : "§4Assassin §8» §6Votre objectif est d'abattre votre cible qui est §e{player-name}§6.",			"target-death-msg" : "§4Assassin §8» §6Votre cible est morte vous allez en recevoir une nouvelle.",			"no-target-msg" : "§4Assassin §8» §cVous n'avez pas reçu de cible !",			"no-stuff-drop" : "§4Assassin §8» §cLe stuff de {player-name} n'a pas été drop car il ne vous a pas pour cible et ce n'est pas votre cible.",			"sb-target-name" : "§2La cible : §a{player-name}",			"sb-target-distance" : "§2Distance : §a{value}",			"tracker" : "§cTraqueur"		},				"bedbomb" : {			"name" : "§6BedBomb",			"description" : "§7Les lits §6explosent§7 lorsque que l'on interagit avec\n§7dans §ftoutes les dimensions§7."		},				"timebomb" : {			"name" : "§6TimeBomb",			"description" : "§7Le stuff est posé §fdans un coffre§7 quand un joueur §cmeurt§7,\n§7il §6explose §7au bout de d'un certain nombre de secondes."		},				"stingy-world" : {			"name" : "§2Stingy World",			"description" : "§7Les mobs et les blocks ne drop §fplus aucun item §7!",			"stingy-blocks" : "§aStingy Blocks",			"stingy-mobs" : "§cStingy Mobs",			"stingy-trees" : "§2Stingy Trees",			"stingy-lakes" : "§bStingy Lakes",			"stingy-bombs" : "§4Stingy Bombs"		},				"tnt-fly" : {			"name" : "§cTnt Fly",			"description" : "§7Permet d'augmenter le knockback §fd'une explosion§7.",			"tnt-boost" : "§bBuff knockback",			"tnt-reduction" : "§cNerf dommage",			"tnt-chain" : "§eTnt liées"		},						"eternal-items" : {			"name" : "§5Eternal Items",			"description" : "§7Les items ne §fdespawn plus§7."		},				"good-game" : {			"name" : "§aGood Game",			"description" : "§7Le premier joueur à dire gg après §cla mort§7 \n§7d'un autre joueur reçoit §fun item aléatoire. \n§8» §a1 §fdiamant\n§8» §a3 §flingots d'or\n§8» §a5 §flingots de fer\n§8» §a1 §fgâteau"		},				"final-heal" : {			"name" : "§dFinal Heal",			"description" : "§7Tous les joueurs sont §asoignés §7au moment du §cpvp.",			"bc-final-heal" : "§dFinal Heal §8» §7C'est l'heure du final Heal ! Tous les joueurs §aont été soignés."		}, 						"beta-zombie" : {			"name" : "§2Beta Zombie",			"description" : "§7Les zombies drop §fdes plumes §7à leur §cmort."		},				"assault-and-battery" : {			"name" : "§bAssault and Battery",			"description" : "§7Scénario jouable qu'en §6team de deux§7. Dans une équipe, \n§7un des joueurs ne peut jouer §aqu'à l'épée §7et l'autre \n§7ne peut jouer §aqu'à l'arc§7. Lors de §cla mort d'un joueur§7, \n§7son coéquippier n'a plus de limite.",			"condition" : "§eTO2",			"bc-announce-sword" : "§3Assault & Battery §8» §bVous êtes §ol'épéiste §bde l'équipe ! Vous ne pouvez donc pas combattre avec l'arc tant que votre coéquipier est en vie.",			"bc-announce-bow" : "§3Assault & Battery §8» §bVous êtes §ol'archer §bde l'équipe ! Vous ne pouvez donc pas combattre avec l'épée tant que votre coéquipier est en vie.",			"bc-announce-solo" : "§3Assault & Battery §8» §bVous pouvez utiliser l'arc et l'épée car vous êtes le seul joueur de votre équipe.",			"bc-announce-use-all" : "§3Assault & Battery §8» §6Votre coéquippier est mort ! Vous pouvez désormais utiliser l'arc et l'épée !"		},				"blood-diamond" : {			"name" : "§cBlood diamond",			"description" : "§7Quand un joueur mine §bdu diamant§7, il §cperd de la vie."		},				"superheroes" : {			"name" : "§eSuperheroes",			"description" : "§7Tous les joueurs obtiennent §fun pouvoir aléatoire§7.",			"powers" : "§a§nPouvoirs :",			"power-announce" : "§aSuperheroes §8» §7Vous avez le pouvoir §6\"{value}\"§7.",			"power" : {				"STRENGTH" : "§cForce",				"RESISTANCE" : "§7Résistance",				"SPEED" : "§bVitesse",				"DOUBLE_HEALTH" : "§aDouble Vie",				"JUMP_BOOST" : "§eJump Boost",				"INVICIBILITY" : "§fInvisibilité"			}		},				"bookception" : {			"name" : "§dBookception",			"description" : "§7Quand un joueur §cmeurt§7, il drop un §flivre \n§fenchanté §7aléatoire."		},				"only-one-winner" : {			"name" : "§cOnly One Winner",			"description" : "§7La dernière équipe en vie §csera dissoute§7 pour ne laisser §aqu'un vainqueur.",			"bc-one-winner" : "{prefix} §cIl n'y aura qu'un seul gagnant : la dernière équipe à été dissoute."		},				"web-cage" : {			"name" : "§cWebcage",			"description" : "§7Quand un joueur §cest tué§7, il génère §fune cage §7de toiles d'araignées."		},				"puppy-power" : {			"name" : "§aPuppy Power",			"description" : "§7Tous les joueurs obtiennent, en début de partie :\n §8» §a64 §foeufs de loup\n §8» §a64 §fos\n §8» §a64 §fviandes de zombie"		},				"cupid" : {			"name" : "§dCupid",			"description" : "§7Quand un joueur touche un autre à l'arc, \n§7il vol §fun certain pourcentage de vie§7.",			"cupid-heal" : "§7Vole §d{value}% §7de vie."		}, 				"inventors" : {			"name" : "§eInventors",			"description" : "§7Quand un joueur §fcraft en premier un item,\n§7il est affiché dans le chat. Il devient alors \n§ale propriétaire §7de cet item et chaque personne\n§7voulant le craft lui devra §6un lingot d'or.",			"invention" : "§eInventor §8» §e{player-name}§6 vient d'inventer :§f {value} §6!",			"craft-property" : "§6Inventeur : §e{value}",			"craft-error" : "{error} §cVous devez posséder 1 lingot d'or pour effectuer ce craft."		}, 				"bow-swap" : {			"name" : "§3Bow Swap",			"description" : "§7Quand un joueur touche un autre à l'arc, il y une probabilité \n§7que les deux joueurs §féchangent leurs positions."		}, 				"highway-to-hell" : {			"name" : "§4Highway to hell",			"description" : "§7Tous les joueurs obtiennent, §fen début de partie,\n§7de quoi aller dans §cle nether."		},				"soup" : {			"name" : "§aSoup",			"description" : "§7Quand un joueur §futilise une soupe,§7 il la consomme\n§7instantanément regagnant ainsi de la vie."		},				"double-jump" : {			"name" : "§bDouble Jump",			"description" : "§7Les joueurs peuvent effectuer §fun double saut."		},				"tracker" : {			"name" : "§cTracker",			"description" : "§7En faisant §fclique droit §7avec un compas en main,\n§7vous pouvez §ctraquer§7 le joueur le plus proche.",			"tracker-no-target" : "§cTraqueur §8» §cLe Traqueur n'a pas trouvé de cible.",			"tracker-target" : "§cTraqueur §8» §eVous ciblez §l{player-name}§e qui se trouve à {value} blocs."		},				"master-level" : {			"name" : "§2Master Level",			"description" : "§7Permet de choisir §fle niveau des joueurs§7 en début de partie.",			"start-level" : "§aNiveau : §e{value}"		},				"golden-retriever" : {			"name" : "§eGolden Retriever",			"description" : "§7Lorsque qu'un joueur §cmeurt§7, il drop une §egolden head§7."		},				"speedy-miner" : {			"name" : "§bSpeedy Miner",			"description" : "§7Lorsque vous vous trouvez sous la couche \n§fy=32§7, vous obtenez §fdes effets de potion§7."		},				"fence-head" : {			"name" : "§cFence Head",			"description" : "§7Lorsque qu'un joueur §cmeurt§7, sa tête apparaît sur une clotûre."		},				"australian-crafting" : {			"name" : "§eAustralian Crafting",			"description" : "§7Tous les crafts sont §frenversés\n§7(le haut est en bas et inversement)."		},				"no-wooden-tool" : {			"name" : "§6No Wooden Tool",			"description" : "§7Les §fmatériaux des outils §7sont améliorés."		},				"open-house" : {			"name" : "§2Open House",			"description" : "§7Chaque joueur peut §cvoler dans l'inventaire §7des autres \n§7en faisant §fsneak + clique droit§7."		},				"dropping-coins" : {			"name" : "§eDropping Coins",			"description" : "§7A chaque fois qu'un joueur prend §cun dégât§7, \n§fun §fitem aléatoire§7 de son stuff §fest drop§7."		},				"no-bucket" : {			"name" : "§9No Bucket",			"description" : "§7Permet de désactiver les §fseaux d'eau/lave§7.",			"water-bucket" : "§9Seau d'eau"		},						"sweat-world" : {			"name" : "§3Sweat World",			"description" : "§7Permet de §fgénérer un monde §7spécialement conçu pour §cle pvp§7."		},				"chunk-apocalypse" : {			"name" : "§cChunk Apocalypse",			"description" : "§7Un certain pourcentage des chunks est §fremplacé par de l'air.§7\n§c[!] Bon serveur recommandé !"		},				"enchanting-center" : {			"name" : "§dEnchanting Center",			"description" : "§7Les joueurs ne peuvent pas crafter §fla table d'enchant§7.\n§7Cependant une §ftable d'enchantement §7est généré au centre de la carte.",			"enchant-table-generation-error" : "{error} §cLa table d'enchantement n'a pas pu être généré au 0 0 donc le scénario \"Enchanting Table\" a été désactivé."		},				"progressive-speed" : {			"name" : "§bProgressive Speed",			"description" : "§7Tous les joueurs commencent avec §fl'effet vitesse I§7\n§7et à chaque §ckill§7, cet effet augmente de niveau§7."		},				"world-is-small" : {			"name" : "§aWorld Is Small",			"description" : "§7Tous les joueurs commencent §fau même endroit§7."		},				"bombers" : {			"name" : "§4Bombers",			"description" : "§7Tous les joueurs recoivent en début de partie un\n§fbriquet solidité X§7 et chaque §cmobs tué §7drop de la §6tnt§7."		},				"skyhigh" : {			"name" : "§bSkyHigh",			"description" : "§7A partir de §fl'activation du pvp§7, tous les joueurs en dessous \n§7de la couche y = 200 §cperdrons de la vie §7à raison de 1 coeur \n§7toutes les 30 secondes.",			"skyhigh-announce" : "§bSkyHigh §8» §7Le scénario skyhight sera actif à l'activation du pvp.",			"skyhigh-announce-start" : "§bSkyHigh §8» §cIl est temps de monter à une couche supérieur ou égal à y = 200 si vous ne voulez pas mourrir !",			"skyhigh-damage" : "§bSkyHigh §8» §cVous venez de perdre 1 coeur car vous êtes sous la couche y = 200."		},				"gapzap" : {			"name" : "§eGapZap",			"description" : "§7Quand un joueur prend un dégât, §fil pert ses effets\n§fde regénération§7."		},				"infinite-enchanter" : {			"name" : "§5Infinite Enchanter",			"description" : "§7Tous les joueurs ont de l'expérience à l'infini."		},				"diamond-isnt" : {			"name" : "§3Diamond isn't diamond",			"description" : "§7Les minerais de diamant peuvent drop un §fitem \n§faléatoire §7en §fquantité aléatoire §7!",			"diamond-drop" : "§2Probabilité de drop d'un minerai : §a{value}"		},				"reincarnation" : {			"name" : "§5Réincarnation",			"description" : "§7Quand un joueur meurt, un §fmob random §7prend\n§7sa place !"		},				"oviparous" : {			"name" : "§2Oviparous",			"description" : "§7Quand un mob meurt, §fil drop un oeuf §7de\n§7son espèce.",			"egg-drop" : "§2Probabilité de drop d'un oeuf : §a{value}"		},				"ender-replacement" : {			"name" : "§3Ender Replacement",			"description" : "§7Quand un §cjoueur meurt, §7tous les §fautres joueurs\n§fsont téléportés§7 à lui."		},				"netheribus" : {			"name" : "§4Netheribus",			"description" : "§7A partir de §fl'activation du pvp§7, tous les joueurs dans l'overworld \n§cperdrons de la vie §7à raison de 1 coeur toutes les 30 secondes.",			"netheribus-announce" : "§4Netheribus §8» §7Le scénario netheribus sera actif à l'activation du pvp.",			"netheribus-announce-start" : "§4Netheribus §8» §cIl est temps d'aller dans le nether si vous ne voulez pas mourrir !",			"netheribus-damage" : "§4Netheribus §8» §cVous venez de perdre 1 coeur car vous êtes dans l'overworld."		},				"best-pve" : {			"name" : "§6Best PVE",			"description" : "§7Tous les joueurs appartiennent, au début de la partie, à la \n§7liste §fbest PVE. §7Si un joueur reçoit §cun dégât PVE, §7il sort de\n§7cette liste. Il ne pourra alors plus revenir avant d'avoir §cfait \n§cun kill. §7Toutes §fles X minutes, §7les joueurs étant dans \n§7cette liste gagneront §f1 coeur permanent.",			"best-pve-increase" : "§6Best-PVE §8» §7Vous venez de gagner §aun coeur permanent !",			"best-pve-damage" : "§6Best-PVE §8» §cVous venez de prendre un dégât de PVE. Par conséquent, vous n'êtes plus dans la liste Best PVE. Vous devrez faire un kill afin de pouvoir réintégrer celle-ci."		},				"urban" : {			"name" : "§eUrban",			"description" : "§7Génère une map §fsuperflat §7remplis §fde villages."		},				"villager-madness" : {			"name" : "§aVillager Madness",			"description" : "§7Tous les joueurs obtiennent, en début de partie :\n §8» §a64 §fblocs d'émeraude \n §8» §a64 §foeufs de villageois"		},				"kill-the-witch" : {			"name" : "§5Kill the witch",			"description" : "§7Toutes les X minutes, (à partir du PVP) un joueur\n§7est définit comme étant §fla sorcière. §7Toutes §fles \n§7boussoles pointerons alors §fvers celle-ci. \n§7Cependant la sorcière gagne une pomme d'or.",			"witch-announce" : "§5Kill The Witch §8» §7La sorcière est désormais : §e{value}"		},				"biome-apocalypse" : {			"name" : "§aBiome Apocalypse",			"description" : "§7Le monde génère des §fbiomes différents §7sur chaque bloc."		},				"hell" : {			"name" : "§4Hell",			"description" : "§7Le monde §cdevient un enfer §7dans lequel il n'y a plus que \n§7le biome nether. De plus, §fles mobs du nether sont \n§faméliorés."		},				"coordonoia" : {			"name" : "§3Coordonoia",			"description" : "§7Toutes les X minutes, §fles coordonnées d'un joueur \n§faléatoire §7sont envoyées à tous les joueurs.",			"coordonoia-announce" : "§3Coordonoia §8» §7Un joueur se trouve en §a{value}"		},				"biome-center" : {			"name" : "§2Biome Center",			"description" : "§7Permet de générer un §funique biome §7autour du centre.",			"biome-type" : "§fBiome : §a{value}",			"biome-distance" : "§fDistance : §a{value}"		},				"aiidor-hardcore" : {			"name" : "§dAiidor Hardcore",			"description" : "§7Rend le jeu §cun peu §7plus dur."		}	},		"enchants" : {		"enchantments" : "Les Enchantements",				"ARROW_DAMAGE" : "Power",			"ARROW_FIRE" : "Flame",				"ARROW_INFINITE" : "Infinity",				"ARROW_KNOCKBACK" : "Punch",				"DAMAGE_ALL" : "Sharpness",		"DAMAGE_ARTHROPODS" : "Bane Of Arthropods",		"DAMAGE_UNDEAD" : "Smite",		"DEPTH_STRIDER" : "Depth Strider",		"DIG_SPEED" : "Efficiency",		"DURABILITY" : "Unbreaking",		"FIRE_ASPECT" : "Fire Aspect",		"KNOCKBACK" : "Knockback",		"LOOT_BONUS_BLOCKS" : "Fortune",		"LOOT_BONUS_MOBS" : "Looting",		"LUCK" : "Luck of the Sea",		"LURE" : "Lure",		"OXYGEN" : "Respiration",			"PROTECTION_ENVIRONMENTAL" : "Protection",				"PROTECTION_EXPLOSIONS" : "Blast Protection",				"PROTECTION_FALL" : "Feather Falling",				"PROTECTION_FIRE" : "Fire Protection",		"PROTECTION_PROJECTILE" : "Projectile Protection",		"SILK_TOUCH" : "Silk Touch",		"THORNS" : "Thorns",		"WATER_WORKER" : "Aqua Affinity"	},			"potions" : {		"potions" : "Les Potions",				"SPEED" : "Vitesse",		"FAST_DIGGING" : "Célérité",		"DAMAGE_RESISTANCE" : "Résistance"	},		"console" : {				"error-world-not-found" : "The \"{world-name}\" world does not exist !",		"error-world-exist" : "The \"{world-name}\" world already exists !",		"world-generation" : "Creation of the \"{world-name}\" world is in progress ...",		"world-deleting" : "Deleting world \"{world-name}\" is in progress ...",		"world-deleting-done" : "The world \"{world-name}\" has been deleted.",		"error-world-deleting-fail" : "The \"{world-name}\" world delete has failed.",		"error-command-player": "Seul un joueur peut effectuer cette commande !",				"cage-generate": "The cage has been generated at spawn !",				"files" : {			"lang-file-load" : "Lang file has been loaded !",			"file-created" : "The file {value} has been created."		}	}}

@@ -20,7 +20,7 @@ import fr.aiidor.uhc.enums.Rank;
 import fr.aiidor.uhc.game.Game;
 import fr.aiidor.uhc.game.UHCPlayer;
 import fr.aiidor.uhc.inventories.GuiManager;
-import fr.aiidor.uhc.tools.UHCItem;
+import fr.aiidor.uhc.utils.UHCItem;
 
 public class CommandHost extends UHCCommand {
 
@@ -75,12 +75,12 @@ public class CommandHost extends UHCCommand {
 			} else {
 				//TOUTES LES COMMANDES
 				sender.sendMessage("§eLes commandes : "
-						+ "\n §6- " + "/" + label.toLowerCase() + " config"
-						+ "\n §6- " + "/" + label.toLowerCase() + " broadcast §f<message>"
-						+ "\n §6- " + "/" + label.toLowerCase() + " invsee §f<player>"
-						+ "\n §6- " + "/" + label.toLowerCase() + " revive §f<player>"
-						+ "\n §6- " + "/" + label.toLowerCase() + " restart"
-
+							+ "\n §6- " + "/" + label.toLowerCase() + " config"
+							+ "\n §6- " + "/" + label.toLowerCase() + " broadcast §f<message>"
+							+ "\n §6- " + "/" + label.toLowerCase() + " invsee §f<player>"
+							+ "\n §6- " + "/" + label.toLowerCase() + " revive §f<player>"
+							+ "\n §6- " + "/" + label.toLowerCase() + " orga <add|remove> §f<player>"
+							+ "\n §6- " + "/" + label.toLowerCase() + " restart"
 						);
 			}
 			
@@ -88,7 +88,7 @@ public class CommandHost extends UHCCommand {
 		}
 		
 		Player player = (Player) sender;
-				
+		
 		if (args[0].equalsIgnoreCase("config")) {
 			
 			if (args.length != 1) {
@@ -103,6 +103,52 @@ public class CommandHost extends UHCCommand {
 			}
 			
 			player.openInventory(GuiManager.INV_CONFIG.getInventory());
+			return true;
+		}
+		
+		//ORGA 
+		if (args[0].equalsIgnoreCase("orga")) {
+			
+			String command = "/" + label.toLowerCase() + " orga <add|remove> <player>";
+			
+			if (args.length == 1) {
+				player.sendMessage(Lang.CMD_HELP.get().replace(LangTag.COMMAND.toString(), command));
+				return true;
+			}
+			
+			if (args.length != 3) {
+				player.sendMessage(Lang.CMD_ERROR_INVALID_ARGUMENT.get().replace(LangTag.COMMAND.toString(), command));
+				return true;
+			}
+			
+			if (!Arrays.asList("add", "remove").contains(args[1].toLowerCase())) {
+				player.sendMessage(Lang.CMD_ERROR_INVALID_ARGUMENT.get().replace(LangTag.COMMAND.toString(), command));
+				return true;
+			}
+			
+			String targetName = args[2];
+			
+			if (!isConnected(targetName)) {
+				player.sendMessage(Lang.CMD_ERROR_PLAYER_OFFLINE.get().replace(LangTag.PLAYER_NAME.toString(), targetName));
+				return true;
+			}
+			
+			Player target = Bukkit.getPlayer(targetName);
+			
+			if (!game.isHere(target.getUniqueId())) {
+				player.sendMessage(Lang.CMD_ERROR_PLAYER_OFFGAME.get().replace(LangTag.PLAYER_NAME.toString(), targetName));
+				return true;
+			}
+			
+			UHCPlayer t = game.getUHCPlayer(target.getUniqueId());
+			Boolean isOrga = t.getRank() == Rank.ORGA || t.getRank() == Rank.STAFF || t.getRank() == Rank.HOST;
+			
+			if (args[1].equalsIgnoreCase("add")) {
+				if (!isOrga) t.setRank(Rank.ORGA);
+			} else {
+				if (t.getRank() == Rank.ORGA) t.setRank(Rank.PLAYER);
+			}
+			
 			return true;
 		}
 		

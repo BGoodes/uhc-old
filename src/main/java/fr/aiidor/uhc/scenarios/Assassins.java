@@ -23,7 +23,7 @@ import fr.aiidor.uhc.inventories.GuiManager;
 import fr.aiidor.uhc.listeners.events.ChangeScenarioStateEvent;
 import fr.aiidor.uhc.listeners.events.GuiClickEvent;
 import fr.aiidor.uhc.team.UHCTeam;
-import fr.aiidor.uhc.tools.ItemBuilder;
+import fr.aiidor.uhc.utils.ItemBuilder;
 
 public class Assassins extends Scenario {
 	
@@ -135,6 +135,7 @@ public class Assassins extends Scenario {
 	@Override
 	public Boolean compatibleWith(Scenario scenario) {
 		if (scenario.equals(ScenariosManager.TRACKER)) return false;
+		if (scenario.equals(ScenariosManager.KILL_THE_WITCH)) return false;
 		return true;
 	}
 	
@@ -154,24 +155,25 @@ public class Assassins extends Scenario {
 		}
 	}
 	
-	public Boolean hasTarget(UHCPlayer p) {
-		return targets.containsKey(p);
+	public Boolean hasTarget(UHCPlayer player) {
+		return targets.containsKey(player);
 	}
 	
-	public Boolean hasTarget(UHCTeam t, UHCPlayer target) {
-		for (UHCPlayer p : t.getAlivePlayers()) {
+	public Boolean hasTarget(UHCTeam team, UHCPlayer target) {
+		
+		for (UHCPlayer p : team.getAlivePlayers()) {
 			if (hasTarget(p) && getTarget(p).equals(target)) return true;
 		} 
 		
 		return false;
 	}
 	
-	public UHCPlayer getTarget(UHCPlayer p) {
-		return targets.get(p);
+	public UHCPlayer getTarget(UHCPlayer player) {
+		return targets.get(player);
 	}	
 	
-	public Integer getDistance(UHCPlayer p) {
-		return distance.get(p);
+	public Integer getDistance(UHCPlayer player) {
+		return distance.get(player);
 	}
 	
 	public void setDistance() {
@@ -228,40 +230,40 @@ public class Assassins extends Scenario {
 		}
 	}
 	
-	public void removeTarget(UHCPlayer p) {
-		if (targets.containsKey(p)) targets.remove(p);
+	public void removeTarget(UHCPlayer player) {
+		if (targets.containsKey(player)) targets.remove(player);
 	}
 	
-	public void setTarget(UHCPlayer p, UHCPlayer t) {
+	public void setTarget(UHCPlayer player, UHCPlayer target) {
 		
-		if (t != null) {
+		if (target != null) {
 			
-			targets.put(p, t);
-			if (p.isConnected()) p.getPlayer().sendMessage(Lang.TARGET_MSG.get().replace(LangTag.PLAYER_NAME.toString(), t.getName()));
+			targets.put(player, target);
+			if (player.isConnected()) player.getPlayer().sendMessage(Lang.TARGET_MSG.get().replace(LangTag.PLAYER_NAME.toString(), target.getName()));
 			
 			
 		} else {
-			if (hasTarget(p)) removeTarget(p);
-			if (p.isConnected()) p.getPlayer().sendMessage(Lang.NO_TARGET_MSG.get());
+			if (hasTarget(player)) removeTarget(player);
+			if (player.isConnected()) player.getPlayer().sendMessage(Lang.NO_TARGET_MSG.get());
 		}
 	}
 	
-	public Boolean canDrop(UHCPlayer p, UHCPlayer k) {
+	public Boolean canDrop(UHCPlayer player, UHCPlayer killer) {
 		
-		if (hasTarget(p) && hasTarget(k)) {
+		if (hasTarget(player) && hasTarget(killer)) {
 				
-			if (getTarget(k).equals(p) || getTarget(p).equals(k)) {
+			if (getTarget(killer).equals(player) || getTarget(player).equals(killer)) {
 				return true;
 			}
 				
-			if ((p.hasTeam() && hasTarget(p.getTeam(), k)) || (k.hasTeam() && hasTarget(k.getTeam(), p))) {
+			if ((player.hasTeam() && hasTarget(player.getTeam(), killer)) || (killer.hasTeam() && hasTarget(killer.getTeam(), player))) {
 				return true;
 			}
 				
 			Bukkit.getScheduler().runTaskLater(UHC.getInstance(), new Runnable() {
 				@Override
 				public void run() {
-					if (k.isConnected()) k.getPlayer().sendMessage(Lang.NO_STUFF_DROP.get().replace(LangTag.PLAYER_NAME.toString(), p.getName()));
+					if (killer.isConnected()) killer.getPlayer().sendMessage(Lang.NO_STUFF_DROP.get().replace(LangTag.PLAYER_NAME.toString(), player.getName()));
 				}
 			}, 1);
 				

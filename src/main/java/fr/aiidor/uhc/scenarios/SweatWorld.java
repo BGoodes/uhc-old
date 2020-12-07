@@ -34,6 +34,12 @@ public class SweatWorld extends Scenario {
 	}
 	
 	@Override
+	public Boolean compatibleWith(Scenario scenario) {
+		if (scenario.equals(ScenariosManager.URBAN)) return false;
+		return true;
+	}
+	
+	@Override
 	public Boolean needWorldGeneration() {
 		return true;
 	}

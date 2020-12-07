@@ -17,7 +17,7 @@ import fr.aiidor.uhc.inventories.Gui;
 import fr.aiidor.uhc.inventories.GuiBuilder;
 import fr.aiidor.uhc.inventories.GuiManager;
 import fr.aiidor.uhc.listeners.events.GuiClickEvent;
-import fr.aiidor.uhc.tools.ItemBuilder;
+import fr.aiidor.uhc.utils.ItemBuilder;
 
 public class TntFly extends Scenario {
 	

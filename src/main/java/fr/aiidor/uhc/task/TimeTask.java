@@ -27,7 +27,7 @@ public class TimeTask extends BukkitRunnable {
 			
 			int i = 1;
 			
-			if (time >= 5100 && time <= 9100) { //9000
+			if (time >= 5100 && time <= 9100) {
 				i++;
 			}
 			

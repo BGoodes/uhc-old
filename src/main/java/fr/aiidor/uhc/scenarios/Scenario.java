@@ -15,7 +15,7 @@ import fr.aiidor.uhc.enums.UHCType;
 import fr.aiidor.uhc.game.Game;
 import fr.aiidor.uhc.inventories.Gui;
 import fr.aiidor.uhc.listeners.events.ChangeScenarioStateEvent;
-import fr.aiidor.uhc.tools.ItemBuilder;
+import fr.aiidor.uhc.utils.ItemBuilder;
 import net.md_5.bungee.api.ChatColor;
 
 public abstract class Scenario {
@@ -72,6 +72,8 @@ public abstract class Scenario {
 					e.setCancelled(true);
 					return;
 				}
+				
+				
 			}
 		}
 
@@ -146,6 +148,14 @@ public abstract class Scenario {
 				game.getSettings().setActivated(this, false);
 				return;
 			}
+		}
+		
+		if (!compatibleWith(game.getUHCMode().getUHCType())) {
+			
+			if (log) game.log(Lang.ST_ERROR_GAMEMODE_COMPATIBILITY.get().replace(LangTag.VALUE.toString(), this.name));
+			
+			game.getSettings().setActivated(this, false);
+			return;
 		}
 	}
 	

@@ -6,8 +6,6 @@ public enum LangTag {
 	ERROR,
 	INFO_PREFIX,
 	DW_PREFIX,
-	TG_PREFIX,
-	LG_PREFIX,
 	
 	AC_CANCEL,
 	AC_VALIDATE,

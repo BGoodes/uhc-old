@@ -42,7 +42,7 @@ public class PuppyPower extends ItemScenario {
 
 	@Override
 	public List<Category> getCategories() {
-		return Arrays.asList(Category.PVP, Category.FUN);
+		return Arrays.asList(Category.FUN);
 	}
 
 	@Override

@@ -2,7 +2,7 @@ package fr.aiidor.uhc.enums;
 
 public enum Category {
 	
-	ALL, RUN, PVP, SURVIVAL, GENERATION, ENCHANTMENT, FUN, ANIME, OTHER;
+	ALL, RUN, PVP, SURVIVAL, GENERATION, ENCHANTMENT, FUN, OTHER, ORIGINALS;
 	
 	private final String name;
 	

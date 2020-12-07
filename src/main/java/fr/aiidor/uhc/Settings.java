@@ -7,11 +7,12 @@ import org.bukkit.WorldType;
 import org.bukkit.configuration.file.FileConfiguration;
 
 import fr.aiidor.uhc.enums.UHCFile;
-import fr.aiidor.uhc.tools.Cage;
+import fr.aiidor.uhc.utils.Cage;
 
 public class Settings {
 	
 	public Boolean auto_host;
+	public Integer auto_unhost;
 	
 	public Boolean remove_op;
 	public Boolean op_to_host;
@@ -32,6 +33,7 @@ public class Settings {
 		FileConfiguration config = UHCFile.CONFIG.getYamlConfig();
 		
 		auto_host = config.getBoolean("Game.auto-host");
+		auto_unhost = config.getInt("Game.auto-unhost");
 		
 		remove_op = config.getBoolean("Permissions.remove-op");
 		op_to_host = config.getBoolean("Permissions.set-op-to-host");
