@@ -1,4 +1,4 @@
-> :warning: **Archived Project**: This project is no longer actively maintained. For those interested in similar work, please check out [this related project](https://github.com/BGoodes/uhc).
+> :warning: **Archived Project**: This project is no longer actively maintained. For those interested in similar work, please check out [this related project](https://github.com/BGoodes/gamelib).
 
 ---
 # UHC Plugin for Spigot 1.8
